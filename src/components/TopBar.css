@@ -1,0 +1,33 @@
+#top-navbar{
+    border: 0 solid #eeeeee;
+    border-width: 0 0 1px 0;
+}
+#navbarTogglerDemo03{
+    margin-top: 8px;
+    padding-left: 0;
+    margin-right: 15px;
+    /* height: 100vh; */
+}
+#navbarTogglerDemo03 hr{
+    border-color: #eeeeee;
+}
+.navbar-brand a{
+    font-family: "Lobster Two";
+    font-size: 27px;
+    color: #33373f;
+    text-decoration: none;
+}
+
+.search-input{
+    border-color: #eeeeee;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+.search-button{
+    border-radius: 0 4px 4px 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    right: 50px;
+    position: relative;
+}

@@ -1,0 +1,19 @@
+.sidebar{
+    overflow-y: scroll;
+    -ms-overflow-style: none;  
+    scrollbar-width: none;
+}
+
+.sidebar-lg{
+    height: 100vh;
+    top: 65px;
+    border: 0 solid #eeeeee;
+    border-right-width: 1px;
+}
+
+.sidebar,
+.sidebar input,
+.sidebar select,
+.sidebar button {
+    font-size: 13px;
+}

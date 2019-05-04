@@ -1,0 +1,80 @@
+.property {
+    overflow: hidden;
+    /* border-radius: 5px; */
+    /* border: 1px solid #dddddd; */
+    border-width: 0 ;
+}
+
+.prop-img {
+    padding: 0;
+    margin: 0;
+}
+
+.prop-img img {
+    height: auto;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.prop-info {
+    height: 95px;
+    font-size: 13px;
+}
+
+.prop-info>div {
+    margin: 3px 0 3px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.property-type span {
+    padding: 0 3px 0 3px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.property-location, .property-price {
+    font-weight: bold;
+}
+
+.property-location i{
+    font-size: 15px;
+    color: gray;
+}
+
+.starrating {
+    float: left;
+    overflow: hidden;
+    position: relative;
+}
+
+.starrating>span {
+    padding-right: 10px;
+}
+
+.starrating>input {
+    /* Remove radio buttons */
+    display: none;
+    margin: 0;
+    padding: 0;
+}
+
+.starrating>label {
+    margin: 0 2px 0 2px;
+    cursor: pointer;
+    font-size: 15px;
+    display: inline-block;
+    color: gray;
+}
+
+.starrating>input:checked ~ label {
+    color: #17a2b8;
+}
+
+.starrating>input:hover ~ label {
+    color: #17a2b8;
+}

@@ -1,0 +1,17 @@
+*{
+    box-sizing: border-box;
+}
+
+.contents{
+    margin-top: 65px;
+}
+
+.contents-body{
+    overflow-y: scroll;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+}
+
+.footer{
+    height: 200px;
+}
