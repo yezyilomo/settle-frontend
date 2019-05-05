@@ -1,33 +1,57 @@
-#top-navbar{
-    border: 0 solid #eeeeee;
+#top-navbar {
+    border: 0 solid #dddddd;
     border-width: 0 0 1px 0;
 }
-#navbarTogglerDemo03{
+
+.navbar-toggler {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#navbarTogglerDemo03 {
     margin-top: 8px;
     padding-left: 0;
     margin-right: 15px;
-    /* height: 100vh; */
 }
-#navbarTogglerDemo03 hr{
-    border-color: #eeeeee;
+
+#navbarTogglerDemo03 hr {
+    border-color: #eeeeee; /* didn't use #eeeeee purposefuly */
 }
-.navbar-brand a{
+
+#navbarTogglerDemo03 li {
+    white-space: nowrap;
+}
+
+.navbar-brand a {
     font-family: "Lobster Two";
     font-size: 27px;
-    color: #33373f;
+    color: #33373f; /* nav-brand color light black */
     text-decoration: none;
 }
 
-.search-input{
-    border-color: #eeeeee;
+.click-effect:active {
+    color: gray;
+}
+
+.search-input {
+    border-color: #dddddd;
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: center;
 }
-.search-button{
+
+.search-button {
     border-radius: 0 4px 4px 0;
+    border-width: 0;
     padding-top: 8px;
     padding-bottom: 8px;
-    right: 50px;
     position: relative;
+    right: 50px;
+    color: gray;
+    font-size: 20px;
+}
+
+.search-button:focus {
+    border-width: 0;
+    box-shadow: 0 0 0 0 white;
 }
