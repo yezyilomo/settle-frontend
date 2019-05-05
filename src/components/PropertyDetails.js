@@ -14,6 +14,7 @@ function PropertyImage(props) {
 
 function PropertyDetails(props) {
     let rate = () => {
+        window.scrollTo(0, 0);
         let id = `star${props.property.rating}-${props.property.id}`;
         document.getElementById(id).checked = true;
     };
