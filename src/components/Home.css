@@ -1,17 +1,22 @@
-*{
+* {
     box-sizing: border-box;
 }
 
-.contents{
+.contents {
     margin-top: 65px;
 }
 
-.contents-body{
-    overflow-y: scroll;
-    -ms-overflow-style: none;  
-    scrollbar-width: none; 
+.footer {
+    height: 100px;
+    border: 0 solid #eeeeee;
+    border-width: 1px 0 0 0;
 }
 
-.footer{
-    height: 200px;
+.scroll-up i {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 50px;
+    opacity: 0.8;
+    cursor: pointer;
 }
