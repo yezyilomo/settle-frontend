@@ -7,3 +7,20 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Theme */
+.c-bg-primary{
+    background-color: #17a2b8;
+}
+
+.c-text-primary{
+  color: unset;
+}
+
+.c-bg-secondary{
+  background-color: #f2f5f8;
+}
+
+.c-text-secondary{
+  color: unset;
+}
