@@ -122,7 +122,7 @@ function Feeds(props) {
 
     onScrollToBottom(() => {
         setGroup1([...group1, ...groupTwo]);
-    }, 50)
+    }, 300)
     //window.scrollTo(0, 0);
     return (
         <Block>
