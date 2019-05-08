@@ -12,12 +12,12 @@ function PropertyOverview(props) {
     return (
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2 m-0">
             <div class="property col-12 p-0 m-0">
-                <div class="prop-img col-12 bg-white">
+                <div class="prop-img col-12">
                     <Link to={`property/${props.property.id}`}>
                         <img src={props.property.img} alt="" />
                     </Link>
                 </div>
-                <div class="prop-info col-12 bg-white px-1">
+                <div class="prop-info col-12 bg-lightz px-1">
                     <div class="property-type">For <span class="bg-info">{props.property.category}</span></div>
                     <div class="property-location"> <i class="fa fa-map-marker-alt"></i> {props.property.location}</div>
                     <div class="property-price">

@@ -3,7 +3,11 @@
 }
 
 .contents {
-    margin-top: 65px;
+    margin-top: 55px;
+}
+
+.contents-body{
+    background-color: rgb(253, 253, 253);
 }
 
 .footer {
@@ -19,4 +23,6 @@
     font-size: 50px;
     opacity: 0.8;
     cursor: pointer;
+    color: rgb(190, 190, 190);
+    text-shadow: 1px 5px 20px rgb(10, 10, 10)
 }

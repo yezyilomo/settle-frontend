@@ -3,8 +3,8 @@ import './SideBar.css';
 
 function SideBar(props) {
     return (
-        <div class={`sidebar ${props.setting}`}>
-            <h6 class="w-100 ml-0 mb-0">Quick Filter</h6>
+        <div class={`sidebar  text-secondary ${props.setting}`}>
+            <h6 class="w-100 ml-0 mb-0 font-weight-bold">Quick Filter</h6>
             <form>
                 <select class="custom-select mr-sm-2 my-2" id="inlineFormCustomSelect">
                     <option selected>I want to...</option>
