@@ -17,3 +17,7 @@
 .sidebar button {
     font-size: 13px;
 }
+
+.sidebar label{
+    font-weight: bold;
+}
