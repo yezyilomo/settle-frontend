@@ -24,3 +24,64 @@ body {
 .c-text-secondary{
   color: unset;
 }
+
+/* End of Theme */
+
+/* Extra small devices (portrait phones, less than 576px)
+  No media query for `xs` since this is the default in Bootstrap
+*/
+
+/* Extra small devices (landscape phones, 575px and below) */
+@media (max-width: 575px) {
+    /*  border width */
+    .border-xs-0{border-width: 0;}
+    .border-xs-1{border-width: 1px;}
+    .border-xs-2{border-width: 2px;}
+    .border-xs-3{border-width: 3px;}
+    .border-xs-4{border-width: 4px;}
+    .border-xs-5{border-width: 5px;}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    /*  border width */
+    .border-sm-0{border-width: 0;}
+    .border-sm-1{border-width: 1px;}
+    .border-sm-2{border-width: 2px;}
+    .border-sm-3{border-width: 3px;}
+    .border-sm-4{border-width: 4px;}
+    .border-sm-5{border-width: 5px;}
+}
+
+/* Medium devices (tablets, 768px and up)  */
+@media (min-width: 768px) {
+    /*  border width */
+    .border-md-0{border-width: 0;}
+    .border-md-1{border-width: 1px;}
+    .border-md-2{border-width: 2px;}
+    .border-md-3{border-width: 3px;}
+    .border-md-4{border-width: 4px;}
+    .border-md-5{border-width: 5px;}
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    /*  border width */
+    .border-lg-0{border-width: 0;}
+    .border-lg-1{border-width: 1px;}
+    .border-lg-2{border-width: 2px;}
+    .border-lg-3{border-width: 3px;}
+    .border-lg-4{border-width: 4px;}
+    .border-lg-5{border-width: 5px;}
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    /*  border width */
+    .border-xl-0{border-width: 0;}
+    .border-xl-1{border-width: 1px;}
+    .border-xl-2{border-width: 2px;}
+    .border-xl-3{border-width: 3px;}
+    .border-xl-4{border-width: 4px;}
+    .border-xl-5{border-width: 5px;}
+}
