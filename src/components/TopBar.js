@@ -35,7 +35,7 @@ function TopBar(props) {
                         <hr class="p-0 m-0 d-lg-none"/>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Help</a>
+                        <Link class="nav-link" to="/upload-property">Help</Link>
                         <hr class="p-0 m-0 d-lg-none"/>
                     </li>
                     <li class="nav-item">

@@ -1,7 +1,18 @@
 import React from 'react';
 import './SideBar.css';
+import {Select} from './';
 
 function SideBar(props) {
+    let options = [
+        "one", "two", "three", "four", "five", "six", "seven",
+        "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+        "fourteen", "fifteen", "sixteen", "seventeen, thousand, three hundred and one", "eighteen",
+        "nineteen", "twelve",
+        "one", "two", "three", "four", "five", "six", "seven",
+        "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+        "fourteen", "fifteen", "sixteen", "seventeen, thousand, three hundred and one", "eighteen",
+        "nineteen", "twelve"
+    ]
     return (
         <div class={`sidebar  text-secondary ${props.setting}`}>
             <h6 class="w-100 ml-0 mb-0 font-weight-bold">Quick Filter</h6>
@@ -26,17 +37,23 @@ function SideBar(props) {
                         <input type="number" class="form-control m-0 px-2 col-5 d-inline" placeholder="To" />
                     </div>
                 </div>
+
+                <label class="form-check-label col-12 mt-4 mb-0 p-0 mx-0">Amenities</label>
+                <Select
+                    class="custom-select"
+                    options={options}
+                    placeholder="Select Amenity"
+                />
                 <input type="text" class="form-control my-4" id="inlineFormInput" placeholder="Location" />
-                <input type="text" class="form-control my-4" id="inlineFormInput" placeholder="Amenities" />
                 <div class="mt-4">
                     <label class="form-check-label mt-2 ml-1">Electricity</label>
                     <input class="form-check-input ml-4 my-2" type="checkbox" ></input>
                 </div>
                 <div class="mt-4">
-                    <label class="form-check-label mt-2 ml-1">Price Negotiation</label>
+                    <label class="form-check-label mt-2 ml-1">Negotiation</label>
                     <input class="form-check-input ml-4 my-2" type="checkbox" ></input>
                 </div>
-                <button type="submit" class="btn btn-info mt-4 col-12">Submit</button>
+                <button type="submit" class="btn btn-info mt-4 mb-5 col-12">Submit</button>
             </form>
         </div>
     );

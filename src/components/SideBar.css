@@ -1,11 +1,11 @@
 .sidebar{
     overflow-y: scroll;
-    -ms-overflow-style: none;  
+    -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
 .sidebar-lg{
-    height: 100vh;
+    height: calc(100vh - 64px);
     top: 65px;
     border: 0 solid #dddddd;
     border-right-width: 1px;
@@ -15,7 +15,14 @@
 .sidebar input,
 .sidebar select,
 .sidebar button {
-    font-size: 13px;
+    font-size: 1em;
+}
+
+.sidebar input:focus,
+.sidebar select:focus,
+.sidebar button:focus {
+    border-width: 1px;
+    box-shadow: 0 0 0 white;
 }
 
 .sidebar label{

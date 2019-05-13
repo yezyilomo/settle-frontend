@@ -1,0 +1,16 @@
+.badge{
+    font-size: 0.95em;
+}
+
+.badge-body{
+
+}
+
+.badge-close{
+    position: relative;
+    top: 1px;
+}
+
+.badge-close{
+    cursor: pointer;
+}

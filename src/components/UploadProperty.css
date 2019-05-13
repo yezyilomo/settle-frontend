@@ -1,0 +1,58 @@
+.property-form,
+.property-form input,
+.property-form select,
+.property-form button {
+    font-size: 1em;
+}
+
+.property-form input:focus,
+.property-form select:focus,
+.property-form button:focus {
+    border-width: 1px;
+    box-shadow: 0 0 0 white;
+}
+
+.property-form label{
+    font-weight: bold;
+}
+
+
+.upload-main-img{
+    width: 400px;
+    height: 300px;
+    border: 1px solid #eeeeee;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #dddddd;
+    text-align: right;
+    cursor: pointer;
+}
+
+.upload-main-img:hover span,
+.upload-other-img:hover span
+{
+    color: rgba(150, 150, 150);
+}
+
+.upload-other-img{
+    width: 200px;
+    height: 120px;
+    border: 1px solid #eeeeee;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #dddddd;
+    text-align: right;
+    cursor: pointer;
+}
+
+.upload-main-img span{
+    font-size: 5em;
+    color: rgba(170, 170, 170);
+    margin: 200px 30px 0 0;
+}
+
+.upload-other-img span{
+    font-size: 3em;
+    color: rgba(170, 170, 170);
+    margin: 60px 15px 0 0;
+}
