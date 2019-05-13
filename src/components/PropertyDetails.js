@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './PropertyDetails.css';
-import { Link } from 'react-router-dom';
+import { } from 'react-router-dom';
 import { Block } from './'
 
 

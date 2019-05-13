@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import './Home.css';
-import { PropertyGroup, SideBar, TopBar, Block, PropertyDetails } from './'
+import { 
+    PropertyGroup, SideBar, TopBar, Block, PropertyDetails,
+    UploadProperty
+} from './'
 
 
 let groupOne = [
@@ -162,6 +165,8 @@ function Home(props) {
                         ].filter((obj) => obj.id.toString() === match.params.id)[0];
                         return <PropertyDetails property={property} properties={groupOne} />
                     }} />
+
+                    <Route exact path="/upload-property" component={UploadProperty} />
                 </div>
             </div>
 
