@@ -17,16 +17,20 @@
     cursor: pointer;
 }
 
-.modal-backdrop
-{
-    opacity: 0.8 !important;
+.modal-backdrop{
+    opacity: 0.93 !important;
 }
 
 .modal-close{
     position: absolute;
-    right: 10px;
-    top: 5px;
+    right: 15px;
+    top: 12px;
     font-size: 25px;
+    color: white;
+}
+
+.modal-close:hover{
+    color: #eeeeee;
 }
 
 .full-img{
@@ -36,7 +40,7 @@
 
 .detailed-prop-info {
     height: auto;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .detailed-prop-info>div {

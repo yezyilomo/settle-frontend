@@ -16,6 +16,7 @@
 .sidebar select,
 .sidebar button {
     font-size: 1em;
+    border-color: rgb(235, 235, 235);
 }
 
 .sidebar input:focus,
