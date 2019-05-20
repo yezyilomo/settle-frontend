@@ -1,0 +1,10 @@
+.add-feature{
+    font-size: 1.2em;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.remove-feature{
+    font-size: 1.2em;
+    cursor: pointer;
+}
