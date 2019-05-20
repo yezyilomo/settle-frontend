@@ -5,8 +5,9 @@ import { Block, SelectMultiValue } from './';
 
 
 function Select(props) {
+    let values = props.values||[]
     let [options, setOptions] = useState(props.options);
-    let [selected, setSelected] = useState([]);
+    let [selected, setSelected] = useState(values);
 
     let optionValue = props.optionValue;
     let optionName = props.optionName;

@@ -18,13 +18,13 @@ function SideBar(props) {
             <h6 class="w-100 ml-0 mb-0 font-weight-bold">Quick Filter</h6>
             <form>
                 <select class="custom-select mr-sm-2 my-2" id="inlineFormCustomSelect">
-                    <option selected>I want to...</option>
+                    <option selected disabled>I want to...</option>
                     <option value="1">Rent</option>
                     <option value="2">Buy</option>
                     <option value="2">Book</option>
                 </select>
                 <select class="custom-select mr-sm-2 my-2" id="inlineFormCustomSelect">
-                    <option selected>Property...</option>
+                    <option selected disabled>Property...</option>
                     <option value="1">Room</option>
                     <option value="2">Apartment</option>
                     <option value="3">House</option>

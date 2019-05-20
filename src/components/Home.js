@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import './Home.css';
-import { 
+import {
     PropertyGroup, SideBar, TopBar, Block, PropertyDetails,
     UploadProperty
 } from './'
@@ -108,8 +108,8 @@ function Feeds(props) {
     window.onscroll = () => {
         props.setScrollY(window.scrollY);
         let scrollTop = (
-            window.pageYOffset || 
-            document.documentElement.scrollTop || 
+            window.pageYOffset ||
+            document.documentElement.scrollTop ||
             document.body.scrollTop || 0
         );
 
@@ -149,11 +149,10 @@ function Home(props) {
                 <SideBar setting="sidebar-lg sticky-top d-none d-lg-block col-12 col-lg-2 pt-3" />
 
                 <Route exact path="/filter" render={() => {
-                    window.scrollTo(0, 0);
                     return <SideBar setting="d-relative d-lg-none col-12 bg-white mt-4 pb-4" />
                 }} />
 
-                <div class="row contents-body col-12 col-lg-10 px-2 px-sm-3 py-4 m-0">
+                <div class="row contents-body col-12 col-lg-10 px-2 px-sm-3 py-2 py-lg-4 m-0">
                     <Route exact path="/" render={()=>{
                         return <Feeds setScrollY={setScrollY}/>;
                     }} />
@@ -175,9 +174,9 @@ function Home(props) {
                     scrollY > 10?
                     (
                         <div class="scroll-up click-effect d-lg-none">
-                        <i class="fa fa-arrow-alt-circle-up" onClick={scrollUp}></i>
-                    </div>
-                    ): 
+                            <i class="fa fa-arrow-alt-circle-up" onClick={scrollUp}></i>
+                        </div>
+                    ):
                     null
                 }
 

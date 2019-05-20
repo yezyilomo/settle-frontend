@@ -8,9 +8,10 @@ import {Block} from './Block';
 import {UploadProperty} from './UploadProperty';
 import {SelectMultiValue} from './SelectMultiValue';
 import {Select} from './Select';
+import {FeatureForm} from './FeatureForm';
 
 export {
     Home, PropertyOverview, PropertyGroup, TopBar, SideBar,
     Block, PropertyDetails, UploadProperty, SelectMultiValue,
-    Select
+    Select, FeatureForm
 };
