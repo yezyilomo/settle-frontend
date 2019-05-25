@@ -21,21 +21,25 @@
     opacity: 0.93 !important;
 }
 
-.modal-close{
+.img-modal .modal-close{
     position: absolute;
     right: 15px;
     top: 12px;
-    font-size: 25px;
-    color: white;
-}
-
-.modal-close:hover{
-    color: #eeeeee;
 }
 
 .full-img{
     width: 100%;
     height: auto;
+}
+
+.img-modal .carousel-control-next{
+    position: absolute;
+    right: -80px;
+}
+
+.img-modal .carousel-control-prev{
+    position: absolute;
+    left: -80px;
 }
 
 .detailed-prop-info {

@@ -6,7 +6,7 @@ function TopBar(props) {
     return (
         <nav class="navbar fixed-top  navbar-expand-lg navbar-light bg-white p-1 p-lg-2" id="top-navbar">
             <div class="navbar-brand col-1 col-sm-2 col-md-2 col-lg-3 px-0 py-1">
-                <Link class="click-effect col-12 col-sm-4 px-0 px-sm-2 py-2" to="/">Settle</Link>
+                <a class="click-effect col-12 col-sm-4 px-0 px-sm-2 py-2" href="/">Settle</a>
             </div>
 
             <form class="form-inline m-0 p-0 col-7 col-sm-8 col-md-8 col-lg-6">
@@ -22,24 +22,28 @@ function TopBar(props) {
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse col-lg-3 m-0 px-0 px-lg-3" id="navbarTogglerDemo03">
                 <hr class="d-lg-none m-0 p-0 mt-3 mt-lg-0"/>
                 <ul class="navbar-nav ml-0 ml-lg-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
+                        <Link class="nav-link" to="" data-toggle="modal" data-target="#login-modal">
+                            Login<span class="sr-only">(current)</span>
+                        </Link>
                         <hr class="p-0 m-0 d-lg-none"/>
                     </li>
                     <li class="nav-item d-lg-none" data-toggle="collapse" data-target="#navbarTogglerDemo03">
                         <Link class="nav-link" to="/filter">Quick Filter <span class="sr-only">(current)</span></Link>
                         <hr class="p-0 m-0 d-lg-none"/>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
                         <Link class="nav-link" to="/upload-property">Help</Link>
                         <hr class="p-0 m-0 d-lg-none"/>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Sign up</a>
+                    <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
+                        <Link class="nav-link" to="" data-toggle="modal" data-target="#signup-modal">
+                            Sign up<span class="sr-only">(current)</span>
+                        </Link>
                         <hr class="p-0 m-0 d-lg-none"/>
                     </li>
                     <li class="nav-item dropdown pb-0 pb-lg-0">
@@ -54,9 +58,10 @@ function TopBar(props) {
                             <div class="dropdown-divider py-0 my-0"></div>
                             <a class="dropdown-item py-2" href="/">My Properties</a>
                         </div>
+                        <div class="dropdown-divider d-lg-none py-0 my-0"></div>
                     </li>
                 </ul>
-
+                <div class="d-lg-none vh-100"></div>
             </div>
         </nav>
     );

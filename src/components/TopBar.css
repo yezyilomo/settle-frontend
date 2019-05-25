@@ -21,13 +21,17 @@
     margin-right: 15px;
 }
 
+#navbarTogglerDemo03 a{
+    font-size: 1.1em;
+}
+
 #navbarTogglerDemo03 hr {
     border-color: #eeeeee; /* didn't use #eeeeee purposefuly */
 }
 
 #navbarTogglerDemo03 li {
     white-space: nowrap;
-} 
+}
 
 .navbar-brand {
     overflow: visible;

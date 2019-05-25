@@ -8,10 +8,6 @@ function SideBar(props) {
         "eight", "nine", "ten", "eleven", "twelve", "thirteen",
         "fourteen", "fifteen", "sixteen", "seventeen, thousand, three hundred and one", "eighteen",
         "nineteen", "twelve",
-        "one", "two", "three", "four", "five", "six", "seven",
-        "eight", "nine", "ten", "eleven", "twelve", "thirteen",
-        "fourteen", "fifteen", "sixteen", "seventeen, thousand, three hundred and one", "eighteen",
-        "nineteen", "twelve"
     ]
     return (
         <div class={`sidebar  text-secondary ${props.setting}`}>
@@ -45,15 +41,7 @@ function SideBar(props) {
                     placeholder="Select Amenity"
                 />
                 <input type="text" class="form-control my-4" id="inlineFormInput" placeholder="Location" />
-                <div class="mt-4">
-                    <label class="form-check-label mt-2 ml-1">Electricity</label>
-                    <input class="form-check-input ml-4 my-2" type="checkbox" ></input>
-                </div>
-                <div class="mt-4">
-                    <label class="form-check-label mt-2 ml-1">Negotiation</label>
-                    <input class="form-check-input ml-4 my-2" type="checkbox" ></input>
-                </div>
-                <button type="submit" class="btn btn-info mt-4 mb-5 col-12">Submit</button>
+                <button type="submit" class="btn btn-info mt-3 mb-5 col-12">Submit</button>
             </form>
         </div>
     );

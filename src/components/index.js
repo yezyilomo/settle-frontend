@@ -9,9 +9,11 @@ import {UploadProperty} from './UploadProperty';
 import {SelectMultiValue} from './SelectMultiValue';
 import {Select} from './Select';
 import {FeatureForm} from './FeatureForm';
+import {LogIn} from './LogIn';
+import {SignUp} from './SignUp';
 
 export {
     Home, PropertyOverview, PropertyGroup, TopBar, SideBar,
     Block, PropertyDetails, UploadProperty, SelectMultiValue,
-    Select, FeatureForm
+    Select, FeatureForm, LogIn, SignUp
 };
