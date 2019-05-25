@@ -3,7 +3,7 @@
 }
 
 .contents {
-    margin-top: 55px;
+    margin-top: 65px;
 }
 
 .contents-body{
@@ -16,13 +16,10 @@
     border-width: 1px 0 0 0;
 }
 
-.scroll-up i {
+.scroll-up img {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    font-size: 50px;
-    opacity: 0.8;
+    filter: contrast(50%);
     cursor: pointer;
-    color: rgb(190, 190, 190);
-    text-shadow: 1px 5px 20px rgb(10, 10, 10)
 }

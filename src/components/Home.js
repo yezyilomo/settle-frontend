@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import './Home.css';
 import {
     PropertyGroup, SideBar, TopBar, Block, PropertyDetails,
-    UploadProperty
+    UploadProperty, LogIn, SignUp
 } from './'
 
 
@@ -146,13 +146,15 @@ function Home(props) {
             <TopBar />
 
             <div class="row contents">
+                <LogIn/>
+                <SignUp/>
                 <SideBar setting="sidebar-lg sticky-top d-none d-lg-block col-12 col-lg-2 pt-3" />
 
                 <Route exact path="/filter" render={() => {
                     return <SideBar setting="d-relative d-lg-none col-12 bg-white mt-4 pb-4" />
                 }} />
 
-                <div class="row contents-body col-12 col-lg-10 px-2 px-sm-3 py-2 py-lg-4 m-0">
+                <div class="row contents-body col-12 col-lg-10 px-2 px-sm-3 py-2 py-lg-3 m-0">
                     <Route exact path="/" render={()=>{
                         return <Feeds setScrollY={setScrollY}/>;
                     }} />
@@ -171,10 +173,10 @@ function Home(props) {
 
             <div class="footer row bg-light">
                 {
-                    scrollY > 10?
+                    scrollY > 100?
                     (
                         <div class="scroll-up click-effect d-lg-none">
-                            <i class="fa fa-arrow-alt-circle-up" onClick={scrollUp}></i>
+                            <img src="icons/up-arrow.svg" onClick={scrollUp} width="30" height="30" alt=""/>
                         </div>
                     ):
                     null

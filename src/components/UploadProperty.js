@@ -10,19 +10,14 @@ function UploadProperty(props) {
         "eight", "nine", "ten", "eleven", "twelve", "thirteen",
         "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
         "nineteen", "twenty"
-    ]
+    ];
 
-    let values = ["one", "two", "three",
-    "one", "two", "three", "four", "five", "six", "seven",
-    "eight", "nine", "ten", "eleven", "twelve", "thirteen",
-    "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
-    "nineteen", "twenty"
-]
+    let values = ["one", "two", "three"];
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
 
     return (
-        <div class="container-fluid p-0 m-0 px-2">
+        <div class="custom-container">
             <form class="property-form text-secondary">
                 <div class="row">
                     <div class="col-12 col-md-6 justify-content-center ">
@@ -103,7 +98,7 @@ function UploadProperty(props) {
 
                     <div class="col-12 col-md-6">
                         <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-center">
-                            <label class="form-check-label col-12 p-0 m-0 px-2">Pictures</label>
+                            <label class="form-check-label col-12 p-0 m-0 px-0">Pictures</label>
                             <div class="upload-main-img d-flex flex-column align-content-center justify-content-center flex-wrap">
                                 <div>Upload main image</div>
                                 <div class="d-flex flex-row justify-content-end">
@@ -112,10 +107,10 @@ function UploadProperty(props) {
                                 </div>
                             </div>
                         </div>
-                        <hr class="mx-0 mx-lg-2"/>
+                        <hr class="mx-0 mx-lg-0"/>
                         <div class="row p-0 m-0  mt-3 justify-content-center">
                             <div class="upload-other-img d-flex flex-column justify-content-center align-content-center flex-wrap">
-                                <div>Upload other image</div>
+                                <div>Upload other images</div>
                                 <div class="d-flex flex-row justify-content-center">
                                     <span class="camera fa fa-camera"/>
                                     <span class="plus fa fa-plus"/>

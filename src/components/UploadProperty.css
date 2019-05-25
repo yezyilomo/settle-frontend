@@ -1,9 +1,13 @@
+.custom-container{
+    overflow: hidden;
+}
+
 .property-form input,
 .property-form select {
     font-size: 1em;
     border-color: rgb(238, 238, 238);
-    height: 36px;
-    padding: 0 5px 0 5spx;
+    height: 40px;
+    padding: 0 5px 0 5px;
 }
 
 .property-form input:focus,
@@ -20,9 +24,8 @@
     height: 45px;
 }
 
-
 .upload-main-img{
-    width: 500px;
+    width: 100%;
     height: 300px;
     border: 1px solid #eeeeee;
     border-radius: 5px;
@@ -33,14 +36,13 @@
 }
 
 .upload-main-img:hover span,
-.upload-other-img:hover span
-{
+.upload-other-img:hover span{
     color: rgba(150, 150, 150);
 }
 
 .upload-other-img{
-    width: 500px;
-    height: 120px;
+    width: 100%;
+    height: 200px;
     border: 1px solid #eeeeee;
     border-radius: 3px;
     overflow: hidden;
