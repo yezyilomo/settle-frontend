@@ -1,112 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route } from 'react-router-dom';
+import {setGlobal, useGlobal} from 'reactn'
 import './Home.css';
 import {
     PropertyGroup, SideBar, TopBar, Block, PropertyDetails,
-    UploadProperty, LogIn, SignUp
+    UploadProperty, LogIn, SignUp, Fetcher, Loader, filterForm
 } from './'
 
 
-let groupOne = [
-    {
-        price: 358,
-        rating: 1,
-        id: 0,
-        category: "Rent",
-        currency: "$",
-        img: "https://a0.muscache.com/im/pictures/69769498/8b565228_original.jpg",
-        location: "Makumbusho, Dar es salaam",
-        payment_terms: 5,
-        unit_of_payment_terms: "Month"
-    },
-    {
-        price: 230,
-        rating: 3,
-        id: 2,
-        category: "Rent",
-        currency: "$",
-        img: "https://a0.muscache.com/im/pictures/939d23fe-ba17-468f-8a75-bc02fbf2300f.jpg",
-        location: "Makumbusho, Dar es salaam",
-        payment_terms: 10,
-        unit_of_payment_terms: "Month"
-    },
-    {
-        price: 554,
-        rating: 1,
-        id: 4,
-        category: "Rent",
-        currency: "$",
-        img: "https://a0.muscache.com/im/pictures/c3ea4623-9f14-44d8-9426-ef58d3bd8acf.jpg",
-        location: "Makumbusho, Dar es salaam",
-        payment_terms: 6,
-        unit_of_payment_terms: "Month"
-    },
-    {
-        price: 432,
-        rating: 5,
-        id: 3,
-        category: "Rent",
-        currency: "$",
-        img: "https://a0.muscache.com/im/pictures/a85d04ad-adac-4ed2-951b-b40730d8ea9e.jpg?aki_policy=xx_large",
-        location: "Makumbusho, Dar es salaam",
-        payment_terms: 6,
-        unit_of_payment_terms: "Month"
+function Filter(props) {
+    let [sideBarStates, ] = useGlobal("SideBar")
+    let {property_type, category, price__gt, price__lt, location, amenities} = sideBarStates.filters
+    let fetchProperties = () => {
+        return fetch(`http://localhost:8000/api/${property_type}/?
+           query={
+            id,
+            category,
+            price,
+            pictures{
+                src,
+                is_main
+            },
+            currency,
+            location,
+            rating,
+            payment_terms,
+            unit_of_payment_terms
+        }&category=${category}&price__gt=${price__gt}&price__lt=${price__lt}&loc=${location}&amenities__contains=${amenities}&format=json`
+        )
+        .then(res => res.json())
+        .then(res => res.results)
+        .catch(error => console.log(error))
     }
-]
-
-let groupTwo = [
-    {
-        price: 440,
-        rating: 4,
-        id: 5,
-        category: "Sale",
-        currency: "$",
-        img: "https://a0.muscache.com/im/pictures/98a003c3-3366-4d3f-ba2c-820f83d34d47.jpg",
-        location: "Makumbusho, Dar es salaam",
-        payment_terms: 5,
-        unit_of_payment_terms: "Month"
-    },
-    {
-        price: 450,
-        rating: 3,
-        id: 6,
-        category: "Sale",
-        currency: "$",
-        img: "https://a0.muscache.com/im/pictures/65125756/be3ddba8_original.jpg",
-        location: "Makumbusho, Dar es salaam",
-        payment_terms: 10,
-        unit_of_payment_terms: "Month"
-    },
-    {
-        price: 270,
-        rating: 1,
-        id: 7,
-        category: "Sale",
-        currency: "$",
-        img: "https://a0.muscache.com/im/pictures/33977646/21d39f72_original.jpg",
-        location: "Kawe, Dar es salaam",
-        payment_terms: 8,
-        unit_of_payment_terms: "Month"
-    },
-    {
-        price: 300,
-        rating: 5,
-        id: 8,
-        category: "Sale",
-        currency: "$",
-        img: "https://a0.muscache.com/im/pictures/33977624/f7ee7eca_original.jpg",
-        location: "Temeke, Dar es salaam",
-        payment_terms: 6,
-        unit_of_payment_terms: "Month"
-    }
-]
-
-
-function Feeds(props) {
-    let [group1, setGroup1] = useState(groupOne);
 
     window.onscroll = () => {
-        props.setScrollY(window.scrollY);
+        //props.setScrollY(window.scrollY);
         let scrollTop = (
             window.pageYOffset ||
             document.documentElement.scrollTop ||
@@ -115,23 +43,106 @@ function Feeds(props) {
 
         let marginBottom = (
             document.documentElement.offsetHeight -
-            (window.innerHeight + scrollTop )
+            (window.innerHeight + scrollTop)
         )
 
         if (marginBottom < 300) {
-            setGroup1([...group1, ...groupTwo]);
+            //Refetch
+            //setProperties([...properties, ...properties]);
         }
     }
 
     return (
-        <Block>
-            <PropertyGroup header="Rent a place" properties={group1} />
-            <PropertyGroup header="Buy a place" properties={group1} />
-        </Block>
+        <Fetcher action={fetchProperties} placeholder={Loader()}>{properties => {
+            return (
+                <Block>
+                    <PropertyGroup header="" properties={properties} />
+                </Block>
+            );
+        }}</Fetcher>
     );
 }
 
-function scrollUp(event){
+
+function Search(props) {
+    let fetchProperties = () => {
+        return fetch(`http://localhost:8000/api/room/?
+           query={
+            id,
+            category,
+            price,
+            pictures{
+                src,
+                is_main
+            },
+            currency,
+            location,
+            rating,
+            payment_terms,
+            unit_of_payment_terms
+        }&loc=${props.location}&format=json`
+        )
+        .then(res => res.json())
+        .then(res => res.results)
+        .catch(error => console.log(error))
+    }
+
+    window.onscroll = () => {
+    }
+
+    return (
+        <Fetcher action={fetchProperties} placeholder={Loader()}>{properties => {
+            return (
+                <Block>
+                    <PropertyGroup header="" properties={properties} />
+                </Block>
+            );
+        }}</Fetcher>
+    );
+}
+
+
+function Feeds(props) {
+
+    let fetchProperties = () => {
+        return fetch(`http://localhost:8000/api/room/?
+           query={
+            id,
+            category,
+            price,
+            pictures{
+                src,
+                is_main
+            },
+            currency,
+            location,
+            rating,
+            payment_terms,
+            unit_of_payment_terms
+            }&format=json`
+        )
+            .then(res => res.json())
+            .then(res => res.results)
+            .catch(error => console.log(error))
+    }
+
+    window.onscroll = () => {
+
+    }
+
+    return (
+        <Fetcher action={fetchProperties} placeholder={Loader()}>{properties => {
+            return (
+                <Block>
+                    <PropertyGroup header="Rent a place" properties={properties} />
+                    <PropertyGroup header="Buy a place" properties={properties} />
+                </Block>
+            );
+        }}</Fetcher>
+    );
+}
+
+function scrollUp(event) {
     window.scrollTo({
         top: 0,
         behavior: 'smooth'
@@ -146,8 +157,8 @@ function Home(props) {
             <TopBar />
 
             <div class="row contents">
-                <LogIn/>
-                <SignUp/>
+                <LogIn />
+                <SignUp />
                 <SideBar setting="sidebar-lg sticky-top d-none d-lg-block col-12 col-lg-2 pt-3" />
 
                 <Route exact path="/filter" render={() => {
@@ -155,16 +166,18 @@ function Home(props) {
                 }} />
 
                 <div class="row contents-body col-12 col-lg-10 px-2 px-sm-3 py-2 py-lg-3 m-0">
-                    <Route exact path="/" render={()=>{
-                        return <Feeds setScrollY={setScrollY}/>;
+                    <Route exact path="/" render={() => {
+                        return <Feeds setScrollY={setScrollY} />;
                     }} />
 
-                    <Route exact path="/property/:id" render={function ({ match }) {
-                        let property = [
-                            ...groupOne,
-                            ...groupTwo
-                        ].filter((obj) => obj.id.toString() === match.params.id)[0];
-                        return <PropertyDetails property={property} properties={groupOne} />
+                    <Route exact path="/ft" component={Filter} />
+
+                    <Route exact path="/search/:key" render={({ match }) => {
+                        return <Search location={match.params.key}/>
+                    }} />
+
+                    <Route exact path="/property/:id" render={({ match }) => {
+                        return <PropertyDetails property={match.params.id} />
                     }} />
 
                     <Route exact path="/upload-property" component={UploadProperty} />
@@ -172,16 +185,12 @@ function Home(props) {
             </div>
 
             <div class="footer row bg-light">
-                {
-                    scrollY > 100?
-                    (
-                        <div class="scroll-up click-effect d-lg-none">
-                            <img src="icons/up-arrow.svg" onClick={scrollUp} width="30" height="30" alt=""/>
-                        </div>
-                    ):
+                {scrollY > 100 ?
+                    <div class="scroll-up click-effect d-lg-none">
+                        <img src="icons/up-arrow.svg" onClick={scrollUp} width="30" height="30" alt="" />
+                    </div> :
                     null
                 }
-
             </div>
 
         </div>

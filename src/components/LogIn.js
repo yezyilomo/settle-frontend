@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { } from 'react-router-dom';
 import './LogIn.css';
 
@@ -9,7 +9,7 @@ function LogIn(props) {
             <div class="modal-dialog modal-dialog-centered mx-auto modal-lg mt-0" role="document">
                 <div class="modal-content border-0">
                     <button class="modal-close close" data-dismiss="modal" aria-label="Close">
-                        <img src="icons/cancel.svg" width="20" height="20" alt=""/>
+                        <img src="icons/cancel.svg" width="20" height="20" alt="" />
                     </button>
                     <div class="modal-body p-0 m-0 border-0 py-5">
                         <div class="container-fluid p-0 m-0 px-2">

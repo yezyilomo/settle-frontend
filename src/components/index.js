@@ -11,9 +11,11 @@ import {Select} from './Select';
 import {FeatureForm} from './FeatureForm';
 import {LogIn} from './LogIn';
 import {SignUp} from './SignUp';
+import {Fetcher} from './Fetcher';
+import {Loader} from './Loader';
 
 export {
     Home, PropertyOverview, PropertyGroup, TopBar, SideBar,
     Block, PropertyDetails, UploadProperty, SelectMultiValue,
-    Select, FeatureForm, LogIn, SignUp
+    Select, FeatureForm, LogIn, SignUp, Fetcher, Loader
 };
