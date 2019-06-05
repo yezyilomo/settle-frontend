@@ -1,10 +1,35 @@
 import React, { } from 'react';
 import { Link, Route, MemoryRouter } from 'react-router-dom';
+import {setGlobal, useGlobal, useDispatch} from 'reactn';
 import './SignUp.css';
 import { Block } from './';
 
+let signupGlobalStates = {
+    first_name: "", last_name: "", email: "",
+    profile_pic: "", username: "", password: "",
+    country: "", city: "", street: ""
+}
+
+setGlobal({
+    SignUp: signupGlobalStates
+})
+
+function setField(SignUp, action){
+    SignUp[action.field] = action.value
+    return SignUp
+}
+
+function useGlobalStateChanger(stateName, reducer){
+    let [states, ] = useGlobal(stateName);
+    let dispatch = useDispatch(reducer, stateName);
+    return [states, dispatch]
+}
 
 function About(props) {
+    let [states, dispatch] = useGlobalStateChanger("SignUp", setField)
+    let handleValueChange = (e) => {
+        dispatch({field: e.target.name, value: e.target.value})
+    }
     return (
         <Block>
             <div class="row progress-tab m-0 p-0">
@@ -12,22 +37,24 @@ function About(props) {
             </div>
             <form class="signup-form text-secondary">
                 <div class="row justify-content-center mt-1">
-
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="text" name="user" class="form-control" placeholder="First Name" />
+                            <input type="text" name="first_name" value={states.first_name}
+                            onChange={handleValueChange} class="form-control" placeholder="First Name" />
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="text" name="user" class="form-control" placeholder="Last Name" />
+                            <input type="text" name="last_name" value={states.last_name}
+                            onChange={handleValueChange}class="form-control" placeholder="Last Name" />
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="email" name="user" class="form-control" placeholder="Email" />
+                            <input type="email" name="email" value={states.email}
+                            onChange={handleValueChange} class="form-control" placeholder="Email" />
                         </div>
                     </div>
 
@@ -46,6 +73,11 @@ function About(props) {
 }
 
 function Account(props) {
+    let [states, dispatch] = useGlobalStateChanger("SignUp", setField)
+    let handleValueChange = (e) => {
+        dispatch({field: e.target.name, value: e.target.value})
+    }
+
     return (
         <Block>
             <div class="row progress-tab m-0 p-0">
@@ -65,13 +97,15 @@ function Account(props) {
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="text" name="user" class="form-control" placeholder="Choose a username" />
+                            <input type="text" name="username" value={states.username}
+                            onChange={handleValueChange} class="form-control" placeholder="Choose a username" />
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="password" name="pass" class="form-control" placeholder="Choose a password" />
+                            <input type="password" name="password" value={states.password}
+                            onChange={handleValueChange} class="form-control" placeholder="Choose a password" />
                         </div>
                     </div>
 
@@ -100,6 +134,10 @@ function Account(props) {
 }
 
 function Finish(props) {
+    let [states, dispatch] = useGlobalStateChanger("SignUp", setField)
+    let handleValueChange = (e) => {
+        dispatch({field: e.target.name, value: e.target.value})
+    }
     return (
         <Block>
             <div class="row progress-tab m-0 p-0">
@@ -110,19 +148,22 @@ function Finish(props) {
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="text" name="user" class="form-control" placeholder="Country" />
+                            <input type="text" name="country" value={states.country}
+                            onChange={handleValueChange} class="form-control" placeholder="Country" />
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="text" name="user" class="form-control" placeholder="City" />
+                            <input type="text" name="city" value={states.city}
+                            onChange={handleValueChange} class="form-control" placeholder="City" />
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="text" name="user" class="form-control" placeholder="Street" />
+                            <input type="text" name="street" value={states.street}
+                            onChange={handleValueChange} class="form-control" placeholder="Street" />
                         </div>
                     </div>
 

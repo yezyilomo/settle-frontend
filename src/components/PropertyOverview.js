@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import './PropertyOverview.css';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function PropertyOverview(props) {
     let rate = () => {
@@ -9,17 +9,27 @@ function PropertyOverview(props) {
     };
     useEffect(rate, [props.property.rating])
 
+    let main_img = props.property.pictures.filter((picture) => picture.is_main)
+    if (main_img.length < 1) {
+        main_img = { is_main: null, src: null, id: null };
+    }
+    else {
+        main_img = main_img[0];
+    }
+
     return (
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2 m-0">
             <div class="property col-12 p-0 m-0">
                 <div class="prop-img col-12">
                     <Link to={`property/${props.property.id}`}>
-                        <img src={props.property.img} alt="" />
+                        <img src={main_img.src} alt="" />
                     </Link>
                 </div>
                 <div class="prop-info col-12 bg-lightz px-1">
                     <div class="property-type">For <span class="bg-info">{props.property.category}</span></div>
-                    <div class="property-location"> <i class="fa fa-map-marker-alt"></i> {props.property.location}</div>
+                    <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
+                        {props.property.location.region}, {props.property.location.country}
+                    </div>
                     <div class="property-price">
                         {props.property.currency} {props.property.price} per {props.property.unit_of_payment_terms}
                     </div>

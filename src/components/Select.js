@@ -71,6 +71,7 @@ function Select(props) {
                     optionName={optionName}
                     placeholder={placeholder}
                 />
+                <input type="hidden" value={JSON.stringify(selected)} name={props.name} />
             </div>
         </Block>
     );
