@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { } from 'react';
+import { Link } from 'react-router-dom';
 import {setGlobal, useGlobal} from 'reactn';
 import './SideBar.css';
 import { Select } from './';
@@ -24,13 +24,14 @@ function SideBar(props) {
     let options = [
         "one", "two", "three", "four", "five", "six", "seven",
         "eight", "nine", "ten", "eleven", "twelve", "thirteen",
-        "fourteen", "fifteen", "sixteen", "seventeen, thousand, three hundred and one", "eighteen",
+        "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
         "nineteen", "twelve",
     ]
 
     let [sideBarStates, setSideBarStates] = useGlobal("SideBar")
 
     let handleSubmit = (e) => {
+        e.preventDefault();
         let form = document.getElementById("filter-form")
         let filters = {
             category: form.category.value,
