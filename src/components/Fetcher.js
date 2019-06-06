@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { } from 'react';
 import {useFetcher} from '../hooks';
 
 const Fetcher = ({ action, placeholder, children }) => {
