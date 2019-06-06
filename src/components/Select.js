@@ -5,36 +5,68 @@ import { Block, SelectMultiValue } from './';
 
 
 function Select(props) {
-    let values = props.values||[]
+    let values = props.value||[]
     let [options, setOptions] = useState(props.options);
     let [selected, setSelected] = useState(values);
 
-    let optionValue = props.optionValue;
-    let optionName = props.optionName;
+    let optionValue = props.optionValue || (val => val);
+    let optionName = props.optionName || (val => val);
     let placeholder = props.placeholder;
 
-    let addToSelected = (selectedValue) => {
+    let find = (list, selectedValue, selectedName) => {
+        return list.find(val => (
+            optionValue(val) == selectedValue &&
+            optionName(val) == selectedName
+        ));
+    }
+
+    let addToSelected = (selectedValue, selectedName) => {
         let temp = [...options];
-        let index = temp.indexOf(selectedValue);
+
+        let optionToAdd = find(temp, selectedValue, selectedName)
+        let index = temp.indexOf(optionToAdd);
         if (index > -1) {
             temp.splice(index, 1);
             if(!props.duplicates){
-                setOptions([...temp]);
+                options = [...temp]
+                setOptions(options);
             }
-            setSelected([...selected, selectedValue]);
+            selected = [...selected, optionToAdd]
+            setSelected(selected);
+        }
+        if(props.onChange){
+            let target = {
+                name: props.name,
+                selected: selected,
+                options: options
+            }
+            props.onChange(target)
         }
     }
 
-    let handleBadgeClick = (event) => {
-        let optionToRemove = event.target.id;
+    let removeFromSelected = (event) => {
+        let selectedName = event.target.getAttribute('data-name');
+        let selectedValue = event.target.getAttribute('data-value');
         let temp = [...selected];
+
+        let optionToRemove =  find(temp, selectedValue, selectedName)
         let index = temp.indexOf(optionToRemove);
         if (index > -1) {
             temp.splice(index, 1);
-            setSelected([...temp]);
+            selected = [...temp]
+            setSelected(selected);
             if(!props.duplicates){
-                setOptions([...options, optionToRemove]);
+                options = [...options, optionToRemove]
+                setOptions(options);
             }
+        }
+        if(props.onChange){
+            let target = {
+                name: props.name,
+                selected: selected,
+                options: options
+            }
+            props.onChange(target)
         }
     }
 
@@ -53,9 +85,9 @@ function Select(props) {
                     return (
                         <Block>
                         <span class="badge badge-secondary mb-1 mr-1">
-                            <span class="badge-body">{shorten(val, 17)}</span>&nbsp;
-                            <span id={val} class="fa fa-times badge-close"
-                                onClick={handleBadgeClick}>
+                            <span class="badge-body">{shorten(optionName(val), 17)}</span>&nbsp;
+                            <span data-value={optionValue(val)} data-name={optionName(val)} class="fa fa-times badge-close"
+                                onClick={removeFromSelected}>
                             </span>
                         </span>
                         </Block>
@@ -71,7 +103,7 @@ function Select(props) {
                     optionName={optionName}
                     placeholder={placeholder}
                 />
-                <input type="hidden" value={JSON.stringify(selected)} name={props.name} />
+                <input type="hidden" value={JSON.stringify(selected.map(val=>optionValue(val)))} name={props.name} />
             </div>
         </Block>
     );

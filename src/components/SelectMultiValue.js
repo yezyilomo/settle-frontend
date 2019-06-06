@@ -2,47 +2,53 @@ import React, { } from 'react';
 import { Block } from './';
 
 
-function SelectMultiValue(props){
+function SelectMultiValue(props) {
     let optionValue = (option) => {
-        if(props.optionValue){
+        if (props.optionValue) {
             return props.optionValue(option);
         }
-        else{
-            return option
-        }
+        return option
     }
 
     let optionName = (option) => {
-        if(props.optionName){
+        if (props.optionName) {
             return props.optionName(option);
         }
-        else{
-            return option;
+        return option;
+    }
+
+    let placeholder = () => {
+        if (props.placeholder !== undefined) {
+            return <option value="" disabled selected>{props.placeholder}</option>
         }
+        return null;
     }
 
     let options = (option) => {
         return (
-            <option value={optionValue(option)}>{optionName(option)}</option>
+            <option value={optionValue(option)} data-name={optionName(option)} onClick={handleSelect}>
+                {optionName(option)}
+            </option>
         );
     };
 
-    let handleValueChange = (event) => {
-        props.onSelect(event.target.value);
-        event.target.value = "";
+    let handleSelect = (event) => {
+        let selectedValue = event.target.value;
+        let selectedName = event.target.getAttribute('data-name');
+        props.onSelect(selectedValue, selectedName);
     };
+
+    let resetPlaceholder = (e) => {
+        e.target.value = "";
+    }
     return (
         <Block>
-            <select class={props.class} name="selected_value" onChange={handleValueChange}>
-                {
-                    props.placeholder !== undefined?
-                    <option value="" disabled selected>{props.placeholder}</option>:
-                    null
-                }
+            <select class={props.class} onChange={resetPlaceholder}>
+                {placeholder()}
                 {props.options.map(options)}
             </select>
         </Block>
     );
 }
 
-export {SelectMultiValue}
+export { SelectMultiValue }
