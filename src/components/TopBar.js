@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './TopBar.css';
 
 function TopBar(props) {
-    let search = (e) => {
-        e.preventDefault()
-        let key = e.target.search.value
+    let [key, setKey] = useState("");
+
+    let updateField = (e) => {
+        let value = e.target.value;
+        setKey(value);
     }
     return (
         <nav class="navbar fixed-top  navbar-expand-lg navbar-light bg-white p-1 p-lg-2" id="top-navbar">
@@ -13,12 +15,14 @@ function TopBar(props) {
                 <Link class="click-effect col-12 col-sm-4 px-0 px-sm-2 py-2" to="/">Settle</Link>
             </div>
 
-            <form class="form-inline m-0 p-0 col-7 col-sm-8 col-md-8 col-lg-6" onSubmit={search}>
-                <input name="search" class="search-input form-control m-0 col-12 col-sm-9 col-md-9 rounded" type="search"
-                    placeholder="Search..." aria-label="Search" />
-                <button class="search-button btn m-0 px-sm-3 d-none d-sm-block" type="submit">
-                    <i class="fa fa-search" />
-                </button>
+            <form class="form-inline m-0 p-0 col-7 col-sm-8 col-md-8 col-lg-6">
+                <input name="search" onChange={updateField} class="search-input form-control m-0 col-12 col-sm-9 col-md-9 rounded"
+                    type="search" placeholder="Search location..." aria-label="Search" />
+                <Link   to={{ pathname: "/search", search: `?q=${key}`}}>
+                    <button class="search-button btn m-0 px-sm-3 d-none d-sm-block">
+                        <i class="fa fa-search" />
+                    </button>
+                </Link>
             </form>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse"

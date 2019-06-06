@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
-import {setGlobal, useGlobal} from 'reactn'
+import { useGlobal} from 'reactn'
 import './Home.css';
 import {
-    PropertyGroup, SideBar, TopBar, Block, PropertyDetails,
-    UploadProperty, LogIn, SignUp, Fetcher, Loader, filterForm
+    PropertyGroup, SideBar, TopBar, PropertyDetails,
+    UploadProperty, LogIn, SignUp, Fetcher, Loader
 } from './'
 
 
@@ -55,9 +55,9 @@ function Filter(props) {
     return (
         <Fetcher action={fetchProperties} placeholder={Loader()}>{properties => {
             return (
-                <Block>
-                    <PropertyGroup header="" properties={properties} />
-                </Block>
+                <div>
+                    <PropertyGroup header="Filter Results.." properties={properties} />
+                </div>
             );
         }}</Fetcher>
     );
@@ -65,6 +65,7 @@ function Filter(props) {
 
 
 function Search(props) {
+    let location = props.location.search.slice(3)
     let fetchProperties = () => {
         return fetch(`http://localhost:8000/api/room/?
            query={
@@ -80,7 +81,7 @@ function Search(props) {
             rating,
             payment_terms,
             unit_of_payment_terms
-        }&loc=${props.location}&format=json`
+        }&loc=${location}&format=json`
         )
         .then(res => res.json())
         .then(res => res.results)
@@ -88,14 +89,30 @@ function Search(props) {
     }
 
     window.onscroll = () => {
+        //props.setScrollY(window.scrollY);
+        let scrollTop = (
+            window.pageYOffset ||
+            document.documentElement.scrollTop ||
+            document.body.scrollTop || 0
+        );
+
+        let marginBottom = (
+            document.documentElement.offsetHeight -
+            (window.innerHeight + scrollTop)
+        )
+
+        if (marginBottom < 300) {
+            //Refetch
+            //setProperties([...properties, ...properties]);
+        }
     }
 
     return (
         <Fetcher action={fetchProperties} placeholder={Loader()}>{properties => {
             return (
-                <Block>
-                    <PropertyGroup header="" properties={properties} />
-                </Block>
+                <div>
+                    <PropertyGroup header="Search Results.." properties={properties} />
+                </div>
             );
         }}</Fetcher>
     );
@@ -133,10 +150,10 @@ function Feeds(props) {
     return (
         <Fetcher action={fetchProperties} placeholder={Loader()}>{properties => {
             return (
-                <Block>
+                <div>
                     <PropertyGroup header="Rent a place" properties={properties} />
                     <PropertyGroup header="Buy a place" properties={properties} />
-                </Block>
+                </div>
             );
         }}</Fetcher>
     );
@@ -172,9 +189,7 @@ function Home(props) {
 
                     <Route exact path="/ft" component={Filter} />
 
-                    <Route exact path="/search/:key" render={({ match }) => {
-                        return <Search location={match.params.key}/>
-                    }} />
+                    <Route exact path="/search/" component={Search}/>
 
                     <Route exact path="/property/:id" render={({ match }) => {
                         return <PropertyDetails property={match.params.id} />

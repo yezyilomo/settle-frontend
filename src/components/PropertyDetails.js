@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {} from 'react';
 import './PropertyDetails.css';
 import { } from 'react-router-dom';
 import { Block, Fetcher, Loader } from './';
