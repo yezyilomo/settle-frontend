@@ -8,7 +8,7 @@ import {Block} from './Block';
 import {UploadProperty} from './UploadProperty';
 import {SelectMultiValue} from './SelectMultiValue';
 import {Select} from './Select';
-import {FeatureForm} from './FeatureForm';
+import {FeaturesInput} from './FeaturesInput';
 import {LogIn} from './LogIn';
 import {SignUp} from './SignUp';
 import {Fetcher} from './Fetcher';
@@ -17,5 +17,5 @@ import {Loader} from './Loader';
 export {
     Home, PropertyOverview, PropertyGroup, TopBar, SideBar,
     Block, PropertyDetails, UploadProperty, SelectMultiValue,
-    Select, FeatureForm, LogIn, SignUp, Fetcher, Loader
+    Select, FeaturesInput, LogIn, SignUp, Fetcher, Loader
 };
