@@ -8,6 +8,7 @@
 
 .contents-body{
     /* background-color: rgb(253, 253, 253); */
+    min-height: calc(100vh - 165px);
 }
 
 .footer {
