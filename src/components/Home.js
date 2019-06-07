@@ -10,8 +10,9 @@ import {API_URL} from '../';
 
 
 function Filter(props) {
-    let [sideBarStates, ] = useGlobal("SideBar")
-    let {property_type, category, price__gt, price__lt, location, amenities} = sideBarStates.filters
+    let [filters, ] = useGlobal("SideBar")
+    let {property_type, category, price__gt, price__lt, location, amenities} = filters
+    let amenity_ids = JSON.stringify(amenities.selected.map(amenity => amenity.id))
     let fetchProperties = () => {
         return fetch(`${API_URL}/api/${property_type}/?
            query={
@@ -27,7 +28,7 @@ function Filter(props) {
             rating,
             payment_terms,
             unit_of_payment_terms
-        }&category=${category}&price__gt=${price__gt}&price__lt=${price__lt}&loc=${location}&amenities__contains=${amenities}&format=json`
+        }&category=${category}&price__gt=${price__gt}&price__lt=${price__lt}&loc=${location}&amenities__contains=${amenity_ids}&format=json`
         )
         .then(res => res.json())
         .then(res => res.results)
