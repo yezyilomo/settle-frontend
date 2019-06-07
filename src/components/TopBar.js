@@ -15,13 +15,11 @@ function TopBar(props) {
                 <Link class="click-effect col-12 col-sm-4 px-0 px-sm-2 py-2" to="/">Settle</Link>
             </div>
 
-            <form class="form-inline m-0 p-0 col-7 col-sm-8 col-md-8 col-lg-6">
+            <form class=" search-form form-inline m-0 p-0 col-7 col-sm-8 col-md-8 col-lg-6">
                 <input name="search" onChange={updateField} class="search-input form-control m-0 col-12 col-sm-9 col-md-9 rounded"
                     type="search" placeholder="Search location..." aria-label="Search" />
-                <Link   to={{ pathname: "/search", search: `?q=${key}`}}>
-                    <button class="search-button btn m-0 px-sm-3 d-none d-sm-block">
-                        <i class="fa fa-search" />
-                    </button>
+                <Link  to={{ pathname: "/search", search: `?q=${key}`}}>
+                    <i class="fa fa-search search-button" />
                 </Link>
             </form>
 

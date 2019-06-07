@@ -70,19 +70,17 @@
 }
 
 .search-button {
-    border-radius: 0 4px 4px 0;
-    border-width: 0;
     padding-top: 6px;
     padding-bottom: 6px;
     position: relative;
-    right: 50px;
+    right: 33px;
     color: gray;
     font-size: 20px;
 }
 
-.search-button:focus {
-    border-width: 0;
-    box-shadow: 0 0 0 0 white;
+.search-form a:focus {
+    text-decoration: none;
+    outline: none;
 }
 
 .dropdown-menu{
