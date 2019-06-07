@@ -6,13 +6,14 @@ import {
     PropertyGroup, SideBar, TopBar, PropertyDetails,
     UploadProperty, LogIn, SignUp, Fetcher, Loader
 } from './'
+import {API_URL} from '../';
 
 
 function Filter(props) {
     let [sideBarStates, ] = useGlobal("SideBar")
     let {property_type, category, price__gt, price__lt, location, amenities} = sideBarStates.filters
     let fetchProperties = () => {
-        return fetch(`http://localhost:8000/api/${property_type}/?
+        return fetch(`${API_URL}/api/${property_type}/?
            query={
             id,
             category,
@@ -67,7 +68,7 @@ function Filter(props) {
 function Search(props) {
     let location = props.location.search.slice(3)
     let fetchProperties = () => {
-        return fetch(`http://localhost:8000/api/room/?
+        return fetch(`${API_URL}/api/room/?
            query={
             id,
             category,
@@ -122,7 +123,7 @@ function Search(props) {
 function Feeds(props) {
 
     let fetchProperties = () => {
-        return fetch(`http://localhost:8000/api/room/?
+        return fetch(`${API_URL}/api/room/?
            query={
             id,
             category,
