@@ -2,6 +2,7 @@ import React, {} from 'react';
 import './PropertyDetails.css';
 import { } from 'react-router-dom';
 import { Block, Fetcher, Loader } from './';
+import {API_URL} from '../';
 
 function ImageModal(props) {
     return (
@@ -89,7 +90,7 @@ function Badges(props) {
 function PropertyDetails(props) {
 
     let fetchProperty = () => {
-        return fetch(`http://localhost:8000/api/room/${props.property}/?
+        return fetch(`${API_URL}/api/room/${props.property}/?
             query={
                 id,
                 category,

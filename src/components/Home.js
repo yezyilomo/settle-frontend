@@ -6,13 +6,15 @@ import {
     PropertyGroup, SideBar, TopBar, PropertyDetails,
     UploadProperty, LogIn, SignUp, Fetcher, Loader
 } from './'
+import {API_URL} from '../';
 
 
 function Filter(props) {
-    let [sideBarStates, ] = useGlobal("SideBar")
-    let {property_type, category, price__gt, price__lt, location, amenities} = sideBarStates.filters
+    let [filters, ] = useGlobal("SideBar")
+    let {property_type, category, price__gt, price__lt, location, amenities} = filters
+    let amenity_ids = JSON.stringify(amenities.selected.map(amenity => amenity.id))
     let fetchProperties = () => {
-        return fetch(`http://localhost:8000/api/${property_type}/?
+        return fetch(`${API_URL}/api/${property_type}/?
            query={
             id,
             category,
@@ -26,30 +28,11 @@ function Filter(props) {
             rating,
             payment_terms,
             unit_of_payment_terms
-        }&category=${category}&price__gt=${price__gt}&price__lt=${price__lt}&loc=${location}&amenities__contains=${amenities}&format=json`
+        }&category=${category}&price__gt=${price__gt}&price__lt=${price__lt}&loc=${location}&amenities__contains=${amenity_ids}&format=json`
         )
         .then(res => res.json())
         .then(res => res.results)
         .catch(error => console.log(error))
-    }
-
-    window.onscroll = () => {
-        //props.setScrollY(window.scrollY);
-        let scrollTop = (
-            window.pageYOffset ||
-            document.documentElement.scrollTop ||
-            document.body.scrollTop || 0
-        );
-
-        let marginBottom = (
-            document.documentElement.offsetHeight -
-            (window.innerHeight + scrollTop)
-        )
-
-        if (marginBottom < 300) {
-            //Refetch
-            //setProperties([...properties, ...properties]);
-        }
     }
 
     return (
@@ -67,7 +50,7 @@ function Filter(props) {
 function Search(props) {
     let location = props.location.search.slice(3)
     let fetchProperties = () => {
-        return fetch(`http://localhost:8000/api/room/?
+        return fetch(`${API_URL}/api/room/?
            query={
             id,
             category,
@@ -88,25 +71,6 @@ function Search(props) {
         .catch(error => console.log(error))
     }
 
-    window.onscroll = () => {
-        //props.setScrollY(window.scrollY);
-        let scrollTop = (
-            window.pageYOffset ||
-            document.documentElement.scrollTop ||
-            document.body.scrollTop || 0
-        );
-
-        let marginBottom = (
-            document.documentElement.offsetHeight -
-            (window.innerHeight + scrollTop)
-        )
-
-        if (marginBottom < 300) {
-            //Refetch
-            //setProperties([...properties, ...properties]);
-        }
-    }
-
     return (
         <Fetcher action={fetchProperties} placeholder={Loader()}>{properties => {
             return (
@@ -122,7 +86,7 @@ function Search(props) {
 function Feeds(props) {
 
     let fetchProperties = () => {
-        return fetch(`http://localhost:8000/api/room/?
+        return fetch(`${API_URL}/api/room/?
            query={
             id,
             category,
@@ -138,13 +102,9 @@ function Feeds(props) {
             unit_of_payment_terms
             }&format=json`
         )
-            .then(res => res.json())
-            .then(res => res.results)
-            .catch(error => console.log(error))
-    }
-
-    window.onscroll = () => {
-
+        .then(res => res.json())
+        .then(res => res.results)
+        .catch(error => console.log(error))
     }
 
     return (
@@ -167,7 +127,11 @@ function scrollUp(event) {
 }
 
 function Home(props) {
-    let [scrollY, setScrollY] = useState(window.scrollY);
+    let [scrollY, setScrollY] = useState(0);
+
+    window.onscroll = () => {
+        //setScrollY(window.scrollY);
+    }
 
     return (
         <div class="container-fluid">
@@ -184,7 +148,7 @@ function Home(props) {
 
                 <div class="row contents-body col-12 col-lg-10 px-2 px-sm-3 py-2 py-lg-3 m-0">
                     <Route exact path="/" render={() => {
-                        return <Feeds setScrollY={setScrollY} />;
+                        return <Feeds />;
                     }} />
 
                     <Route exact path="/ft" component={Filter} />
@@ -200,7 +164,7 @@ function Home(props) {
             </div>
 
             <div class="footer row bg-light">
-                {scrollY > 100 ?
+                {scrollY > 100  ?
                     <div class="scroll-up click-effect d-lg-none">
                         <img src="icons/up-arrow.svg" onClick={scrollUp} width="30" height="30" alt="" />
                     </div> :
