@@ -4,8 +4,8 @@
 }
 
 .navbar-toggler {
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     background-color: rgb(230, 230, 230);
     border-color: white;
     border-width: 0
@@ -54,33 +54,46 @@
 }
 
 .search-input {
-    border-color: #dddddd;
+    border-color: rgb(230, 230, 230);
     padding-top: 18px;
     padding-bottom: 18px;
+    padding-left: 40px;
     text-align: center;
     background-color: rgb(230, 230, 230);
     border-color: white;
-    border-width: 0;
+    border-width: 1px;
+    transition: background-color 0.1s linear, box-shadow 0.1s linear, border-width 0.1s linear, border-color 0.1s linear;
 }
 
 .search-input:focus{
     box-shadow: 0 0 0 0 white;
-    border-color: #dddddd;
     border-width: 1px;
+    border-color: rgb(230, 230, 230);
+    background-color: rgb(250, 250, 250);
 }
 
 .search-button {
-    padding-top: 6px;
-    padding-bottom: 6px;
-    position: relative;
-    right: 33px;
     color: gray;
     font-size: 20px;
+    position: relative;
+    top: 2px;
+    transition: 0.3s linear color;
 }
 
-.search-form a:focus {
-    text-decoration: none;
-    outline: none;
+.search-form a{
+    width: 50px;
+    /*position: relative;*/
+    /*right: 50px;*/
+    overflow: hidden;
+    position: absolute;
+}
+
+.search-form button:focus{
+    box-shadow: 0 0 0 0 white;
+}
+
+.search-form a:hover .search-button{
+    color: rgb(76, 76, 76);
 }
 
 .dropdown-menu{
