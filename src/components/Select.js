@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import './Select.css';
 import { } from 'react-router-dom';
 import { Block, SelectMultiValue } from './';
+import { useLocalState } from '../hooks';
 
 
 function Select(props) {
     let values = props.value||[]
-    let [options, setOptions] = useState(props.options);
-    let [selected, setSelected] = useState(values);
+    let [options, updateOptions] = useLocalState(props.options);
+    let [selected, updateSelected] = useLocalState(values);
 
     let optionValue = props.optionValue || (val => val);
     let optionName = props.optionName || (val => val);
@@ -21,19 +22,18 @@ function Select(props) {
     }
 
     let addToSelected = (selectedValue, selectedName) => {
-        let temp = [...options];
 
-        let optionToAdd = find(temp, selectedValue, selectedName)
-        let index = temp.indexOf(optionToAdd);
-        if (index > -1) {
-            temp.splice(index, 1);
-            if(!props.duplicates){
-                options = [...temp]
-                setOptions(options);
-            }
-            selected = [...selected, optionToAdd]
-            setSelected(selected);
+        let optionToAdd = find(options, selectedValue, selectedName)
+        if(!props.duplicates){
+            updateOptions({
+                action: "remove",
+                value: optionToAdd
+            })
         }
+        updateSelected({
+            action: "push",
+            value: optionToAdd
+        })
         if(props.onChange){
             let target = {
                 name: props.name,
@@ -47,19 +47,21 @@ function Select(props) {
     let removeFromSelected = (event) => {
         let selectedName = event.target.getAttribute('data-name');
         let selectedValue = event.target.getAttribute('data-value');
-        let temp = [...selected];
 
-        let optionToRemove =  find(temp, selectedValue, selectedName)
-        let index = temp.indexOf(optionToRemove);
-        if (index > -1) {
-            temp.splice(index, 1);
-            selected = [...temp]
-            setSelected(selected);
-            if(!props.duplicates){
-                options = [...options, optionToRemove]
-                setOptions(options);
-            }
+        let optionToRemove =  find(selected, selectedValue, selectedName)
+
+        updateOptions({
+            action: "push",
+            value: optionToRemove
+        })
+
+        if(!props.duplicates){
+            updateSelected({
+                action: "remove",
+                value: optionToRemove
+            })
         }
+
         if(props.onChange){
             let target = {
                 name: props.name,

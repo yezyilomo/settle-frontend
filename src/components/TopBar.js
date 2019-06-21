@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './TopBar.css';
+import { useGlobalState } from '../hooks';
+
 
 function TopBar(props) {
+    let [user, updateUser] = useGlobalState("User");
     let [key, setKey] = useState("");
 
     let updateField = (e) => {
         let value = e.target.value;
         setKey(value);
     }
+
+    let logOut = (event) => {
+        var d = new Date();
+        d.setTime(d.getTime() - 24*60*60*1000); // in milliseconds
+        document.cookie = `auth_token=;path=/;expires=${d.toGMTString()};`;
+        updateUser([
+            {field: "isLoggedIn", value: false},
+            {field: "authToken", value: null}
+        ]);
+    }
+
     return (
         <nav class="navbar fixed-top  navbar-expand-lg navbar-light bg-white p-1 p-lg-2" id="top-navbar">
             <div class="navbar-brand col-1 col-sm-2 col-md-2 col-lg-3 px-0 py-1">
@@ -34,12 +48,15 @@ function TopBar(props) {
             <div class="collapse navbar-collapse col-lg-3 m-0 px-0 px-lg-3" id="navbarTogglerDemo03">
                 <hr class="d-lg-none m-0 p-0 mt-3 mt-lg-0" />
                 <ul class="navbar-nav ml-0 ml-lg-auto">
-                    <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
-                        <Link class="nav-link" to="" data-toggle="modal" data-target="#login-modal">
-                            Login<span class="sr-only">(current)</span>
-                        </Link>
-                        <hr class="p-0 m-0 d-lg-none" />
-                    </li>
+                    { !user.isLoggedIn?
+                        <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
+                            <Link class="nav-link" to="" data-toggle="modal" data-target="#login-modal">
+                                Login<span class="sr-only">(current)</span>
+                            </Link>
+                            <hr class="p-0 m-0 d-lg-none" />
+                        </li>:
+                        null
+                    }
                     <li class="nav-item d-lg-none" data-toggle="collapse" data-target="#navbarTogglerDemo03">
                         <Link class="nav-link" to="/filter">Quick Filter <span class="sr-only">(current)</span></Link>
                         <hr class="p-0 m-0 d-lg-none" />
@@ -48,27 +65,35 @@ function TopBar(props) {
                         <Link class="nav-link" to="/upload-property">Help</Link>
                         <hr class="p-0 m-0 d-lg-none" />
                     </li>
-                    <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
-                        <Link class="nav-link" to="" data-toggle="modal" data-target="#signup-modal">
-                            Sign up<span class="sr-only">(current)</span>
-                        </Link>
-                        <hr class="p-0 m-0 d-lg-none" />
-                    </li>
-                    <li class="nav-item dropdown pb-0 pb-lg-0">
-                        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Profile
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right border-xs-0 border-lg-1 py-0 my-0 mt-lg-3" aria-labelledby="navbarDropdown">
+                    { !user.isLoggedIn?
+                        <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
+                            <Link class="nav-link" to="" data-toggle="modal" data-target="#signup-modal">
+                                Sign up<span class="sr-only">(current)</span>
+                            </Link>
+                            <hr class="p-0 m-0 d-lg-none" />
+                        </li>:
+                        null
+                    }
+                    { user.isLoggedIn?
+                        <li class="nav-item dropdown pb-0 pb-lg-0">
+                            <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profile
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right border-xs-0 border-lg-1 py-0 my-0 mt-lg-3" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-divider d-lg-none py-0 my-0"></div>
+                                <a class="dropdown-item py-2" href="/">Edit Info</a>
+                                <div class="dropdown-divider py-0 my-0"></div>
+                                <a class="dropdown-item py-2" href="/">Manage</a>
+                                <div class="dropdown-divider py-0 my-0"></div>
+                                <a class="dropdown-item py-2" href="/">My Properties</a>
+                                <div class="dropdown-divider py-0 my-0"></div>
+                                <a class="dropdown-item py-2" href="/" onClick={logOut}>Logout</a>
+                            </div>
                             <div class="dropdown-divider d-lg-none py-0 my-0"></div>
-                            <a class="dropdown-item py-2" href="/">Edit Info</a>
-                            <div class="dropdown-divider py-0 my-0"></div>
-                            <a class="dropdown-item py-2" href="/">Manage</a>
-                            <div class="dropdown-divider py-0 my-0"></div>
-                            <a class="dropdown-item py-2" href="/">My Properties</a>
-                        </div>
-                        <div class="dropdown-divider d-lg-none py-0 my-0"></div>
-                    </li>
+                        </li>:
+                        null
+                    }
                 </ul>
                 <div class="d-lg-none vh-100"></div>
             </div>
