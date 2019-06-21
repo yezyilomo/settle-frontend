@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
-import { useGlobal} from 'reactn'
+import { setGlobal, useGlobal} from 'reactn'
 import './Home.css';
 import {
     PropertyGroup, SideBar, TopBar, PropertyDetails,
@@ -8,6 +8,31 @@ import {
 } from './'
 import {API_URL} from '../';
 
+function getCookie(name){
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+let isLoggedIn = false;
+let authToken = getCookie("auth_token");
+
+if(authToken !== null){
+    isLoggedIn = true;
+}
+
+setGlobal({
+    User: {isLoggedIn: isLoggedIn, authToken: authToken}
+})
 
 function Filter(props) {
     let [filters, ] = useGlobal("SideBar")
