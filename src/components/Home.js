@@ -39,7 +39,7 @@ function Filter(props) {
     let {property_type, category, price__gt, price__lt, location, amenities} = filters
     let amenity_ids = JSON.stringify(amenities.selected.map(amenity => amenity.id))
     let fetchProperties = () => {
-        return fetch(`${API_URL}/api/${property_type}/?
+        return fetch(`${API_URL}/${property_type}/?
            query={
             id,
             category,
@@ -75,7 +75,7 @@ function Filter(props) {
 function Search(props) {
     let location = props.location.search.slice(3)
     let fetchProperties = () => {
-        return fetch(`${API_URL}/api/room/?
+        return fetch(`${API_URL}/room/?
            query={
             id,
             category,
@@ -111,7 +111,7 @@ function Search(props) {
 function Feeds(props) {
 
     let fetchProperties = () => {
-        return fetch(`${API_URL}/api/room/?
+        return fetch(`${API_URL}/room/?
            query={
             id,
             category,

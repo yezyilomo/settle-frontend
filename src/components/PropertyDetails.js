@@ -90,7 +90,7 @@ function Badges(props) {
 function PropertyDetails(props) {
 
     let fetchProperty = () => {
-        return fetch(`${API_URL}/api/room/${props.property}/?
+        return fetch(`${API_URL}/room/${props.property}/?
             query={
                 id,
                 category,
