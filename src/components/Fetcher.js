@@ -1,8 +1,8 @@
 import React, { } from 'react';
 import {useFetcher} from '../hooks';
 
-const Fetcher = ({ action, placeholder, children }) => {
-    const [data, loading, error] = useFetcher(action);
+const Fetcher = ({ action, placeholder, children, error }) => {
+    const [data, loading, fetchError] = useFetcher(action);
 
     if (loading){
         if(placeholder){
@@ -10,7 +10,7 @@ const Fetcher = ({ action, placeholder, children }) => {
         }
         return null;
     }
-    if (error) return <div>Error occured while loading..</div>
+    if (fetchError) return error;
 
     if (!data) return null;
 
