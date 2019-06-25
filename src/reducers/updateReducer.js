@@ -34,7 +34,7 @@ function updateState(state, dispatch){
     }
     else if(dispatch.action === "remove"){
         let index = obj[fieldName].indexOf(dispatch.value);
-        if (index > -1) {
+        if (index > -1){
             obj[fieldName].splice(index, 1);
         }
     }
@@ -55,7 +55,7 @@ function updateState(state, dispatch){
 
 function updateReducer(state, dispatches){
     if(Array.isArray(dispatches)){
-        // Do nothing
+        // Good to go
     }
     else if(typeof dispatches === 'object' && dispatches !== null){
         dispatches = [dispatches]
