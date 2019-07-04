@@ -30,7 +30,7 @@
     border: 1px solid #eeeeee;
     border-radius: 5px;
     overflow: hidden;
-    background-color: #eeeeee;
+    background-color: rgba(252, 252, 252);
     text-align: right;
     cursor: pointer;
 }
@@ -41,14 +41,9 @@
 }
 
 .upload-other-img{
-    width: 100%;
-    height: 200px;
-    border: 1px solid #eeeeee;
-    border-radius: 3px;
-    overflow: hidden;
-    background-color: #eeeeee;
-    text-align: right;
     cursor: pointer;
+    overflow: hidden;
+    margin: 2px 0 2px 5px;
 }
 
 .upload-main-img .camera{
@@ -57,7 +52,7 @@
 }
 
 .upload-other-img .camera{
-    font-size: 5em;
+    font-size: 6em;
     color: rgba(170, 170, 170);
 }
 
@@ -69,4 +64,52 @@
 .upload-other-img .plus{
     font-size: 20px;
     color: rgba(170, 170, 170);
+}
+
+.file-input{
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.file-input-label{
+    width: 100%;
+}
+
+.other-file-input-label{
+
+}
+
+.main-img-preview{
+    border-radius: 5px;
+}
+
+.other-img-preview{
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 2px;
+}
+
+.remove-img{
+    position: absolute;
+}
+
+.remove-img i{
+    cursor: pointer;
+    font-size: 30px;
+    position: relative;
+    left: 5px;
+    top: 5px;
+    color: rgba(50, 50, 50);
+}
+
+.remove-other-img{
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    margin: 3px;
+    color: rgba(50, 50, 50);
 }
