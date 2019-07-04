@@ -72,7 +72,15 @@ function updateReducer(state, dispatches){
         state = updateState(state, dispatch);
     }
 
-    return state
+    if(Array.isArray(state)){
+        return [...state];
+    }
+    else if(typeof state === 'object' && state !== null){
+        return {...state};
+    }
+    else {
+        return state;
+    }
 }
 
 export {updateReducer}
