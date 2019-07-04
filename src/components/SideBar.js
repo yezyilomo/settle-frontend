@@ -1,5 +1,5 @@
 import React, { } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import {setGlobal, useGlobal} from 'reactn';
 import './SideBar.css';
 import { Select } from './';
@@ -49,10 +49,15 @@ function SideBar(props) {
         }
         setFields(fields);
     }
+
+    let handleSubmit = (e) => {
+        e.preventDefault();
+        props.history.push("/ft");
+    }
     return (
         <div class={`sidebar  text-secondary ${props.setting}`}>
             <h6 class="w-100 ml-0 mb-0 font-weight-bold">Quick Filter</h6>
-            <form id="filter-form">
+            <form id="filter-form" onSubmit={handleSubmit}>
                 <select class="custom-select mr-sm-2 my-2" name="category" value={fields.category} onChange={updateValue}>
                     <option selected disabled>I want to...</option>
                     <option value="rent">Rent</option>
@@ -82,12 +87,12 @@ function SideBar(props) {
                 />
                 <input type="text" name="location" class="form-control my-4" value={fields.location}
                  onChange={updateValue} placeholder="Location" />
-                <Link to="/ft" >
-                    <button class="btn btn-info mt-3 mb-5 col-12">Submit</button>
-                </Link>
+                <input type="submit" class="col-12 btn btn-info mt-3" value="Submit" />
             </form>
         </div>
     );
 }
 
-export { SideBar };
+const comp = withRouter(SideBar)
+
+export { comp as SideBar }

@@ -1,8 +1,10 @@
-import React, {  } from 'react';
+import React, { useRef, useState } from 'react';
 import './UploadProperty.css';
-import { } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import {setGlobal, useGlobal} from 'reactn';
-import { Select, FeaturesInput} from './';
+import {Select, FeaturesInput, Block} from './';
+import {API_URL} from '../';
+import { useLocalState } from '../hooks';
 
 let options = [
     {id: 1, name: "one"},
@@ -17,34 +19,90 @@ setGlobal({
     UploadProperty: {
         amenities: {selected: [], options: options},
         services: {selected: [], options: options},
-        potentials: {selected: [], options: options}
+        potentials: {selected: [], options: options},
+        main_picture: [],
+        other_pictures: []
     }
 })
 
 function UploadProperty(props) {
-    let [fields, setFields] = useGlobal("UploadProperty")
-    let [otherFeatures, ] = useGlobal("FeaturesInput")
+    let [fields, setFields] = useGlobal("UploadProperty");
+    let [otherFeatures, ] = useGlobal("FeaturesInput");
+    let [user, ] = useGlobal("User");
 
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
+    let categories = ["rent", "sell", "book" ];
+    let types = ["room", "house", "apartment", "land", "frame", "office"];
 
-    let handleSubmit = (e) => {
+    let postImages = (propertyID, pictures) => {
+        if(pictures.length === 0){
+            // Render property
+            props.history.push(`/property/${propertyID}`);
+            return
+        }
+        let img = pictures.pop();
+        let postData = new FormData();
+        postData.append("property", propertyID)
+        postData.append("is_main", Number(img.is_main))
+        postData.append("tool_tip", img.tool_tip)
+        postData.append("src", img.src)
+
+        let postUrl = `${API_URL}/picture/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`
+        }
+        fetch(postUrl, {method: 'POST', body: postData, headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => postImages(propertyID, pictures))
+        .catch(error => console.log(error));
+    }
+
+    let updatePropertyImages = (response) => {
+        if(response.status !== 201){
+            // Report error
+            return
+        }
+        let id = response.data.id;
+        let pictures = [...fields.main_picture, ...fields.other_pictures]
+        postImages(id, pictures)
+    }
+
+    let createProperty = (e) => {
         e.preventDefault();
         let form = e.target
-        let data = {
+        let formData = {
+            category: form.category.value,
             price: form.price.value,
             currency: form.currency.value,
-            Country: form.country.value,
-            region: form.region.value,
-            distric: form.distric.value,
-            street1: form.street1.value,
-            Street2: form.street2.value,
-            amenities: fields.amenities.selected.map(amenity => amenity.id),
-            services: fields.services.selected.map(service => service.id),
-            potentials: fields.potentials.selected.map(potential => potential.id),
+            location: {
+                country: form.country.value,
+                region: form.region.value,
+                distric: form.distric.value,
+                street1: form.street1.value,
+                street2: form.street2.value
+            },
+            contact: {
+                name: form.name.value,
+                email: form.email.value,
+                phones: [form.phone.value]
+            },
+            amenities: JSON.parse(form.amenities.value),
+            services: JSON.parse(form.services.value),
+            potentials: JSON.parse(form.potentials.value),
             other_features: otherFeatures
         }
-        alert(JSON.stringify(data));
+
+        let postUrl = `${API_URL}/${form.type.value}/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`,
+            //'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        fetch(postUrl, {method: 'POST', body: JSON.stringify(formData), headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => updatePropertyImages(obj))
+        .catch(error => console.log(error));
     }
 
     let updateValue = (e) => {
@@ -61,7 +119,7 @@ function UploadProperty(props) {
         return opt.id
     }
 
-    let updateField = (target) => {
+    let updateSelection = (target) => {
         fields[target.name] = {
             selected: target.selected,
             options: target.options
@@ -69,13 +127,43 @@ function UploadProperty(props) {
         setFields(fields)
     }
 
+    let updateOtherImages = (value) => {
+        fields.other_pictures = value
+        setFields(fields);
+    }
+
+    let updateMainImage = (value) => {
+        fields.main_picture = value
+        setFields(fields);
+    }
+
     return (
         <div class="custom-container">
-            <form class="property-form text-secondary" onSubmit={handleSubmit}>
+            <form class="property-form text-secondary" onSubmit={createProperty}>
                 <div class="row">
                     <div class="col-12 col-md-6 justify-content-center ">
 
-                            <div class="row p-0 m-0 my-0 my-lg-1">
+                            <div class="row p-0 m-0 my-2 my-lg-1">
+                                <label class="form-check-label col-12 px-2">Property type</label>
+                                <div class="col-12 my-1 px-2">
+                                    <select class="custom-select" name="type" value={fields.type} onChange={updateValue}>
+                                        <option value="" disabled selected>Select Type</option>
+                                        {types.map((type)=><option value={type}>{type}</option>)}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row p-0 m-0 my-2 my-lg-1">
+                                <label class="form-check-label col-12 px-2">Available for</label>
+                                <div class="col-12 my-1 px-2">
+                                    <select class="custom-select" name="category" value={fields.category} onChange={updateValue}>
+                                        <option value="" disabled selected>Select Category</option>
+                                        {categories.map((category)=><option value={category}>{category}</option>)}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row p-0 m-0 my-0 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Pricing</label>
                                 <div class="col-12 my-1">
                                     <div class="row">
@@ -129,7 +217,7 @@ function UploadProperty(props) {
                             <div class="row col-12 p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Amenities</label>
                                 <div class="col-12 px-2">
-                                    <Select class="custom-select" name="amenities" options={fields.amenities.options} onChange={updateField}
+                                    <Select class="custom-select" name="amenities" options={fields.amenities.options} onChange={updateSelection}
                                      value={fields.amenities.selected} optionName={optionName} optionValue={optionValue} placeholder="Select Amenity"/>
                                 </div>
                             </div>
@@ -137,7 +225,7 @@ function UploadProperty(props) {
                             <div class="row col-12 p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Services</label>
                                 <div class="col-12 px-2">
-                                    <Select class="custom-select" name="services" options={fields.services.options} onChange={updateField}
+                                    <Select class="custom-select" name="services" options={fields.services.options} onChange={updateSelection}
                                      value={fields.services.selected} optionName={optionName} optionValue={optionValue} placeholder="Select Service"/>
                                 </div>
                             </div>
@@ -145,7 +233,7 @@ function UploadProperty(props) {
                             <div class="row col-12 p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Potentials</label>
                                 <div class="col-12 px-2">
-                                    <Select class="custom-select" name="potentials" options={fields.potentials.options} onChange={updateField}
+                                    <Select class="custom-select" name="potentials" options={fields.potentials.options} onChange={updateSelection}
                                       value={fields.potentials.selected} optionName={optionName} optionValue={optionValue} placeholder="Select Potential"/>
                                 </div>
                             </div>
@@ -157,23 +245,28 @@ function UploadProperty(props) {
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-center">
-                            <label class="form-check-label col-12 p-0 m-0 px-0">Pictures</label>
-                            <div class="upload-main-img d-flex flex-column align-content-center justify-content-center flex-wrap">
-                                <div>Upload main image</div>
-                                <div class="d-flex flex-row justify-content-end">
-                                    <span class="camera fa fa-camera"/>
-                                    <span class="plus fa fa-plus"/>
-                                </div>
-                            </div>
-                        </div>
+                        <label class="form-check-label col-12 p-0 m-0 px-0 mt-1">Main Picture</label>
+                        <ImageUploader name="main_picture" onChange={updateMainImage} />
                         <hr class="mx-0 mx-lg-0"/>
-                        <div class="row p-0 m-0  mt-3 justify-content-center">
-                            <div class="upload-other-img d-flex flex-column justify-content-center align-content-center flex-wrap">
-                                <div>Upload other images</div>
-                                <div class="d-flex flex-row justify-content-center">
-                                    <span class="camera fa fa-camera"/>
-                                    <span class="plus fa fa-plus"/>
+                        <label class="form-check-label col-12 p-0 m-0 px-0 mt-1">Other Pictures</label>
+                        <MultipleImageUploader name="other_pictures" onChange={updateOtherImages}/>
+                        <hr class="mx-0 mx-lg-0"/>
+                        <div class="row p-0 m-0 my-2 my-lg-3">
+                            <label class="form-check-label col-12 px-0">Contact</label>
+                            <div class="col-12 my-1 px-0">
+                                <input type="text" name="phone" value={fields.phone} onChange={updateValue}
+                                class="form-control" placeholder="Phone Number" />
+                            </div>
+                            <div class="col-12 my-1">
+                                <div class="row">
+                                    <div class="col-6 px-0">
+                                        <input type="text" name="name" value={fields.name} onChange={updateValue}
+                                        class="form-control" placeholder="Name" />
+                                    </div>
+                                    <div class="col-6 px-0">
+                                        <input type="text" name="email" value={fields.email} onChange={updateValue}
+                                        class="form-control" placeholder="Email" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -189,4 +282,108 @@ function UploadProperty(props) {
     )
 }
 
-export { UploadProperty }
+function ImageUploader(props){
+    let [file, setFile] = useState("");
+    let fileInput = useRef(null);
+
+    let loadFile = (e) => {
+        setFile(e.target.files[0]);
+        if(props.onChange !== undefined){
+            let value = [{src: e.target.files[0], is_main: true}]
+            props.onChange(value);
+        }
+        let output = document.getElementById('output');
+        output.src = URL.createObjectURL(e.target.files[0]);
+    }
+
+    let removeImg = (e) => {
+        fileInput.current.value = "";
+        let output = document.getElementById('output');
+        output.src = "";
+        setFile("");
+        if(props.onChange !== undefined){
+            let value = []
+            props.onChange(value);
+        }
+    }
+
+    return (
+        <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-center">
+            {file !== ""?
+                <div class="remove-img col-12">
+                    <i class="far fa-times-circle" onClick={removeImg}></i>
+                </div>:
+                null
+            }
+            <img class="main-img-preview" id="output" alt=""/>
+            <input ref={fileInput} type="file" name={props.name} id={props.name} class="file-input" onChange={loadFile}/>
+            {file === ""?
+                <label for={props.name} class="file-input-label">
+                    <div class="upload-main-img d-flex flex-column align-content-center justify-content-center flex-wrap">
+                        <div>Upload main image</div>
+                        <div class="d-flex flex-row justify-content-end">
+                            <span class="camera fa fa-camera"/>
+                            <span class="plus fa fa-plus"/>
+                        </div>
+                    </div>
+                </label>:
+                null
+            }
+        </div>
+    );
+}
+
+
+function MultipleImageUploader(props){
+    let [files, updateFiles] = useLocalState([]);
+
+    let loadFile = (e) => {
+        let src = URL.createObjectURL(e.target.files[0]);
+        updateFiles({
+            action: "push",
+            value: {src: src, value: e.target.files[0]}
+        });
+        if(props.onChange !== undefined){
+            let value = files.map(file=>({src: file.value, is_main: false}))
+            props.onChange(value);
+        }
+    }
+
+    let removeImg = (img) => {
+        updateFiles({
+            action: "remove",
+            value: img
+        })
+        if(props.onChange !== undefined){
+            let value = files.map(file=>({src: file.value, is_main: false}))
+            props.onChange(value);
+        }
+    }
+
+    return (
+        <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-start">
+            {files.map(img =>
+                <Block>
+                    <div class="other-img-preview">
+                        <i class="remove-other-img far fa-times-circle" onClick={(e)=>{removeImg(img)}}></i>
+                        <img src={img.src} width="172" alt=""/>
+                    </div>
+                </Block>
+            )}
+            <label for={props.name} class="other-file-input-label">
+                <div class="upload-other-img d-flex flex-column align-content-center justify-content-center flex-wrap">
+                    <div class="d-flex flex-row justify-content-end mt-2">
+                        <span class="camera fa fa-camera"/>
+                        <span class="plus fa fa-plus"/>
+                    </div>
+                </div>
+            </label>
+            <input type="file" name={props.name} class="file-input" id={props.name} onChange={loadFile} multiple/>
+        </div>
+    );
+}
+
+
+const comp = withRouter(UploadProperty);
+
+export { comp as UploadProperty }
