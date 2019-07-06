@@ -62,7 +62,11 @@ function TopBar(props) {
                         <hr class="p-0 m-0 d-lg-none" />
                     </li>
                     <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
-                        <Link class="nav-link" to="/upload-property">Help</Link>
+                        <Link class="nav-link" to="/upload-property">Create</Link>
+                        <hr class="p-0 m-0 d-lg-none" />
+                    </li>
+                    <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
+                        <Link class="nav-link" to="/edit-property">Edit</Link>
                         <hr class="p-0 m-0 d-lg-none" />
                     </li>
                     { !user.isLoggedIn?
