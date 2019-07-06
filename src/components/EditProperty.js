@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import './UploadProperty.css';
+import './EditProperty.css';
 import {withRouter} from 'react-router-dom';
 import {setGlobal, useGlobal} from 'reactn';
-import {Select, FeaturesInput, Block} from './';
+import {Select, FeaturesInput, Fetcher, Loader, Block} from './';
 import {API_URL} from '../';
 import { useLocalState } from '../hooks';
 
@@ -15,18 +15,10 @@ let options = [
     {id: 6, name: "six"}
 ];
 
-setGlobal({
-    UploadProperty: {
-        amenities: {selected: [], options: [...options]},
-        services: {selected: [], options: [...options]},
-        potentials: {selected: [], options: [...options]},
-        main_picture: [],
-        other_pictures: []
-    }
-})
 
-function UploadProperty(props){
-    let [fields, setFields] = useGlobal("UploadProperty");
+function EditProperty(props){
+
+    let [fields, setFields] = useState(props.property)
     let [otherFeatures, ] = useGlobal("FeaturesInput");
     let [user, ] = useGlobal("User");
 
@@ -120,10 +112,7 @@ function UploadProperty(props){
     }
 
     let updateSelection = (target) => {
-        fields[target.name] = {
-            selected: target.selected,
-            options: target.options
-        }
+        fields[target.name] = target.selected
         setFields(fields)
     }
 
@@ -184,7 +173,7 @@ function UploadProperty(props){
                             <div class="row p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Location</label>
                                 <div class="col-12 my-1 px-2">
-                                    <select class="custom-select" name="country" value={fields.country} onChange={updateValue}>
+                                    <select class="custom-select" name="country" value={fields.location.country} onChange={updateValue}>
                                         <option value="" disabled selected>Country</option>
                                         {countries.map((country)=><option value={country}>{country}</option>)}
                                     </select>
@@ -192,11 +181,11 @@ function UploadProperty(props){
                                 <div class="col-12 my-1">
                                     <div class="row">
                                         <div class="col-6 px-2">
-                                            <input type="text" name="region" value={fields.region} onChange={updateValue}
+                                            <input type="text" name="region" value={fields.location.region} onChange={updateValue}
                                             class="form-control" placeholder="Region" />
                                         </div>
                                         <div class="col-6 px-2">
-                                            <input type="text" name="distric" value={fields.distric} onChange={updateValue}
+                                            <input type="text" name="distric" value={fields.location.distric} onChange={updateValue}
                                             class="form-control" placeholder="Distric" />
                                         </div>
                                     </div>
@@ -204,11 +193,11 @@ function UploadProperty(props){
                                 <div class="col-12 my-1">
                                     <div class="row">
                                         <div class="col-6 px-2">
-                                            <input type="text" name="street1" value={fields.street1} onChange={updateValue}
+                                            <input type="text" name="street1" value={fields.location.street1} onChange={updateValue}
                                             class="form-control" placeholder="Street1" />
                                         </div>
                                         <div class="col-6 px-2">
-                                            <input type="text" name="street2" value={fields.street2} onChange={updateValue}
+                                            <input type="text" name="street2" value={fields.location.street2} onChange={updateValue}
                                             class="form-control" placeholder="Street2" />
                                         </div>
                                     </div>
@@ -218,24 +207,24 @@ function UploadProperty(props){
                             <div class="row col-12 p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Amenities</label>
                                 <div class="col-12 px-2">
-                                    <Select class="custom-select" name="amenities" options={fields.amenities.options} onChange={updateSelection}
-                                     value={fields.amenities.selected} optionName={optionName} optionValue={optionValue} placeholder="Select Amenity"/>
+                                    <Select class="custom-select" name="amenities" options={fields.amenities} onChange={updateSelection}
+                                     value={fields.amenities} optionName={optionName} optionValue={optionValue} placeholder="Select Amenity"/>
                                 </div>
                             </div>
 
                             <div class="row col-12 p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Services</label>
                                 <div class="col-12 px-2">
-                                    <Select class="custom-select" name="services" options={fields.services.options} onChange={updateSelection}
-                                     value={fields.services.selected} optionName={optionName} optionValue={optionValue} placeholder="Select Service"/>
+                                    <Select class="custom-select" name="services" options={fields.services} onChange={updateSelection}
+                                     value={fields.services} optionName={optionName} optionValue={optionValue} placeholder="Select Service"/>
                                 </div>
                             </div>
 
                             <div class="row col-12 p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Potentials</label>
                                 <div class="col-12 px-2">
-                                    <Select class="custom-select" name="potentials" options={fields.potentials.options} onChange={updateSelection}
-                                      value={fields.potentials.selected} optionName={optionName} optionValue={optionValue} placeholder="Select Potential"/>
+                                    <Select class="custom-select" name="potentials" options={fields.potentials} onChange={updateSelection}
+                                      value={fields.potentials} optionName={optionName} optionValue={optionValue} placeholder="Select Potential"/>
                                 </div>
                             </div>
 
@@ -247,25 +236,25 @@ function UploadProperty(props){
 
                     <div class="col-12 col-md-6">
                         <label class="form-check-label col-12 p-0 m-0 px-0 mt-1">Main Picture</label>
-                        <ImageUploader name="main_picture" onChange={updateMainImage} />
+                        <ImageUploader name="main_picture" src={fields.pictures.filter(img=>img.is_main)[0]} onChange={updateMainImage} />
                         <hr class="mx-0 mx-lg-0"/>
                         <label class="form-check-label col-12 p-0 m-0 px-0 mt-1">Other Pictures</label>
-                        <MultipleImageUploader name="other_pictures" onChange={updateOtherImages}/>
+                        <MultipleImageUploader name="other_pictures" src={fields.pictures} onChange={updateOtherImages}/>
                         <hr class="mx-0 mx-lg-0"/>
                         <div class="row p-0 m-0 my-2 my-lg-3">
                             <label class="form-check-label col-12 px-0">Contact</label>
                             <div class="col-12 my-1 px-0">
-                                <input type="text" name="phone" value={fields.phone} onChange={updateValue}
+                                <input type="text" name="phone" value={fields.contact.phone} onChange={updateValue}
                                 class="form-control" placeholder="Phone Number" />
                             </div>
                             <div class="col-12 my-1">
                                 <div class="row">
                                     <div class="col-6 px-0">
-                                        <input type="text" name="name" value={fields.name} onChange={updateValue}
+                                        <input type="text" name="name" value={fields.contact.name} onChange={updateValue}
                                         class="form-control" placeholder="Name" />
                                     </div>
                                     <div class="col-6 px-0">
-                                        <input type="text" name="email" value={fields.email} onChange={updateValue}
+                                        <input type="text" name="email" value={fields.contact.email} onChange={updateValue}
                                         class="form-control" placeholder="Email" />
                                     </div>
                                 </div>
@@ -284,7 +273,7 @@ function UploadProperty(props){
 }
 
 function ImageUploader(props){
-    let image = props.src||null;
+    let image = (props.src&&props.src.src)||null;
     let [preview, setPreview] = useState(image)
     let fileInput = useRef(null);
 
@@ -394,6 +383,50 @@ function MultipleImageUploader(props){
 }
 
 
-const comp = withRouter(UploadProperty);
+function PropertyFetcher(props){
+    let fetchProperty = () => {
+        return fetch(`${API_URL}/room/${props.id}/?
+            query={
+                id,
+                category,
+                price,
+                currency,
+                location{
+                    region,
+                    country
+                },
+                rating,
+                payment_terms,
+                unit_of_payment_terms,
+                amenities,
+                services,
+                potentials,
+                pictures{
+                    id,
+                    is_main,
+                    src
+                },
+                other_features{
+                    feature{
+                        name
+                    },
+                    value
+                }
+            }&format=json`
+        )
+        .then(res => res.json())
+        .then(results => results)
+        .catch(error => console.log(error))
+    }
 
-export { comp as UploadProperty }
+
+    return (
+        <Fetcher action={fetchProperty} placeholder={Loader()}>{property => {
+            return <EditProperty property={property}/>
+        }}</Fetcher>
+    );
+}
+
+const comp = withRouter(PropertyFetcher);
+
+export { comp as EditProperty }

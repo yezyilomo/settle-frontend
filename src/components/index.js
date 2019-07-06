@@ -13,9 +13,11 @@ import {LogIn} from './LogIn';
 import {SignUp} from './SignUp';
 import {Fetcher} from './Fetcher';
 import {Loader} from './Loader';
+import {EditProperty} from './EditProperty';
 
 export {
     Home, PropertyOverview, PropertyGroup, TopBar, SideBar,
     Block, PropertyDetails, UploadProperty, SelectMultiValue,
-    Select, FeaturesInput, LogIn, SignUp, Fetcher, Loader
+    Select, FeaturesInput, LogIn, SignUp, Fetcher, Loader,
+    EditProperty
 };
