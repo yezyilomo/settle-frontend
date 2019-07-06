@@ -12,20 +12,20 @@ let options = [
     {id: 3, name: "three"},
     {id: 4, name: "four"},
     {id: 5, name: "five"},
-    {id: 1, name: "Repeat One"}
+    {id: 6, name: "six"}
 ];
 
 setGlobal({
     UploadProperty: {
-        amenities: {selected: [], options: options},
-        services: {selected: [], options: options},
-        potentials: {selected: [], options: options},
+        amenities: {selected: [], options: [...options]},
+        services: {selected: [], options: [...options]},
+        potentials: {selected: [], options: [...options]},
         main_picture: [],
         other_pictures: []
     }
 })
 
-function UploadProperty(props) {
+function UploadProperty(props){
     let [fields, setFields] = useGlobal("UploadProperty");
     let [otherFeatures, ] = useGlobal("FeaturesInput");
     let [user, ] = useGlobal("User");
@@ -146,7 +146,7 @@ function UploadProperty(props) {
                             <div class="row p-0 m-0 my-2 my-lg-1">
                                 <label class="form-check-label col-12 px-2">Property type</label>
                                 <div class="col-12 my-1 px-2">
-                                    <select class="custom-select" name="type" value={fields.type} onChange={updateValue}>
+                                    <select class="custom-select" name="type" value={fields.type} onChange={updateValue} required>
                                         <option value="" disabled selected>Select Type</option>
                                         {types.map((type)=><option value={type}>{type}</option>)}
                                     </select>
@@ -156,7 +156,7 @@ function UploadProperty(props) {
                             <div class="row p-0 m-0 my-2 my-lg-1">
                                 <label class="form-check-label col-12 px-2">Available for</label>
                                 <div class="col-12 my-1 px-2">
-                                    <select class="custom-select" name="category" value={fields.category} onChange={updateValue}>
+                                    <select class="custom-select" name="category" value={fields.category} onChange={updateValue} required>
                                         <option value="" disabled selected>Select Category</option>
                                         {categories.map((category)=><option value={category}>{category}</option>)}
                                     </select>
@@ -168,10 +168,11 @@ function UploadProperty(props) {
                                 <div class="col-12 my-1">
                                     <div class="row">
                                         <div class="col-8 px-2">
-                                            <input type="number" name="price" value={fields.price} onChange={updateValue} class="form-control" placeholder="Price" />
+                                            <input type="number" name="price" value={fields.price} onChange={updateValue}
+                                                class="form-control" placeholder="Price" required/>
                                         </div>
                                         <div class="col-4 px-2">
-                                            <select class="custom-select" name="currency" value={fields.currency} onChange={updateValue}>
+                                            <select class="custom-select" name="currency" value={fields.currency} onChange={updateValue} required>
                                                 <option value="" disabled selected>Currency</option>
                                                 {currencies.map((currency)=><option  value={currency}>{currency}</option>)}
                                             </select>
@@ -283,24 +284,22 @@ function UploadProperty(props) {
 }
 
 function ImageUploader(props){
-    let [file, setFile] = useState("");
+    let image = props.src||null;
+    let [preview, setPreview] = useState(image)
     let fileInput = useRef(null);
 
     let loadFile = (e) => {
-        setFile(e.target.files[0]);
         if(props.onChange !== undefined){
             let value = [{src: e.target.files[0], is_main: true}]
             props.onChange(value);
         }
-        let output = document.getElementById('output');
-        output.src = URL.createObjectURL(e.target.files[0]);
+        let src = URL.createObjectURL(e.target.files[0]);
+        setPreview(src)
     }
 
     let removeImg = (e) => {
-        fileInput.current.value = "";
-        let output = document.getElementById('output');
-        output.src = "";
-        setFile("");
+        fileInput.current.value = null;
+        setPreview(null)
         if(props.onChange !== undefined){
             let value = []
             props.onChange(value);
@@ -309,15 +308,15 @@ function ImageUploader(props){
 
     return (
         <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-center">
-            {file !== ""?
+            {preview !== null?
                 <div class="remove-img col-12">
                     <i class="far fa-times-circle" onClick={removeImg}></i>
                 </div>:
                 null
             }
-            <img class="main-img-preview" id="output" alt=""/>
+            <img class="main-img-preview" src={preview} alt=""/>
             <input ref={fileInput} type="file" name={props.name} id={props.name} class="file-input" onChange={loadFile}/>
-            {file === ""?
+            {preview === null?
                 <label for={props.name} class="file-input-label">
                     <div class="upload-main-img d-flex flex-column align-content-center justify-content-center flex-wrap">
                         <div>Upload main image</div>
@@ -335,7 +334,15 @@ function ImageUploader(props){
 
 
 function MultipleImageUploader(props){
-    let [files, updateFiles] = useLocalState([]);
+    let images = []
+    if(props.src !== undefined){
+        props.src.map(img=>{
+            img.value = null;
+        })
+        images = props.src
+    }
+
+    let [files, updateFiles] = useLocalState([...images]);
 
     let loadFile = (e) => {
         let src = URL.createObjectURL(e.target.files[0]);
@@ -346,6 +353,7 @@ function MultipleImageUploader(props){
         if(props.onChange !== undefined){
             let value = files.map(file=>({src: file.value, is_main: false}))
             props.onChange(value);
+            //props.onChange({create: [], delete: []})
         }
     }
 
@@ -354,9 +362,11 @@ function MultipleImageUploader(props){
             action: "remove",
             value: img
         })
+
         if(props.onChange !== undefined){
             let value = files.map(file=>({src: file.value, is_main: false}))
             props.onChange(value);
+            //props.onChange({create: [], delete: []})
         }
     }
 
@@ -378,7 +388,7 @@ function MultipleImageUploader(props){
                     </div>
                 </div>
             </label>
-            <input type="file" name={props.name} class="file-input" id={props.name} onChange={loadFile} multiple/>
+            <input type="file" name={props.name} class="file-input" id={props.name} onChange={loadFile}/>
         </div>
     );
 }
