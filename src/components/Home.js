@@ -4,7 +4,8 @@ import { setGlobal, useGlobal} from 'reactn'
 import './Home.css';
 import {
     PropertyGroup, SideBar, TopBar, PropertyDetails,
-    UploadProperty, LogIn, SignUp, Fetcher, Loader
+    UploadProperty, LogIn, SignUp, Fetcher, Loader,
+    EditProperty
 } from './'
 import {API_URL} from '../';
 
@@ -185,6 +186,9 @@ function Home(props) {
                     }} />
 
                     <Route exact path="/upload-property" component={UploadProperty} />
+                    <Route exact path="/edit-property/:id" render={({ match }) => {
+                        return <EditProperty id={match.params.id} />
+                    }} />
                 </div>
             </div>
 
