@@ -21,13 +21,13 @@ setGlobal({
         services: {selected: [], options: [...options]},
         potentials: {selected: [], options: [...options]},
         main_picture: [],
-        other_pictures: []
+        other_pictures: [],
+        other_features: []
     }
 })
 
 function UploadProperty(props){
     let [fields, setFields] = useGlobal("UploadProperty");
-    let [otherFeatures, ] = useGlobal("FeaturesInput");
     let [user, ] = useGlobal("User");
 
     let currencies = ["TZS", "USD"];
@@ -90,7 +90,7 @@ function UploadProperty(props){
             amenities: JSON.parse(form.amenities.value),
             services: JSON.parse(form.services.value),
             potentials: JSON.parse(form.potentials.value),
-            other_features: otherFeatures
+            other_features: fields.other_features
         }
 
         let postUrl = `${API_URL}/${form.type.value}/`;
@@ -134,6 +134,11 @@ function UploadProperty(props){
 
     let updateMainImage = (value) => {
         fields.main_picture = value
+        setFields(fields);
+    }
+
+    let updateFeatures = (features) => {
+        fields.other_features = features;
         setFields(fields);
     }
 
@@ -240,7 +245,7 @@ function UploadProperty(props){
                             </div>
 
                             <div class="row p-0 m-0 my-4">
-                                <FeaturesInput label="Add Other Features"/>
+                                <FeaturesInput label="Add Other Features" onChange={updateFeatures}/>
                             </div>
 
                     </div>
