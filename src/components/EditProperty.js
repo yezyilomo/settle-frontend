@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './EditProperty.css';
 import {withRouter} from 'react-router-dom';
-import {setGlobal, useGlobal} from 'reactn';
+import {useGlobal} from 'reactn';
 import {Select, FeaturesInput, Fetcher, Loader, Block} from './';
 import {API_URL} from '../';
 import { useLocalState } from '../hooks';
@@ -17,11 +17,8 @@ let options = [
 
 
 function EditProperty(props){
-
-    let [fields, setFields] = useState(props.property)
-    let [otherFeatures, ] = useGlobal("FeaturesInput");
+    let [fields, updateFields] = useLocalState(props.property);
     let [user, ] = useGlobal("User");
-
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
     let categories = ["rent", "sell", "book" ];
@@ -82,7 +79,7 @@ function EditProperty(props){
             amenities: JSON.parse(form.amenities.value),
             services: JSON.parse(form.services.value),
             potentials: JSON.parse(form.potentials.value),
-            other_features: otherFeatures
+            other_features: fields.other_features
         }
 
         let postUrl = `${API_URL}/${form.type.value}/`;
@@ -91,16 +88,17 @@ function EditProperty(props){
             //'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-        fetch(postUrl, {method: 'POST', body: JSON.stringify(formData), headers: headers})
+        fetch(postUrl, {method: 'PUT', body: JSON.stringify(formData), headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => updatePropertyImages(obj))
         .catch(error => console.log(error));
     }
 
     let updateValue = (e) => {
-        let field = e.target.name;
-        fields[field] = e.target.value;
-        setFields(fields)
+        updateFields({
+            field: e.target.getAttribute("data-field"),
+            value: e.target.value
+        })
     }
 
     let optionName = (opt) => {
@@ -112,18 +110,32 @@ function EditProperty(props){
     }
 
     let updateSelection = (target) => {
-        fields[target.name] = target.selected
-        setFields(fields)
+        updateFields({
+            field: target.name,
+            value: target.selected
+        })
+
     }
 
     let updateOtherImages = (value) => {
-        fields.other_pictures = value
-        setFields(fields);
+        updateFields({
+            field: "other_pictures",
+            value: value
+        })
     }
 
     let updateMainImage = (value) => {
-        fields.main_picture = value
-        setFields(fields);
+        updateFields({
+            field: "main_picture",
+            value: value
+        })
+    }
+
+    let updateFeatures = (features) => {
+        updateFields({
+            field: "other_features",
+            value: features
+        })
     }
 
     return (
@@ -135,7 +147,7 @@ function EditProperty(props){
                             <div class="row p-0 m-0 my-2 my-lg-1">
                                 <label class="form-check-label col-12 px-2">Property type</label>
                                 <div class="col-12 my-1 px-2">
-                                    <select class="custom-select" name="type" value={fields.type} onChange={updateValue} required>
+                                    <select class="custom-select" data-field="type" name="type" value={fields.type} onChange={updateValue} required>
                                         <option value="" disabled selected>Select Type</option>
                                         {types.map((type)=><option value={type}>{type}</option>)}
                                     </select>
@@ -145,7 +157,7 @@ function EditProperty(props){
                             <div class="row p-0 m-0 my-2 my-lg-1">
                                 <label class="form-check-label col-12 px-2">Available for</label>
                                 <div class="col-12 my-1 px-2">
-                                    <select class="custom-select" name="category" value={fields.category} onChange={updateValue} required>
+                                    <select class="custom-select" data-field="category" name="category" value={fields.category} onChange={updateValue} required>
                                         <option value="" disabled selected>Select Category</option>
                                         {categories.map((category)=><option value={category}>{category}</option>)}
                                     </select>
@@ -157,11 +169,11 @@ function EditProperty(props){
                                 <div class="col-12 my-1">
                                     <div class="row">
                                         <div class="col-8 px-2">
-                                            <input type="number" name="price" value={fields.price} onChange={updateValue}
+                                            <input type="number" data-field="price" name="price" value={fields.price} onChange={updateValue}
                                                 class="form-control" placeholder="Price" required/>
                                         </div>
                                         <div class="col-4 px-2">
-                                            <select class="custom-select" name="currency" value={fields.currency} onChange={updateValue} required>
+                                            <select class="custom-select" data-field="currency" name="currency" value={fields.currency} onChange={updateValue} required>
                                                 <option value="" disabled selected>Currency</option>
                                                 {currencies.map((currency)=><option  value={currency}>{currency}</option>)}
                                             </select>
@@ -173,7 +185,7 @@ function EditProperty(props){
                             <div class="row p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Location</label>
                                 <div class="col-12 my-1 px-2">
-                                    <select class="custom-select" name="country" value={fields.location.country} onChange={updateValue}>
+                                    <select class="custom-select" data-field="location.country" name="country" value={fields.location.country} onChange={updateValue}>
                                         <option value="" disabled selected>Country</option>
                                         {countries.map((country)=><option value={country}>{country}</option>)}
                                     </select>
@@ -181,11 +193,11 @@ function EditProperty(props){
                                 <div class="col-12 my-1">
                                     <div class="row">
                                         <div class="col-6 px-2">
-                                            <input type="text" name="region" value={fields.location.region} onChange={updateValue}
+                                            <input type="text" data-field="location.region" name="region" value={fields.location.region} onChange={updateValue}
                                             class="form-control" placeholder="Region" />
                                         </div>
                                         <div class="col-6 px-2">
-                                            <input type="text" name="distric" value={fields.location.distric} onChange={updateValue}
+                                            <input type="text" data-field="location.distric" name="distric" value={fields.location.distric} onChange={updateValue}
                                             class="form-control" placeholder="Distric" />
                                         </div>
                                     </div>
@@ -193,11 +205,11 @@ function EditProperty(props){
                                 <div class="col-12 my-1">
                                     <div class="row">
                                         <div class="col-6 px-2">
-                                            <input type="text" name="street1" value={fields.location.street1} onChange={updateValue}
+                                            <input type="text" data-field="location.street1" name="street1" value={fields.location.street1} onChange={updateValue}
                                             class="form-control" placeholder="Street1" />
                                         </div>
                                         <div class="col-6 px-2">
-                                            <input type="text" name="street2" value={fields.location.street2} onChange={updateValue}
+                                            <input type="text" data-field="location.street2" name="street2" value={fields.location.street2} onChange={updateValue}
                                             class="form-control" placeholder="Street2" />
                                         </div>
                                     </div>
@@ -229,7 +241,8 @@ function EditProperty(props){
                             </div>
 
                             <div class="row p-0 m-0 my-4">
-                                <FeaturesInput label="Add Other Features"/>
+                                <FeaturesInput label="Add Other Features" onChange={updateFeatures}
+                                value={fields.other_features.map(item=>({name: item.feature.name, value: item.value}))}/>
                             </div>
 
                     </div>
@@ -244,17 +257,17 @@ function EditProperty(props){
                         <div class="row p-0 m-0 my-2 my-lg-3">
                             <label class="form-check-label col-12 px-0">Contact</label>
                             <div class="col-12 my-1 px-0">
-                                <input type="text" name="phone" value={fields.contact.phone} onChange={updateValue}
+                                <input type="text" data-field="contact.phone" name="phone" value={fields.contact.phone} onChange={updateValue}
                                 class="form-control" placeholder="Phone Number" />
                             </div>
                             <div class="col-12 my-1">
                                 <div class="row">
                                     <div class="col-6 px-0">
-                                        <input type="text" name="name" value={fields.contact.name} onChange={updateValue}
+                                        <input type="text" data-field="contact.name" name="name" value={fields.contact.name} onChange={updateValue}
                                         class="form-control" placeholder="Name" />
                                     </div>
                                     <div class="col-6 px-0">
-                                        <input type="text" name="email" value={fields.contact.email} onChange={updateValue}
+                                        <input type="text" data-field="contact.email" name="email" value={fields.contact.email} onChange={updateValue}
                                         class="form-control" placeholder="Email" />
                                     </div>
                                 </div>

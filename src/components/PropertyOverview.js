@@ -28,7 +28,7 @@ function PropertyOverview(props) {
                 <div class="prop-info col-12 bg-lightz px-1">
                     <div class="property-type">For <span class="bg-info">{props.property.category}</span></div>
                     <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
-                        {props.property.location.region}, {props.property.location.country}
+                        &nbsp;{props.property.location.region}, {props.property.location.country}
                     </div>
                     <div class="property-price">
                         {props.property.currency} {props.property.price} per {props.property.unit_of_payment_terms}

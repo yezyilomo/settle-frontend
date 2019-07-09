@@ -1,8 +1,9 @@
 import React, {} from 'react';
 import './PropertyDetails.css';
-import { } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Block, Fetcher, Loader } from './';
 import {API_URL} from '../';
+import {useGlobal} from 'reactn';
 
 function ImageModal(props) {
     return (
@@ -88,7 +89,7 @@ function Badges(props) {
 }
 
 function PropertyDetails(props) {
-
+    let [user, ] = useGlobal("User");
     let fetchProperty = () => {
         return fetch(`${API_URL}/room/${props.property}/?
             query={
@@ -136,6 +137,25 @@ function PropertyDetails(props) {
             }
             let other_imgs = property.pictures.filter((picture) => !picture.is_main)
 
+            let redirect = (status) => {
+                if(status === 204){
+                    props.history.push(`/`);
+                    return
+                }
+                // Report Error
+            }
+
+            let deleteProperty = (e) => {
+                let postUrl = `${API_URL}/room/${props.property}/`;
+                let headers = {
+                    'Authorization': `Token ${user.authToken}`,
+                    'Content-Type': 'application/json'
+                }
+                fetch(postUrl, {method: 'DELETE', headers: headers})
+                .then(res =>  res.status)
+                .then(status => redirect(status))
+                .catch(error => console.log(error));
+            }
             return (
                 <div class="col-12 p-2 m-0">
                     <div class="property-details row col-12 p-0 m-0">
@@ -144,9 +164,10 @@ function PropertyDetails(props) {
                             <ImageModal src={main_img.src} id={main_img.id} other={other_imgs} />
                         </div>
                         <div class="detailed-prop-info col-12 col-sm-6 col-lg-3 px-1 px-sm-0 px-lg-4 mt-3 mt-lg-0">
+                            <b>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 remove-feature text-danger" onClick={deleteProperty}/></b>
                             <div class="property-type">Available for <span class="bg-info">{property.category}</span></div>
                             <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
-                                {property.location.region + "," + property.location.country}
+                                &nbsp;{property.location.region + "," + property.location.country}
                             </div>
                             <div class="property-price">
                                 Price: {property.currency} {property.price} per {property.unit_of_payment_terms}
@@ -188,4 +209,6 @@ function PropertyDetails(props) {
     )
 }
 
-export { PropertyDetails }
+const comp = withRouter(PropertyDetails);
+
+export { comp as PropertyDetails}
