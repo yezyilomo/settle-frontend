@@ -168,7 +168,7 @@ function UploadProperty(props){
                                 </div>
                             </div>
 
-                            <div class="row p-0 m-0 my-0 my-lg-3">
+                            <div class="row p-0 m-0 my-4">
                                 <label class="form-check-label col-12 px-2">Pricing</label>
                                 <div class="col-12 my-1">
                                     <div class="row">
@@ -186,7 +186,7 @@ function UploadProperty(props){
                                 </div>
                             </div>
 
-                            <div class="row p-0 m-0 my-2 my-lg-3">
+                            <div class="row p-0 m-0 my-4">
                                 <label class="form-check-label col-12 px-2">Location</label>
                                 <div class="col-12 my-1 px-2">
                                     <select class="custom-select" name="country" value={fields.country} onChange={updateValue}>
@@ -220,27 +220,27 @@ function UploadProperty(props){
                                 </div>
                             </div>
 
-                            <div class="row col-12 p-0 m-0 my-2 my-lg-3">
-                                <label class="form-check-label col-12 px-2">Amenities</label>
-                                <div class="col-12 px-2">
-                                    <Select class="custom-select" name="amenities" options={fields.amenities.options} onChange={updateSelection}
-                                     value={fields.amenities.selected} optionName={optionName} optionValue={optionValue} placeholder="Select Amenity"/>
+                            <div class="my-4">
+                                <label class="form-check-label col-12 px-2">Features</label>
+                                <div class="row col-12 p-0 m-0 mt-1 mb-3">
+                                    <div class="col-12 px-2">
+                                        <Select class="custom-select" name="amenities" options={fields.amenities.options} onChange={updateSelection}
+                                         value={fields.amenities.selected} optionName={optionName} optionValue={optionValue} placeholder="Amenities"/>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row col-12 p-0 m-0 my-2 my-lg-3">
-                                <label class="form-check-label col-12 px-2">Services</label>
-                                <div class="col-12 px-2">
-                                    <Select class="custom-select" name="services" options={fields.services.options} onChange={updateSelection}
-                                     value={fields.services.selected} optionName={optionName} optionValue={optionValue} placeholder="Select Service"/>
+                                <div class="row col-12 p-0 m-0 my-3 my-lg-3">
+                                    <div class="col-12 px-2">
+                                        <Select class="custom-select" name="services" options={fields.services.options} onChange={updateSelection}
+                                         value={fields.services.selected} optionName={optionName} optionValue={optionValue} placeholder="Services"/>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row col-12 p-0 m-0 my-2 my-lg-3">
-                                <label class="form-check-label col-12 px-2">Potentials</label>
-                                <div class="col-12 px-2">
-                                    <Select class="custom-select" name="potentials" options={fields.potentials.options} onChange={updateSelection}
-                                      value={fields.potentials.selected} optionName={optionName} optionValue={optionValue} placeholder="Select Potential"/>
+                                <div class="row col-12 p-0 m-0 my-3 my-lg-3">
+                                    <div class="col-12 px-2">
+                                        <Select class="custom-select" name="potentials" options={fields.potentials.options} onChange={updateSelection}
+                                          value={fields.potentials.selected} optionName={optionName} optionValue={optionValue} placeholder="Potentials"/>
+                                    </div>
                                 </div>
                             </div>
 
@@ -265,11 +265,11 @@ function UploadProperty(props){
                             </div>
                             <div class="col-12 my-1">
                                 <div class="row">
-                                    <div class="col-6 px-0">
+                                    <div class="col m-0 p-0 pr-1">
                                         <input type="text" name="name" value={fields.name} onChange={updateValue}
                                         class="form-control" placeholder="Name" />
                                     </div>
-                                    <div class="col-6 px-0">
+                                    <div class="col m-0 p-0 pl-1">
                                         <input type="text" name="email" value={fields.email} onChange={updateValue}
                                         class="form-control" placeholder="Email" />
                                     </div>
@@ -289,7 +289,7 @@ function UploadProperty(props){
 }
 
 function ImageUploader(props){
-    let image = props.src||null;
+    let image = (props.src&&props.src.src)||null;
     let [preview, setPreview] = useState(image)
     let fileInput = useRef(null);
 
@@ -314,12 +314,16 @@ function ImageUploader(props){
     return (
         <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-center">
             {preview !== null?
-                <div class="remove-img col-12">
-                    <i class="far fa-times-circle" onClick={removeImg}></i>
-                </div>:
+                <Block>
+                    <div class="remove-img col-12">
+                        <i class="far fa-times-circle" onClick={removeImg}></i>
+                    </div>
+                    <div class="main-img">
+                        <img class="main-img-preview" src={preview} alt=""/>
+                    </div>
+                </Block>:
                 null
             }
-            <img class="main-img-preview" src={preview} alt=""/>
             <input ref={fileInput} type="file" name={props.name} id={props.name} class="file-input" onChange={loadFile}/>
             {preview === null?
                 <label for={props.name} class="file-input-label">
@@ -379,9 +383,13 @@ function MultipleImageUploader(props){
         <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-start">
             {files.map(img =>
                 <Block>
-                    <div class="other-img-preview">
-                        <i class="remove-other-img far fa-times-circle" onClick={(e)=>{removeImg(img)}}></i>
-                        <img src={img.src} width="172" alt=""/>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 py-1 px-1 m-0">
+                        <div class="col-12 p-0 m-0">
+                            <div class="other-img col-12">
+                                <i class="remove-other-img far fa-times-circle" onClick={(e)=>{removeImg(img)}}></i>
+                                <img src={img.src} alt="" />
+                            </div>
+                        </div>
                     </div>
                 </Block>
             )}
