@@ -262,11 +262,11 @@ function EditProperty(props){
                             </div>
                             <div class="col-12 my-1">
                                 <div class="row">
-                                    <div class="col-6 px-0">
+                                    <div class="col m-0 p-0 pr-1">
                                         <input type="text" data-field="contact.name" name="name" value={fields.contact.name} onChange={updateValue}
                                         class="form-control" placeholder="Name" />
                                     </div>
-                                    <div class="col-6 px-0">
+                                    <div class="col m-0 p-0 pl-1">
                                         <input type="text" data-field="contact.email" name="email" value={fields.contact.email} onChange={updateValue}
                                         class="form-control" placeholder="Email" />
                                     </div>
@@ -316,7 +316,9 @@ function ImageUploader(props){
                 </div>:
                 null
             }
-            <img class="main-img-preview" src={preview} alt=""/>
+            <div class="main-img">
+                <img class="main-img-preview" src={preview} alt=""/>
+            </div>
             <input ref={fileInput} type="file" name={props.name} id={props.name} class="file-input" onChange={loadFile}/>
             {preview === null?
                 <label for={props.name} class="file-input-label">
@@ -376,9 +378,13 @@ function MultipleImageUploader(props){
         <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-start">
             {files.map(img =>
                 <Block>
-                    <div class="other-img-preview">
-                        <i class="remove-other-img far fa-times-circle" onClick={(e)=>{removeImg(img)}}></i>
-                        <img src={img.src} width="172" alt=""/>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 py-1 px-1 m-0">
+                        <div class="col-12 p-0 m-0">
+                            <div class="other-img col-12">
+                                <i class="remove-other-img far fa-times-circle" onClick={(e)=>{removeImg(img)}}></i>
+                                <img src={img.src} alt="" />
+                            </div>
+                        </div>
                     </div>
                 </Block>
             )}
