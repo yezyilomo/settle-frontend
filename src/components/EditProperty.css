@@ -1,0 +1,16 @@
+/* load background  */
+.other-img, .main-img{
+    padding: 0;
+    margin: 0;
+
+    /* magic begins here */
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+}
+/* end load background  */
+
+.other-img img, .main-img img {
+    height: auto;
+    width: 100%;
+}

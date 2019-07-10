@@ -16,8 +16,13 @@
 .sidebar select,
 .sidebar button {
     font-size: 1em;
-    border-color: rgb(235, 235, 235);
     height: 40px;
+}
+
+.sidebar input,
+.sidebar select{
+    border-color: #eeeeee;
+    background-color: #eeeeee;
 }
 
 .sidebar input:focus,

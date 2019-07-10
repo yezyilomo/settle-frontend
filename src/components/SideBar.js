@@ -80,14 +80,20 @@ function SideBar(props) {
                         value={fields.price__lt} onChange={updateValue} placeholder="To" />
                     </div>
                 </div>
+                <select class="custom-select mr-sm-2 my-3" name="currency" value={fields.currency} onChange={updateValue}>
+                    <option selected disabled>Currency</option>
+                    <option value="TZS">TZS</option>
+                    <option value="USD">USD</option>
+                </select>
 
-                <label class="form-check-label col-12 mt-4 mb-0 p-0 mx-0">Amenities</label>
+                <input type="text" name="location" class="form-control my-3" value={fields.location}
+                 onChange={updateValue} placeholder="Location" />
+
+                <label class="form-check-label col-12 mt-1 mb-0 p-0 mx-0">Amenities</label>
                 <Select class="custom-select" name="amenities" options={fields.amenities.options} placeholder="Select Amenity"
                 onChange={updateField} value={fields.amenities.selected} optionName={optionName} optionValue={optionValue}
                 />
-                <input type="text" name="location" class="form-control my-4" value={fields.location}
-                 onChange={updateValue} placeholder="Location" />
-                <input type="submit" class="col-12 btn btn-info mt-3" value="Submit" />
+                <button type="submit" class="col-12 btn btn-info mt-4">Submit</button>
             </form>
         </div>
     );
