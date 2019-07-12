@@ -26,13 +26,22 @@ function getCookie(name){
 
 let isLoggedIn = false;
 let authToken = getCookie("auth_token");
+let id= getCookie("id");
+let username = getCookie("usernamen");
+let email = getCookie("email");
 
 if(authToken !== null){
     isLoggedIn = true;
 }
 
 setGlobal({
-    User: {isLoggedIn: isLoggedIn, authToken: authToken}
+    User: {
+        isLoggedIn: isLoggedIn,
+        authToken: authToken,
+        id: id,
+        email: email,
+        username: username
+    }
 })
 
 function Filter(props) {
@@ -66,6 +75,42 @@ function Filter(props) {
             return (
                 <div>
                     <PropertyGroup header="Filter Results.." properties={properties} />
+                </div>
+            );
+        }}</Fetcher>
+    );
+}
+
+
+function UserProperties(props) {
+    let [user, ] = useGlobal("User");
+    let fetchProperties = () => {
+        return fetch(`${API_URL}/property/?
+           query={
+            id,
+            category,
+            price,
+            pictures{
+                src,
+                is_main
+            },
+            currency,
+            location,
+            rating,
+            payment_terms,
+            unit_of_payment_terms
+        }&owner=${user.id}&format=json`
+        )
+        .then(res => res.json())
+        .then(res => res.results)
+        .catch(error => console.log(error))
+    }
+
+    return (
+        <Fetcher action={fetchProperties} placeholder={Loader()}>{properties => {
+            return (
+                <div>
+                    <PropertyGroup header="My Properties.." properties={properties} edit/>
                 </div>
             );
         }}</Fetcher>
@@ -181,11 +226,12 @@ function Home(props) {
 
                     <Route exact path="/search/" component={Search}/>
 
-                    <Route exact path="/property/:id" render={({ match }) => {
-                        return <PropertyDetails property={match.params.id} />
+                    <Route exact path="/property/:id" render={({ match, location }) => {
+                        return <PropertyDetails property={match.params.id} edit={location.edit}/>
                     }} />
 
                     <Route exact path="/upload-property" component={UploadProperty} />
+                    <Route exact path="/my-properties" component={UserProperties} />
                     <Route exact path="/edit-property/:id" render={({ match }) => {
                         return <EditProperty id={match.params.id} />
                     }} />
