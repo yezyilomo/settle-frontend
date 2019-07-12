@@ -201,14 +201,20 @@ function Finish(props) {
             var d = new Date();
             d.setTime(d.getTime() + 30*24*60*60*1000); // in milliseconds
             document.cookie = `auth_token=${authToken};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
+            document.cookie = `id=${response.id};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
+            document.cookie = `username=${response.username};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
+            document.cookie = `email=${response.email};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
             updateUser([
                 {field: "isLoggedIn", value: true},
-                {field: "authToken", value: authToken}
+                {field: "authToken", value: authToken},
+                {field: "id", value: response.id},
+                {field: "username", value: response.username},
+                {field: "email", value: response.email}
             ]);
             window.location = "/";
         }
         else{
-            // Report error
+            // Report Errors
         }
     }
 

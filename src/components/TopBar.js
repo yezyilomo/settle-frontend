@@ -17,9 +17,15 @@ function TopBar(props) {
         var d = new Date();
         d.setTime(d.getTime() - 24*60*60*1000); // in milliseconds
         document.cookie = `auth_token=;path=/;expires=${d.toGMTString()};`;
+        document.cookie = `id=;path=/;expires=${d.toGMTString()};`;
+        document.cookie = `username=;path=/;expires=${d.toGMTString()};`;
+        document.cookie = `email=;path=/;expires=${d.toGMTString()};`;
         updateUser([
             {field: "isLoggedIn", value: false},
-            {field: "authToken", value: null}
+            {field: "authToken", value: null},
+            {field: "id", value: null},
+            {field: "username", value: null},
+            {field: "email", value: null}
         ]);
     }
 
@@ -48,6 +54,10 @@ function TopBar(props) {
             <div class="collapse navbar-collapse col-lg-3 m-0 px-0 px-lg-3" id="navbarTogglerDemo03">
                 <hr class="d-lg-none m-0 p-0 mt-3 mt-lg-0" />
                 <ul class="navbar-nav ml-0 ml-lg-auto">
+                    <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
+                        <Link class="nav-link" to="/">Home</Link>
+                        <hr class="p-0 m-0 d-lg-none" />
+                    </li>
                     { !user.isLoggedIn?
                         <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
                             <Link class="nav-link" to="" data-toggle="modal" data-target="#login-modal">
@@ -61,14 +71,6 @@ function TopBar(props) {
                         <Link class="nav-link" to="/filter">Quick Filter <span class="sr-only">(current)</span></Link>
                         <hr class="p-0 m-0 d-lg-none" />
                     </li>
-                    <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
-                        <Link class="nav-link" to="/upload-property">Create</Link>
-                        <hr class="p-0 m-0 d-lg-none" />
-                    </li>
-                    <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
-                        <Link class="nav-link" to="/edit-property">Edit</Link>
-                        <hr class="p-0 m-0 d-lg-none" />
-                    </li>
                     { !user.isLoggedIn?
                         <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
                             <Link class="nav-link" to="" data-toggle="modal" data-target="#signup-modal">
@@ -79,6 +81,11 @@ function TopBar(props) {
                         null
                     }
                     { user.isLoggedIn?
+                        <>
+                        <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
+                            <Link class="nav-link" to="/upload-property">Create</Link>
+                            <hr class="p-0 m-0 d-lg-none" />
+                        </li>
                         <li class="nav-item dropdown pb-0 pb-lg-0">
                             <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -90,12 +97,13 @@ function TopBar(props) {
                                 <div class="dropdown-divider py-0 my-0"></div>
                                 <a class="dropdown-item py-2" href="/">Manage</a>
                                 <div class="dropdown-divider py-0 my-0"></div>
-                                <a class="dropdown-item py-2" href="/">My Properties</a>
+                                <Link class="dropdown-item py-2" to="/my-properties">My Properties</Link>
                                 <div class="dropdown-divider py-0 my-0"></div>
                                 <a class="dropdown-item py-2" href="/" onClick={logOut}>Logout</a>
                             </div>
                             <div class="dropdown-divider d-lg-none py-0 my-0"></div>
-                        </li>:
+                        </li>
+                        </>:
                         null
                     }
                 </ul>
