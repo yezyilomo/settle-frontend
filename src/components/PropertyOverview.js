@@ -21,7 +21,7 @@ function PropertyOverview(props) {
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2 m-0">
             <div class="property col-12 p-0 m-0">
                 <div class="prop-img col-12">
-                    <Link to={`property/${props.property.id}`}>
+                    <Link to={{pathname: `property/${props.property.id}`, edit: props.edit}}>
                         <img src={main_img.src} alt="" />
                     </Link>
                 </div>

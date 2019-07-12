@@ -1,6 +1,6 @@
 import React, {} from 'react';
 import './PropertyDetails.css';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { Block, Fetcher, Loader } from './';
 import {API_URL} from '../';
 import {useGlobal} from 'reactn';
@@ -139,7 +139,7 @@ function PropertyDetails(props) {
 
             let redirect = (status) => {
                 if(status === 204){
-                    props.history.push(`/`);
+                    props.history.goBack();
                     return
                 }
                 // Report Error
@@ -157,14 +157,24 @@ function PropertyDetails(props) {
                 .catch(error => console.log(error));
             }
             return (
-                <div class="col-12 p-2 m-0">
+                <div class="col-12 px-2 py-1 m-0">
                     <div class="property-details row col-12 p-0 m-0">
+                        {props.edit?
+                            <div class="actions col-12 text-center p-0 m-0 mb-3">
+                                <Link to={`/edit-property/${property.id}`}>
+                                <b>Edit <span class="fas fa-edit mt-2 ml-1 ml-lg-3 edit-property text-danger"/></b>
+                                </Link>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <b>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 remove-feature text-danger" onClick={deleteProperty}/></b>
+                                <hr class="m-0 p-0"/>
+                            </div>:
+                            null
+                        }
                         <div class="main-prop-img col-12 col-lg-6">
                             <img class="main-img" src={main_img.src} alt="" data-toggle="modal" data-target={`#Modal_${main_img.id}`} />
                             <ImageModal src={main_img.src} id={main_img.id} other={other_imgs} />
                         </div>
                         <div class="detailed-prop-info col-12 col-sm-6 col-lg-3 px-1 px-sm-0 px-lg-4 mt-3 mt-lg-0">
-                            <b>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 remove-feature text-danger" onClick={deleteProperty}/></b>
                             <div class="property-type">Available for <span class="bg-info">{property.category}</span></div>
                             <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                 &nbsp;{property.location.region + "," + property.location.country}
