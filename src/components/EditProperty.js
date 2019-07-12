@@ -277,7 +277,7 @@ function EditProperty(props){
                 </div>
 
                 <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-info mt-4 col-11 col-sm-6">Submit</button>
+                    <button type="submit" class="btn btn-info mt-4 col-11 col-sm-6">Save</button>
                 </div>
 
             </form>
