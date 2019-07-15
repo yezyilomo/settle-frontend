@@ -63,13 +63,13 @@ function LogIn(props) {
                                 <div class="row justify-content-center">
                                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                                         <div class="col-12 px-2">
-                                            <input type="text" name="username" class="form-control" placeholder="Username" />
+                                            <input type="text" name="username" class="form-control" placeholder="Username" required />
                                         </div>
                                     </div>
 
                                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                                         <div class="col-12 px-2">
-                                            <input type="password" name="password" class="form-control" placeholder="Password" />
+                                            <input type="password" name="password" class="form-control" placeholder="Password" required />
                                         </div>
                                     </div>
 
