@@ -4,11 +4,13 @@
 }
 
 .navbar-toggler {
-    padding-top: 3px;
-    padding-bottom: 3px;
-    background-color: rgb(230, 230, 230);
-    border-color: white;
-    border-width: 0
+    padding-top: 5px;
+    border-width: 0;
+    padding: 0;
+}
+
+.menu-icon{
+    filter: contrast(30%);
 }
 
 .navbar-toggler:focus {
@@ -36,7 +38,6 @@
 .navbar-brand {
     overflow: visible;
     height: 48px;
-
 }
 
 .navbar-brand a {
@@ -45,7 +46,6 @@
     overflow: hidden;
     color: rgb(76, 76, 76); /* nav-brand color light black */
     text-decoration: none;
-    margin-bottom: 3px;
     outline: none;
 }
 
@@ -54,10 +54,9 @@
 }
 
 .search-input {
+    height: 35px;
     border-color: rgb(230, 230, 230);
-    padding-top: 18px;
-    padding-bottom: 18px;
-    padding-left: 40px;
+    padding-left: 35px;
     text-align: center;
     background-color: rgb(230, 230, 230);
     border-color: white;
@@ -73,11 +72,9 @@
 }
 
 .search-button {
-    color: gray;
-    font-size: 20px;
     position: relative;
-    top: 2px;
-    transition: 0.3s linear color;
+    right: 4px;
+    bottom: 1px;
 }
 
 .search-form a{

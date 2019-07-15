@@ -53,21 +53,21 @@ function About(props) {
                 <div class="row justify-content-center mt-1">
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="text" name="first_name" value={form.first_name}
+                            <input type="text" name="first_name" value={form.first_name} required
                             onChange={handleValueChange} class="form-control" placeholder="First Name" />
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="text" name="last_name" value={form.last_name}
+                            <input type="text" name="last_name" value={form.last_name} required
                             onChange={handleValueChange}class="form-control" placeholder="Last Name" />
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="email" name="email" value={form.email}
+                            <input type="email" name="email" value={form.email} required
                             onChange={handleValueChange} class="form-control" placeholder="Email" />
                         </div>
                     </div>
@@ -130,14 +130,14 @@ function Account(props) {
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="text" name="username" value={form.username}
+                            <input type="text" name="username" value={form.username} required
                             onChange={handleValueChange} class="form-control" placeholder="Choose a username" />
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="password" name="password" value={form.password}
+                            <input type="password" name="password" value={form.password} required
                             onChange={handleValueChange} class="form-control" placeholder="Choose a password" />
                         </div>
                     </div>

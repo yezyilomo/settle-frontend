@@ -11,7 +11,7 @@ function FeaturesInput(props) {
     let addFeature = (event) => {
         updateFeatures({
             action: "push",
-            value: {name: "", value: ""}
+            value: {id: null, feature: {id: null, name: ""}, value: ""}
         });
         if(props.onChange !== undefined){
             props.onChange(features)
@@ -42,7 +42,7 @@ function FeaturesInput(props) {
 
     let updateName = (event, feature) => {
         let name = event.target.value;
-        feature.name = name;
+        feature.feature.name = name;
         updateFeatures({
             value: features
         });

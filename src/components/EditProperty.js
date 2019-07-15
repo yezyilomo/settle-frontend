@@ -57,6 +57,32 @@ function EditProperty(props){
         postImages(id, pictures)
     }
 
+    let updateLocation = (location) => {
+        let locationID = fields.location.id;
+        let postUrl = `${API_URL}/location/${locationID}/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`,
+            'Content-Type': 'application/json'
+        }
+        return fetch(postUrl, {method: 'PUT', body: JSON.stringify(location), headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => obj)
+        .catch(error => console.log(error));
+    }
+
+    let updateContact = (contact, ob) => {
+        let contactID = fields.contact.id;
+        let postUrl = `${API_URL}/contact/${contactID}/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`,
+            'Content-Type': 'application/json'
+        }
+        return fetch(postUrl, {method: 'PUT', body: JSON.stringify(contact), headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => obj)
+        .catch(error => console.log(error));
+    }
+
     let createProperty = (e) => {
         e.preventDefault();
         let form = e.target
@@ -64,33 +90,38 @@ function EditProperty(props){
             category: form.category.value,
             price: form.price.value,
             currency: form.currency.value,
-            location: {
-                country: form.country.value,
-                region: form.region.value,
-                distric: form.distric.value,
-                street1: form.street1.value,
-                street2: form.street2.value
-            },
-            contact: {
-                name: form.name.value,
-                email: form.email.value,
-                phones: [form.phone.value]
-            },
-            amenities: JSON.parse(form.amenities.value),
-            services: JSON.parse(form.services.value),
-            potentials: JSON.parse(form.potentials.value),
-            other_features: fields.other_features
         }
 
-        let postUrl = `${API_URL}/${form.type.value}/`;
+        let location = {
+            country: form.country.value,
+            region: form.region.value,
+            distric: form.distric.value,
+            street1: form.street1.value,
+            street2: form.street2.value
+        }
+
+        let contact = {
+            name: form._name.value,
+            email: form.email.value
+            //phones: [form.phone.value]
+        }
+
+        let amenities = JSON.parse(form.amenities.value)
+        let services = JSON.parse(form.services.value)
+        let potentials = JSON.parse(form.potentials.value)
+        let other_features = fields.other_features
+
+        let postUrl = `${API_URL}/${form.type.value}/${fields.id}/`;
         let headers = {
             'Authorization': `Token ${user.authToken}`,
-            //'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
         fetch(postUrl, {method: 'PUT', body: JSON.stringify(formData), headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => updatePropertyImages(obj))
+        .then(obj => updateLocation(location))
+        .then(obj => updateContact(contact, obj))
+        .then(obj => props.history.push(`/edit-property/${fields.id}`))
+        //.then(obj => updatePropertyImages(obj))
         .catch(error => console.log(error));
     }
 
@@ -242,7 +273,7 @@ function EditProperty(props){
 
                             <div class="row p-0 m-0 my-4">
                                 <FeaturesInput label="Add Other Features" onChange={updateFeatures}
-                                value={fields.other_features.map(item=>({name: item.feature.name, value: item.value}))}/>
+                                value={fields.other_features}/>
                             </div>
 
                     </div>
@@ -263,7 +294,7 @@ function EditProperty(props){
                             <div class="col-12 my-1">
                                 <div class="row">
                                     <div class="col m-0 p-0 pr-1">
-                                        <input type="text" data-field="contact.name" name="name" value={fields.contact.name} onChange={updateValue}
+                                        <input type="text" data-field="contact.name" name="_name" value={fields.contact.name} onChange={updateValue}
                                         class="form-control" placeholder="Name" />
                                     </div>
                                     <div class="col m-0 p-0 pl-1">

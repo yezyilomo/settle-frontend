@@ -214,10 +214,10 @@ function Home(props) {
                 <SideBar setting="sidebar-lg sticky-top d-none d-lg-block col-12 col-lg-2 pt-3" />
 
                 <Route exact path="/filter" render={() => {
-                    return <SideBar setting="d-relative d-lg-none col-12 bg-white mt-4 pb-4" />
+                    return <SideBar setting="d-relative d-lg-none col-12 bg-white " />
                 }} />
 
-                <div class="row contents-body col-12 col-lg-10 px-2 px-sm-3 py-2 py-lg-3 m-0">
+                <div class="row contents-body col-12 col-lg-10 px-2 px-sm-3 py-0 py-lg-2 m-0 mb-5">
                     <Route exact path="/" render={() => {
                         return <Feeds />;
                     }} />
@@ -238,14 +238,27 @@ function Home(props) {
                 </div>
             </div>
 
-            <div class="footer row bg-light">
-                {scrollY > 100  ?
-                    <div class="scroll-up click-effect d-lg-none">
-                        <img src="icons/up-arrow.svg" onClick={scrollUp} width="30" height="30" alt="" />
-                    </div> :
-                    null
-                }
+            <div class="bottom-nav-bar d-md-none row fixed-bottom">
+                <div class="col text-center">
+                    <img src="icons/home.svg" width="23" height="23" alt=""/>
+                </div>
+                <div class="col text-center">
+                    <img src="icons/placeholder.svg" width="23" height="23" alt=""/>
+                </div>
+                <div class="col text-center">
+                    <img src="icons/calendar.svg" width="23" height="23" alt=""/>
+                </div>
+                <div class="col text-center">
+                    <img src="icons/search_black.svg" width="23" height="23" alt=""/>
+                </div>
             </div>
+
+            {true ?
+                <div class="scroll-up click-effect d-lg-none">
+                    <img src="icons/up-arrow.svg" onClick={scrollUp} width="25" height="25" alt="" />
+                </div> :
+                null
+            }
 
         </div>
     );
