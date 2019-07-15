@@ -30,17 +30,18 @@ function TopBar(props) {
     }
 
     return (
-        <nav class="navbar fixed-top  navbar-expand-lg navbar-light bg-white p-1 p-lg-2" id="top-navbar">
+        <nav class="navbar fixed-top  navbar-expand-lg navbar-light bg-white p-0 px-1 p-lg-2" id="top-navbar">
             <div class="navbar-brand col-1 col-sm-2 col-md-2 col-lg-3 px-0 py-1">
                 <Link class="click-effect col-12 col-sm-4 px-0 px-sm-2 py-2" to="/">Settle</Link>
             </div>
 
             <form class="search-form form-inline m-0 p-0 col-7 col-sm-8 col-md-8 col-lg-6">
-                <input name="search" onChange={updateField} class="search-input form-control m-0 col-12 col-sm-9 col-md-9 rounded"
+                <input name="search" onChange={updateField} class="search-input py-0 py-lg-3 form-control m-0 col-12 col-sm-9 col-md-9 "
                     type="search" placeholder="Search location..." aria-label="Search" />
                 <Link   to={{ pathname: "/search", search: `?q=${key}`}}>
                     <button class="btn m-0 px-sm-3 {/*d-none d-sm-block*/}">
-                        <i class="fa fa-search search-button " />
+                        <img class="search-button" src="icons/search.svg" width="21" height="21" alt=""/>
+                        {/*<i class="fa fa-search search-button " />*/}
                     </button>
                 </Link>
             </form>
@@ -48,11 +49,11 @@ function TopBar(props) {
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
                 aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <img class="menu-icon" src="icons/menu.svg" width="40" height="40" alt=""/>
             </button>
 
             <div class="collapse navbar-collapse col-lg-3 m-0 px-0 px-lg-3" id="navbarTogglerDemo03">
-                <hr class="d-lg-none m-0 p-0 mt-3 mt-lg-0" />
+                <hr class="d-lg-none m-0 p-0 mt-0" />
                 <ul class="navbar-nav ml-0 ml-lg-auto">
                     <li class="nav-item" data-toggle="collapse" data-target="#navbarTogglerDemo03">
                         <Link class="nav-link" to="/">Home</Link>
