@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import './Select.css';
 import { } from 'react-router-dom';
 import { Block, SelectMultiValue } from './';
@@ -7,8 +7,18 @@ import { useLocalState } from '../hooks';
 
 function Select(props) {
     let values = props.value||[]
+
+    let setSelected = () => {
+        if(!props.duplicates){
+            for(let item of values){
+                addToSelected(optionValue(item), optionName(item))
+            }
+        }
+    }
+
+    useEffect(setSelected, [])
     let [options, updateOptions] = useLocalState(props.options);
-    let [selected, updateSelected] = useLocalState(values);
+    let [selected, updateSelected] = useLocalState([]);
 
     let optionValue = props.optionValue || (val => val);
     let optionName = props.optionName || (val => val);
