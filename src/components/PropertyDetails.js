@@ -113,9 +113,8 @@ function PropertyDetails(props) {
                     src
                 },
                 other_features{
-                    feature{
-                        name
-                    },
+                    id,
+                    name,
                     value
                 }
             }&format=json`
@@ -198,7 +197,7 @@ function PropertyDetails(props) {
                             </div>
                             <div class="w-100" />
                             {property.other_features.map((feature) => {
-                                return <div class="other-feature"><b>{feature.feature.name}:</b> {feature.value}</div>;
+                                return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                             })}
                         </div>
                         <div class="col-12 col-sm-6 col-lg-3 px-1 px-sm-0 px-lg-4 mt-3 mt-lg-0 text-dark">

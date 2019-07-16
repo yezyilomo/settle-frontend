@@ -85,12 +85,12 @@ function UploadProperty(props){
             contact: {
                 name: form.name.value,
                 email: form.email.value,
-                phones: [form.phone.value]
+                phone: form.phone.value
             },
             amenities: JSON.parse(form.amenities.value),
             services: JSON.parse(form.services.value),
             potentials: JSON.parse(form.potentials.value),
-            other_features: fields.other_features.map(item=>({name: item.feature.name, value: item.value}))
+            other_features: fields.other_features
         }
 
         let postUrl = `${API_URL}/${form.type.value}/`;

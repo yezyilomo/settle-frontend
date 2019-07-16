@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './EditProperty.css';
 import {withRouter} from 'react-router-dom';
 import {useGlobal} from 'reactn';
@@ -6,33 +6,23 @@ import {Select, FeaturesInput, Fetcher, Loader, Block} from './';
 import {API_URL} from '../';
 import { useLocalState } from '../hooks';
 
-let options = [
-    {id: 1, name: "one"},
-    {id: 2, name: "two"},
-    {id: 3, name: "three"},
-    {id: 4, name: "four"},
-    {id: 5, name: "five"},
-    {id: 6, name: "six"}
-];
-
 
 function EditProperty(props){
     let [fields, updateFields] = useLocalState(props.property);
     let [user, ] = useGlobal("User");
+    let [featuresToDelete, ] = useState([])
+    let [imgsToDelete, ] = useState([])
+    let [mainImg, setMainImg] = useState([])
+    let [otherImgs, setOtherImgs] = useState([])
+
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
     let categories = ["rent", "sell", "book" ];
     let types = ["room", "house", "apartment", "land", "frame", "office"];
 
-    let postImages = (propertyID, pictures) => {
-        if(pictures.length === 0){
-            // Render property
-            props.history.push(`/property/${propertyID}`);
-            return
-        }
-        let img = pictures.pop();
+    let createImage = (img) => {
         let postData = new FormData();
-        postData.append("property", propertyID)
+        postData.append("property", fields.id)
         postData.append("is_main", Number(img.is_main))
         postData.append("tool_tip", img.tool_tip)
         postData.append("src", img.src)
@@ -41,23 +31,58 @@ function EditProperty(props){
         let headers = {
             'Authorization': `Token ${user.authToken}`
         }
-        fetch(postUrl, {method: 'POST', body: postData, headers: headers})
+        return fetch(postUrl, {method: 'POST', body: postData, headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => postImages(propertyID, pictures))
+        .then(obj => obj)
         .catch(error => console.log(error));
     }
 
-    let updatePropertyImages = (response) => {
-        if(response.status !== 201){
-            // Report error
-            return
+    let updateImage = (img) => {
+        let imgInfo = {
+            tool_tip: img.tool_tip,
+            is_main: img.is_main
         }
-        let id = response.data.id;
-        let pictures = [...fields.main_picture, ...fields.other_pictures]
-        postImages(id, pictures)
+        let postUrl = `${API_URL}/picture/${img.id}/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`,
+            'Content-Type': 'application/json'
+        }
+        return fetch(postUrl, {method: 'PUT', body: JSON.stringify(imgInfo), headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => obj)
+        .catch(error => console.log(error));
     }
 
-    let updateLocation = (location) => {
+    let deleteImage = (imgID) => {
+        let postUrl = `${API_URL}/picture/${imgID}/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`,
+            'Content-Type': 'application/json'
+        }
+        return fetch(postUrl, {method: 'DELETE', body: "", headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => obj)
+        .catch(error => console.log(error));
+    }
+
+    let updateImages = (prevResponse) => {
+        let pictures = [...mainImg, ...otherImgs]
+        alert(JSON.stringify(pictures))
+        for(let picture of pictures){
+            if(picture.id === null){
+                createImage(picture);
+            }
+            else{
+                //updateImage(picture);
+            }
+        }
+        for(let pictureID of imgsToDelete){
+            deleteImage(pictureID)
+        }
+        return prevResponse
+    }
+
+    let updateLocation = (location, prevResponse) => {
         let locationID = fields.location.id;
         let postUrl = `${API_URL}/location/${locationID}/`;
         let headers = {
@@ -70,7 +95,7 @@ function EditProperty(props){
         .catch(error => console.log(error));
     }
 
-    let updateContact = (contact, ob) => {
+    let updateContact = (contact, prevResponse) => {
         let contactID = fields.contact.id;
         let postUrl = `${API_URL}/contact/${contactID}/`;
         let headers = {
@@ -83,13 +108,73 @@ function EditProperty(props){
         .catch(error => console.log(error));
     }
 
-    let createProperty = (e) => {
+    let updateFeature = (feature) => {
+        let postUrl = `${API_URL}/feature/${feature.id}/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`,
+            'Content-Type': 'application/json'
+        }
+        return fetch(postUrl, {method: 'PUT', body: JSON.stringify(feature), headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => obj)
+        .catch(error => console.log(error));
+    }
+
+    let createFeature = (feature) => {
+        feature = {
+            property: fields.id,
+            name: feature.name,
+            value: feature.value
+        }
+        let postUrl = `${API_URL}/feature/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`,
+            'Content-Type': 'application/json'
+        }
+        return fetch(postUrl, {method: 'POST', body: JSON.stringify(feature), headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => obj)
+        .catch(error => console.log(error));
+    }
+
+    let deleteFeature = (featureID) => {
+        let postUrl = `${API_URL}/feature/${featureID}/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`,
+            'Content-Type': 'application/json'
+        }
+        return fetch(postUrl, {method: 'DELETE', body: "", headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => obj)
+        .catch(error => console.log(error));
+    }
+
+    let updateOtherFeatures = (features, prevResponse) => {
+        for(let feature of features){
+            if(feature.id === null){
+                createFeature(feature);
+            }
+            else{
+                updateFeature(feature);
+            }
+        }
+        for(let feature of featuresToDelete){
+            deleteFeature(feature)
+        }
+        return prevResponse
+    }
+
+    let updateProperty = (e) => {
         e.preventDefault();
         let form = e.target
         let formData = {
             category: form.category.value,
             price: form.price.value,
             currency: form.currency.value,
+            amenities: JSON.parse(form.amenities.value),
+            services: JSON.parse(form.services.value),
+            potentials: JSON.parse(form.potentials.value)
+            //other_features: {"delete": featuresToDelete},
         }
 
         let location = {
@@ -102,13 +187,10 @@ function EditProperty(props){
 
         let contact = {
             name: form._name.value,
-            email: form.email.value
-            //phones: [form.phone.value]
+            email: form.email.value,
+            phone: form.phone.value
         }
 
-        let amenities = JSON.parse(form.amenities.value)
-        let services = JSON.parse(form.services.value)
-        let potentials = JSON.parse(form.potentials.value)
         let other_features = fields.other_features
 
         let postUrl = `${API_URL}/${form.type.value}/${fields.id}/`;
@@ -118,10 +200,11 @@ function EditProperty(props){
         }
         fetch(postUrl, {method: 'PUT', body: JSON.stringify(formData), headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => updateLocation(location))
+        .then(obj => updateLocation(location, obj))
         .then(obj => updateContact(contact, obj))
+        .then(obj => updateOtherFeatures(other_features, obj))
+        .then(obj => updateImages(obj))
         .then(obj => props.history.push(`/edit-property/${fields.id}`))
-        //.then(obj => updatePropertyImages(obj))
         .catch(error => console.log(error));
     }
 
@@ -149,17 +232,11 @@ function EditProperty(props){
     }
 
     let updateOtherImages = (value) => {
-        updateFields({
-            field: "other_pictures",
-            value: value
-        })
+        setOtherImgs(value);
     }
 
     let updateMainImage = (value) => {
-        updateFields({
-            field: "main_picture",
-            value: value
-        })
+        setMainImg(value);
     }
 
     let updateFeatures = (features) => {
@@ -169,16 +246,29 @@ function EditProperty(props){
         })
     }
 
+    let markToDelete = (feature) => {
+        if(feature.id !== null){
+            featuresToDelete.push(feature.id);
+        }
+    }
+
+    let markImgToDelete = (img) => {
+        if(img.id !== null){
+            imgsToDelete.push(img.id);
+        }
+    }
+
+
     return (
         <div class="custom-container">
-            <form class="property-form text-secondary" onSubmit={createProperty}>
+            <form class="property-form text-secondary" onSubmit={updateProperty}>
                 <div class="row">
                     <div class="col-12 col-md-6 justify-content-center ">
 
                             <div class="row p-0 m-0 my-2 my-lg-1">
                                 <label class="form-check-label col-12 px-2">Property type</label>
                                 <div class="col-12 my-1 px-2">
-                                    <select class="custom-select" data-field="type" name="type" value={fields.type} onChange={updateValue} required>
+                                    <select disabled class="custom-select" data-field="type" name="type" value={fields.prop_type} onChange={updateValue} required>
                                         <option value="" disabled selected>Select Type</option>
                                         {types.map((type)=><option value={type}>{type}</option>)}
                                     </select>
@@ -250,7 +340,7 @@ function EditProperty(props){
                             <div class="row col-12 p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Amenities</label>
                                 <div class="col-12 px-2">
-                                    <Select class="custom-select" name="amenities" options={fields.amenities} onChange={updateSelection}
+                                    <Select class="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
                                      value={fields.amenities} optionName={optionName} optionValue={optionValue} placeholder="Select Amenity"/>
                                 </div>
                             </div>
@@ -258,7 +348,7 @@ function EditProperty(props){
                             <div class="row col-12 p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Services</label>
                                 <div class="col-12 px-2">
-                                    <Select class="custom-select" name="services" options={fields.services} onChange={updateSelection}
+                                    <Select class="custom-select" name="services" options={props.options.services} onChange={updateSelection}
                                      value={fields.services} optionName={optionName} optionValue={optionValue} placeholder="Select Service"/>
                                 </div>
                             </div>
@@ -266,24 +356,26 @@ function EditProperty(props){
                             <div class="row col-12 p-0 m-0 my-2 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Potentials</label>
                                 <div class="col-12 px-2">
-                                    <Select class="custom-select" name="potentials" options={fields.potentials} onChange={updateSelection}
+                                    <Select class="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
                                       value={fields.potentials} optionName={optionName} optionValue={optionValue} placeholder="Select Potential"/>
                                 </div>
                             </div>
 
                             <div class="row p-0 m-0 my-4">
                                 <FeaturesInput label="Add Other Features" onChange={updateFeatures}
-                                value={fields.other_features}/>
+                                 onDelete={markToDelete} value={fields.other_features}/>
                             </div>
 
                     </div>
 
                     <div class="col-12 col-md-6">
                         <label class="form-check-label col-12 p-0 m-0 px-0 mt-1">Main Picture</label>
-                        <ImageUploader name="main_picture" src={fields.pictures.filter(img=>img.is_main)[0]} onChange={updateMainImage} />
+                        <ImageUploader name="main_picture" src={fields.pictures.filter(img=>img.is_main)}
+                            onChange={updateMainImage} onDelete={markImgToDelete}/>
                         <hr class="mx-0 mx-lg-0"/>
                         <label class="form-check-label col-12 p-0 m-0 px-0 mt-1">Other Pictures</label>
-                        <MultipleImageUploader name="other_pictures" src={fields.pictures} onChange={updateOtherImages}/>
+                        <MultipleImageUploader name="other_pictures" src={fields.pictures.filter(img=>!img.is_main)}
+                            onChange={updateOtherImages} onDelete={markImgToDelete}/>
                         <hr class="mx-0 mx-lg-0"/>
                         <div class="row p-0 m-0 my-2 my-lg-3">
                             <label class="form-check-label col-12 px-0">Contact</label>
@@ -317,41 +409,63 @@ function EditProperty(props){
 }
 
 function ImageUploader(props){
-    let image = (props.src&&props.src.src)||null;
-    let [preview, setPreview] = useState(image)
-    let fileInput = useRef(null);
+    let images = props.src||[]
+    images = images.map(img => ({img_link: img.src , img: img}))
+    let [files, updateFiles] = useLocalState(images);
 
-    let loadFile = (e) => {
+    let addImg = (e) => {
+        let src = URL.createObjectURL(e.target.files[0]);
+        updateFiles({
+            action: "push",
+            value: {
+                img_link: src,
+                img: {
+                    id: null, tool_tip: null, is_main: true,
+                    src: e.target.files[0]
+                }
+            }
+        });
         if(props.onChange !== undefined){
-            let value = [{src: e.target.files[0], is_main: true}]
+            let value = files.map(file=>file.img)
             props.onChange(value);
         }
-        let src = URL.createObjectURL(e.target.files[0]);
-        setPreview(src)
     }
 
-    let removeImg = (e) => {
-        fileInput.current.value = null;
-        setPreview(null)
+    let removeImg = (img) => {
+        updateFiles({
+            action: "remove",
+            value: img
+        })
+
         if(props.onChange !== undefined){
-            let value = []
+            let value = files.map(file=>file.img)
             props.onChange(value);
         }
+        if(props.onDelete !== undefined){
+            props.onDelete(img.img)
+        }
+    }
+
+    let src = () => {
+        if(files.length === 0){
+            return null;
+        }
+        return files[0].img_link
     }
 
     return (
         <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-center">
-            {preview !== null?
+            {files.length > 0?
                 <div class="remove-img col-12">
-                    <i class="far fa-times-circle" onClick={removeImg}></i>
+                    <i class="far fa-times-circle" onClick={(e)=>{removeImg(files[0])}}></i>
                 </div>:
                 null
             }
             <div class="main-img">
-                <img class="main-img-preview" src={preview} alt=""/>
+                <img class="main-img-preview" src={src()} alt=""/>
             </div>
-            <input ref={fileInput} type="file" name={props.name} id={props.name} class="file-input" onChange={loadFile}/>
-            {preview === null?
+            <input type="file" name={props.name} id={props.name} class="file-input" onChange={addImg}/>
+            {files.length === 0?
                 <label for={props.name} class="file-input-label">
                     <div class="upload-main-img d-flex flex-column align-content-center justify-content-center flex-wrap">
                         <div>Upload main image</div>
@@ -369,26 +483,25 @@ function ImageUploader(props){
 
 
 function MultipleImageUploader(props){
-    let images = []
-    if(props.src !== undefined){
-        props.src.map(img=>{
-            img.value = null;
-        })
-        images = props.src
-    }
+    let images = props.src||[]
+    images = images.map(img => ({img_link: img.src , img: img}))
+    let [files, updateFiles] = useLocalState(images);
 
-    let [files, updateFiles] = useLocalState([...images]);
-
-    let loadFile = (e) => {
+    let addImg = (e) => {
         let src = URL.createObjectURL(e.target.files[0]);
         updateFiles({
             action: "push",
-            value: {src: src, value: e.target.files[0]}
+            value: {
+                img_link: src,
+                img: {
+                    id: null, tool_tip: null, is_main: false,
+                    src: e.target.files[0]
+                }
+            }
         });
         if(props.onChange !== undefined){
-            let value = files.map(file=>({src: file.value, is_main: false}))
+            let value = files.map(file=>file.img)
             props.onChange(value);
-            //props.onChange({create: [], delete: []})
         }
     }
 
@@ -399,9 +512,11 @@ function MultipleImageUploader(props){
         })
 
         if(props.onChange !== undefined){
-            let value = files.map(file=>({src: file.value, is_main: false}))
+            let value = files.map(file=>file.img)
             props.onChange(value);
-            //props.onChange({create: [], delete: []})
+        }
+        if(props.onDelete !== undefined){
+            props.onDelete(img.img)
         }
     }
 
@@ -413,7 +528,7 @@ function MultipleImageUploader(props){
                         <div class="col-12 p-0 m-0">
                             <div class="other-img col-12">
                                 <i class="remove-other-img far fa-times-circle" onClick={(e)=>{removeImg(img)}}></i>
-                                <img src={img.src} alt="" />
+                                <img src={img.img_link} alt="" />
                             </div>
                         </div>
                     </div>
@@ -427,7 +542,7 @@ function MultipleImageUploader(props){
                     </div>
                 </div>
             </label>
-            <input type="file" name={props.name} class="file-input" id={props.name} onChange={loadFile}/>
+            <input type="file" name={props.name} class="file-input" id={props.name} onChange={addImg}/>
         </div>
     );
 }
@@ -441,6 +556,7 @@ function PropertyFetcher(props){
                 category,
                 price,
                 currency,
+                prop_type,
                 location{
                     region,
                     country
@@ -457,9 +573,8 @@ function PropertyFetcher(props){
                     src
                 },
                 other_features{
-                    feature{
-                        name
-                    },
+                    id,
+                    name,
                     value
                 }
             }&format=json`
@@ -469,10 +584,38 @@ function PropertyFetcher(props){
         .catch(error => console.log(error))
     }
 
+    let [amenities, setAmenities] = useState([]);
+    let [services, setServices] = useState([]);
+    let [potentials, setPotentials] = useState([]);
+
+    let fetchOptions = () => {
+        fetch(`${API_URL}/amenity/?query={id,name}&format=json`)
+        .then(res => res.json())
+        .then(results => setAmenities(results.results))
+        .catch(error => console.log(error))
+
+        fetch(`${API_URL}/service/?query={id,name}&format=json`)
+        .then(res => res.json())
+        .then(results => setServices(results.results))
+        .catch(error => console.log(error))
+
+        fetch(`${API_URL}/amenity/?query={id,name}&format=json`)
+        .then(res => res.json())
+        .then(results => setAmenities(results.results))
+        .catch(error => console.log(error))
+    }
+
+    let options = {
+        amenities: amenities,
+        services: services,
+        potentials: potentials
+    }
+
+    useEffect(fetchOptions, [])
 
     return (
         <Fetcher action={fetchProperty} placeholder={Loader()}>{property => {
-            return <EditProperty property={property}/>
+            return <EditProperty property={property} options={options}/>
         }}</Fetcher>
     );
 }
