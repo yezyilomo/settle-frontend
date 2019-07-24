@@ -5,10 +5,14 @@
 }
 
 .sidebar-lg{
-    height: calc(100vh - 64px);
-    top: 65px;
+    height: calc(100vh - 60px);
+    top: 60px;
     border: 0 solid #dddddd;
     border-right-width: 1px;
+}
+
+.sidebar-sm{
+    padding: 0 7px 0 7px;
 }
 
 

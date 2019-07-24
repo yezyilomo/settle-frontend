@@ -1,4 +1,3 @@
-import React, { } from 'react';
 import {useFetcher} from '../hooks';
 
 const Fetcher = ({ action, placeholder, children, error }) => {

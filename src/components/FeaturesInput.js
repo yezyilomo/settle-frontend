@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {setGlobal, useGlobal} from 'reactn';
+import React, { } from 'react';
+import { } from 'reactn';
 import { Block } from './';
 import './FeaturesInput.css';
 import { useLocalState } from '../hooks';

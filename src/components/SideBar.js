@@ -58,13 +58,13 @@ function SideBar(props) {
         <div class={`sidebar  text-secondary ${props.setting}`}>
             <h6 class="w-100 ml-0 mb-0 font-weight-bold">Quick Filter</h6>
             <form id="filter-form" onSubmit={handleSubmit}>
-                <select class="custom-select mr-sm-2 my-2" name="category" value={fields.category} onChange={updateValue}>
+                <select class="custom-select mr-sm-2 my-2" name="category" value={fields.category} onChange={updateValue} required>
                     <option selected disabled>I want to...</option>
                     <option value="rent">Rent</option>
-                    <option value="buy">Buy</option>
+                    <option value="sale">Buy</option>
                     <option value="book">Book</option>
                 </select>
-                <select class="custom-select mr-sm-2 my-2" name="property_type" value={fields.property_type} onChange={updateValue}>
+                <select class="custom-select mr-sm-2 my-2" name="property_type" value={fields.property_type} onChange={updateValue} required>
                     <option selected disabled>Property...</option>
                     <option value="room">Room</option>
                     <option value="apartment">Apartment</option>

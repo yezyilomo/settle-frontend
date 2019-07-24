@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './EditProperty.css';
 import {withRouter} from 'react-router-dom';
 import {useGlobal} from 'reactn';
-import {Select, FeaturesInput, Fetcher, Loader, Block} from './';
+import {
+    Select, FeaturesInput, Fetcher, Loader,
+    ImageUploader, MultipleImageUploader, PageError
+} from './';
 import {API_URL} from '../';
 import { useLocalState } from '../hooks';
 
@@ -17,7 +20,7 @@ function EditProperty(props){
 
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
-    let categories = ["rent", "sell", "book" ];
+    let categories = ["rent", "sale", "book" ];
     let types = ["room", "house", "apartment", "land", "frame", "office"];
 
     let createImage = (img) => {
@@ -67,7 +70,6 @@ function EditProperty(props){
 
     let updateImages = (prevResponse) => {
         let pictures = [...mainImg, ...otherImgs]
-        alert(JSON.stringify(pictures))
         for(let picture of pictures){
             if(picture.id === null){
                 createImage(picture);
@@ -164,6 +166,14 @@ function EditProperty(props){
         return prevResponse
     }
 
+    let redirect = (response) => {
+        props.history.replace({
+            pathname: `/property/${fields.id}`,
+            edit: true
+        })
+        return
+    }
+
     let updateProperty = (e) => {
         e.preventDefault();
         let form = e.target
@@ -204,7 +214,7 @@ function EditProperty(props){
         .then(obj => updateContact(contact, obj))
         .then(obj => updateOtherFeatures(other_features, obj))
         .then(obj => updateImages(obj))
-        .then(obj => props.history.push(`/edit-property/${fields.id}`))
+        .then(obj => redirect(obj))
         .catch(error => console.log(error));
     }
 
@@ -260,7 +270,7 @@ function EditProperty(props){
 
 
     return (
-        <div class="custom-container">
+        <div class="custom-container pb-5">
             <form class="property-form text-secondary" onSubmit={updateProperty}>
                 <div class="row">
                     <div class="col-12 col-md-6 justify-content-center ">
@@ -408,149 +418,9 @@ function EditProperty(props){
     )
 }
 
-function ImageUploader(props){
-    let images = props.src||[]
-    images = images.map(img => ({img_link: img.src , img: img}))
-    let [files, updateFiles] = useLocalState(images);
-
-    let addImg = (e) => {
-        let src = URL.createObjectURL(e.target.files[0]);
-        updateFiles({
-            action: "push",
-            value: {
-                img_link: src,
-                img: {
-                    id: null, tool_tip: null, is_main: true,
-                    src: e.target.files[0]
-                }
-            }
-        });
-        if(props.onChange !== undefined){
-            let value = files.map(file=>file.img)
-            props.onChange(value);
-        }
-    }
-
-    let removeImg = (img) => {
-        updateFiles({
-            action: "remove",
-            value: img
-        })
-
-        if(props.onChange !== undefined){
-            let value = files.map(file=>file.img)
-            props.onChange(value);
-        }
-        if(props.onDelete !== undefined){
-            props.onDelete(img.img)
-        }
-    }
-
-    let src = () => {
-        if(files.length === 0){
-            return null;
-        }
-        return files[0].img_link
-    }
-
-    return (
-        <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-center">
-            {files.length > 0?
-                <div class="remove-img col-12">
-                    <i class="far fa-times-circle" onClick={(e)=>{removeImg(files[0])}}></i>
-                </div>:
-                null
-            }
-            <div class="main-img">
-                <img class="main-img-preview" src={src()} alt=""/>
-            </div>
-            <input type="file" name={props.name} id={props.name} class="file-input" onChange={addImg}/>
-            {files.length === 0?
-                <label for={props.name} class="file-input-label">
-                    <div class="upload-main-img d-flex flex-column align-content-center justify-content-center flex-wrap">
-                        <div>Upload main image</div>
-                        <div class="d-flex flex-row justify-content-end">
-                            <span class="camera fa fa-camera"/>
-                            <span class="plus fa fa-plus"/>
-                        </div>
-                    </div>
-                </label>:
-                null
-            }
-        </div>
-    );
-}
-
-
-function MultipleImageUploader(props){
-    let images = props.src||[]
-    images = images.map(img => ({img_link: img.src , img: img}))
-    let [files, updateFiles] = useLocalState(images);
-
-    let addImg = (e) => {
-        let src = URL.createObjectURL(e.target.files[0]);
-        updateFiles({
-            action: "push",
-            value: {
-                img_link: src,
-                img: {
-                    id: null, tool_tip: null, is_main: false,
-                    src: e.target.files[0]
-                }
-            }
-        });
-        if(props.onChange !== undefined){
-            let value = files.map(file=>file.img)
-            props.onChange(value);
-        }
-    }
-
-    let removeImg = (img) => {
-        updateFiles({
-            action: "remove",
-            value: img
-        })
-
-        if(props.onChange !== undefined){
-            let value = files.map(file=>file.img)
-            props.onChange(value);
-        }
-        if(props.onDelete !== undefined){
-            props.onDelete(img.img)
-        }
-    }
-
-    return (
-        <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-start">
-            {files.map(img =>
-                <Block>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 py-1 px-1 m-0">
-                        <div class="col-12 p-0 m-0">
-                            <div class="other-img col-12">
-                                <i class="remove-other-img far fa-times-circle" onClick={(e)=>{removeImg(img)}}></i>
-                                <img src={img.img_link} alt="" />
-                            </div>
-                        </div>
-                    </div>
-                </Block>
-            )}
-            <label for={props.name} class="other-file-input-label">
-                <div class="upload-other-img d-flex flex-column align-content-center justify-content-center flex-wrap">
-                    <div class="d-flex flex-row justify-content-end mt-2">
-                        <span class="camera fa fa-camera"/>
-                        <span class="plus fa fa-plus"/>
-                    </div>
-                </div>
-            </label>
-            <input type="file" name={props.name} class="file-input" id={props.name} onChange={addImg}/>
-        </div>
-    );
-}
-
-
 function PropertyFetcher(props){
     let fetchProperty = () => {
-        return fetch(`${API_URL}/room/${props.id}/?
+        return fetch(`${API_URL}/property/${props.id}/?
             query={
                 id,
                 category,
@@ -580,8 +450,6 @@ function PropertyFetcher(props){
             }&format=json`
         )
         .then(res => res.json())
-        .then(results => results)
-        .catch(error => console.log(error))
     }
 
     let [amenities, setAmenities] = useState([]);
@@ -599,9 +467,9 @@ function PropertyFetcher(props){
         .then(results => setServices(results.results))
         .catch(error => console.log(error))
 
-        fetch(`${API_URL}/amenity/?query={id,name}&format=json`)
+        fetch(`${API_URL}/potential/?query={id,name}&format=json`)
         .then(res => res.json())
-        .then(results => setAmenities(results.results))
+        .then(results => setPotentials(results.results))
         .catch(error => console.log(error))
     }
 
@@ -614,8 +482,9 @@ function PropertyFetcher(props){
     useEffect(fetchOptions, [])
 
     return (
-        <Fetcher action={fetchProperty} placeholder={Loader()}>{property => {
-            return <EditProperty property={property} options={options}/>
+        <Fetcher action={fetchProperty}
+         placeholder={<Loader/>} error={<PageError/>}>{property => {
+            return <EditProperty history={props.history} property={property} options={options}/>
         }}</Fetcher>
     );
 }

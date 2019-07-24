@@ -1,15 +1,49 @@
 import React, {} from 'react';
 import './PropertyDetails.css';
 import { withRouter, Link } from 'react-router-dom';
-import { Block, Fetcher, Loader } from './';
+import { Block, Fetcher, Loader, Rating, PageError, Menu } from './';
 import {API_URL} from '../';
 import {useGlobal} from 'reactn';
+
+
+function InfoModal(props) {
+  return (
+    <>
+      <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Launch modal</a>
+      <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full" role="document">
+          <div class="modal-content">
+              { props.header !== undefined?
+                  <div class="modal-header">
+                    <h5 class="modal-title">{props.header}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <img src="icons/cancel.svg" width="20" height="20" alt="" />
+                    </button>
+                   </div>:
+                   null
+              }
+            <div class="modal-body p-0">
+                {props.children}
+            </div>
+            { props.footer !== undefined?
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>:
+                null
+            }
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
 
 function ImageModal(props) {
     return (
         <div class="img-modal modal fade p-0 m-0" id={`Modal_${props.id}`}>
             <button class="modal-close close" data-dismiss="modal" aria-label="Close">
-                <img src="icons/cancel.svg" width="20" height="20" alt="" />
+                <img src="icons/cancel.svg" width="23" height="23" alt="" />
             </button>
             <div class="modal-dialog modal-dialog-centered mx-auto modal-lg" role="document">
                 <div class="modal-content border-0">
@@ -48,14 +82,15 @@ function ImageModal(props) {
 }
 
 function PropertyImage(props) {
+    let other = props.other.filter(img => img.id !== props.id)
     return (
         <Block>
-            <div class="row pictures col-6 col-sm-6 col-md-4 col-lg-3 p-1 p-sm-2 m-0">
+            <div class="row pictures col-6 col-sm-6 col-md-4 col-lg-3 mx-0 p-1">
                 <div class="other-prop-img col-12">
                     <img class="small-img" src={props.src} alt="" data-toggle="modal" data-target={`#Modal_${props.id}`} />
                 </div>
             </div>
-            <ImageModal src={props.src} id={props.id} other={props.other} />
+            <ImageModal src={props.src} id={props.id} other={other} />
         </Block>
     )
 }
@@ -91,7 +126,7 @@ function Badges(props) {
 function PropertyDetails(props) {
     let [user, ] = useGlobal("User");
     let fetchProperty = () => {
-        return fetch(`${API_URL}/room/${props.property}/?
+        return fetch(`${API_URL}/property/${props.property}/?
             query={
                 id,
                 category,
@@ -120,12 +155,11 @@ function PropertyDetails(props) {
             }&format=json`
         )
         .then(res => res.json())
-        .then(results => results)
-        .catch(error => console.log(error))
     }
 
     return (
-        <Fetcher action={fetchProperty} placeholder={Loader()}>{property => {
+        <Fetcher action={fetchProperty}
+        placeholder={<Loader/>} error={<PageError/>}>{property => {
 
             let main_img = property.pictures.filter((picture) => picture.is_main)
             if (main_img.length < 1) {
@@ -138,14 +172,14 @@ function PropertyDetails(props) {
 
             let redirect = (status) => {
                 if(status === 204){
-                    props.history.goBack();
+                    props.history.push('/my-properties/');
                     return
                 }
                 // Report Error
             }
 
             let deleteProperty = (e) => {
-                let postUrl = `${API_URL}/room/${props.property}/`;
+                let postUrl = `${API_URL}/${property.category}/${property.id}/`;
                 let headers = {
                     'Authorization': `Token ${user.authToken}`,
                     'Content-Type': 'application/json'
@@ -157,19 +191,24 @@ function PropertyDetails(props) {
             }
             return (
                 <div class="col-12 px-2 py-1 m-0">
+                    {props.edit?
+                        <div class="row col-12 p-0 m-0">
+                            <div class="actions row col-12 col-lg-6 mb-3 mt-0 my-lg-3 mx-0 px-0">
+                                <div class="col text-center py-2">
+                                    <Link to={`/edit-property/${property.id}`} class="edit-property">
+                                        <b>Edit <span class="fas fa-edit mt-2 ml-1 ml-lg-3 edit-property-icon"/></b>
+                                    </Link>
+                                </div>
+                                <div class="col text-center py-2">
+                                    <b class="delete-property">Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 delete-property-icon" onClick={deleteProperty}/></b>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6"></div>
+                        </div>:
+                        null
+                    }
                     <div class="property-details row col-12 p-0 m-0">
-                        {props.edit?
-                            <div class="actions col-12 text-center p-0 m-0 mb-3">
-                                <Link to={`/edit-property/${property.id}`}>
-                                <b>Edit <span class="fas fa-edit mt-2 ml-1 ml-lg-3 edit-property text-danger"/></b>
-                                </Link>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <b>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 remove-feature text-danger" onClick={deleteProperty}/></b>
-                                <hr class="m-0 p-0"/>
-                            </div>:
-                            null
-                        }
-                        <div class="main-prop-img col-12 col-lg-6">
+                        <div class="main-prop-img col-12 col-lg-6 mx-0 px-0">
                             <img class="main-img" src={main_img.src} alt="" data-toggle="modal" data-target={`#Modal_${main_img.id}`} />
                             <ImageModal src={main_img.src} id={main_img.id} other={other_imgs} />
                         </div>
@@ -182,18 +221,8 @@ function PropertyDetails(props) {
                                 Price: {property.currency} {property.price} per {property.unit_of_payment_terms}
                             </div>
                             <div class="peyment-terms">Payment terms: {property.payment_terms} {property.unit_of_payment_terms}s</div>
-                            <div class="starrating d-flex justify-center flex-row-reverse m-0 p-0">
-                                <input type="radio" id={`star5-${property.id}`} name={`rating${property.id}`} value="5" />
-                                <label for={`star5-${property.id}`} title="5 star"><i class="fa fa-star"></i></label>
-                                <input type="radio" id={`star4-${property.id}`} name={`rating${property.id}`} value="4" />
-                                <label for={`star4-${property.id}`} title="4 star"><i class="fa fa-star"></i></label>
-                                <input type="radio" id={`star3-${property.id}`} name={`rating${property.id}`} value="3" />
-                                <label for={`star3-${property.id}`} title="3 star"><i class="fa fa-star"></i></label>
-                                <input type="radio" id={`star2-${property.id}`} name={`rating${property.id}`} value="2" />
-                                <label for={`star2-${property.id}`} title="2 star"><i class="fa fa-star"></i></label>
-                                <input type="radio" id={`star1-${property.id}`} name={`rating${property.id}`} value="1" />
-                                <label for={`star1-${property.id}`} title="1 star"><i class="fa fa-star"></i></label>
-                                <span>Rating:</span>
+                            <div class="property-rating">
+                                <span class="rating-label">Rating</span><Rating rating={property.rating}/>
                             </div>
                             <div class="w-100" />
                             {property.other_features.map((feature) => {
@@ -208,11 +237,20 @@ function PropertyDetails(props) {
                     </div>
 
                     <div class="row col-12 mb-3 m-0 mt-3 mt-sm-5 p-0 text-dark">
-                        <div class="w-100 ml-1 ml-sm-2 mb-0 mt-0 h5">Other Images</div>
-                        {other_imgs.map(img =>
-                            <PropertyImage src={img.src} id={img.id} other={other_imgs} />
-                        )}
+                        <div class="w-100 my-0 h5">Other Images</div>
+                        <div class="row mx-0 px-0 mt-1">
+                           {other_imgs.map(img =>
+                               <PropertyImage src={img.src} id={img.id} other={other_imgs} />
+                           )}
+                        </div>
                     </div>
+                    <InfoModal header="Menu">
+                        <nav class="navbar col-12 navbar-light p-0 m-0 d-block d-lg-none">
+                            <div class="navbar-collapse m-0 p-0" id="navbarTogglerDemo03">
+                                <Menu/>
+                            </div>
+                        </nav>
+                    </InfoModal>
                 </div>)
         }}</Fetcher>
     )

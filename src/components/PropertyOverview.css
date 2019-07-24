@@ -54,35 +54,8 @@
     color: gray;
 }
 
-.starrating {
-    float: left;
-    overflow: hidden;
-    position: relative;
-}
-
-.starrating>span {
+.rating-label{
     padding-right: 10px;
-}
-
-.starrating>input {
-    /* Remove radio buttons */
-    display: none;
-    margin: 0;
-    padding: 0;
-}
-
-.starrating>label {
-    margin: 0 2px 0 2px;
-    cursor: pointer;
-    font-size: 15px;
-    display: inline-block;
-    color: gray;
-}
-
-.starrating>input:checked ~ label {
-    color: #17a2b8;
-}
-
-.starrating>input:hover ~ label {
-    color: #17a2b8;
+    position: relative;
+    bottom: 2px;
 }

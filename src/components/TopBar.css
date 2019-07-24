@@ -7,6 +7,7 @@
     padding-top: 5px;
     border-width: 0;
     padding: 0;
+    background-color: white;
 }
 
 .menu-icon{
@@ -54,9 +55,10 @@
 }
 
 .search-input {
-    height: 35px;
+    height: 38px;
+    border-radius: 5px;
     border-color: rgb(230, 230, 230);
-    padding-left: 35px;
+    padding-left: 37px;
     text-align: center;
     background-color: rgb(230, 230, 230);
     border-color: white;
@@ -64,11 +66,20 @@
     transition: background-color 0.1s linear, box-shadow 0.1s linear, border-width 0.1s linear, border-color 0.1s linear;
 }
 
+@media only screen and (min-width: 992px) {
+   /* A little twerk */
+   .search-input {
+       height: 42px;
+       border-radius: 7px;
+   }
+}
+
 .search-input:focus{
     box-shadow: 0 0 0 0 white;
     border-width: 1px;
     border-color: rgb(230, 230, 230);
     background-color: rgb(250, 250, 250);
+    text-align: left;
 }
 
 .search-button {

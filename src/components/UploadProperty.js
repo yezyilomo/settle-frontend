@@ -1,38 +1,31 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './UploadProperty.css';
 import {withRouter} from 'react-router-dom';
-import {setGlobal, useGlobal} from 'reactn';
-import {Select, FeaturesInput, Block} from './';
+import {useGlobal} from 'reactn';
+import {
+    Select, FeaturesInput, ImageUploader,
+    MultipleImageUploader, Fetcher, Loader
+} from './';
 import {API_URL} from '../';
-import { useLocalState } from '../hooks';
 
-let options = [
-    {id: 1, name: "one"},
-    {id: 2, name: "two"},
-    {id: 3, name: "three"},
-    {id: 4, name: "four"},
-    {id: 5, name: "five"},
-    {id: 6, name: "six"}
-];
 
-setGlobal({
-    UploadProperty: {
-        amenities: {selected: [], options: [...options]},
-        services: {selected: [], options: [...options]},
-        potentials: {selected: [], options: [...options]},
-        main_picture: [],
-        other_pictures: [],
-        other_features: []
-    }
-})
+let initialData = {
+    amenities: {selected: [], options: []},
+    services: {selected: [], options: []},
+    potentials: {selected: [], options: []},
+    main_picture: [],
+    other_pictures: [],
+    other_features: []
+}
+
 
 function UploadProperty(props){
-    let [fields, setFields] = useGlobal("UploadProperty");
+    let [fields, setFields] = useState(initialData);
     let [user, ] = useGlobal("User");
 
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
-    let categories = ["rent", "sell", "book" ];
+    let categories = ["rent", "sale", "book" ];
     let types = ["room", "house", "apartment", "land", "frame", "office"];
 
     let postImages = (propertyID, pictures) => {
@@ -102,7 +95,7 @@ function UploadProperty(props){
         fetch(postUrl, {method: 'POST', body: JSON.stringify(formData), headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => updatePropertyImages(obj))
-        .catch(error => console.log(error));
+        .catch(error => alert(error));
     }
 
     let updateValue = (e) => {
@@ -148,7 +141,7 @@ function UploadProperty(props){
                 <div class="row">
                     <div class="col-12 col-md-6 justify-content-center ">
 
-                            <div class="row p-0 m-0 my-2 my-lg-1">
+                            <div class="row p-0 m-0 my-0 my-lg-1">
                                 <label class="form-check-label col-12 px-2">Property type</label>
                                 <div class="col-12 my-1 px-2">
                                     <select class="custom-select" name="type" value={fields.type} onChange={updateValue} required>
@@ -224,21 +217,21 @@ function UploadProperty(props){
                                 <label class="form-check-label col-12 px-2">Features</label>
                                 <div class="row col-12 p-0 m-0 mt-1 mb-3">
                                     <div class="col-12 px-2">
-                                        <Select class="custom-select" name="amenities" options={fields.amenities.options} onChange={updateSelection}
+                                        <Select class="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
                                          value={fields.amenities.selected} optionName={optionName} optionValue={optionValue} placeholder="Amenities"/>
                                     </div>
                                 </div>
 
                                 <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                                     <div class="col-12 px-2">
-                                        <Select class="custom-select" name="services" options={fields.services.options} onChange={updateSelection}
+                                        <Select class="custom-select" name="services" options={props.options.services} onChange={updateSelection}
                                          value={fields.services.selected} optionName={optionName} optionValue={optionValue} placeholder="Services"/>
                                     </div>
                                 </div>
 
                                 <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                                     <div class="col-12 px-2">
-                                        <Select class="custom-select" name="potentials" options={fields.potentials.options} onChange={updateSelection}
+                                        <Select class="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
                                           value={fields.potentials.selected} optionName={optionName} optionValue={optionValue} placeholder="Potentials"/>
                                     </div>
                                 </div>
@@ -279,7 +272,7 @@ function UploadProperty(props){
                     </div>
                 </div>
 
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mb-4">
                     <button type="submit" class="btn btn-info mt-4 col-11 col-sm-6">Submit</button>
                 </div>
 
@@ -288,125 +281,41 @@ function UploadProperty(props){
     )
 }
 
-function ImageUploader(props){
-    let image = (props.src&&props.src.src)||null;
-    let [preview, setPreview] = useState(image)
-    let fileInput = useRef(null);
+function OptionsFetcher(props) {
+    let [amenities, setAmenities] = useState(null);
+    let [services, setServices] = useState(null);
+    let [potentials, setPotentials] = useState(null);
+    let fetchOptions = () => {
+        fetch(`${API_URL}/amenity/?query={id,name}&format=json`)
+        .then(res => res.json())
+        .then(results => setAmenities(results.results))
+        .catch(error => console.log(error));
 
-    let loadFile = (e) => {
-        if(props.onChange !== undefined){
-            let value = [{src: e.target.files[0], is_main: true}]
-            props.onChange(value);
-        }
-        let src = URL.createObjectURL(e.target.files[0]);
-        setPreview(src)
+        fetch(`${API_URL}/service/?query={id,name}&format=json`)
+        .then(res => res.json())
+        .then(results => setServices(results.results))
+        .catch(error => console.log(error));
+
+        fetch(`${API_URL}/potential/?query={id,name}&format=json`)
+        .then(res => res.json())
+        .then(results => setPotentials(results.results))
+        .catch(error => console.log(error));
     }
-
-    let removeImg = (e) => {
-        fileInput.current.value = null;
-        setPreview(null)
-        if(props.onChange !== undefined){
-            let value = []
-            props.onChange(value);
-        }
+    useEffect(fetchOptions, []);
+    let options = {
+        amenities: amenities,
+        services: services,
+        potentials: potentials
     }
 
     return (
-        <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-center">
-            {preview !== null?
-                <Block>
-                    <div class="remove-img col-12">
-                        <i class="far fa-times-circle" onClick={removeImg}></i>
-                    </div>
-                    <div class="main-img">
-                        <img class="main-img-preview" src={preview} alt=""/>
-                    </div>
-                </Block>:
-                null
-            }
-            <input ref={fileInput} type="file" name={props.name} id={props.name} class="file-input" onChange={loadFile}/>
-            {preview === null?
-                <label for={props.name} class="file-input-label">
-                    <div class="upload-main-img d-flex flex-column align-content-center justify-content-center flex-wrap">
-                        <div>Upload main image</div>
-                        <div class="d-flex flex-row justify-content-end">
-                            <span class="camera fa fa-camera"/>
-                            <span class="plus fa fa-plus"/>
-                        </div>
-                    </div>
-                </label>:
-                null
-            }
-        </div>
+        amenities !== null && services !== null && potentials !== null?
+            <UploadProperty options={options}/>:
+            <Loader/>
     );
 }
 
 
-function MultipleImageUploader(props){
-    let images = []
-    if(props.src !== undefined){
-        props.src.map(img=>{
-            img.value = null;
-        })
-        images = props.src
-    }
-
-    let [files, updateFiles] = useLocalState([...images]);
-
-    let loadFile = (e) => {
-        let src = URL.createObjectURL(e.target.files[0]);
-        updateFiles({
-            action: "push",
-            value: {src: src, value: e.target.files[0]}
-        });
-        if(props.onChange !== undefined){
-            let value = files.map(file=>({src: file.value, is_main: false}))
-            props.onChange(value);
-            //props.onChange({create: [], delete: []})
-        }
-    }
-
-    let removeImg = (img) => {
-        updateFiles({
-            action: "remove",
-            value: img
-        })
-
-        if(props.onChange !== undefined){
-            let value = files.map(file=>({src: file.value, is_main: false}))
-            props.onChange(value);
-            //props.onChange({create: [], delete: []})
-        }
-    }
-
-    return (
-        <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-start">
-            {files.map(img =>
-                <Block>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 py-1 px-1 m-0">
-                        <div class="col-12 p-0 m-0">
-                            <div class="other-img col-12">
-                                <i class="remove-other-img far fa-times-circle" onClick={(e)=>{removeImg(img)}}></i>
-                                <img src={img.src} alt="" />
-                            </div>
-                        </div>
-                    </div>
-                </Block>
-            )}
-            <label for={props.name} class="other-file-input-label">
-                <div class="upload-other-img d-flex flex-column align-content-center justify-content-center flex-wrap">
-                    <div class="d-flex flex-row justify-content-end mt-2">
-                        <span class="camera fa fa-camera"/>
-                        <span class="plus fa fa-plus"/>
-                    </div>
-                </div>
-            </label>
-            <input type="file" name={props.name} class="file-input" id={props.name} onChange={loadFile}/>
-        </div>
-    );
-}
-
-
-const comp = withRouter(UploadProperty);
+const comp = withRouter(OptionsFetcher);
 
 export { comp as UploadProperty }
