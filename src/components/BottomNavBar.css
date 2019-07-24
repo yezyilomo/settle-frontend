@@ -1,0 +1,14 @@
+
+.bottom-nav-bar{
+    padding: 7px 0 8px 0;
+    background-color: white;
+    border-top: 1px solid rgb(240, 240, 240);
+}
+
+.bottom-nav-bar>div{
+    padding: 0;
+}
+
+.bottom-nav-bar>div>img{
+    cursor: pointer;
+}
