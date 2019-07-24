@@ -1,26 +1,7 @@
-* {
-    box-sizing: border-box;
-}
-
-.contents {
-    margin-top: 65px;
-}
-
-.contents-body{
-    /* background-color: rgb(253, 253, 253); */
-    min-height: calc(100vh - 165px);
-}
-
-.scroll-up img {
-    position: fixed;
-    bottom: 50px;
-    right: 10px;
-    filter: contrast(50%);
-    cursor: pointer;
-}
-
-.bottom-nav-bar{
-    padding: 5px 0 6px 0;
-    background-color: white;
-    border-top: 1px solid rgb(240, 240, 240);
+.horizontal-property-container{
+    white-space: nowrap;
+    width: 100%;
+    height: 200px;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }

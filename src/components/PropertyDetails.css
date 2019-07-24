@@ -27,6 +27,10 @@
     top: 12px;
 }
 
+.img-modal .modal-close img{
+    -webkit-filter: invert(100%);
+}
+
 .full-img{
     width: 100%;
     height: auto;
@@ -72,35 +76,42 @@
     color: gray;
 }
 
-.starrating {
-    float: left;
-    overflow: hidden;
-    position: relative;
+.actions{
+    border-radius: 5px;
+    background-color: rgba(245, 245, 245);
 }
 
-.starrating>span {
-    padding-right: 10px;
+.edit-property{
+    color: black;
 }
 
-.starrating>input {
-    /* Remove radio buttons */
-    display: none;
+.delete-property:hover{
+    text-decoration: underline;
+    color: rgb(250, 39, 39);
+    cursor: pointer;
+}
+
+/* Beautiful Modal */
+.modal-full {
+    min-width: 100%;
     margin: 0;
     padding: 0;
+    bottom: -1px;
+    position: fixed;
 }
 
-.starrating>label {
-    margin: 0 2px 0 2px;
-    cursor: pointer;
-    font-size: 15px;
-    display: inline-block;
-    color: gray;
+.modal-full .modal-content {
+    border-radius: 20px 20px 0 0;
+    animation: scrollup .5s forwards;
+    padding: 0;
+    margin: 0;
 }
 
-.starrating>input:checked~label {
-    color: #17a2b8;
-}
-
-.starrating>input:hover~label {
-    color: #17a2b8;
+@keyframes scrollup {
+    from {
+        height: 0;
+    }
+    to {
+        height: 90vh;
+    }
 }

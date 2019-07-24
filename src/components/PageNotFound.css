@@ -1,0 +1,9 @@
+.page-not-found{
+    margin-top: 20vh;
+    font-size: 1.2em;
+}
+
+.page-not-found-icon{
+    color: rgb(100, 100, 100);
+    font-size: 2em;
+}

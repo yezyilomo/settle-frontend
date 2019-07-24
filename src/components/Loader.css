@@ -1,3 +1,23 @@
 .page-loader{
     margin-top: 20vh;
 }
+
+.inline-loader{
+    background-color: #eeeeee;
+    border-radius: 5px;
+    padding: 5px 0 5px 0;
+}
+
+.spinner-border{
+
+}
+
+.page-loader .spinner-border{
+    border-width: 2px;
+}
+
+.inline-loader .spinner-border{
+    height: 25px;
+    width: 25px;
+    border-width: 1px;
+}

@@ -1,0 +1,38 @@
+
+.upload-other-img:hover span{
+    color: rgba(150, 150, 150);
+}
+
+.upload-other-img{
+    cursor: pointer;
+    overflow: hidden;
+    margin: 2px 0 2px 5px;
+}
+
+.upload-other-img .camera{
+    font-size: 6em;
+    color: rgba(170, 170, 170);
+}
+
+.upload-other-img .plus{
+    font-size: 20px;
+    color: rgba(170, 170, 170);
+}
+
+.other-file-input-label{
+
+}
+
+.other-img-preview{
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 2px;
+}
+
+.remove-other-img{
+    cursor: pointer;
+    font-size: 20px;
+    position: absolute;
+    margin: 3px;
+    color: rgba(50, 50, 50);
+}

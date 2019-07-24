@@ -1,0 +1,21 @@
+.page-error{
+    margin-top: 20vh;
+    font-size: 1.2em;
+}
+
+.error-icon{
+    color: rgb(100, 100, 100);
+}
+
+.page-error .error-icon{
+    font-size: 1.5em;
+}
+
+.inline-error{
+    background-color: #eeeeee;
+    border-radius: 5px;
+}
+
+.inline-error .error-icon{
+    font-size: 1em;
+}
