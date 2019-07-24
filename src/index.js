@@ -14,6 +14,14 @@ window.onscroll = () => {
     }
 }
 
-ReactDOM.render(<Router base="/"><App/></Router>, document.getElementById('root'));
+function Application(props){
+    return (
+        <Router base="/">
+            <App/>
+        </Router>
+    );
+}
+
+ReactDOM.render(<Application/>, document.getElementById('root'));
 
 export {API_URL}
