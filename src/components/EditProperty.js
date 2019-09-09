@@ -84,135 +84,68 @@ function EditProperty(props){
         return prevResponse
     }
 
-    let updateLocation = (location, prevResponse) => {
-        let locationID = fields.location.id;
-        let postUrl = `${API_URL}/location/${locationID}/`;
-        let headers = {
-            'Authorization': `Token ${user.authToken}`,
-            'Content-Type': 'application/json'
-        }
-        return fetch(postUrl, {method: 'PUT', body: JSON.stringify(location), headers: headers})
-        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => obj)
-        .catch(error => console.log(error));
-    }
-
-    let updateContact = (contact, prevResponse) => {
-        let contactID = fields.contact.id;
-        let postUrl = `${API_URL}/contact/${contactID}/`;
-        let headers = {
-            'Authorization': `Token ${user.authToken}`,
-            'Content-Type': 'application/json'
-        }
-        return fetch(postUrl, {method: 'PUT', body: JSON.stringify(contact), headers: headers})
-        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => obj)
-        .catch(error => console.log(error));
-    }
-
-    let updateFeature = (feature) => {
-        let postUrl = `${API_URL}/feature/${feature.id}/`;
-        let headers = {
-            'Authorization': `Token ${user.authToken}`,
-            'Content-Type': 'application/json'
-        }
-        return fetch(postUrl, {method: 'PUT', body: JSON.stringify(feature), headers: headers})
-        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => obj)
-        .catch(error => console.log(error));
-    }
-
-    let createFeature = (feature) => {
-        feature = {
-            property: fields.id,
-            name: feature.name,
-            value: feature.value
-        }
-        let postUrl = `${API_URL}/feature/`;
-        let headers = {
-            'Authorization': `Token ${user.authToken}`,
-            'Content-Type': 'application/json'
-        }
-        return fetch(postUrl, {method: 'POST', body: JSON.stringify(feature), headers: headers})
-        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => obj)
-        .catch(error => console.log(error));
-    }
-
-    let deleteFeature = (featureID) => {
-        let postUrl = `${API_URL}/feature/${featureID}/`;
-        let headers = {
-            'Authorization': `Token ${user.authToken}`,
-            'Content-Type': 'application/json'
-        }
-        return fetch(postUrl, {method: 'DELETE', body: "", headers: headers})
-        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => obj)
-        .catch(error => console.log(error));
-    }
-
-    let updateOtherFeatures = (features, prevResponse) => {
-        for(let feature of features){
-            if(feature.id === null){
-                createFeature(feature);
-            }
-            else{
-                updateFeature(feature);
-            }
-        }
-        for(let feature of featuresToDelete){
-            deleteFeature(feature)
-        }
-        return prevResponse
-    }
-
     let redirect = (response) => {
-        props.history.replace({
+        return props.history.replace({
             pathname: `/property/${fields.id}`,
             edit: true
         })
-        return
     }
 
     let updateProperty = (e) => {
         e.preventDefault();
         let form = e.target
+
+        let features = {
+            create: [],
+            remove: [],
+            update: {}
+        }
+        
+        for(let feature of fields.other_features){
+            if(featuresToDelete.indexOf(feature.id) !== -1){
+                //To delete
+                continue
+            }
+            else if(feature.id === null){
+                let featureValues = {name: feature.name, value: feature.value}
+                features.create.push(featureValues)
+            }
+            else{
+                let featureValues = {name: feature.name, value: feature.value}
+                features.update[`${feature.id}`] = featureValues
+            }
+        }
+        features.remove = featuresToDelete
+
         let formData = {
             category: form.category.value,
             price: form.price.value,
             currency: form.currency.value,
-            amenities: JSON.parse(form.amenities.value),
-            services: JSON.parse(form.services.value),
-            potentials: JSON.parse(form.potentials.value)
-            //other_features: {"delete": featuresToDelete},
+            //amenities: JSON.parse(form.amenities.value),
+            //services: JSON.parse(form.services.value),
+            //potentials: JSON.parse(form.potentials.value),
+            location: {
+                country: form.country.value,
+                region: form.region.value,
+                distric: form.distric.value,
+                street1: form.street1.value,
+                street2: form.street2.value
+            },
+            contact: {
+                name: form._name.value,
+                email: form.email.value,
+                phone: form.phone.value
+            },
+            other_features: features
         }
 
-        let location = {
-            country: form.country.value,
-            region: form.region.value,
-            distric: form.distric.value,
-            street1: form.street1.value,
-            street2: form.street2.value
-        }
-
-        let contact = {
-            name: form._name.value,
-            email: form.email.value,
-            phone: form.phone.value
-        }
-
-        let other_features = fields.other_features
-
-        let postUrl = `${API_URL}/${form.type.value}/${fields.id}/`;
+        let postUrl = `${API_URL}/${form.type.value}/${fields.id}/?format=json`;
         let headers = {
             'Authorization': `Token ${user.authToken}`,
             'Content-Type': 'application/json'
         }
         fetch(postUrl, {method: 'PUT', body: JSON.stringify(formData), headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => updateLocation(location, obj))
-        .then(obj => updateContact(contact, obj))
-        .then(obj => updateOtherFeatures(other_features, obj))
         .then(obj => updateImages(obj))
         .then(obj => redirect(obj))
         .catch(error => console.log(error));
