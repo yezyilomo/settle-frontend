@@ -62,7 +62,7 @@ function ImageUploader(props){
                 </Block>:
                 null
             }
-            <input type="file" name={props.name} id={props.name} class="file-input" onChange={addImg}/>
+            <input type="file" accept="image/*" name={props.name} id={props.name} class="file-input" onChange={addImg}/>
             {files.length === 0?
                 <label for={props.name} class="file-input-label">
                     <div class="upload-main-img d-flex flex-column align-content-center justify-content-center flex-wrap">

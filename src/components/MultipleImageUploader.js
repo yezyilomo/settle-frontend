@@ -64,7 +64,7 @@ function MultipleImageUploader(props){
                     </div>
                 </div>
             </label>
-            <input type="file" name={props.name} class="file-input" id={props.name} onChange={addImg}/>
+            <input type="file" accept="image/*" name={props.name} class="file-input" id={props.name} onChange={addImg}/>
         </div>
     );
 }

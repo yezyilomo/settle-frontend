@@ -172,14 +172,14 @@ function PropertyDetails(props) {
 
             let redirect = (status) => {
                 if(status === 204){
-                    props.history.push('/my-properties/');
+                    props.history.replace('/my-properties/');
                     return
                 }
                 // Report Error
             }
 
             let deleteProperty = (e) => {
-                let postUrl = `${API_URL}/${property.category}/${property.id}/`;
+                let postUrl = `${API_URL}/property/${property.id}/`;
                 let headers = {
                     'Authorization': `Token ${user.authToken}`,
                     'Content-Type': 'application/json'
@@ -200,7 +200,7 @@ function PropertyDetails(props) {
                                     </Link>
                                 </div>
                                 <div class="col text-center py-2">
-                                    <b class="delete-property">Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 delete-property-icon" onClick={deleteProperty}/></b>
+                                    <b class="delete-property" onClick={deleteProperty}>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 delete-property-icon"/></b>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6"></div>

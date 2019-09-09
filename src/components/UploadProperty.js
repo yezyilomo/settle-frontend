@@ -31,6 +31,10 @@ function UploadProperty(props){
     let postImages = (propertyID, pictures) => {
         if(pictures.length === 0){
             // Render property
+            props.history.push({
+                pathname: `/property/${propertyID}`,
+                edit: true
+            })
             props.history.push(`/property/${propertyID}`);
             return
         }
@@ -76,14 +80,22 @@ function UploadProperty(props){
                 street2: form.street2.value
             },
             contact: {
-                name: form.name.value,
+                name: form.full_name.value,
                 email: form.email.value,
                 phone: form.phone.value
             },
-            amenities: JSON.parse(form.amenities.value),
-            services: JSON.parse(form.services.value),
-            potentials: JSON.parse(form.potentials.value),
-            other_features: fields.other_features
+            amenities: {
+                "add": JSON.parse(form.amenities.value)
+            },
+            services: {
+                "add": JSON.parse(form.services.value)
+            },
+            potentials: {
+                "add": JSON.parse(form.potentials.value)
+            },
+            other_features: {
+                "create": fields.other_features
+            }
         }
 
         let postUrl = `${API_URL}/${form.type.value}/`;
@@ -254,17 +266,17 @@ function UploadProperty(props){
                             <label class="form-check-label col-12 px-0">Contact</label>
                             <div class="col-12 my-1 px-0">
                                 <input type="text" name="phone" value={fields.phone} onChange={updateValue}
-                                class="form-control" placeholder="Phone Number" />
+                                class="form-control" placeholder="Phone Number" required/>
                             </div>
                             <div class="col-12 my-1">
                                 <div class="row">
                                     <div class="col m-0 p-0 pr-1">
-                                        <input type="text" name="name" value={fields.name} onChange={updateValue}
-                                        class="form-control" placeholder="Name" />
+                                        <input type="text" name="full_name" value={fields.name} onChange={updateValue}
+                                        class="form-control" placeholder="Name" required/>
                                     </div>
                                     <div class="col m-0 p-0 pl-1">
                                         <input type="text" name="email" value={fields.email} onChange={updateValue}
-                                        class="form-control" placeholder="Email" />
+                                        class="form-control" placeholder="Email" required/>
                                     </div>
                                 </div>
                             </div>
@@ -310,7 +322,7 @@ function OptionsFetcher(props) {
 
     return (
         amenities !== null && services !== null && potentials !== null?
-            <UploadProperty options={options}/>:
+            <UploadProperty history={props.history} options={options}/>:
             <Loader/>
     );
 }

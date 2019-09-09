@@ -23,7 +23,7 @@ function SearchProperties(props) {
             rating,
             payment_terms,
             unit_of_payment_terms
-        }&loc=${location}&format=json`
+        }&search=${location}&format=json`
         )
         .then(res => res.json())
     }

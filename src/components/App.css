@@ -13,7 +13,7 @@
 
 .scroll-up img {
     position: fixed;
-    bottom: 45px;
+    bottom: 50px;
     right: 10px;
     filter: contrast(50%);
     cursor: pointer;

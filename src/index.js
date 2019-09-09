@@ -4,7 +4,7 @@ import './index.css';
 import {App} from './components'
 import {HashRouter as Router} from 'react-router-dom';
 
-let API_URL = "http://localhost:8000/api";
+let API_URL = "http://192.168.8.100:8000/api";
 
 window.onScrollActions = {}
 
@@ -14,6 +14,14 @@ window.onscroll = () => {
     }
 }
 
-ReactDOM.render(<Router base="/"><App/></Router>, document.getElementById('root'));
+function Application(props){
+    return (
+        <Router base="/">
+            <App/>
+        </Router>
+    );
+}
+
+ReactDOM.render(<Application/>, document.getElementById('root'));
 
 export {API_URL}

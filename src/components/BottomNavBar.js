@@ -43,19 +43,19 @@ function BottomNavBar(props){
     return (
         <div class="bottom-nav-bar d-md-none row fixed-bottom">
             <div class="col text-center">
-                <img src={`icons/house${active(rentPath)}.svg`} width="25" height="25" alt="" onClick={goToRent}/>
+                <img src={`icons/house${active(rentPath)}.svg`} width="26" height="26" alt="" onClick={goToRent}/>
             </div>
             <div class="col text-center">
-                <img src={`icons/tag${active(buyPath)}.svg`} width="25" height="25" alt="" onClick={goToBuy}/>
+                <img src={`icons/tag${active(buyPath)}.svg`} width="26" height="26" alt="" onClick={goToBuy}/>
             </div>
             <div class="col text-center">
-                <img src={`icons/book${active(bookPath)}.svg`} width="25" height="25" alt="" onClick={goToBook}/>
+                <img src={`icons/book${active(bookPath)}.svg`} width="26" height="26" alt="" onClick={goToBook}/>
             </div>
             <div class="col text-center">
-                <img src={`icons/settings${active(filterPath)}.svg`} width="25" height="25" alt="" onClick={goToFilter}/>
+                <img src={`icons/settings${active(filterPath)}.svg`} width="26" height="26" alt="" onClick={goToFilter}/>
             </div>
             <div class="col text-center">
-                <img src={`icons/magnifying-glass${active(searchPath)}.svg`} width="25" height="25" alt="" onClick={search}/>
+                <img src={`icons/magnifying-glass${active(searchPath)}.svg`} width="26" height="26" alt="" onClick={search}/>
             </div>
         </div>
     );
