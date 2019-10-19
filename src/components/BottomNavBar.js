@@ -36,10 +36,6 @@ function BottomNavBar(props){
         return ""
     }
 
-    let setActive = (e) => {
-        alert('Hello')
-    }
-
     return (
         <div class="bottom-nav-bar d-md-none row fixed-bottom">
             <div class="col text-center">

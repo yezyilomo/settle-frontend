@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
+import React, { } from 'react';
+import { } from 'react-router-dom';
 import './Home.css';
 import {
-    Fetcher, Loader, PropertyGroup, Rating, InlineLoader,
-    PageError
+    Fetcher, Loader, PropertyGroup, PageError
 } from './'
 import {API_URL} from '../';
 
-
+/*
 function Overview(props) {
     let main_img = props.property.pictures.filter((picture) => picture.is_main)
     if (main_img.length < 1) {
@@ -37,6 +36,7 @@ function Group(props) {
         </div>
     )
 }
+*/
 
 function Home(props) {
     let fetchPropertiesToRent = () => {

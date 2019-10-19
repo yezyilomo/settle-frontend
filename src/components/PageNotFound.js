@@ -1,11 +1,11 @@
 import React, { } from 'react';
 import './PageNotFound.css';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 
 function PageNotFound(props) {
-    let path = props.history.location.pathname;
-    let search = props.history.location.search||"";
+    // let path = props.history.location.pathname;
+    // let search = props.history.location.search||"";
     return (
         <div class="col-12 text-center">
             <div class="col-12 page-not-found">

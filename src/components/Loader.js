@@ -1,6 +1,6 @@
 import React, { } from 'react';
 import './Loader.css';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 
 function PageLoader(props) {
