@@ -43,7 +43,7 @@ function LogIn(props) {
         var formdata = new FormData();
         formdata.append("username", username);
         formdata.append("password", password);
-        let loginUrl = `${API_URL}/token-auth/`
+        let loginUrl = `${API_URL}/auth/`
         fetch(loginUrl, {method: 'POST', body: formdata})
         .then(response => response.json())
         .then(res => updateLogin(res))

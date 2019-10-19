@@ -219,7 +219,7 @@ function Finish(props) {
     }
 
     let login = (response) => {
-        if(response.status !== 201){
+        if(response.status !== 200){
             updateErrors({action: "assign", field: "signupError", value: "Signup Failed"});
             return
         }
@@ -228,7 +228,7 @@ function Finish(props) {
         var formdata = new FormData();
         formdata.append("username", username);
         formdata.append("password", password);
-        let loginUrl = `${API_URL}/token-auth/`
+        let loginUrl = `${API_URL}/auth/`
         fetch(loginUrl, {method: 'POST', body: formdata})
         .then(res => res.json())
         .then(results => updateLogin(results))
@@ -244,8 +244,8 @@ function Finish(props) {
         formdata.append("username", form.username);
         formdata.append("password", form.password);
 
-        let loginUrl = `${API_URL}/users/`
-        fetch(loginUrl, {method: 'POST', body: formdata})
+        let registerUrl = `${API_URL}/register/`
+        fetch(registerUrl, {method: 'POST', body: formdata})
         .then(res => login(res))
         .catch(error => console.log(error));
     }

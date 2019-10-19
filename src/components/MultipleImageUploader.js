@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import { } from 'react-router-dom';
 import './MultipleImageUploader.css';
 import { Block} from './'
@@ -8,6 +8,14 @@ function MultipleImageUploader(props){
     let images = props.src||[]
     images = images.map(img => ({img_link: img.src , img: img}))
     let [files, updateFiles] = useLocalState(images);
+
+    // Trigger sythentic onChange event when files is updated
+    useEffect(() => {
+        if(props.onChange !== undefined){
+            let value = files.map(file=>file.img)
+            props.onChange(value);
+        }
+    }, [files]);
 
     let addImg = (e) => {
         let src = URL.createObjectURL(e.target.files[0]);
@@ -21,10 +29,6 @@ function MultipleImageUploader(props){
                 }
             }
         });
-        if(props.onChange !== undefined){
-            let value = files.map(file=>file.img)
-            props.onChange(value);
-        }
     }
 
     let removeImg = (img) => {
@@ -33,10 +37,6 @@ function MultipleImageUploader(props){
             value: img
         })
 
-        if(props.onChange !== undefined){
-            let value = files.map(file=>file.img)
-            props.onChange(value);
-        }
         if(props.onDelete !== undefined){
             props.onDelete(img.img)
         }

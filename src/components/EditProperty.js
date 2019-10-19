@@ -18,6 +18,12 @@ function EditProperty(props){
     let [mainImg, setMainImg] = useState([])
     let [otherImgs, setOtherImgs] = useState([])
 
+    let selectionFields = {
+        amenities: {"add": [], "remove": []},
+        service: {"add": [], "remove": []},
+        potentials: {"add": [], "remove": []}
+    }
+
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
     let categories = ["rent", "sale", "book" ];
@@ -121,9 +127,9 @@ function EditProperty(props){
             category: form.category.value,
             price: form.price.value,
             currency: form.currency.value,
-            //amenities: JSON.parse(form.amenities.value),
-            //services: JSON.parse(form.services.value),
-            //potentials: JSON.parse(form.potentials.value),
+            amenities: selectionFields.amenities,
+            services: selectionFields.services,
+            potentials: selectionFields.potentials,
             location: {
                 country: form.country.value,
                 region: form.region.value,
@@ -167,11 +173,7 @@ function EditProperty(props){
     }
 
     let updateSelection = (target) => {
-        updateFields({
-            field: target.name,
-            value: target.selected
-        })
-
+        selectionFields[target.name] = target.values;
     }
 
     let updateOtherImages = (value) => {

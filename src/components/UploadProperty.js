@@ -28,6 +28,12 @@ function UploadProperty(props){
     let categories = ["rent", "sale", "book" ];
     let types = ["room", "house", "apartment", "land", "frame", "office"];
 
+    let selectionFields = {
+        amenities: {"add": [], "remove": []},
+        service: {"add": [], "remove": []},
+        potentials: {"add": [], "remove": []}
+    }
+
     let postImages = (propertyID, pictures) => {
         if(pictures.length === 0){
             // Render property
@@ -85,13 +91,13 @@ function UploadProperty(props){
                 phone: form.phone.value
             },
             amenities: {
-                "add": JSON.parse(form.amenities.value)
+                "add": selectionFields.amenities.add
             },
             services: {
-                "add": JSON.parse(form.services.value)
+                "add": selectionFields.services.add
             },
             potentials: {
-                "add": JSON.parse(form.potentials.value)
+                "add": selectionFields.potentials.add
             },
             other_features: {
                 "create": fields.other_features
@@ -125,11 +131,7 @@ function UploadProperty(props){
     }
 
     let updateSelection = (target) => {
-        fields[target.name] = {
-            selected: target.selected,
-            options: target.options
-        }
-        setFields(fields)
+        selectionFields[target.name] = target.values;
     }
 
     let updateOtherImages = (value) => {

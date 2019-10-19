@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import './Select.css';
 import { } from 'react-router-dom';
 import { Block, SelectMultiValue } from './';
@@ -6,11 +6,12 @@ import { useLocalState } from '../hooks';
 
 
 function Select(props) {
-    let values = props.value||[]
-    let allOptions = props.options||[]
+    let values = props.value||[];
+    let allOptions = props.options||[];
     let optionValue = props.optionValue || (val => val);
     let optionName = props.optionName || (val => val);
     let placeholder = props.placeholder;
+
 
     let find = (list, selectedValue, selectedName) => {
         return list.find(val => (
@@ -30,9 +31,29 @@ function Select(props) {
         return allOptions;
     }
 
+    let initialUpdates = {
+        "add": [],
+        "remove": []
+    };
+    let [updates, updateUpdates] = useLocalState(initialUpdates);
+    let [originalValues, ] = useLocalState([...values]);
     let [options, updateOptions] = useLocalState(getOptions());
     let [selected, updateSelected] = useLocalState(values);
 
+    // Trigger sythentic onChange event when updates is changed
+    useEffect(() => {
+        if(props.onChange){
+            let value = {
+                "add": updates.add.map(val => val.id),
+                "remove": updates.remove.map(val => val.id)
+            }
+            let target = {
+                name: props.name,
+                values: value
+            }
+            props.onChange(target)
+        }
+    }, [updates]);
 
     let addToSelected = (selectedValue, selectedName) => {
 
@@ -47,13 +68,22 @@ function Select(props) {
             action: "push",
             value: optionToAdd
         })
-        if(props.onChange){
-            let target = {
-                name: props.name,
-                selected: selected,
-                options: options
-            }
-            props.onChange(target)
+
+        let toAdd = find(originalValues, selectedValue, selectedName);
+        if (toAdd === undefined){
+            updateUpdates({
+                field: "add",
+                action: "push",
+                value: optionToAdd
+            });
+        }
+        let toClear = find(updates.remove, selectedValue, selectedName);
+        if (toClear !== undefined){
+            updateUpdates({
+                field: "remove",
+                action: "remove",
+                value: toClear
+            });
         }
     }
 
@@ -61,27 +91,35 @@ function Select(props) {
         let selectedName = event.target.getAttribute('data-name');
         let selectedValue = event.target.getAttribute('data-value');
 
-        let optionToRemove =  find(selected, selectedValue, selectedName)
+        let optionToRemove =  find(selected, selectedValue, selectedName);
 
         updateOptions({
             action: "push",
             value: optionToRemove
         })
 
+        let toRemove = find(originalValues, selectedValue, selectedName);
+        if (toRemove !== undefined){
+            updateUpdates({
+                field: "remove",
+                action: "push",
+                value: toRemove
+            });
+        }
+        let toClear = find(updates.add, selectedValue, selectedName);
+        if (toClear !== undefined){
+            updateUpdates({
+                field: "add",
+                action: "remove",
+                value: toClear
+            });
+        }
+
         if(!props.duplicates){
             updateSelected({
                 action: "remove",
                 value: optionToRemove
             })
-        }
-
-        if(props.onChange){
-            let target = {
-                name: props.name,
-                selected: selected,
-                options: options
-            }
-            props.onChange(target)
         }
     }
 

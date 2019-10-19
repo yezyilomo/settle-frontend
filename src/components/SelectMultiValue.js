@@ -26,24 +26,26 @@ function SelectMultiValue(props) {
 
     let options = (option) => {
         return (
-            <option value={optionValue(option)} data-name={optionName(option)} onClick={handleSelect}>
+            <option value={optionValue(option)} data-name={optionName(option)} >
                 {optionName(option)}
             </option>
         );
     };
 
-    let handleSelect = (event) => {
-        let selectedValue = event.target.value;
-        let selectedName = event.target.getAttribute('data-name');
-        props.onSelect(selectedValue, selectedName);
-    };
 
-    let resetPlaceholder = (e) => {
+    let handleSelection = (e) => {
+        let selectedOption = e.target.options[e.target.selectedIndex];
+        let selectedValue = selectedOption.value;
+        let selectedName = selectedOption.getAttribute('data-name');
+        props.onSelect(selectedValue, selectedName);
+
+        // Reset Placeholder
         e.target.value = "";
     }
+    
     return (
         <Block>
-            <select class={props.class} onChange={resetPlaceholder}>
+            <select class={props.class} onChange={handleSelection}>
                 {placeholder()}
                 {props.options.map(options)}
             </select>
