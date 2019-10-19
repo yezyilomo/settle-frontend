@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom';
 import {useGlobal} from 'reactn';
 import {
     Select, FeaturesInput, ImageUploader,
-    MultipleImageUploader, Fetcher, Loader
+    MultipleImageUploader, Loader
 } from './';
 import {API_URL} from '../';
 

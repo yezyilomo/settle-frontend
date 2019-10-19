@@ -18,7 +18,7 @@ let sideBarGlobalStates = {
         price__lt: "",
         price__gt: "",
         location: "",
-        amenities: {selected: [], options: options},
+        amenities: []
     }
 }
 
@@ -43,10 +43,7 @@ function SideBar(props) {
     }
 
     let updateField = (target) => {
-        fields[target.name] = {
-            selected: target.selected,
-            options: target.options
-        }
+        fields[target.name] = target.values.add;
         setFields(fields);
     }
 
@@ -90,7 +87,7 @@ function SideBar(props) {
                  onChange={updateValue} placeholder="Location" />
 
                 <label class="form-check-label col-12 mt-1 mb-0 p-0 mx-0">Amenities</label>
-                <Select class="custom-select" name="amenities" options={fields.amenities.options} placeholder="Select Amenity"
+                <Select class="custom-select" name="amenities" options={options} placeholder="Select Amenity"
                 onChange={updateField} value={fields.amenities.selected} optionName={optionName} optionValue={optionValue}
                 />
                 <button type="submit" class="col-12 btn btn-info mt-4">Submit</button>

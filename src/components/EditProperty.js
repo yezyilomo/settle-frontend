@@ -46,6 +46,7 @@ function EditProperty(props){
         .catch(error => console.log(error));
     }
 
+    /*
     let updateImage = (img) => {
         let imgInfo = {
             tool_tip: img.tool_tip,
@@ -61,6 +62,7 @@ function EditProperty(props){
         .then(obj => obj)
         .catch(error => console.log(error));
     }
+    */
 
     let deleteImage = (imgID) => {
         let postUrl = `${API_URL}/picture/${imgID}/`;

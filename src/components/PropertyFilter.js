@@ -10,7 +10,7 @@ import {API_URL} from '../';
 function PropertyFilter(props) {
     let [filters, ] = useGlobal("SideBar")
     let {property_type, category, price__gt, price__lt, location, amenities, currency} = filters
-    let amenity_ids = JSON.stringify(amenities.selected.map(amenity => amenity.id))
+    let amenity_ids = JSON.stringify(amenities)
     let fetchProperties = () => {
         return fetch(`${API_URL}/${property_type}/?
            query={
