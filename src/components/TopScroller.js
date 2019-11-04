@@ -8,7 +8,6 @@ function scrollUp(event) {
     })
 }
 
-
 function TopScroller(props) {
     let [scrollY, setScrollY] = useState(0);
     let setY = () => {
@@ -19,7 +18,7 @@ function TopScroller(props) {
     return (
         scrollY > 800 ?
             <div class="scroll-up click-effect d-lg-none">
-                <img src="icons/up-arrow.svg" onClick={scrollUp} width="25" height="25" alt="" />
+                <img src="icons/up-arrow.svg" onClick={scrollUp} width="24" height="24" alt="" />
             </div> :
             null
     );

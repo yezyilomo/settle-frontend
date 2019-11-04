@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './EditProperty.css';
 import {withRouter} from 'react-router-dom';
-import {useGlobal} from 'reactn';
 import {
     Select, FeaturesInput, Fetcher, Loader,
     ImageUploader, MultipleImageUploader, PageError
 } from './';
 import {API_URL} from '../';
-import { useLocalState } from '../hooks';
+import { useLocalState, useGlobalState } from 'simple-react-state';
 
 
 function EditProperty(props){
     let [fields, updateFields] = useLocalState(props.property);
-    let [user, ] = useGlobal("User");
-    let [featuresToDelete, ] = useState([])
-    let [imgsToDelete, ] = useState([])
-    let [mainImg, setMainImg] = useState([])
-    let [otherImgs, setOtherImgs] = useState([])
+    let [user, ] = useGlobalState("user");
+    let [featuresToDelete, ] = useState([]);
+    let [imgsToDelete, ] = useState([]);
+    let [mainImg, setMainImg] = useState([]);
+    let [otherImgs, setOtherImgs] = useState([]);
 
     let selectionFields = {
         amenities: {"add": [], "remove": []},
@@ -212,7 +211,7 @@ function EditProperty(props){
                 <div class="row">
                     <div class="col-12 col-md-6 justify-content-center ">
 
-                            <div class="row p-0 m-0 my-2 my-lg-1">
+                            <div class="row p-0 m-0 my-3 my-lg-1">
                                 <label class="form-check-label col-12 px-2">Property type</label>
                                 <div class="col-12 my-1 px-2">
                                     <select disabled class="custom-select" data-field="type" name="type" value={fields.prop_type} onChange={updateValue} required>
@@ -222,7 +221,7 @@ function EditProperty(props){
                                 </div>
                             </div>
 
-                            <div class="row p-0 m-0 my-2 my-lg-1">
+                            <div class="row p-0 m-0 my-3 my-lg-1">
                                 <label class="form-check-label col-12 px-2">Available for</label>
                                 <div class="col-12 my-1 px-2">
                                     <select class="custom-select" data-field="category" name="category" value={fields.category} onChange={updateValue} required>
@@ -232,7 +231,7 @@ function EditProperty(props){
                                 </div>
                             </div>
 
-                            <div class="row p-0 m-0 my-0 my-lg-3">
+                            <div class="row p-0 m-0 my-3 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Pricing</label>
                                 <div class="col-12 my-1">
                                     <div class="row">
@@ -250,7 +249,7 @@ function EditProperty(props){
                                 </div>
                             </div>
 
-                            <div class="row p-0 m-0 my-2 my-lg-3">
+                            <div class="row p-0 m-0 my-3 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Location</label>
                                 <div class="col-12 my-1 px-2">
                                     <select class="custom-select" data-field="location.country" name="country" value={fields.location.country} onChange={updateValue}>
@@ -284,7 +283,7 @@ function EditProperty(props){
                                 </div>
                             </div>
 
-                            <div class="row col-12 p-0 m-0 my-2 my-lg-3">
+                            <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Amenities</label>
                                 <div class="col-12 px-2">
                                     <Select class="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
@@ -292,7 +291,7 @@ function EditProperty(props){
                                 </div>
                             </div>
 
-                            <div class="row col-12 p-0 m-0 my-2 my-lg-3">
+                            <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Services</label>
                                 <div class="col-12 px-2">
                                     <Select class="custom-select" name="services" options={props.options.services} onChange={updateSelection}
@@ -300,7 +299,7 @@ function EditProperty(props){
                                 </div>
                             </div>
 
-                            <div class="row col-12 p-0 m-0 my-2 my-lg-3">
+                            <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                                 <label class="form-check-label col-12 px-2">Potentials</label>
                                 <div class="col-12 px-2">
                                     <Select class="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}

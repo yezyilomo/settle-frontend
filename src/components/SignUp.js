@@ -1,25 +1,19 @@
-import React, { } from 'react';
+import React, { useState } from 'react';
 import { Route, MemoryRouter } from 'react-router-dom';
-import {setGlobal} from 'reactn';
 import './SignUp.css';
 import { Block } from './';
-import { useGlobalState, useLocalState } from '../hooks';
-import {API_URL} from '../';
+import { useGlobalState, useLocalState } from 'simple-react-state';
+import { API_URL } from '../';
+import { Modal, Nav } from 'react-bootstrap';
 
-let signupGlobalStates = {
-    first_name: "", last_name: "", email: "",
-    profile_pic: "", username: "", password: "",
-    country: "", city: "", street: ""
-}
-
-setGlobal({
-    SignUp: signupGlobalStates
-})
 
 function About(props) {
-    let [form, updateForm] = useGlobalState("SignUp");
+    let [form, updateForm] = useGlobalState("signUp");
     let handleValueChange = (e) => {
-        updateForm({field: e.target.name, value: e.target.value});
+        updateForm({
+            field: e.target.name, 
+            value: e.target.value
+        });
     }
     let isFormValid = () => {
         if(
@@ -74,7 +68,7 @@ function About(props) {
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="submit" class="col-12 btn btn-info mt-3" value="Next" />
+                            <input type="submit" class="col-12 btn btn-info mt-2 mb-3" value="Next" />
                         </div>
                     </div>
 
@@ -85,9 +79,12 @@ function About(props) {
 }
 
 function Account(props) {
-    let [form, updateForm] = useGlobalState("SignUp");
+    let [form, updateForm] = useGlobalState("signUp");
     let handleValueChange = (e) => {
-        updateForm({field: e.target.name, value: e.target.value});
+        updateForm({
+            field: e.target.name, 
+            value: e.target.value
+        });
     }
 
     let isFormValid = () => {
@@ -145,7 +142,7 @@ function Account(props) {
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="row px-2">
                             <div class="col-5">
-                                <input type="button" class="col-12 btn btn-info mt-3" value="Back" onClick={
+                                <input type="button" class="col-12 btn btn-info mt-2 mb-3" value="Back" onClick={
                                     (event) => {
                                         props.history.goBack();
                                     }
@@ -153,7 +150,7 @@ function Account(props) {
                             </div>
                             <div class="col-2"></div>
                             <div class="col-5">
-                                <input type="submit" class="col-12 btn btn-info mt-3" value="Next" />
+                                <input type="submit" class="col-12 btn btn-info mt-2 mb-3" value="Next" />
                             </div>
                         </div>
                     </div>
@@ -165,14 +162,16 @@ function Account(props) {
 }
 
 function Finish(props) {
-    let [form, updateForm] = useGlobalState("SignUp");
-    let [, updateUser] = useGlobalState("User");
+    let [form, updateForm] = useGlobalState("signUp");
+    let [, updateUser] = useGlobalState("user");
     let [errors, updateErrors] = useLocalState({});
 
     let handleValueChange = (e) => {
-        updateForm({field: e.target.name, value: e.target.value});
+        updateForm({
+            field: e.target.name, 
+            value: e.target.value
+        });
     }
-
     let isFormValid = () => {
         if(
             form.country.length > 0 &&
@@ -204,13 +203,15 @@ function Finish(props) {
             document.cookie = `id=${response.id};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
             document.cookie = `username=${response.username};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
             document.cookie = `email=${response.email};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
-            updateUser([
-                {field: "isLoggedIn", value: true},
-                {field: "authToken", value: authToken},
-                {field: "id", value: response.id},
-                {field: "username", value: response.username},
-                {field: "email", value: response.email}
-            ]);
+            updateUser({
+                value: {
+                    isLoggedIn: true,
+                    authToken: authToken,
+                    id: response.id,
+                    username: response.username,
+                    email: response.email
+                }
+            });
             window.location = "/";
         }
         else{
@@ -285,7 +286,7 @@ function Finish(props) {
                         </div>
                         <div class="row px-2">
                             <div class="col-5">
-                                <input type="button" class="col-12 btn btn-info mt-3" value="Back" onClick={
+                                <input type="button" class="col-12 btn btn-info mt-2 mb-3" value="Back" onClick={
                                     (event) => {
                                         props.history.goBack();
                                     }
@@ -293,7 +294,7 @@ function Finish(props) {
                             </div>
                             <div class="col-2"></div>
                             <div class="col-5">
-                                <input type="submit" class="col-12 btn btn-info mt-3" value="Finish" />
+                                <input type="submit" class="col-12 btn btn-info mt-2 mb-3" value="Finish" />
                             </div>
                         </div>
                     </div>
@@ -305,26 +306,34 @@ function Finish(props) {
 }
 
 function SignUp(props) {
+    const [modalShow, setModalShow] = useState(false);
+    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if(modalShow){
+        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");    
+    }
+    else{
+        metaThemeColor.setAttribute("content", "white"); 
+    }
+    
     return (
-        <div class="signup-modal modal fade p-0 m-0" id="signup-modal">
-            <div class="modal-dialog modal-dialog-centered mx-auto modal-lg" role="document">
-                <div class="modal-content border-0">
-                    <button class="modal-close close" data-dismiss="modal" aria-label="Close">
-                        <img src="icons/cancel.svg" width="20" height="20" alt=""/>
-                    </button>
-                    <div class="modal-body p-0 m-0 border-0 py-4">
-                        <div class="container-fluid p-0 m-0">
-                            <center class="header col-12 h4 mt-0 text-secondary">Create Free Account</center>
-                            <MemoryRouter initialEntries={["/about", "/account", "/finish", { pathname: "/" }]} initialIndex={0}>
-                                <Route exact path="/about" component={About} />
-                                <Route exact path="/account" component={Account} />
-                                <Route exact path="/finish" component={Finish} />
-                            </MemoryRouter>
-                        </div>
+        <>
+          <Nav.Link onClick={() => setModalShow(true)}>Sign up</Nav.Link>
+          <Modal animation={false} dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+              <div class="modal-close" onClick={() => setModalShow(false)}>
+                  <img src="icons/cancel.svg" width="23" height="23" alt=""/>
+              </div>
+              <Modal.Body className="p-0 m-0">
+                    <div class="container-fluid py-4">
+                        <center class="header col-12 h4 mt-0 text-secondary">Create Free Account</center>
+                        <MemoryRouter initialEntries={["/about", "/account", "/finish", { pathname: "/" }]} initialIndex={0}>
+                            <Route exact path="/about" component={About} />
+                            <Route exact path="/account" component={Account} />
+                            <Route exact path="/finish" component={Finish} />
+                        </MemoryRouter>
                     </div>
-                </div>
-            </div>
-        </div>
+              </Modal.Body>
+          </Modal>
+        </>
     );
 }
 

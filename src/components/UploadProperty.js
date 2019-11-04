@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './UploadProperty.css';
-import {withRouter} from 'react-router-dom';
-import {useGlobal} from 'reactn';
+import { withRouter } from 'react-router-dom';
+import { useGlobalState } from 'simple-react-state';
 import {
     Select, FeaturesInput, ImageUploader,
     MultipleImageUploader, Loader
 } from './';
-import {API_URL} from '../';
+import { API_URL } from '../';
 
 
 let initialData = {
@@ -21,7 +21,7 @@ let initialData = {
 
 function UploadProperty(props){
     let [fields, setFields] = useState(initialData);
-    let [user, ] = useGlobal("User");
+    let [user, ] = useGlobalState("user");
 
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];

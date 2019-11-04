@@ -1,8 +1,7 @@
 import React, { } from 'react';
-import { } from 'reactn';
 import { Block } from './';
 import './FeaturesInput.css';
-import { useLocalState } from '../hooks';
+import { useLocalState } from 'simple-react-state';
 
 function FeaturesInput(props) {
     let initialState = props.value||[];

@@ -1,10 +1,9 @@
 import React, { } from 'react';
-import { } from 'react-router-dom';
 import './Home.css';
 import {
     Fetcher, Loader, PropertyGroup, PageError
-} from './'
-import {API_URL} from '../';
+} from './';
+import { API_URL } from '../';
 
 /*
 function Overview(props) {

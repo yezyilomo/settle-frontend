@@ -18,17 +18,24 @@
 }
 
 .modal-backdrop{
-    opacity: 0.93 !important;
+    opacity: 0.95 !important;
+    background-color: rgb(14, 14, 14);
 }
 
-.img-modal .modal-close{
-    position: absolute;
-    right: 15px;
+.img-modal-backdrop{
+    opacity: 1 !important;
+    background-color: rgb(14, 14, 14);
+}
+
+.modal-close{
+    position: fixed;
+    right: 10px;
     top: 12px;
+    cursor: pointer;
 }
 
-.img-modal .modal-close img{
-    -webkit-filter: invert(100%);
+.modal-close img{
+    -webkit-filter: invert(65%);
 }
 
 .full-img{
@@ -91,27 +98,9 @@
     cursor: pointer;
 }
 
-/* Beautiful Modal */
-.modal-full {
-    min-width: 100%;
-    margin: 0;
+.cusom-modal-dialog{
+    width: 100%;
+    margin: 0 auto 0 auto;
     padding: 0;
-    bottom: -1px;
-    position: fixed;
-}
-
-.modal-full .modal-content {
-    border-radius: 20px 20px 0 0;
-    animation: scrollup .5s forwards;
-    padding: 0;
-    margin: 0;
-}
-
-@keyframes scrollup {
-    from {
-        height: 0;
-    }
-    to {
-        height: 90vh;
-    }
+    top: 15px;
 }

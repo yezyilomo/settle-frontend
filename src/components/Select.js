@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import './Select.css';
-import { } from 'react-router-dom';
 import { Block, SelectMultiValue } from './';
-import { useLocalState } from '../hooks';
+import { useLocalState } from 'simple-react-state';
 
 
 function Select(props) {

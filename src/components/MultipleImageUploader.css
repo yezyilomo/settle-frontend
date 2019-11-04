@@ -29,10 +29,22 @@
     margin: 2px;
 }
 
+
+
 .remove-other-img{
-    cursor: pointer;
-    font-size: 20px;
     position: absolute;
-    margin: 3px;
+}
+
+.remove-other-img i{
+    cursor: pointer;
+    font-size: 25px;
+    position: relative;
+    right: -13px;
+    top: 3px;
+    float: right;
     color: rgba(50, 50, 50);
+    background-color: rgba(250, 250, 250, 0.5);
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0 0 5px rgba(250, 250, 250, 0.5);
 }

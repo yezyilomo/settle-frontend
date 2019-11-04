@@ -1,20 +1,18 @@
-import React, { } from 'react';
+import React from 'react';
 import './BottomNavBar.css';
 import { withRouter } from 'react-router-dom';
-import { useGlobalState } from '../hooks';
+
 
 function BottomNavBar(props){
-    let [topBarStates, ] = useGlobalState("TopBar");
-    let search = (e) => {
-        topBarStates.searchElement.current.focus();
-    }
-
+    let homePath = "/";
     let filterPath = "/filter";
     let rentPath = "/rent-property";
     let buyPath = "/buy-property";
     let bookPath = "/book-property";
-    let searchPath = "/search";
 
+    let goToHome = (e) => {
+        props.history.push(homePath)
+    }
     let goToFilter = (e) => {
         props.history.push(filterPath)
     }
@@ -31,27 +29,32 @@ function BottomNavBar(props){
     let active = (iconPath) => {
         let currentPath = props.history.location.pathname;
         if(currentPath === iconPath){
-            return "_neg";
+            return ["_neg", "active-text"];
         }
-        return ""
+        return ["", ""]
     }
 
     return (
-        <div class="bottom-nav-bar d-md-none row fixed-bottom">
-            <div class="col text-center">
-                <img src={`icons/house${active(rentPath)}.svg`} width="26" height="26" alt="" onClick={goToRent}/>
+        <div class="bottom-nav-bar d-lg-none row fixed-bottom">
+            <div class="col text-center btn-ripple" onClick={goToHome}>
+                <img src={`icons/magnifying-glass${active(homePath)[0]}.svg`} width="24" height="24" alt=""/>
+                <div class={`icon-label ${active(homePath)[1]}`}>&nbsp;&nbsp;&nbsp;EXPLORE</div>
             </div>
-            <div class="col text-center">
-                <img src={`icons/tag${active(buyPath)}.svg`} width="26" height="26" alt="" onClick={goToBuy}/>
+            <div class="col text-center btn-ripple" onClick={goToRent}>
+                <img src={`icons/house${active(rentPath)[0]}.svg`} width="24" height="24" alt=""/>
+                <div class={`icon-label ${active(rentPath)[1]}`}>RENT</div>
             </div>
-            <div class="col text-center">
-                <img src={`icons/book${active(bookPath)}.svg`} width="26" height="26" alt="" onClick={goToBook}/>
+            <div class="col text-center btn-ripple" onClick={goToBuy}>
+                <img src={`icons/tag${active(buyPath)[0]}.svg`} width="24" height="24" alt=""/>
+                <div class={`icon-label ${active(buyPath)[1]}`}>&nbsp;&nbsp;BUY</div>
             </div>
-            <div class="col text-center">
-                <img src={`icons/settings${active(filterPath)}.svg`} width="26" height="26" alt="" onClick={goToFilter}/>
+            <div class="col text-center btn-ripple" onClick={goToBook}>
+                <img src={`icons/star${active(bookPath)[0]}.svg`} width="24" height="24" alt=""/>
+                <div class={`icon-label ${active(bookPath)[1]}`}>&nbsp;BOOK</div>
             </div>
-            <div class="col text-center">
-                <img src={`icons/magnifying-glass${active(searchPath)}.svg`} width="26" height="26" alt="" onClick={search}/>
+            <div class="col text-center btn-ripple" onClick={goToFilter}>
+                <img src={`icons/settings${active(filterPath)[0]}.svg`} width="24" height="24" alt=""/>
+                <div class={`icon-label ${active(filterPath)[1]}`}>FILTER</div>
             </div>
         </div>
     );

@@ -1,101 +1,139 @@
-import React, {} from 'react';
+import React, { useState } from 'react';
 import './PropertyDetails.css';
 import { withRouter, Link } from 'react-router-dom';
-import { Block, Fetcher, Loader, Rating, PageError, Menu } from './';
-import {API_URL} from '../';
-import {useGlobal} from 'reactn';
+import { Block, Fetcher, Loader, Rating, PageError } from './';
+import { API_URL } from '../';
+import { Button, Modal, Carousel } from 'react-bootstrap';
+import { useGlobalState } from 'simple-react-state';
 
 
 function InfoModal(props) {
-  return (
-    <>
-      <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Launch modal</a>
-      <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-full" role="document">
-          <div class="modal-content">
-              { props.header !== undefined?
-                  <div class="modal-header">
-                    <h5 class="modal-title">{props.header}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <img src="icons/cancel.svg" width="20" height="20" alt="" />
-                    </button>
-                   </div>:
-                   null
-              }
-            <div class="modal-body p-0">
-                {props.children}
-            </div>
-            { props.footer !== undefined?
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                </div>:
-                null
-            }
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-
-function ImageModal(props) {
+    const [modalShow, setModalShow] = useState(false);
+    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if(modalShow){
+        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");    
+    }
+    else{
+        metaThemeColor.setAttribute("content", "white"); 
+    }
+    
     return (
-        <div class="img-modal modal fade p-0 m-0" id={`Modal_${props.id}`}>
-            <button class="modal-close close" data-dismiss="modal" aria-label="Close">
-                <img src="icons/cancel.svg" width="23" height="23" alt="" />
-            </button>
-            <div class="modal-dialog modal-dialog-centered mx-auto modal-lg" role="document">
-                <div class="modal-content border-0">
-                    <div class="modal-body p-0 m-0 border-0">
+        <>
+          <Button variant="primary" onClick={() => setModalShow(true)}>
+            More Features
+          </Button>
+    
+          <Modal scrollable={true} animation={false} backdropClassName="modal-backdrop-" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+              <Modal.Header className="p-2" closeButton>
+                  <Modal.Title>
+                   <h5 class="modal-title">{props.header}</h5>
+                  </Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="p-0 m-0">
+                  {props.children}
+              </Modal.Body>
+          </Modal>
+        </>
+    );
+  }
 
-                        <div id={`carouselExampleControls${props.id}`} class="carousel slide" data-ride="carousel" data-interval="false">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img class="full-img d-block w-100" src={props.src} alt="" />
-                                </div>
-                                {props.other.map((picture) => {
-                                    return (
-                                        <div class="carousel-item">
-                                            <img class="full-img d-block w-100" src={picture.src} alt="" />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                            <a class="carousel-control-prev d-none d-sm-flex" href={`#carouselExampleControls${props.id}`}
-                                role="button" data-slide="prev">
-                                <img src="icons/back.svg" width="20" height="20" alt="" />
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next d-none d-sm-flex" href={`#carouselExampleControls${props.id}`}
-                                role="button" data-slide="next">
-                                <img src="icons/next.svg" width="20" height="20" alt="" />
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
+  function PropertyImagesCarousel(props) {
+    let activeImageIndex = props.images.indexOf(props.activeImage);
+    const [index, setIndex] = useState(activeImageIndex);
+    const [direction, setDirection] = useState(null);
+  
+    const handleSelect = (selectedIndex, e) => {
+      setIndex(selectedIndex);
+      setDirection(e.direction);
+    };
+  
+    return (
+      <Carousel 
+      interval={0} 
+      controls={false} 
+      indicators={false} 
+      activeIndex={index} 
+      direction={direction} 
+      onSelect={handleSelect}>
+        {props.images.map((image) => {
+            return (
+                <Carousel.Item>
+                    <img class="full-img d-block w-100" src={image.src} alt="" />
+                </Carousel.Item>
+            );
+        })}
+      </Carousel>
+    );
+  }
+
+function MainPropertyImagesModal(props) {
+    const [modalShow, setModalShow] = useState(false);
+    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if(modalShow){
+        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");    
+    }
+    else{
+        metaThemeColor.setAttribute("content", "white"); 
+    }
+
+    return (
+        <>
+          <div class="main-prop-img col-12 col-lg-6 mx-0 px-0">
+              <img class="main-img" src={props.activeImage.src} alt="" onClick={() => setModalShow(true)}/>
+          </div>
+
+          <Modal animation={false} backdropClassName="img-modal-backdrop" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+              <div class="modal-close" onClick={() => setModalShow(false)}>
+                  <img src="icons/cancel.svg" width="23" height="23" alt=""/>
+              </div>
+              <Modal.Body className="p-0 m-0">
+                  <PropertyImagesCarousel activeImage={props.activeImage} images={props.images}/>
+              </Modal.Body>
+          </Modal>
+        </>
     );
 }
 
-function PropertyImage(props) {
-    let other = props.other.filter(img => img.id !== props.id)
+function OthersPropertyImagesModal(props) {
+    const [modalShow, setModalShow] = useState(false);
+    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if(modalShow){
+        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");    
+    }
+    else{
+        metaThemeColor.setAttribute("content", "white"); 
+    }
+    
+    return (
+        <>
+          <div class="row pictures col-6 col-sm-6 col-md-4 col-lg-3 mx-0 p-1">
+                <div class="other-prop-img col-12">
+                    <img class="small-img" src={props.activeImage.src} alt="" onClick={() => setModalShow(true)} />
+                </div>
+          </div>
+    
+          <Modal animation={false} backdropClassName="img-modal-backdrop" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+              <div class="modal-close" onClick={() => setModalShow(false)}>
+                  <img src="icons/cancel.svg" width="23" height="23" alt=""/>
+              </div>
+              <Modal.Body className="p-0 m-0">
+                  <PropertyImagesCarousel activeImage={props.activeImage} images={props.images}/>
+              </Modal.Body>
+          </Modal>
+        </>
+    );
+}
+
+function PropertyOtherImages(props) {
     return (
         <Block>
-            <div class="row pictures col-6 col-sm-6 col-md-4 col-lg-3 mx-0 p-1">
-                <div class="other-prop-img col-12">
-                    <img class="small-img" src={props.src} alt="" data-toggle="modal" data-target={`#Modal_${props.id}`} />
-                </div>
-            </div>
-            <ImageModal src={props.src} id={props.id} other={other} />
+            <OthersPropertyImagesModal activeImage={props.activeImage} images={props.images} />
         </Block>
     )
 }
 
-function shorten(str, to) {
+function shortenString(str, to) {
     let long = str.slice(to);
     if (long) {
         return str.slice(0, to) + "...";
@@ -113,7 +151,7 @@ function Badges(props) {
                         <Block>
                             <span class="badge badge-secondary mb-1 mr-1">
                                 <span id={val} class={`fa fa-${val} badge-close`} />&nbsp;
-                                <span class="badge-body">{shorten(val, 17)}</span>
+                                <span class="badge-body">{shortenString(val, 17)}</span>
                             </span>
                         </Block>
                     );
@@ -124,7 +162,7 @@ function Badges(props) {
 }
 
 function PropertyDetails(props) {
-    let [user, ] = useGlobal("User");
+    let [user, ] = useGlobalState("user")
     let fetchProperty = () => {
         return fetch(`${API_URL}/property/${props.property}/?
             query={
@@ -208,10 +246,7 @@ function PropertyDetails(props) {
                         null
                     }
                     <div class="property-details row col-12 p-0 m-0">
-                        <div class="main-prop-img col-12 col-lg-6 mx-0 px-0">
-                            <img class="main-img" src={main_img.src} alt="" data-toggle="modal" data-target={`#Modal_${main_img.id}`} />
-                            <ImageModal src={main_img.src} id={main_img.id} other={other_imgs} />
-                        </div>
+                        <MainPropertyImagesModal activeImage={main_img} images={[main_img, ...other_imgs]} />
                         <div class="detailed-prop-info col-12 col-sm-6 col-lg-3 px-1 px-sm-0 px-lg-4 mt-3 mt-lg-0">
                             <div class="property-type">Available for <span class="bg-info">{property.category}</span></div>
                             <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
@@ -239,17 +274,23 @@ function PropertyDetails(props) {
                     <div class="row col-12 mb-3 m-0 mt-3 mt-sm-5 p-0 text-dark">
                         <div class="w-100 my-0 h5">Other Images</div>
                         <div class="row mx-0 px-0 mt-1">
-                           {other_imgs.map(img =>
-                               <PropertyImage src={img.src} id={img.id} other={other_imgs} />
+                           {other_imgs.map(image =>
+                               <PropertyOtherImages activeImage={image} images={other_imgs} />
                            )}
                         </div>
                     </div>
                     <InfoModal header="Menu">
-                        <nav class="navbar col-12 navbar-light p-0 m-0 d-block d-lg-none">
-                            <div class="navbar-collapse m-0 p-0" id="navbarTogglerDemo03">
-                                <Menu/>
-                            </div>
-                        </nav>
+                        <ul>
+                            <li>One</li>
+                            <li>Two</li>
+                            <li>Three</li>
+                            <li>Four</li>
+                            <li>Five</li>
+                            <li>One</li>
+                            <li>Two</li>
+                            <li>Three</li>
+                            <li>Four</li>
+                        </ul>
                     </InfoModal>
                 </div>)
         }}</Fetcher>
