@@ -3,7 +3,7 @@ import {Home} from './Home';
 import {PropertyOverview} from './PropertyOverview';
 import {PropertyDetails} from './PropertyDetails';
 import {PropertyGroup} from './PropertyGroup';
-import {TopBar, Menu} from './TopBar';
+import {TopBar} from './TopBar';
 import {SideBar} from './SideBar';
 import {Block} from './Block';
 import {UploadProperty} from './UploadProperty';
@@ -33,5 +33,5 @@ export {
     EditProperty, ImageUploader, MultipleImageUploader,
     PropertyFilter, UserProperties, SearchProperties, Rating,
     BottomNavBar, FilterProperties, InlineLoader, TopScroller,
-    PageError, InlineError, PageNotFound, Menu
+    PageError, InlineError, PageNotFound
 };

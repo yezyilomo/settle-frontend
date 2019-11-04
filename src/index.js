@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'simple-react-state';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import {App} from './components'
-import {HashRouter as Router} from 'react-router-dom';
+import { App } from './components'
+import { HashRouter as Router } from 'react-router-dom';
+import store from './store';
 
-let API_URL = "http://192.168.8.100:8000/api";
+let API_URL = "http://192.168.43.129:8000/api";
 
 window.onScrollActions = {}
 
@@ -16,9 +19,11 @@ window.onscroll = () => {
 
 function Application(props){
     return (
-        <Router base="/">
-            <App/>
-        </Router>
+        <Provider store={store}>
+            <Router base="/">
+                <App/>
+            </Router>
+        </Provider>
     );
 }
 

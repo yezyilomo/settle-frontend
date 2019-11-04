@@ -1,7 +1,7 @@
 import React, { } from 'react';
 import './PropertyOverview.css';
 import { Link } from 'react-router-dom';
-import {Rating} from './';
+import { Rating } from './';
 
 function PropertyOverview(props) {
     let main_img = props.property.pictures.filter((picture) => picture.is_main)

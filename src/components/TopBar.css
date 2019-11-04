@@ -1,51 +1,20 @@
 #top-navbar {
-    border: 0 solid rgb(230, 230, 230);
-    border-width: 0 0 1px 0;
-}
-
-.navbar-toggler {
-    padding-top: 5px;
-    border-width: 0;
-    padding: 0;
-    background-color: white;
-}
-
-.menu-icon{
-    filter: contrast(30%);
-}
-
-.navbar-toggler:focus {
-    outline: none;
-}
-
-#navbarTogglerDemo03 {
-    margin-top: 8px;
-    padding-left: 0;
-    margin-right: 15px;
-}
-
-#navbarTogglerDemo03 a{
-    font-size: 1.1em;
-}
-
-#navbarTogglerDemo03 hr {
-    border-color: #eeeeee; /* didn't use #eeeeee purposefuly */
-}
-
-#navbarTogglerDemo03 li {
-    white-space: nowrap;
+    border: 0;
+    box-shadow: 0 -7px 10px black;
+    font-size: 1.15em;
 }
 
 .navbar-brand {
     overflow: visible;
     height: 48px;
+    outline: none;
 }
 
 .navbar-brand a {
     font-family: 'Grand Hotel';
-    font-size: 32px;
+    font-size: 33px;
     overflow: hidden;
-    color: rgb(76, 76, 76); /* nav-brand color light black */
+    color: rgb(76, 76, 76);
     text-decoration: none;
     outline: none;
 }
@@ -54,9 +23,23 @@
     color: gray;
 }
 
+.navbar-toggler {
+    border-width: 0;
+    padding: 7px;
+    background-color: white;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+}
+
+.menu-icon {
+    filter: contrast(30%);
+}
+
 .search-input {
-    height: 38px;
-    border-radius: 5px;
+    height: 40px;
+    border-radius: 8px;
     border-color: rgb(230, 230, 230);
     padding-left: 37px;
     text-align: center;
@@ -67,14 +50,14 @@
 }
 
 @media only screen and (min-width: 992px) {
-   /* A little twerk */
-   .search-input {
-       height: 42px;
-       border-radius: 7px;
-   }
+    /* A little twerk */
+    .search-input {
+        height: 42px;
+        border-radius: 7px;
+    }
 }
 
-.search-input:focus{
+.search-input:focus {
     box-shadow: 0 0 0 0 white;
     border-width: 1px;
     border-color: rgb(230, 230, 230);
@@ -88,22 +71,16 @@
     bottom: 1px;
 }
 
-.search-form a{
+.search-form a {
     width: 50px;
-    /*position: relative;*/
-    /*right: 50px;*/
     overflow: hidden;
     position: absolute;
 }
 
-.search-form button:focus{
+.search-form button:focus {
     box-shadow: 0 0 0 0 white;
 }
 
-.search-form a:hover .search-button{
+.search-form a:hover .search-button {
     color: rgb(76, 76, 76);
-}
-
-.dropdown-menu{
-    overflow: hidden;
 }

@@ -1,14 +1,66 @@
 
 .bottom-nav-bar{
-    padding: 8px 5px 9px 5px;
+    padding: 0 10px 0 10px;
     background-color: white;
-    border-top: 1px solid rgb(240, 240, 240);
+    box-shadow: 0 8px 10px black;
 }
 
 .bottom-nav-bar>div{
-    padding: 0;
+    padding: 7px 5px 0 5px;
+    border-radius: 15px;
+    margin: 0 10px 0 10px;
 }
 
 .bottom-nav-bar>div>img{
     cursor: pointer;
+}
+
+.bottom-nav-bar .icon-label{
+    font-size: 11px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.bottom-nav-bar .active-text{
+	color: #17a2b8;
+	visibility: visible;
+}
+
+.icon-label{
+	visibility: hidden;
+}
+
+.btn-ripple>img{
+	filter: opacity(70%);
+}
+
+.btn-ripple {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	transition: all ease-in-out 0s;
+}
+
+.btn-ripple::after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 25%;
+	height: 100%;
+	width: 50%;
+	background-color: #000;
+	border-radius: 50%;
+	opacity: 0;
+	pointer-events: none;
+	transition: all ease-in-out 0.4s;
+	transform: scale(10, 10);
+}
+
+.btn-ripple:active::after {
+	padding: 0;
+	margin: 0;
+	opacity: .2;
+	transition: 0s;
+	transform: scale(0, 0);
 }

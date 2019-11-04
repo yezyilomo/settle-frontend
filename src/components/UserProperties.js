@@ -1,14 +1,13 @@
-import React, { } from 'react';
-import {} from 'react-router-dom';
-import {useGlobal} from 'reactn'
+import React from 'react';
+import { useGlobalState } from 'simple-react-state';
 import {
     Fetcher, Loader, PropertyGroup, PageError
 } from './'
-import {API_URL} from '../';
+import { API_URL } from '../';
 
 
 function UserProperties(props) {
-    let [user, ] = useGlobal("User");
+    const [user, ] = useGlobalState("user");
     let fetchProperties = () => {
         return fetch(`${API_URL}/property/?
            query={

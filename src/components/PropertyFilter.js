@@ -1,14 +1,13 @@
-import React, { } from 'react';
-import {} from 'react-router-dom';
-import {useGlobal} from 'reactn'
+import React from 'react';
+import { useGlobalState } from 'simple-react-state';
 import {
     Fetcher, Loader, PropertyGroup, PageError
-} from './'
-import {API_URL} from '../';
+} from './';
+import { API_URL } from '../';
 
 
 function PropertyFilter(props) {
-    let [filters, ] = useGlobal("SideBar")
+    let [filters, ] = useGlobalState("sideBar");
     let {property_type, category, price__gt, price__lt, location, amenities, currency} = filters
     let amenity_ids = JSON.stringify(amenities)
     let fetchProperties = () => {

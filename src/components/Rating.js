@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Rating.css';
 
+
 function App(props) {
   return <Rating rating={props.rating} />
 }

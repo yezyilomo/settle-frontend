@@ -1,7 +1,4 @@
 
-.login-modal .header{
-
-}
 .login-form input{
     height: 45px;
 }
@@ -9,10 +6,6 @@
 .login-form input:focus {
     border-width: 1px;
     box-shadow: 0 0 0 white;
-}
-
-.login-modal .modal-backdrop{
-    opacity: 0.2 !important;
 }
 
 .login-modal .modal-close{

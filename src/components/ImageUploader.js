@@ -2,7 +2,7 @@ import React, { } from 'react';
 import { } from 'react-router-dom';
 import './ImageUploader.css';
 import { Block} from './'
-import { useLocalState } from '../hooks';
+import { useLocalState } from 'simple-react-state';
 
 function ImageUploader(props){
     let images = props.src||[]
