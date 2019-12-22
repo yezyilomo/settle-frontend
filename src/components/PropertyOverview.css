@@ -1,4 +1,4 @@
-.property {
+.prop-overview {
     overflow: hidden;
     /* border-radius: 3px; */
     /* border: 1px solid #dddddd; */
@@ -6,7 +6,7 @@
 }
 
 /* load background  */
-.prop-img{
+.prop-overview .prop-img{
     padding: 0;
     margin: 0;
 
@@ -19,24 +19,24 @@
 }
 /* end load background  */
 
-.prop-img img {
+.prop-overview .prop-img img {
     height: auto;
     width: 100%;
 }
 
-.prop-info {
+.prop-overview .prop-info {
     height: 95px;
     font-size: 13px;
 }
 
-.prop-info>div {
+.prop-overview .prop-info>div {
     margin: 3px 0 3px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.property-type span {
+.prop-overview .prop-type span {
     padding: 0 3px 0 3px;
     font-size: 11px;
     font-weight: bold;
@@ -45,17 +45,83 @@
     border-radius: 5px;
 }
 
-.property-location, .property-price {
+.prop-overview .prop-location, 
+.prop-overview .prop-price {
     font-weight: bold;
 }
 
-.property-location i{
+.prop-overview .prop-location i{
     font-size: 15px;
     color: gray;
 }
 
-.rating-label{
-    padding-right: 10px;
+.prop-overview .prop-rating{
     position: relative;
-    bottom: 2px;
+    right: 3px;
+}
+
+
+
+/* Property Slider Overview */
+
+.prop-slider-overview {
+    overflow: hidden;
+    /* border-radius: 30px; */
+    /* border: 1px solid #dddddd; */
+    border-width: 0 ;
+}
+
+/* load background  */
+.prop-slider-overview .prop-img{
+    padding: 0;
+    margin: 0;
+
+    /* magic begins here */
+    background-color: gray;
+    width: 100%;
+    min-height: 120px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+/* end load background  */
+
+.prop-slider-overview .prop-img img {
+    height: auto;
+    width: 100%;
+}
+
+.prop-slider-overview .prop-info {
+    height: 95px;
+    font-size: 13px;
+}
+
+.prop-slider-overview .prop-info>div {
+    margin: 3px 0 3px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prop-slider-overview .prop-type span {
+    padding: 0 3px 0 3px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.prop-slider-overview .prop-location, 
+.prop-slider-overview .prop-price {
+    font-weight: bold;
+}
+
+.prop-slider-overview .prop-location i{
+    font-size: 15px;
+    color: gray;
+}
+
+.prop-slider-overview .prop-rating{
+    position: relative;
+    right: 3px;
 }

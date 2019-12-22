@@ -1,5 +1,5 @@
 /* load background  */
-.other-img, .main-img{
+.property-form .other-img, .property-form .main-img{
     padding: 0;
     margin: 0;
 
@@ -10,7 +10,7 @@
 }
 /* end load background  */
 
-.other-img img, .main-img img {
+.property-form .other-img img, .property-form .main-img img {
     height: auto;
     width: 100%;
 }

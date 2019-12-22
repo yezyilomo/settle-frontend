@@ -20,7 +20,7 @@ function MultipleImageUploader(props){
     let addImg = (e) => {
         let src = URL.createObjectURL(e.target.files[0]);
         updateFiles({
-            action: "push",
+            type: "PUSH",
             value: {
                 img_link: src,
                 img: {
@@ -33,7 +33,7 @@ function MultipleImageUploader(props){
 
     let removeImg = (img) => {
         updateFiles({
-            action: "remove",
+            type: "REMOVE",
             value: img
         })
 

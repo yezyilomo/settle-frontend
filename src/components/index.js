@@ -13,7 +13,7 @@ import {FeaturesInput} from './FeaturesInput';
 import {LogIn} from './LogIn';
 import {SignUp} from './SignUp';
 import {Fetcher} from './Fetcher';
-import {Loader, InlineLoader} from './Loader';
+import {Loader, InlineLoader, GlowInlineLoader} from './Loader';
 import {EditProperty} from './EditProperty';
 import {ImageUploader} from './ImageUploader';
 import {MultipleImageUploader} from './MultipleImageUploader';
@@ -25,6 +25,7 @@ import {BottomNavBar} from './BottomNavBar';
 import {TopScroller} from './TopScroller';
 import {PageError, InlineError} from './Errors';
 import {PageNotFound} from './PageNotFound';
+import {Carousel} from './Carousel';
 
 export {
     App, Home, PropertyOverview, PropertyGroup, TopBar, SideBar,
@@ -32,6 +33,6 @@ export {
     Select, FeaturesInput, LogIn, SignUp, Fetcher, Loader,
     EditProperty, ImageUploader, MultipleImageUploader,
     PropertyFilter, UserProperties, SearchProperties, Rating,
-    BottomNavBar, FilterProperties, InlineLoader, TopScroller,
-    PageError, InlineError, PageNotFound
+    BottomNavBar, FilterProperties, InlineLoader, GlowInlineLoader,
+    TopScroller, PageError, InlineError, PageNotFound, Carousel
 };

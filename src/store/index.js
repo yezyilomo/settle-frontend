@@ -12,7 +12,7 @@ if (authToken !== null) {
     isLoggedIn = true;
 }
 
-const preloadedState = {
+const initialState = {
     user: {
         isLoggedIn: isLoggedIn,
         authToken: authToken,
@@ -41,9 +41,8 @@ const preloadedState = {
     }
 }
 
-
 const store = configureStore({
-    preloadedState: preloadedState
+    initialState: initialState
 });
 
 export default store

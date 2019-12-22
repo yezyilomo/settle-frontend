@@ -1,5 +1,6 @@
-.signup-modal .header{
-
+.signup{
+    border-radius: 10px;
+    background-color: rgb(253, 253, 253)
 }
 
 .progress-tab{
@@ -17,15 +18,24 @@
 
 .signup-form input{
     height: 45px;
+    font-size: 1em;
+    border-radius: 0;
+    border: solid 0 #e2e2e2;
+    border-bottom-width: 1px;
+    padding: 0;
+    padding: 0 0 0 3px;
 }
 
 .signup-form input:focus {
-    border-width: 1px;
     box-shadow: 0 0 0 white;
+    border: solid 0 #17a2b8;
+    border-bottom-width: 2px;
 }
 
-.signup-modal .modal-backdrop{
-    opacity: 0.2 !important;
+.signup-form input[type="submit"], .signup-form input[type="button"]{
+    border-radius: 5px;
+    border-width: 0;
+    padding: 0;
 }
 
 .signup-modal .modal-close{

@@ -12,6 +12,7 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
+    "react-slick": "^0.25.2",
     "redux-starter-kit": "^1.0.0",
     "simple-react-state": "/home/yezy/Projects/personal/simple-react-state"
   },

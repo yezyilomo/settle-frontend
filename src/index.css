@@ -4,11 +4,13 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.line{
+  height: 2px;
 }
 
 /* Theme */
@@ -28,7 +30,11 @@ body {
   color: unset;
 }
 
-a{
+
+a, .c-anchor{
+  color: #17a2b8;
+}
+.a:hover, .c-anchor:hover{
   color: #17a2b8;
 }
 
@@ -39,56 +45,56 @@ a{
 */
 
 /* Extra small devices (landscape phones, 575px and below) */
-@media (max-width: 575px) {
+@media (min-width: 0) {
     /*  border width */
-    .border-xs-0{border-width: 0;}
-    .border-xs-1{border-width: 1px;}
-    .border-xs-2{border-width: 2px;}
-    .border-xs-3{border-width: 3px;}
-    .border-xs-4{border-width: 4px;}
-    .border-xs-5{border-width: 5px;}
+    .border-xs-0{border-width: 0; border-style: solid;}
+    .border-xs-1{border-width: 1px; border-style: solid;}
+    .border-xs-2{border-width: 2px; border-style: solid;}
+    .border-xs-3{border-width: 3px; border-style: solid;}
+    .border-xs-4{border-width: 4px; border-style: solid;}
+    .border-xs-5{border-width: 5px; border-style: solid;}
 }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
     /*  border width */
-    .border-sm-0{border-width: 0;}
-    .border-sm-1{border-width: 1px;}
-    .border-sm-2{border-width: 2px;}
-    .border-sm-3{border-width: 3px;}
-    .border-sm-4{border-width: 4px;}
-    .border-sm-5{border-width: 5px;}
+    .border-sm-0{border-width: 0; border-style: solid;}
+    .border-sm-1{border-width: 1px; border-style: solid;}
+    .border-sm-2{border-width: 2px; border-style: solid;}
+    .border-sm-3{border-width: 3px; border-style: solid;}
+    .border-sm-4{border-width: 4px; border-style: solid;}
+    .border-sm-5{border-width: 5px; border-style: solid;}
 }
 
 /* Medium devices (tablets, 768px and up)  */
 @media (min-width: 768px) {
     /*  border width */
-    .border-md-0{border-width: 0;}
-    .border-md-1{border-width: 1px;}
-    .border-md-2{border-width: 2px;}
-    .border-md-3{border-width: 3px;}
-    .border-md-4{border-width: 4px;}
-    .border-md-5{border-width: 5px;}
+    .border-md-0{border-width: 0; border-style: solid;}
+    .border-md-1{border-width: 1px; border-style: solid;}
+    .border-md-2{border-width: 2px; border-style: solid;}
+    .border-md-3{border-width: 3px; border-style: solid;}
+    .border-md-4{border-width: 4px; border-style: solid;}
+    .border-md-5{border-width: 5px; border-style: solid;}
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
     /*  border width */
-    .border-lg-0{border-width: 0;}
-    .border-lg-1{border-width: 1px;}
-    .border-lg-2{border-width: 2px;}
-    .border-lg-3{border-width: 3px;}
-    .border-lg-4{border-width: 4px;}
-    .border-lg-5{border-width: 5px;}
+    .border-lg-0{border-width: 0; border-style: solid;}
+    .border-lg-1{border-width: 1px; border-style: solid;}
+    .border-lg-2{border-width: 2px; border-style: solid;}
+    .border-lg-3{border-width: 3px; border-style: solid;}
+    .border-lg-4{border-width: 4px; border-style: solid;}
+    .border-lg-5{border-width: 5px; border-style: solid;}
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
     /*  border width */
-    .border-xl-0{border-width: 0;}
-    .border-xl-1{border-width: 1px;}
-    .border-xl-2{border-width: 2px;}
-    .border-xl-3{border-width: 3px;}
-    .border-xl-4{border-width: 4px;}
-    .border-xl-5{border-width: 5px;}
+    .border-xl-0{border-width: 0; border-style: solid;}
+    .border-xl-1{border-width: 1px; border-style: solid;}
+    .border-xl-2{border-width: 2px; border-style: solid;}
+    .border-xl-3{border-width: 3px; border-style: solid;}
+    .border-xl-4{border-width: 4px; border-style: solid;}
+    .border-xl-5{border-width: 5px; border-style: solid;}
 }

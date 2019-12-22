@@ -1,9 +1,11 @@
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import './Home.css';
 import {
-    Fetcher, Loader, PropertyGroup, PageError
+    Fetcher, PropertyGroup, PageError, GlowInlineLoader, Loader
 } from './';
+import {PropertySlider} from "./PropertyGroup";
 import { API_URL } from '../';
+
 
 /*
 function Overview(props) {
@@ -36,6 +38,7 @@ function Group(props) {
     )
 }
 */
+
 
 function Home(props) {
     let fetchPropertiesToRent = () => {
@@ -78,30 +81,56 @@ function Home(props) {
         .then(res => res.json())
     }
 
+    let fetchPropertiesToSlide = () => {
+        return fetch(`${API_URL}/property/?
+           query={
+            id,
+            category,
+            price,
+            pictures{
+                src,
+                is_main
+            },
+            currency,
+            location,
+            rating,
+            payment_terms,
+            unit_of_payment_terms
+            }&format=json&price__lt=800000`
+        )
+        .then(res => res.json())
+    }
 
     return (
         <>
-        <Fetcher action={fetchPropertiesToRent}
-         placeholder={<Loader/>} error={<PageError/>}>{properties => {
-            return (
-                <>
-                    <div>
+          <Fetcher action={fetchPropertiesToRent}
+           placeholder={<Loader/>} error={<PageError/>}>{properties => {
+              return (
+                  <>
+                    <div class="mt-3 mt-md-4 px-1 px-md-2">
                         <PropertyGroup header="Rent a place" properties={properties} />
                     </div>
 
-                    <Fetcher action={fetchPropertiesToBuy}
-                     placeholder={<Loader/>} error={<PageError/>}>{properties => {
+                    <Fetcher action={fetchPropertiesToSlide}
+                     placeholder={<GlowInlineLoader/>} error={<PageError/>}>{properties => {
                         return (
-                            <div>
+                            <div class="p-0 m-0 mt-2 mt-md-3">
+                                  <PropertySlider header="Amazing Places" properties={properties}/>
+                            </div>
+                        );
+                    }}</Fetcher>
+          
+                    <Fetcher action={fetchPropertiesToBuy}
+                     placeholder={<GlowInlineLoader/>} error={<PageError/>}>{properties => {
+                        return (
+                            <div class="px-1 px-md-2">
                                 <PropertyGroup header="Buy a place" properties={properties} />
                             </div>
                         );
                     }}</Fetcher>
-                </>
-            );
-        }}</Fetcher>
-
-
+                  </>
+              );
+          }}</Fetcher>
         </>
     );
 }

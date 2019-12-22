@@ -69,7 +69,7 @@ function PropertyFilter(props) {
         <Fetcher action={fetchProperties}
         placeholder={<Loader/>} error={<PageError/>}>{properties => {
             return (
-                <div>
+                <div class="mt-2 mt-md-3 px-1 px-md-2">
                     <PropertyGroup header={`Filter Results(${properties.count}).. `}properties={properties} onScrollToBottom={fetchNew}/>
                 </div>
             );

@@ -68,7 +68,7 @@ function About(props) {
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="submit" class="col-12 btn btn-info mt-2 mb-3" value="Next" />
+                            <input type="submit" class="col-12 btn btn-info my-3" value="Next" />
                         </div>
                     </div>
 
@@ -142,7 +142,7 @@ function Account(props) {
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="row px-2">
                             <div class="col-5">
-                                <input type="button" class="col-12 btn btn-info mt-2 mb-3" value="Back" onClick={
+                                <input type="button" class="col-12 btn btn-info my-3" value="Back" onClick={
                                     (event) => {
                                         props.history.goBack();
                                     }
@@ -150,7 +150,7 @@ function Account(props) {
                             </div>
                             <div class="col-2"></div>
                             <div class="col-5">
-                                <input type="submit" class="col-12 btn btn-info mt-2 mb-3" value="Next" />
+                                <input type="submit" class="col-12 btn btn-info my-3" value="Next" />
                             </div>
                         </div>
                     </div>
@@ -286,7 +286,7 @@ function Finish(props) {
                         </div>
                         <div class="row px-2">
                             <div class="col-5">
-                                <input type="button" class="col-12 btn btn-info mt-2 mb-3" value="Back" onClick={
+                                <input type="button" class="col-12 btn btn-info my-3" value="Back" onClick={
                                     (event) => {
                                         props.history.goBack();
                                     }
@@ -294,7 +294,7 @@ function Finish(props) {
                             </div>
                             <div class="col-2"></div>
                             <div class="col-5">
-                                <input type="submit" class="col-12 btn btn-info mt-2 mb-3" value="Finish" />
+                                <input type="submit" class="col-12 btn btn-info my-3" value="Finish" />
                             </div>
                         </div>
                     </div>
@@ -323,7 +323,7 @@ function SignUp(props) {
                   <img src="icons/cancel.svg" width="23" height="23" alt=""/>
               </div>
               <Modal.Body className="p-0 m-0">
-                    <div class="container-fluid py-4">
+                    <div class="container-fluid signup py-4">
                         <center class="header col-12 h4 mt-0 text-secondary">Create Free Account</center>
                         <MemoryRouter initialEntries={["/about", "/account", "/finish", { pathname: "/" }]} initialIndex={0}>
                             <Route exact path="/about" component={About} />

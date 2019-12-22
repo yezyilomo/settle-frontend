@@ -15,25 +15,26 @@
     padding: 0 7px 0 7px;
 }
 
-
-.sidebar input,
-.sidebar select,
-.sidebar button {
-    font-size: 1em;
-    height: 40px;
-}
-
 .sidebar input,
 .sidebar select{
-    border-color: #eeeeee;
-    background-color: #eeeeee;
+    font-size: 1em;
+    border-radius: 0;
+    border: solid 0 #e2e2e2;
+    border-bottom-width: 1px;
+    padding: 0;
+}
+
+.sidebar button {
+    font-size: 1.09em;
+    color: #eeeeee;
 }
 
 .sidebar input:focus,
 .sidebar select:focus,
 .sidebar button:focus {
-    border-width: 1px;
     box-shadow: 0 0 0 white;
+    border: solid 0 #17a2b8;
+    border-bottom-width: 2px;
 }
 
 .sidebar label{
