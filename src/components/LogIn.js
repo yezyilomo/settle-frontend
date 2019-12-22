@@ -72,7 +72,7 @@ function LogIn(props) {
                   <img src="icons/cancel.svg" width="23" height="23" alt=""/>
               </div>
               <Modal.Body className="p-0 m-0">
-                    <div class="container-fluid py-4">
+                    <div class="container-fluid login py-4">
                         <center class="header col-12 h4 pt-2 text-secondary">Login to Your Account</center>
                         <form class="login-form text-secondary" onSubmit={login}>
                             <div class="row justify-content-center">
@@ -91,7 +91,7 @@ function LogIn(props) {
                                 </div>
                                 <div class="col-10 p-0 m-0 my-2 my-lg-3">
                                     <div class="col-12 px-2">
-                                        <input type="submit" class="col-12 btn btn-info mt-2 mb-3" value="Submit" />
+                                        <input type="submit" class="col-12 btn btn-info my-3" value="Submit" />
                                     </div>
                                 </div>
                             </div>

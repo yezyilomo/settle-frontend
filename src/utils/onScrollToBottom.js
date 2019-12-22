@@ -1,4 +1,4 @@
-function onScrollToBottom(handleScrollToBottom, y=0){
+function onScrollToBottom(handleScrollToBottom, y=1){
     let scrollToBottomEventHandler = () => {
         let scrollTop = (
             window.pageYOffset ||
@@ -11,7 +11,7 @@ function onScrollToBottom(handleScrollToBottom, y=0){
             (window.innerHeight + scrollTop )
         )
 
-        if (distanceFromBottom === y) {
+        if (distanceFromBottom  < y && distanceFromBottom > -1) {
             handleScrollToBottom();
         }
     };

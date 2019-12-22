@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import './EditProperty.css';
 import {withRouter} from 'react-router-dom';
 import {
@@ -418,10 +418,14 @@ function PropertyFetcher(props){
     useEffect(fetchOptions, [])
 
     return (
-        <Fetcher action={fetchProperty}
-         placeholder={<Loader/>} error={<PageError/>}>{property => {
-            return <EditProperty history={props.history} property={property} options={options}/>
-        }}</Fetcher>
+        <Fetcher 
+         action={fetchProperty}
+         placeholder={<Loader/>} 
+         error={<PageError/>}>
+             {property => {
+                return <EditProperty history={props.history} property={property} options={options}/>
+             }}
+         </Fetcher>
     );
 }
 

@@ -1,8 +1,7 @@
-.property-details {
+.property-images-md {
     overflow: hidden;
-    /* border-radius: 5px; */
-    /* border: 1px solid #dddddd; */
-    border-width: 0;
+    background-color: rgb(58, 58, 58);
+    transition: opacity ease-in .25s, background-color ease-in .25s;
 }
 
 .main-prop-img, .other-prop-img {
@@ -13,56 +12,86 @@
 .main-img, .small-img {
     height: auto;
     width: 100%;
-    border-radius: 3px;
     cursor: pointer;
+    transition: opacity ease-in .25s;
 }
 
-.modal-backdrop{
-    opacity: 0.95 !important;
+.property-images-md:hover img:hover {
+    opacity: 1;
+}
+
+.property-images-md:hover img {
+    opacity: .75;
+}
+
+.view-photos-btn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    opacity: .95;
+    z-index: 1;
+}
+
+.view-photos-btn:focus-within {
+    border: solid 1px rgb(110, 110, 110);
+}
+
+.modal-backdrop {
+    opacity: 0.97 !important;
     background-color: rgb(14, 14, 14);
 }
 
-.img-modal-backdrop{
+.img-modal-backdrop {
     opacity: 1 !important;
     background-color: rgb(14, 14, 14);
 }
 
-.modal-close{
+.img-modal-backdrop-md {
+    opacity: .98 !important;
+    background-color: rgb(14, 14, 14);
+}
+
+.modal-content {
+    border-radius: 0;
+    border-width: 0;
+    box-shadow: 0 0 0 white;
+    background-color: unset;
+}
+
+.modal-close {
     position: fixed;
     right: 10px;
     top: 12px;
     cursor: pointer;
 }
 
-.modal-close img{
+.modal-close img {
     -webkit-filter: invert(65%);
 }
 
-.full-img{
+.full-img {
     width: 100%;
     height: auto;
 }
 
-.img-modal .carousel-control-next{
+.img-modal .carousel-control-next {
     position: absolute;
     right: -80px;
 }
 
-.img-modal .carousel-control-prev{
+.img-modal .carousel-control-prev {
     position: absolute;
     left: -80px;
 }
 
-.detailed-prop-info {
-    height: auto;
-    font-size: 15px;
+.prop-info-card {
+    top: 90px;
+    border-color: #dddddd;
+    border-radius: 2px;
 }
 
-.detailed-prop-info>div {
-    margin: 3px 0 3px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.prop-info-card>div {
+    padding: 4px 0 4px 0;
 }
 
 .property-type span {
@@ -83,24 +112,57 @@
     color: gray;
 }
 
-.actions{
-    border-radius: 5px;
+.actions {
     background-color: rgba(245, 245, 245);
 }
 
-.edit-property{
+.edit-property {
     color: black;
 }
 
-.delete-property:hover{
+.delete-property:hover {
     text-decoration: underline;
     color: rgb(250, 39, 39);
     cursor: pointer;
 }
 
-.cusom-modal-dialog{
+.cusom-modal-dialog {
     width: 100%;
     margin: 0 auto 0 auto;
     padding: 0;
     top: 15px;
+}
+
+.carousel-indicators {
+    height: 12px;
+}
+
+.carousel-indicators li {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    margin: 0 5px 0 5px;
+    position: relative;
+    transition: all linear .25s;
+}
+
+.carousel-indicators .active {
+    height: 12px;
+    width: 12px;
+    bottom: 2px;
+}
+
+.corouser-items-counter {
+    position: fixed;
+    bottom: 15px;
+    left: 20px;
+    color: white;
+}
+
+.info-modal .modal-header {
+    border-radius: 10px 10px 0 0;
+}
+
+.info-modal .modal-body {
+    border-radius: 0 0 10px 10px;
 }

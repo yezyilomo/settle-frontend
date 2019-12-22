@@ -17,17 +17,17 @@ function App(props) {
             <div class="row contents">
                 <SideBar setting="sidebar-lg sticky-top d-none d-lg-block col-12 col-lg-2 pt-3" />
 
-                <div class="row contents-body col-12 col-lg-10 px-2 px-sm-3 py-2 py-lg-3 m-0 mb-5">
+                <div class="contents-body col-12 col-lg-10 p-0 m-0 mb-5 pb-5">
                     <Switch>
                         <Route exact path="/filter" render={() => {
-                            return <SideBar setting="sidebar-sm d-relative d-lg-none col-12 pb-4" />
+                            return <SideBar setting="sidebar-sm px-2 d-relative d-lg-none col-12 pb-4" />
                         }} />
 
                         <Route exact path="/" render={() => {
-                            return <Home />;
+                            return <Home/>;
                         }} />
 
-                        <Route exact path="/ft" component={PropertyFilter} />
+                        <Route exact path="/ft" component={PropertyFilter}/>
 
                         <Route exact path="/search/" component={SearchProperties}/>
 

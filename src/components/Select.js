@@ -59,12 +59,12 @@ function Select(props) {
         let optionToAdd = find(options, selectedValue, selectedName)
         if(!props.duplicates){
             updateOptions({
-                action: "remove",
+                type: "REMOVE",
                 value: optionToAdd
             })
         }
         updateSelected({
-            action: "push",
+            type: "PUSH",
             value: optionToAdd
         })
 
@@ -72,7 +72,7 @@ function Select(props) {
         if (toAdd === undefined){
             updateUpdates({
                 field: "add",
-                action: "push",
+                type: "push",
                 value: optionToAdd
             });
         }
@@ -80,7 +80,7 @@ function Select(props) {
         if (toClear !== undefined){
             updateUpdates({
                 field: "remove",
-                action: "remove",
+                type: "REMOVE",
                 value: toClear
             });
         }
@@ -93,7 +93,7 @@ function Select(props) {
         let optionToRemove =  find(selected, selectedValue, selectedName);
 
         updateOptions({
-            action: "push",
+            type: "PUSH",
             value: optionToRemove
         })
 
@@ -101,7 +101,7 @@ function Select(props) {
         if (toRemove !== undefined){
             updateUpdates({
                 field: "remove",
-                action: "push",
+                type: "PUSH",
                 value: toRemove
             });
         }
@@ -109,14 +109,14 @@ function Select(props) {
         if (toClear !== undefined){
             updateUpdates({
                 field: "add",
-                action: "remove",
+                type: "REMOVE",
                 value: toClear
             });
         }
 
         if(!props.duplicates){
             updateSelected({
-                action: "remove",
+                type: "REMOVE",
                 value: optionToRemove
             })
         }

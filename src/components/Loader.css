@@ -1,19 +1,17 @@
 .page-loader{
-    margin-top: 20vh;
+    margin-top: 30vh;
 }
 
 .inline-loader{
     background-color: #eeeeee;
     border-radius: 5px;
-    padding: 5px 0 5px 0;
-}
-
-.spinner-border{
-
+    padding: 8px 0 7px 0;
 }
 
 .page-loader .spinner-border{
     border-width: 2px;
+    height: 50px;
+    width: 50px;
 }
 
 .inline-loader .spinner-border{

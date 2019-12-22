@@ -67,7 +67,7 @@ function UserProperties(props) {
         <Fetcher action={fetchProperties}
         placeholder={<Loader/>} error={<PageError/>}>{properties => {
             return (
-                <div>
+                <div class="mt-2 mt-md-3 px-1 px-md-2">
                     <PropertyGroup header="My Properties.." properties={properties} onScrollToBottom={fetchNew} edit/>
                 </div>
             );

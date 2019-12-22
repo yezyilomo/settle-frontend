@@ -12,7 +12,7 @@ function ImageUploader(props){
     let addImg = (e) => {
         let src = URL.createObjectURL(e.target.files[0]);
         updateFiles({
-            action: "push",
+            type: "PUSH",
             value: {
                 img_link: src,
                 img: {
@@ -29,7 +29,7 @@ function ImageUploader(props){
 
     let removeImg = (img) => {
         updateFiles({
-            action: "remove",
+            type: "REMOVE",
             value: img
         })
 

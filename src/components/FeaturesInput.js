@@ -9,7 +9,7 @@ function FeaturesInput(props) {
 
     let addFeature = (event) => {
         updateFeatures({
-            action: "push",
+            type: "PUSH",
             value: {id: null, name: "", value: ""}
         });
         if(props.onChange !== undefined){
@@ -19,7 +19,7 @@ function FeaturesInput(props) {
 
     let deleteFeature = (featureToDelete) => {
         updateFeatures({
-            action: "filter",
+            type: "FILTER",
             value: (feature) => feature !== featureToDelete
         })
         if(props.onChange !== undefined){
