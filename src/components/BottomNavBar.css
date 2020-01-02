@@ -30,18 +30,18 @@
 	visibility: hidden;
 }
 
-.btn-ripple>img{
+.bottom-nav-bar .btn-ripple>img{
 	filter: opacity(70%);
 }
 
-.btn-ripple {
+.bottom-nav-bar .btn-ripple {
 	display: inline-block;
 	position: relative;
 	overflow: hidden;
 	transition: all ease-in-out 0s;
 }
 
-.btn-ripple::after {
+.bottom-nav-bar .btn-ripple::after {
 	content: "";
 	display: block;
 	position: absolute;
@@ -57,7 +57,7 @@
 	transform: scale(10, 10);
 }
 
-.btn-ripple:active::after {
+.bottom-nav-bar .btn-ripple:active::after {
 	padding: 0;
 	margin: 0;
 	opacity: .2;

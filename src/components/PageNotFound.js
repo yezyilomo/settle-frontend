@@ -1,11 +1,8 @@
 import React, { } from 'react';
 import './PageNotFound.css';
-import {withRouter} from 'react-router-dom';
 
 
 function PageNotFound(props) {
-    // let path = props.history.location.pathname;
-    // let search = props.history.location.search||"";
     return (
         <div class="col-12 text-center">
             <div class="col-12 page-not-found">
@@ -16,6 +13,4 @@ function PageNotFound(props) {
     );
 }
 
-let comp = withRouter(PageNotFound)
-
-export { comp as PageNotFound};
+export { PageNotFound};

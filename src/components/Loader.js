@@ -1,10 +1,17 @@
-import React, { } from 'react';
+import React, { useState } from 'react';
 import './Loader.css';
-import {withRouter} from 'react-router-dom';
 import {Spinner} from 'react-bootstrap';
 
 
+let LOADER_DELAY = 150
+
 function PageLoader(props) {
+    let [visible, setVisibility] = useState(false);
+    setTimeout(function(){setVisibility(true)}, LOADER_DELAY);
+
+    if(!visible){
+        return null
+    }
     return (
         <div class="col-12 text-center">
             <div class="col-12 page-loader">
@@ -15,6 +22,12 @@ function PageLoader(props) {
 }
 
 function InlineLoader(props) {
+    let [visible, setVisibility] = useState(false);
+    setTimeout(function(){setVisibility(true)}, LOADER_DELAY);
+
+    if(!visible){
+        return null
+    }
     return (
         <div class="col-12 text-center mx-0 px-0">
             <div class="col-12 inline-loader">
@@ -25,6 +38,12 @@ function InlineLoader(props) {
 }
 
 function GlowInlineLoader(props){
+    let [visible, setVisibility] = useState(false);
+    setTimeout(function(){setVisibility(true)}, LOADER_DELAY);
+
+    if(!visible){
+        return null
+    }
     return (
         <div class="glow-inline-loader col-12 my-3 text-center">
             <Spinner animation="grow" variant="info" size="sm"/>
@@ -34,8 +53,4 @@ function GlowInlineLoader(props){
     );
 }
 
-
-let comp1 = withRouter(PageLoader)
-let comp2 = withRouter(InlineLoader)
-
-export { comp1 as Loader, comp2 as InlineLoader, GlowInlineLoader};
+export { PageLoader as Loader, InlineLoader, GlowInlineLoader};

@@ -15,6 +15,13 @@ function TopBar(props) {
         setKey(value);
     }
 
+    let validateKey = () => {
+        if(key){
+            return "";
+        }
+        return 'return false';
+    }
+
     let logOut = (event) => {
         var d = new Date();
         d.setTime(d.getTime() - 24*60*60*1000); // in milliseconds
@@ -41,8 +48,8 @@ function TopBar(props) {
             <form class="search-form form-inline m-0 ml-2 ml-lg-0 p-0 py-2 p-lg-0 col-7 col-sm-8 col-md-8 col-lg-5 ">
                 <input name="search" onChange={updateField} class="search-input py-0 py-lg-3 form-control m-0 col-12 col-sm-9 col-md-9 col-lg-12"
                     type="search" placeholder="Search location..." aria-label="Search" />
-                <Link to={{ pathname: "/search", search: `?q=${key}`}}>
-                    <button class="btn m-0 px-sm-3 {/*d-none d-sm-block*/}" >
+                <Link onClick={validateKey()} to={{ pathname: "/search", search: `?q=${key}`}}>
+                    <button class="btn m-0 px-sm-3" >
                         <img class="search-button" src="icons/search.svg" width="21" height="21" alt=""/>
                     </button>
                 </Link>
@@ -75,7 +82,7 @@ function TopBar(props) {
                   }
                   { user.isLoggedIn?
                       <>
-                        <Nav.Link href="#upload-property">Create</Nav.Link>
+                        <Nav.Link href="#create/properties/">Create</Nav.Link>
                         <hr class="line p-0 m-0 d-lg-none" />
                       </>:
                       null
@@ -84,9 +91,9 @@ function TopBar(props) {
                       <>
                         <Dropdown alignRight>
                             <Dropdown.Toggle as={Nav.Link}>Profile</Dropdown.Toggle>
-                            <Dropdown.Menu className="nav-dropdown-menu border-xs-0 border-lg-1">
+                            <Dropdown.Menu className="nav-dropdown-menu bw-0 bw-lg-1">
                                 <hr class="line p-0 m-0 d-lg-none" />
-                                <Dropdown.Item className="nav-dropdown-item" href="#my-properties">My Properties</Dropdown.Item>
+                                <Dropdown.Item className="nav-dropdown-item" href="#properties/">My Properties</Dropdown.Item>
                                 <hr class="line p-0 m-0" />
                                 <Dropdown.Item className="nav-dropdown-item" href="#/" onClick={logOut}>
                                     Logout

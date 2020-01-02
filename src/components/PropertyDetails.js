@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './PropertyDetails.css';
-import { withRouter, Link } from 'react-router-dom';
-import { Block, Fetcher, Loader, Rating, PageError, Carousel as Slider } from './';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+import { Block, LocalFetcher, Loader, Rating, PageError, Carousel as Slider } from './';
 import { API_URL } from '../';
-import { Button, Modal, Carousel } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'simple-react-state';
 
 
@@ -20,7 +21,7 @@ function InfoModal(props) {
     
     return (
         <>
-          <Button className="c-anchor m-0 p-0" variant="link" onClick={() => setModalShow(true)}>
+          <Button className="c-anchor m-0 p-0 mt-2 w-100 text-left" variant="link" onClick={() => setModalShow(true)}>
               {props.modalButton}
           </Button>
     
@@ -62,7 +63,7 @@ function ImagesCarousel(props) {
               <img class="full-img d-block w-100" src={image.src} alt="" />
           )}
         </Slider>
-        <div class="corouser-items-counter">{index+1}/{props.images.length}</div>
+        <div class="corousel-items-counter">{index+1}/{props.images.length}</div>
       </>
   );
 }
@@ -176,6 +177,7 @@ function OthersPropertyImages(props) {
             case 1: return `0 0 ${width}px ${width}px`;
             case 2: return `0 0 0 ${width}px`;
             case 3: return `0 0 0 ${width}px`;
+            default: return `0`;
         }
     }
 
@@ -245,7 +247,7 @@ function Badges(props) {
                             return (
                                 <div class="px-2 pt-3" style={{"font-size": "1.05em"}}>
                                     {val}
-                                    <hr class="line d-md-none m-0 mt-2 p-0"/>
+                                    <hr class="line m-0 mt-2 p-0"/>
                                 </div>
                             )
                         })}
@@ -259,42 +261,17 @@ function Badges(props) {
 }
 
 function PropertyDetails(props) {
-    let [user, ] = useGlobalState("user")
+    let history = useHistory();
+    let [user, ] = useGlobalState("user");
     let fetchProperty = () => {
-        return fetch(`${API_URL}/property/${props.property}/?
-            query={
-                id,
-                category,
-                price,
-                currency,
-                location{
-                    region,
-                    country
-                },
-                rating,
-                payment_terms,
-                unit_of_payment_terms,
-                amenities,
-                services,
-                potentials,
-                pictures{
-                    id,
-                    is_main,
-                    src
-                },
-                other_features{
-                    id,
-                    name,
-                    value
-                }
-            }&format=json`
-        )
+        return fetch(`${API_URL}/${props.type}/${props.id}/`)
         .then(res => res.json())
     }
 
     return (
-        <Fetcher action={fetchProperty}
+        <LocalFetcher action={fetchProperty}
         placeholder={<Loader/>} error={<PageError/>}>{property => {
+            let isAllowedToEdit = user.id == property.owner.id
 
             let main_img = property.pictures.filter((picture) => picture.is_main)
             if (main_img.length < 1) {
@@ -307,14 +284,13 @@ function PropertyDetails(props) {
 
             let redirect = (status) => {
                 if(status === 204){
-                    props.history.replace('/my-properties/');
-                    return
+                    return history.replace('/my-properties/');
                 }
                 // Report Error
             }
 
             let deleteProperty = (e) => {
-                let postUrl = `${API_URL}/property/${property.id}/`;
+                let postUrl = `${API_URL}/${props.type}/${property.id}/`;
                 let headers = {
                     'Authorization': `Token ${user.authToken}`,
                     'Content-Type': 'application/json'
@@ -338,14 +314,14 @@ function PropertyDetails(props) {
                         </div>
                     </div>
 
-                    {props.edit?
-                        <div class="col-12 p-0 m-0 px-0">
+                    {isAllowedToEdit ?
+                        <div class="col-12 p-0 m-0">
                             <div class="actions row m-0 p-0">
                                 <div class="col text-center py-2">
                                     <b class="delete-property" onClick={deleteProperty}>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 delete-property-icon"/></b>
                                 </div>
                                 <div class="col text-center py-2">
-                                    <Link to={`/edit-property/${property.id}`} class="edit-property c-anchor">
+                                    <Link to={`/edit/${props.type}/${property.id}`} class="edit-property c-anchor">
                                         <b>Edit <span class="fas fa-edit mt-2 ml-1 ml-lg-3 edit-property-icon"/></b>
                                     </Link>
                                 </div>
@@ -356,9 +332,9 @@ function PropertyDetails(props) {
                     }
                     
                     <div class="col-12 p-0 m-0">
-                        <div class="row p-0 m-0 px-3 mt-2 mt-md-4 pt-md-2 text-dark">
+                        <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                             <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
-                                <div class="prop-info-card sticky-top border-md-1 py-1 px-md-3 py-md-2">
+                                <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
                                     <div class="property-type">Available for <span class="bg-info">{property.category}</span></div>
                                     <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                         &nbsp;{property.location.region + "," + property.location.country}
@@ -385,10 +361,8 @@ function PropertyDetails(props) {
                         </div>
                     </div>
                 </div>)
-        }}</Fetcher>
+        }}</LocalFetcher>
     )
 }
 
-const comp = withRouter(PropertyDetails);
-
-export { comp as PropertyDetails}
+export {PropertyDetails}

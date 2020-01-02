@@ -1,23 +1,18 @@
 .prop-overview {
     overflow: hidden;
-    /* border-radius: 3px; */
-    /* border: 1px solid #dddddd; */
     border-width: 0 ;
 }
 
-/* load background  */
 .prop-overview .prop-img{
     padding: 0;
     margin: 0;
-
-    /* magic begins here */
     background-color: gray;
     width: 100%;
-    min-height: 120px;
     border-radius: 4px;
     overflow: hidden;
+    min-height: 80px;
+
 }
-/* end load background  */
 
 .prop-overview .prop-img img {
     height: auto;
@@ -25,8 +20,8 @@
 }
 
 .prop-overview .prop-info {
-    height: 95px;
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 300;
 }
 
 .prop-overview .prop-info>div {
@@ -45,9 +40,8 @@
     border-radius: 5px;
 }
 
-.prop-overview .prop-location, 
 .prop-overview .prop-price {
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .prop-overview .prop-location i{
@@ -71,19 +65,15 @@
     border-width: 0 ;
 }
 
-/* load background  */
 .prop-slider-overview .prop-img{
     padding: 0;
     margin: 0;
-
-    /* magic begins here */
     background-color: gray;
     width: 100%;
-    min-height: 120px;
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
+    min-height: 80px;
 }
-/* end load background  */
 
 .prop-slider-overview .prop-img img {
     height: auto;
@@ -91,8 +81,8 @@
 }
 
 .prop-slider-overview .prop-info {
-    height: 95px;
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 300;
 }
 
 .prop-slider-overview .prop-info>div {
@@ -113,7 +103,7 @@
 
 .prop-slider-overview .prop-location, 
 .prop-slider-overview .prop-price {
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .prop-slider-overview .prop-location i{

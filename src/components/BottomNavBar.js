@@ -1,9 +1,10 @@
 import React from 'react';
 import './BottomNavBar.css';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 
 function BottomNavBar(props){
+    let history = useHistory();
     let homePath = "/";
     let filterPath = "/filter";
     let rentPath = "/rent-property";
@@ -11,23 +12,23 @@ function BottomNavBar(props){
     let bookPath = "/book-property";
 
     let goToHome = (e) => {
-        props.history.push(homePath)
+        history.push(homePath)
     }
     let goToFilter = (e) => {
-        props.history.push(filterPath)
+        history.push(filterPath)
     }
     let goToRent = (e) => {
-        props.history.push(rentPath)
+        history.push(rentPath)
     }
     let goToBuy = (e) => {
-        props.history.push(buyPath)
+        history.push(buyPath)
     }
     let goToBook = (e) => {
-        props.history.push(bookPath)
+        history.push(bookPath)
     }
 
     let active = (iconPath) => {
-        let currentPath = props.history.location.pathname;
+        let currentPath = history.location.pathname;
         if(currentPath === iconPath){
             return ["_neg", "active-text"];
         }
@@ -60,6 +61,4 @@ function BottomNavBar(props){
     );
 }
 
-let comp = withRouter(BottomNavBar);
-
-export {comp as BottomNavBar}
+export {BottomNavBar}

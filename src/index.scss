@@ -1,0 +1,146 @@
+@import "variables.scss";
+
+html {
+  overflow-y: scroll;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.line{
+  height: 2px;
+}
+
+/* Theme */
+.c-bg-primary{
+    background-color: $primaryColor;
+}
+
+.c-text-primary{
+  color: unset;
+}
+
+.c-bg-secondary{
+  background-color: $secondaryColor;
+}
+
+.c-text-secondary{
+  color: unset;
+}
+
+
+a, .c-anchor{
+  color: $primaryColor;
+  text-decoration: none;
+}
+.a:hover, .c-anchor:hover{
+  color: $primaryColor;
+  text-decoration: none;
+}
+
+/* End of Theme */
+
+/* Extra small devices (portrait phones, less than 576px)
+  No media query for `xs` since this is the default in Bootstrap
+*/
+
+
+/* Extra small devices (landscape phones, 575px and below) */
+@media (min-width: 0) {
+    /*  border width */
+    .bw-0{border-width: 0; border-style: solid;}
+    .bw-1{border-width: 1px; border-style: solid;}
+    .bw-2{border-width: 2px; border-style: solid;}
+    .bw-3{border-width: 3px; border-style: solid;}
+    .bw-4{border-width: 4px; border-style: solid;}
+    .bw-5{border-width: 5px; border-style: solid;}
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@include media-breakpoint-up(sm) {
+    /*  border width */
+    .bw-sm-0{border-width: 0; border-style: solid;}
+    .bw-sm-1{border-width: 1px; border-style: solid;}
+    .bw-sm-2{border-width: 2px; border-style: solid;}
+    .bw-sm-3{border-width: 3px; border-style: solid;}
+    .bw-sm-4{border-width: 4px; border-style: solid;}
+    .bw-sm-5{border-width: 5px; border-style: solid;}
+}
+
+/* Medium devices (tablets, 768px and up)  */
+@include media-breakpoint-up(md) {
+    /*  border width */
+    .bw-md-0{border-width: 0; border-style: solid;}
+    .bw-md-1{border-width: 1px; border-style: solid;}
+    .bw-md-2{border-width: 2px; border-style: solid;}
+    .bw-md-3{border-width: 3px; border-style: solid;}
+    .bw-md-4{border-width: 4px; border-style: solid;}
+    .bw-md-5{border-width: 5px; border-style: solid;}
+}
+
+/* Large devices (desktops, 992px and up) */
+@include media-breakpoint-up(lg) {
+    /*  border width */
+    .bw-lg-0{border-width: 0; border-style: solid;}
+    .bw-lg-1{border-width: 1px; border-style: solid;}
+    .bw-lg-2{border-width: 2px; border-style: solid;}
+    .bw-lg-3{border-width: 3px; border-style: solid;}
+    .bw-lg-4{border-width: 4px; border-style: solid;}
+    .bw-lg-5{border-width: 5px; border-style: solid;}
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@include media-breakpoint-up(xl) {
+    /*  border width */
+    .bw-xl-0{border-width: 0; border-style: solid;}
+    .bw-xl-1{border-width: 1px; border-style: solid;}
+    .bw-xl-2{border-width: 2px; border-style: solid;}
+    .bw-xl-3{border-width: 3px; border-style: solid;}
+    .bw-xl-4{border-width: 4px; border-style: solid;}
+    .bw-xl-5{border-width: 5px; border-style: solid;}
+}
+
+
+.d-2{
+    @media (min-width: 0) {
+        .d-none-3, .d-none-4, .d-none-5, .d-none-6, .d-none-7, .d-none-8{
+            display: none;
+        }
+    }
+}
+
+.d-4{
+    @media (min-width: 0) {
+        .d-none-5, .d-none-6, .d-none-7, .d-none-8{
+            display: none;
+        }
+    }
+}
+
+.d-sm-4{
+    @include media-breakpoint-up(sm) {
+        .d-none-3, .d-none-4{
+            display: block;
+        }
+    }
+}
+
+.d-md-6{
+    @include media-breakpoint-up(md) {
+        .d-none-3, .d-none-4, .d-none-5, .d-none-6{
+            display: block;
+        }
+    }
+}
+
+.d-lg-8{
+    @include media-breakpoint-up(lg) {
+        .d-none-3, .d-none-4, .d-none-5, .d-none-6, .d-none-7, .d-none-8{
+            display: block;
+        }
+    }
+}

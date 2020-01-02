@@ -1,11 +1,13 @@
 import React, { } from 'react';
 import './Errors.css';
-import {Link, withRouter} from 'react-router-dom';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 
 function PageError(props) {
-    let path = props.history.location.pathname;
-    let search = props.history.location.search||"";
+    let history = useHistory();
+    let path = history.location.pathname;
+    let search = history.location.search||"";
     return (
         <div class="col-12 text-center">
             <div class="col-12 page-error">
@@ -21,12 +23,13 @@ function PageError(props) {
 }
 
 function InlineError(props) {
+    let history = useHistory()
     return (
         <div class="col-12 text-center mx-0 px-0">
             <div class="col-12 inline-error py-1">
                 <i class="error-icon fas fa-exclamation-triangle"></i>
                 <div>Error,&nbsp;
-                    <Link to={props.history.pathname}>
+                    <Link to={history.pathname}>
                         Try again
                     </Link>
                 </div>
@@ -35,7 +38,4 @@ function InlineError(props) {
     );
 }
 
-let comp1 = withRouter(PageError)
-let comp2 = withRouter(InlineError)
-
-export { comp1 as PageError, comp2 as InlineError };
+export { PageError, InlineError };
