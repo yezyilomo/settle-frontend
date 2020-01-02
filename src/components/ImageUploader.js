@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import { } from 'react-router-dom';
 import './ImageUploader.css';
 import { Block} from './'
@@ -8,6 +8,14 @@ function ImageUploader(props){
     let images = props.src||[]
     images = images.map(img => ({img_link: img.src , img: img}))
     let [files, updateFiles] = useLocalState(images);
+
+    // Trigger sythentic onChange event when files is updated
+    useEffect(() => {
+        if(props.onChange !== undefined){
+            let value = files.map(file=>file.img)
+            props.onChange(value);
+        }
+    }, [files]);
 
     let addImg = (e) => {
         let src = URL.createObjectURL(e.target.files[0]);
@@ -21,10 +29,6 @@ function ImageUploader(props){
                 }
             }
         });
-        if(props.onChange !== undefined){
-            let value = files.map(file=>file.img)
-            props.onChange(value);
-        }
     }
 
     let removeImg = (img) => {
@@ -50,12 +54,10 @@ function ImageUploader(props){
     }
 
     return (
-        <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-center">
+        <div class="row p-0 m-0 justify-content-center">
             {files.length > 0?
                 <Block>
-                    <div class="remove-main-img col-12">
-                        <i class="far fa-times-circle" onClick={(e)=>{removeImg(files[0])}}></i>
-                    </div>
+                    <i class="fas fa-times remove-main-img" onClick={(e)=>{removeImg(files[0])}}></i>
                     <div class="main-img">
                         <img class="main-img-preview" src={src()} alt=""/>
                     </div>

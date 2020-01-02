@@ -2,7 +2,10 @@ import {App} from './App';
 import {Home} from './Home';
 import {PropertyOverview} from './PropertyOverview';
 import {PropertyDetails} from './PropertyDetails';
-import {PropertyGroup} from './PropertyGroup';
+import {
+    GenericResourcesGroup, PropertiesGroup, 
+    SliderPropertiesGroup, TwoRowsPropertiesGroup
+}from './ResourcesGroups';
 import {TopBar} from './TopBar';
 import {SideBar} from './SideBar';
 import {Block} from './Block';
@@ -12,14 +15,16 @@ import {Select} from './Select';
 import {FeaturesInput} from './FeaturesInput';
 import {LogIn} from './LogIn';
 import {SignUp} from './SignUp';
-import {Fetcher} from './Fetcher';
+import {LocalFetcher, GlobalFetcher} from './Fetchers';
 import {Loader, InlineLoader, GlowInlineLoader} from './Loader';
 import {EditProperty} from './EditProperty';
 import {ImageUploader} from './ImageUploader';
 import {MultipleImageUploader} from './MultipleImageUploader';
-import {PropertyFilter} from './PropertyFilter';
-import {UserProperties} from './UserProperties';
-import {SearchProperties, FilterProperties} from './SearchProperties';
+import {
+    GenericFilter ,PropertiesFilter, UserProperties,
+    SearchProperties, FilterPropertiesByCategory,
+    EndpointPropertiesFilter, ShowGroupProperties
+} from './Filters';
 import {Rating} from './Rating';
 import {BottomNavBar} from './BottomNavBar';
 import {TopScroller} from './TopScroller';
@@ -28,11 +33,12 @@ import {PageNotFound} from './PageNotFound';
 import {Carousel} from './Carousel';
 
 export {
-    App, Home, PropertyOverview, PropertyGroup, TopBar, SideBar,
-    Block, PropertyDetails, UploadProperty, SelectMultiValue,
-    Select, FeaturesInput, LogIn, SignUp, Fetcher, Loader,
-    EditProperty, ImageUploader, MultipleImageUploader,
-    PropertyFilter, UserProperties, SearchProperties, Rating,
-    BottomNavBar, FilterProperties, InlineLoader, GlowInlineLoader,
-    TopScroller, PageError, InlineError, PageNotFound, Carousel
+    App, Home, PropertyOverview, TopBar, SideBar, Block, PropertyDetails,
+    UploadProperty, SelectMultiValue, Select, FeaturesInput, LogIn, SignUp,
+    LocalFetcher, GlobalFetcher, Loader, EditProperty, ImageUploader, 
+    MultipleImageUploader, UserProperties, SearchProperties, FilterPropertiesByCategory, 
+    Rating, BottomNavBar, InlineLoader, GlowInlineLoader, TopScroller, PageError,
+    InlineError, PageNotFound, Carousel, GenericFilter ,PropertiesFilter,
+    EndpointPropertiesFilter, GenericResourcesGroup, PropertiesGroup,
+    SliderPropertiesGroup, TwoRowsPropertiesGroup, ShowGroupProperties
 };

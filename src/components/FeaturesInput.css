@@ -1,10 +1,12 @@
 .add-feature{
     font-size: 1.2em;
-    margin-left: 20px;
     cursor: pointer;
+    position: relative;
+    top: 2px;
 }
 
 .remove-feature{
     font-size: 1.2em;
     cursor: pointer;
+    margin-top: 12px;
 }

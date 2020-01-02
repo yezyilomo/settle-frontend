@@ -72,7 +72,7 @@ function Select(props) {
         if (toAdd === undefined){
             updateUpdates({
                 field: "add",
-                type: "push",
+                type: "PUSH",
                 value: optionToAdd
             });
         }

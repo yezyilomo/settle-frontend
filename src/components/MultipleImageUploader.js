@@ -43,15 +43,13 @@ function MultipleImageUploader(props){
     }
 
     return (
-        <div class="row p-0 m-0 mt-3 mt-md-1 justify-content-start">
+        <div class="row p-0 m-0 justify-content-start">
             {files.map(img =>
                 <Block>
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 py-1 px-1 m-0">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 m-0 py-1 px-1">
                         <div class="p-0 m-0 row">
+                            <i class="fas fa-times remove-other-img" onClick={(e)=>{removeImg(img)}}></i>
                             <div class="other-img col-12">
-                                <div class="remove-other-img col-12">
-                                    <i class="far fa-times-circle" onClick={(e)=>{removeImg(img)}}></i>
-                                </div>
                                 <img src={img.img_link} alt="" />
                             </div>
                         </div>
@@ -59,8 +57,8 @@ function MultipleImageUploader(props){
                 </Block>
             )}
             <label for={props.name} class="other-file-input-label">
-                <div class="upload-other-img d-flex flex-column align-content-center justify-content-center flex-wrap">
-                    <div class="d-flex flex-row justify-content-end mt-2">
+                <div class="upload-other-img m-0 py-1 px-1 d-flex flex-column align-content-center justify-content-center flex-wrap">
+                    <div class="d-flex flex-row justify-content-end m-0 p-0">
                         <span class="camera fa fa-camera"/>
                         <span class="plus fa fa-plus"/>
                     </div>

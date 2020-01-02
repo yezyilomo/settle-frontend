@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { useGlobalState } from 'simple-react-state';
 import './LogIn.css';
 import {API_URL} from '../';
@@ -7,6 +7,7 @@ import {Modal, Nav} from 'react-bootstrap';
 
 
 function LogIn(props) {
+    let history = useHistory();
     const [,updateUser] = useGlobalState('user');
     const [loginError, setLoginError] = useState('');
     const [modalShow, setModalShow] = useState(false);
@@ -38,7 +39,7 @@ function LogIn(props) {
                 }
             });
             setLoginError("");
-            props.history.push("/");
+            history.push("/");
         }
         else if(response.non_field_errors !== undefined){
             setLoginError("Invalid credentials, please try again!.");
@@ -103,6 +104,4 @@ function LogIn(props) {
     );
 }
 
-const comp = withRouter(LogIn);
-
-export { comp as LogIn }
+export { LogIn }

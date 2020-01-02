@@ -1,8 +1,10 @@
-import React from 'react';
-import { withRouter } from  'react-router-dom';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { useGlobalState } from 'simple-react-state';
-import './SideBar.css';
+import './SideBar.scss';
 import { Select } from   './';
+import { setErrorClass } from '../utils';
+
 
 let options = [
     {id: 1, name: "one"},
@@ -13,9 +15,11 @@ let options = [
     {id: 1, name: "Repeat One"}
 ];
 
-
 function SideBar(props) {
+    let history = useHistory();
     let [filterFields, updateFilterFields] = useGlobalState("sideBar");
+
+    useEffect(setErrorClass, [])
 
     let updateFieldValue = (e) => {
         let field = e.target.name;
@@ -43,23 +47,28 @@ function SideBar(props) {
 
     let handleSubmit = (e) => {
         e.preventDefault();
-        props.history.push("/ft");
+        history.push("/ft");
     }
     return (
         <div class={`sidebar text-secondary p-0 m-0 ${props.setting}`}>
             <h5 class="m-0 p-0 px-2 mt-3 mt-md-0 col-12">Quick Filter</h5>
             <form id="filter-form" class="p-0 m-0 px-2 pr-md-3" onSubmit={handleSubmit}>
                 <select class="custom-select mt-3" name="category" value={filterFields.category} onChange={updateFieldValue} required>
-                    <option selected disabled>I want to...</option>
+                    <option selected disabled value="">I want to...</option>
                     <option value="rent">Rent</option>
                     <option value="sale">Buy</option>
                     <option value="book">Book</option>
                 </select>
                 <select class="custom-select mt-4" name="property_type" value={filterFields.property_type} onChange={updateFieldValue} required>
-                    <option selected disabled>Property...</option>
-                    <option value="room">Room</option>
-                    <option value="apartment">Apartment</option>
-                    <option value="house">House</option>
+                    <option selected disabled value="">Property...</option>
+                    <option value="rooms">Room</option>
+                    <option value="apartments">Apartment</option>
+                    <option value="houses">House</option>
+                    <option value="halls">Hall</option>
+                    <option value="frames">Frame</option>
+                    <option value="offices">Office</option>
+                    <option value="hostels">Hostel</option>
+                    <option value="lands">Land</option>
                 </select>
 
                 <label class="form-check-label p-0 m-0 mt-5">Price range</label>
@@ -91,6 +100,5 @@ function SideBar(props) {
     );
 }
 
-const comp = withRouter(SideBar)
 
-export { comp as SideBar }
+export { SideBar }
