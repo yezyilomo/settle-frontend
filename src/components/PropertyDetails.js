@@ -6,6 +6,7 @@ import { Block, LocalFetcher, Loader, Rating, PageError, Carousel as Slider } fr
 import { API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'simple-react-state';
+import { getPropertyRoute } from '../utils';
 
 
 function InfoModal(props) {
@@ -264,7 +265,7 @@ function PropertyDetails(props) {
     let history = useHistory();
     let [user, ] = useGlobalState("user");
     let fetchProperty = () => {
-        return fetch(`${API_URL}/${props.type}/${props.id}/`)
+        return fetch(`${API_URL}/${getPropertyRoute(props.type)}/${props.id}/`)
         .then(res => res.json())
     }
 
@@ -284,13 +285,13 @@ function PropertyDetails(props) {
 
             let redirect = (status) => {
                 if(status === 204){
-                    return history.replace('/my-properties/');
+                    return history.replace('/properties/');
                 }
                 // Report Error
             }
 
             let deleteProperty = (e) => {
-                let postUrl = `${API_URL}/${props.type}/${property.id}/`;
+                let postUrl = `${API_URL}/${getPropertyRoute(props.type)}/${property.id}/`;
                 let headers = {
                     'Authorization': `Token ${user.authToken}`,
                     'Content-Type': 'application/json'
@@ -321,7 +322,7 @@ function PropertyDetails(props) {
                                     <b class="delete-property" onClick={deleteProperty}>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 delete-property-icon"/></b>
                                 </div>
                                 <div class="col text-center py-2">
-                                    <Link to={`/edit/${props.type}/${property.id}`} class="edit-property c-anchor">
+                                    <Link to={`/edit/${getPropertyRoute(props.type)}/${property.id}`} class="edit-property c-anchor">
                                         <b>Edit <span class="fas fa-edit mt-2 ml-1 ml-lg-3 edit-property-icon"/></b>
                                     </Link>
                                 </div>
@@ -335,7 +336,7 @@ function PropertyDetails(props) {
                         <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                             <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
                                 <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                    <div class="property-type">Available for <span class="bg-info">{property.category}</span></div>
+                                    <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
                                     <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                         &nbsp;{property.location.region + "," + property.location.country}
                                     </div>

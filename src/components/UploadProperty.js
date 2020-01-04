@@ -7,6 +7,7 @@ import {
     MultipleImageUploader, Loader
 } from './';
 import { API_URL } from '../';
+import { getPropertyRoute } from '../utils';
 
 
 let initialData = {
@@ -29,7 +30,7 @@ function UploadProperty(props){
 
     let postImages = (propertyID, pictures) => {
         if(pictures.length === 0){
-            return history.push(`${props.type}/${propertyID}`);
+            return history.push(`/${getPropertyRoute(props.type)}/${propertyID}`);
         }
         let img = pictures.pop();
         let postData = new FormData();
@@ -38,7 +39,7 @@ function UploadProperty(props){
         postData.append("tool_tip", img.tool_tip)
         postData.append("src", img.src)
 
-        let postUrl = `${API_URL}/picture/`;
+        let postUrl = `${API_URL}/pictures/`;
         let headers = {
             'Authorization': `Token ${user.authToken}`
         }
@@ -62,7 +63,7 @@ function UploadProperty(props){
         e.preventDefault();
         let form = e.target
         let formData = {
-            category: form.category.value,
+            available_for: form.available_for.value,
             price: form.price.value,
             currency: form.currency.value,
             location: {
@@ -91,7 +92,7 @@ function UploadProperty(props){
             }
         }
 
-        let postUrl = `${API_URL}/${props.type}/`;
+        let postUrl = `${API_URL}/${getPropertyRoute(props.type)}/`;
         let headers = {
             'Authorization': `Token ${user.authToken}`,
             'Content-Type': 'application/json'
@@ -154,7 +155,7 @@ function UploadProperty(props){
                             <div class="row p-0 m-0 my-0 my-lg-1">
                                 <label class="form-check-label col-12 p-0 m-0">Available for</label>
                                 <div class="col-12 p-0 m-0 my-1">
-                                    <select class="custom-select" name="category" value={fields.category} onChange={updateValue} required>
+                                    <select class="custom-select" name="available_for" value={fields.available_for} onChange={updateValue} required>
                                         <option value="" disabled selected>Select Category</option>
                                         <option value="rent">Rent</option>
                                         <option value="sell">Sell</option>

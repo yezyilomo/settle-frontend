@@ -7,6 +7,7 @@ import {
 } from './';
 import {API_URL} from '../';
 import { useLocalState, useGlobalState } from 'simple-react-state';
+import { getPropertyRoute } from '../utils';
 
 
 function EditProperty(props){
@@ -92,7 +93,7 @@ function EditProperty(props){
     }
 
     let redirect = (response) => {
-        return history.replace(`/${props.type}/${fields.id}`)
+        return history.replace(`/${getPropertyRoute(props.type)}/${fields.id}`)
     }
 
     let updateProperty = (e) => {
@@ -122,7 +123,7 @@ function EditProperty(props){
         features.remove = featuresToDelete
 
         let formData = {
-            category: form.category.value,
+            available_for: form.available_for.value,
             price: form.price.value,
             currency: form.currency.value,
             amenities: selectionFields.amenities,
@@ -143,7 +144,7 @@ function EditProperty(props){
             other_features: features
         }
 
-        let postUrl = `${API_URL}/${props.type}/${fields.id}/?format=json`;
+        let postUrl = `${API_URL}/${getPropertyRoute(props.type)}/${fields.id}/?format=json`;
         let headers = {
             'Authorization': `Token ${user.authToken}`,
             'Content-Type': 'application/json'
@@ -214,9 +215,8 @@ function EditProperty(props){
                             <div class="row p-0 m-0 my-0 my-lg-1">
                                 <label class="form-check-label col-12 p-0 m-0">Property type</label>
                                 <div class="col-12 p-0 m-0 my-1">
-                                    <select disabled class="custom-select" data-field="type" name="type" value={fields.prop_type} onChange={updateValue} required>
-                                        <option value="" disabled selected>Select Type</option>
-                                        {types.map((type)=><option value={type}>{type}</option>)}
+                                    <select disabled class="custom-select" data-field="type" name="type">
+                                        <option value="" disabled selected>{fields.type}</option>
                                     </select>
                                 </div>
                             </div>
@@ -224,9 +224,9 @@ function EditProperty(props){
                             <div class="row p-0 m-0 my-2 my-lg-1">
                                 <label class="form-check-label col-12 p-0 m-0">Available for</label>
                                 <div class="col-12 p-0 m-0 my-1">
-                                    <select class="custom-select" data-field="category" name="category" value={fields.category} onChange={updateValue} required>
+                                    <select class="custom-select" data-field="available_for" name="available_for" value={fields.available_for} onChange={updateValue} required>
                                         <option value="" disabled selected>Select Category</option>
-                                        {categories.map((category)=><option value={category}>{category}</option>)}
+                                        {categories.map((available_for)=><option value={available_for}>{available_for}</option>)}
                                     </select>
                                 </div>
                             </div>
@@ -358,7 +358,7 @@ function EditProperty(props){
 
 function PropertyFetcher(props){
     let fetchProperty = () => {
-        return fetch(`${API_URL}/${props.type}/${props.id}/`)
+        return fetch(`${API_URL}/${getPropertyRoute(props.type)}/${props.id}/`)
         .then(res => res.json())
     }
 
