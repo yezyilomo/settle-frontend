@@ -12,6 +12,31 @@ function setErrorClass(query = "input, select, textarea") {
     });
 }
 
+let propertyTypes = {
+    "generic": "properties",
+    "room": "rooms",
+    "house": "houses",
+    "apartment": "apartments",
+    "hostel": "hostels",
+    "office": "offices",
+    "hall": "halls",
+    "land": "lands",
+    "frame": "frames"
+}
+
+function getPropertyRoute(propertyType){
+    return propertyTypes[propertyType]
+}
+
+function getPropertyType(propertyRoute){
+    let propertyRoutes = {}
+    for(let route in propertyTypes){
+        let key = propertyTypes[route]
+        propertyRoutes[key] = route
+    }
+    return propertyRoutes[propertyRoute]
+}
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -49,5 +74,5 @@ function onScrollToBottom(handleScrollToBottom, y = 1) {
 }
 
 export {
-    setErrorClass, getCookie, onScrollToBottom
+    setErrorClass, getCookie, onScrollToBottom, getPropertyRoute, getPropertyType
 }
