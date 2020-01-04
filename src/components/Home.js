@@ -12,9 +12,9 @@ function Home(props) {
     let proertiesToRentEndpoint = `properties/?
     query={
         id,
-        category,
+        available_for,
         price,
-        prop_type,
+        type,
         pictures{
             src,
             is_main
@@ -22,14 +22,14 @@ function Home(props) {
         currency,
         location,
         rating
-    }&category=rent&format=json`
+    }&available_for=rent&format=json`
 
     let propertiesToBuyEndpoint = `properties/?
     query={
         id,
-        category,
+        available_for,
         price,
-        prop_type,
+        type,
         pictures{
             src,
             is_main
@@ -37,14 +37,14 @@ function Home(props) {
         currency,
         location,
         rating
-    }&category=sale&format=json`
+    }&available_for=sale&format=json`
 
     let propertiesToSlideEndpoint = `properties/?
     query={
         id,
-        category,
+        available_for,
         price,
-        prop_type,
+        type,
         pictures{
             src,
             is_main

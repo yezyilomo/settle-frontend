@@ -53,7 +53,7 @@ function SideBar(props) {
         <div class={`sidebar text-secondary p-0 m-0 ${props.setting}`}>
             <h5 class="m-0 p-0 px-2 mt-3 mt-md-0 col-12">Quick Filter</h5>
             <form id="filter-form" class="p-0 m-0 px-2 pr-md-3" onSubmit={handleSubmit}>
-                <select class="custom-select mt-3" name="category" value={filterFields.category} onChange={updateFieldValue} required>
+                <select class="custom-select mt-3" name="available_for" value={filterFields.available_for} onChange={updateFieldValue} required>
                     <option selected disabled value="">I want to...</option>
                     <option value="rent">Rent</option>
                     <option value="sale">Buy</option>

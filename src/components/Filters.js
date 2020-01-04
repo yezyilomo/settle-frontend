@@ -6,6 +6,7 @@ import {
 } from '.';
 import { API_URL } from '..';
 import { useRestoreScrollState } from '../hooks';
+import { getPropertyRoute } from '../utils';
 
 
 function GenericFilter(props) {
@@ -58,14 +59,14 @@ function GenericFilter(props) {
 
 function PropertiesFilter(props) {
     let [filters, ] = useGlobalState("sideBar");
-    let {property_type, category, price__gt, price__lt, location, amenities, currency} = filters
+    let {property_type, available_for, price__gt, price__lt, location, amenities, currency} = filters
     let amenity_ids = JSON.stringify(amenities)
     let endpoint = `${property_type}/?
     query={
         id,
-        category,
+        available_for,
         price,
-        prop_type,
+        type,
         pictures{
             src,
             is_main
@@ -73,7 +74,7 @@ function PropertiesFilter(props) {
         currency,
         location,
         rating
-    }&category=${category}&price__gt=${price__gt}&
+    }&available_for=${available_for}&price__gt=${price__gt}&
     price__lt=${price__lt}&currency=${currency||""}&
     search=${location}&amenities__contains=${amenity_ids}&format=json`
 
@@ -122,9 +123,9 @@ function SearchProperties(props) {
     let endpoint = `properties/?
     query={
         id,
-        category,
+        available_for,
         price,
-        prop_type,
+        type,
         pictures{
             src,
             is_main
@@ -158,9 +159,9 @@ function FilterPropertiesByCategory(props) {
     let endpoint = `properties/?
     query={
         id,
-        category,
+        available_for,
         price,
-        prop_type,
+        type,
         pictures{
             src,
             is_main
@@ -168,7 +169,7 @@ function FilterPropertiesByCategory(props) {
         currency,
         location,
         rating
-    }&category=${props.category}&format=json`
+    }&available_for=${props.availableFor}&format=json`
     return (
         <GenericFilter endpoint={endpoint} placeholder={<Loader/>} error={<PageError/>}>
             {(properties, fetchMoreProperties) => {
@@ -190,12 +191,12 @@ function FilterPropertiesByCategory(props) {
 function UserProperties(props) {
     useRestoreScrollState();
     const [user, ] = useGlobalState("user");
-    let endpoint = `${props.type}/?
+    let endpoint = `${getPropertyRoute(props.type)}/?
     query={
         id,
-        category,
+        available_for,
         price,
-        prop_type,
+        type,
         pictures{
             src,
             is_main
@@ -206,7 +207,7 @@ function UserProperties(props) {
     }&owner=${user.id}&format=json`
 
     return (
-        <GenericFilter endpoint={endpoint} global selection={`my-${props.type}`}
+        <GenericFilter endpoint={endpoint} global selection={`my-${getPropertyRoute(props.type)}`}
         placeholder={<Loader/>} error={<PageError/>}>
             {(properties, fetchMoreProperties) => {
                 let header = `My properties(${properties.count})..`
