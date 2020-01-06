@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { } from 'react-router-dom';
 import './ImageUploader.css';
-import { Block} from './'
 import { useLocalState } from 'simple-react-state';
 
 function ImageUploader(props){
@@ -56,12 +55,12 @@ function ImageUploader(props){
     return (
         <div class="row p-0 m-0 justify-content-center">
             {files.length > 0?
-                <Block>
+                <>
                     <i class="fas fa-times remove-main-img" onClick={(e)=>{removeImg(files[0])}}></i>
                     <div class="main-img">
                         <img class="main-img-preview" src={src()} alt=""/>
                     </div>
-                </Block>:
+                </>:
                 null
             }
             <input type="file" accept="image/*" name={props.name} id={props.name} class="file-input" onChange={addImg}/>

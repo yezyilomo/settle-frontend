@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './Select.css';
-import { Block, SelectMultiValue } from './';
+import { SelectMultiValue } from './';
 import { useLocalState } from 'simple-react-state';
 
 
@@ -131,18 +131,18 @@ function Select(props) {
     }
 
     return (
-        <Block>
+        <>
             <div>
                 {selected.map((val) => {
                     return (
-                        <Block>
+                        <>
                         <span class="badge badge-secondary mb-1 mr-1">
                             <span class="badge-body">{shorten(optionName(val), 17)}</span>&nbsp;
                             <span data-value={optionValue(val)} data-name={optionName(val)} class="fa fa-times badge-close"
                                 onClick={removeFromSelected}>
                             </span>
                         </span>
-                        </Block>
+                        </>
                     );
                 })}
             </div>
@@ -157,7 +157,7 @@ function Select(props) {
                 />
                 <input type="hidden" value={JSON.stringify(selected.map(val=>optionValue(val)))} name={props.name} />
             </div>
-        </Block>
+        </>
     );
 }
 

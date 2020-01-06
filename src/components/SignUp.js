@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Route, MemoryRouter } from 'react-router-dom';
 import './SignUp.css';
-import { Block } from './';
 import { useGlobalState, useLocalState } from 'simple-react-state';
 import { API_URL } from '../';
 import { Modal, Nav } from 'react-bootstrap';
@@ -39,7 +38,7 @@ function About(props) {
     }
 
     return (
-        <Block>
+        <>
             <div class="row progress-tab m-0 p-0">
                 <div class="col text-center text-secondary">ABOUT</div>
             </div>
@@ -74,7 +73,7 @@ function About(props) {
 
                 </div>
             </form>
-        </Block>
+        </>
     );
 }
 
@@ -109,7 +108,7 @@ function Account(props) {
     }
 
     return (
-        <Block>
+        <>
             <div class="row progress-tab m-0 p-0">
                 <div class="col text-center text-secondary">ACCOUNT</div>
             </div>
@@ -157,7 +156,7 @@ function Account(props) {
 
                 </div>
             </form>
-        </Block>
+        </>
     );
 }
 
@@ -252,7 +251,7 @@ function Finish(props) {
     }
 
     return (
-        <Block>
+        <>
             <div class="row progress-tab m-0 p-0">
                 <div class="col text-center text-secondary">FINISH</div>
             </div>
@@ -301,7 +300,7 @@ function Finish(props) {
 
                 </div>
             </form>
-        </Block>
+        </>
     );
 }
 

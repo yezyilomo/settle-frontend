@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { } from 'react-router-dom';
 import './MultipleImageUploader.css';
-import { Block} from './'
 import { useLocalState } from 'simple-react-state';
 
 function MultipleImageUploader(props){
@@ -45,7 +44,7 @@ function MultipleImageUploader(props){
     return (
         <div class="row p-0 m-0 justify-content-start">
             {files.map(img =>
-                <Block>
+                <>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-4 m-0 py-1 px-1">
                         <div class="p-0 m-0 row">
                             <i class="fas fa-times remove-other-img" onClick={(e)=>{removeImg(img)}}></i>
@@ -54,7 +53,7 @@ function MultipleImageUploader(props){
                             </div>
                         </div>
                     </div>
-                </Block>
+                </>
             )}
             <label for={props.name} class="other-file-input-label">
                 <div class="upload-other-img m-0 py-1 px-1 d-flex flex-column align-content-center justify-content-center flex-wrap">
