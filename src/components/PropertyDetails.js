@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './PropertyDetails.css';
+import './PropertyDetails.scss';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Block, LocalFetcher, Loader, Rating, PageError, Carousel as Slider } from './';
+import { LocalFetcher, Loader, Rating, PageError, Carousel as Slider } from './';
 import { API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'simple-react-state';
@@ -234,12 +234,12 @@ function Badges(props) {
                 <div class="h5">{props.label}</div>
                 {values.map((val) => {
                     return (
-                        <Block>
+                        <>
                             <span class="badge badge-secondary mb-1 mr-1">
                                 <span id={val} class={`fa fa-${val} badge-close`} />&nbsp;
                                 <span class="badge-body">{shortenString(val, 17)}</span>
                             </span>
-                        </Block>
+                        </>
                     );
                 })}
                 { props.values.length > (maxValue) ?
