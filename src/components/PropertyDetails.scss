@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 .property-images-md {
     overflow: hidden;
     background-color: rgb(58, 58, 58);
@@ -113,7 +115,7 @@
 }
 
 .actions {
-    background-color: rgba(245, 245, 245);
+    background-color: rgb(245, 245, 245);
 }
 
 .edit-property {
@@ -121,8 +123,7 @@
 }
 
 .delete-property:hover {
-    text-decoration: underline;
-    color: rgb(250, 39, 39);
+    color: $red;
     cursor: pointer;
 }
 

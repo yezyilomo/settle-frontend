@@ -1,5 +1,4 @@
 import React from 'react';
-import { Block } from './';
 
 
 function SelectMultiValue(props) {
@@ -44,12 +43,12 @@ function SelectMultiValue(props) {
     }
     
     return (
-        <Block>
+        <>
             <select class={props.class} onChange={handleSelection}>
                 {placeholder()}
                 {props.options.map(options)}
             </select>
-        </Block>
+        </>
     );
 }
 

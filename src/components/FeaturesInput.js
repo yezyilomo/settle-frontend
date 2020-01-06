@@ -1,5 +1,4 @@
 import React, { } from 'react';
-import { Block } from './';
 import './FeaturesInput.css';
 import { useLocalState } from 'simple-react-state';
 
@@ -54,7 +53,7 @@ function FeaturesInput(props) {
     }
 
     return (
-        <Block>
+        <>
             <label class="form-check-label col-12 p-0 m-0 mb-1">
                 {props.label}
                 <span class="fa fa-plus add-feature ml-3" onClick={addFeature} />
@@ -74,7 +73,7 @@ function FeaturesInput(props) {
                     </div>
                 </div>
             )}
-        </Block>
+        </>
     );
 }
 
