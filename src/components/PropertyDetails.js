@@ -332,38 +332,320 @@ function PropertyDetails(props) {
                         null
                     }
                     
-                    <div class="col-12 p-0 m-0">
-                        <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
-                            <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
-                                <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                    <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
-                                    <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
-                                        &nbsp;{property.location.region + "," + property.location.country}
-                                    </div>
-                                    <div class="property-price">
-                                        Price: {property.currency} {property.price} / {property.unit_of_payment_terms}
-                                    </div>
-                                    <div class="peyment-terms">Payment terms: {property.payment_terms} {property.unit_of_payment_terms}s</div>
-                                    <div class="property-rating">
-                                        <span class="rating-label">Rating</span><Rating rating={property.rating}/>
-                                    </div>
-                                    {property.other_features.map((feature) => {
-                                        return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
-                                    })}
-                                </div>
-                                <hr class="line d-md-none m-0 p-0"/>
-                            </div>
-                            
-                            <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
-                                <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
-                                <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
-                                <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
-                            </div>
-                        </div>
-                    </div>
+                    { props.children ?
+                      props.children(property):
+                      null
+                    }
                 </div>)
         }}</LocalFetcher>
     )
 }
 
-export {PropertyDetails}
+function RoomDetails(props){
+    return (
+        <PropertyDetails type="room" id={props.id}>
+            {property => 
+                    <div class="col-12 p-0 m-0">
+                    <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                            <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
+                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
+                                    &nbsp;{property.location.region + "," + property.location.country}
+                                </div>
+                                <div class="property-price">
+                                    Price: {property.currency} {property.price} / {property.price_payment_terms_unit}
+                                </div>
+                                <div class="peyment-terms">Payment terms: {property.payment_terms} {property.payment_terms_unit}s</div>
+                                <div class="property-rating">
+                                    <span class="rating-label">Rating</span><Rating rating={property.rating}/>
+                                </div>
+                                {property.other_features.map((feature) => {
+                                    return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
+                                })}
+                            </div>
+                            <hr class="line d-md-none m-0 p-0"/>
+                        </div>
+                        
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                            <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
+                            <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
+                            <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </PropertyDetails>
+    );
+}
+
+function HouseDetails(props){
+    return (
+        <PropertyDetails type="house" id={props.id}>
+            {property => 
+                    <div class="col-12 p-0 m-0">
+                    <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                            <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
+                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
+                                    &nbsp;{property.location.region + "," + property.location.country}
+                                </div>
+                                <div class="property-price">
+                                    Price: {property.currency} {property.price} / {property.unit_of_payment_terms}
+                                </div>
+                                <div class="peyment-terms">Payment terms: {property.payment_terms} {property.unit_of_payment_terms}s</div>
+                                <div class="property-rating">
+                                    <span class="rating-label">Rating</span><Rating rating={property.rating}/>
+                                </div>
+                                {property.other_features.map((feature) => {
+                                    return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
+                                })}
+                            </div>
+                            <hr class="line d-md-none m-0 p-0"/>
+                        </div>
+                        
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                            <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
+                            <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
+                            <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </PropertyDetails>
+    );
+}
+
+function ApartmentDetails(props){
+    return (
+        <PropertyDetails type="apartment" id={props.id}>
+            {property => 
+                    <div class="col-12 p-0 m-0">
+                    <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                            <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
+                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
+                                    &nbsp;{property.location.region + "," + property.location.country}
+                                </div>
+                                <div class="property-price">
+                                    Price: {property.currency} {property.price} / {property.unit_of_payment_terms}
+                                </div>
+                                <div class="peyment-terms">Payment terms: {property.payment_terms} {property.unit_of_payment_terms}s</div>
+                                <div class="property-rating">
+                                    <span class="rating-label">Rating</span><Rating rating={property.rating}/>
+                                </div>
+                                {property.other_features.map((feature) => {
+                                    return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
+                                })}
+                            </div>
+                            <hr class="line d-md-none m-0 p-0"/>
+                        </div>
+                        
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                            <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
+                            <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
+                            <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </PropertyDetails>
+    );
+}
+
+function HostelDetails(props){
+    return (
+        <PropertyDetails type="hostel" id={props.id}>
+            {property => 
+                    <div class="col-12 p-0 m-0">
+                    <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                            <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
+                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
+                                    &nbsp;{property.location.region + "," + property.location.country}
+                                </div>
+                                <div class="property-price">
+                                    Price: {property.currency} {property.price} / {property.unit_of_payment_terms}
+                                </div>
+                                <div class="peyment-terms">Payment terms: {property.payment_terms} {property.unit_of_payment_terms}s</div>
+                                <div class="property-rating">
+                                    <span class="rating-label">Rating</span><Rating rating={property.rating}/>
+                                </div>
+                                {property.other_features.map((feature) => {
+                                    return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
+                                })}
+                            </div>
+                            <hr class="line d-md-none m-0 p-0"/>
+                        </div>
+                        
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                            <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
+                            <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
+                            <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </PropertyDetails>
+    );
+}
+
+function OfficeDetails(props){
+    return (
+        <PropertyDetails type="office" id={props.id}>
+            {property => 
+                    <div class="col-12 p-0 m-0">
+                    <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                            <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
+                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
+                                    &nbsp;{property.location.region + "," + property.location.country}
+                                </div>
+                                <div class="property-price">
+                                    Price: {property.currency} {property.price} / {property.unit_of_payment_terms}
+                                </div>
+                                <div class="peyment-terms">Payment terms: {property.payment_terms} {property.unit_of_payment_terms}s</div>
+                                <div class="property-rating">
+                                    <span class="rating-label">Rating</span><Rating rating={property.rating}/>
+                                </div>
+                                {property.other_features.map((feature) => {
+                                    return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
+                                })}
+                            </div>
+                            <hr class="line d-md-none m-0 p-0"/>
+                        </div>
+                        
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                            <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
+                            <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
+                            <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </PropertyDetails>
+    );
+}
+
+function HallDetails(props){
+    return (
+        <PropertyDetails type="hall" id={props.id}>
+            {property => 
+                    <div class="col-12 p-0 m-0">
+                    <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                            <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
+                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
+                                    &nbsp;{property.location.region + "," + property.location.country}
+                                </div>
+                                <div class="property-price">
+                                    Price: {property.currency} {property.price} / {property.unit_of_payment_terms}
+                                </div>
+                                <div class="peyment-terms">Payment terms: {property.payment_terms} {property.unit_of_payment_terms}s</div>
+                                <div class="property-rating">
+                                    <span class="rating-label">Rating</span><Rating rating={property.rating}/>
+                                </div>
+                                {property.other_features.map((feature) => {
+                                    return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
+                                })}
+                            </div>
+                            <hr class="line d-md-none m-0 p-0"/>
+                        </div>
+                        
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                            <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
+                            <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
+                            <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </PropertyDetails>
+    );
+}
+
+function LandDetails(props){
+    return (
+        <PropertyDetails type="land" id={props.id}>
+            {property => 
+                    <div class="col-12 p-0 m-0">
+                    <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                            <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
+                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
+                                    &nbsp;{property.location.region + "," + property.location.country}
+                                </div>
+                                <div class="property-price">
+                                    Price: {property.currency} {property.price} / {property.unit_of_payment_terms}
+                                </div>
+                                <div class="peyment-terms">Payment terms: {property.payment_terms} {property.unit_of_payment_terms}s</div>
+                                <div class="property-rating">
+                                    <span class="rating-label">Rating</span><Rating rating={property.rating}/>
+                                </div>
+                                {property.other_features.map((feature) => {
+                                    return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
+                                })}
+                            </div>
+                            <hr class="line d-md-none m-0 p-0"/>
+                        </div>
+                        
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                            <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
+                            <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
+                            <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </PropertyDetails>
+    );
+}
+
+function FrameDetails(props){
+    return (
+        <PropertyDetails type="frame" id={props.id}>
+            {property => 
+                    <div class="col-12 p-0 m-0">
+                    <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                            <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
+                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
+                                    &nbsp;{property.location.region + "," + property.location.country}
+                                </div>
+                                <div class="property-price">
+                                    Price: {property.currency} {property.price} / {property.unit_of_payment_terms}
+                                </div>
+                                <div class="peyment-terms">Payment terms: {property.payment_terms} {property.unit_of_payment_terms}s</div>
+                                <div class="property-rating">
+                                    <span class="rating-label">Rating</span><Rating rating={property.rating}/>
+                                </div>
+                                {property.other_features.map((feature) => {
+                                    return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
+                                })}
+                            </div>
+                            <hr class="line d-md-none m-0 p-0"/>
+                        </div>
+                        
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                            <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
+                            <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
+                            <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </PropertyDetails>
+    );
+}
+
+export {
+    PropertyDetails, RoomDetails, HouseDetails, ApartmentDetails, 
+    HostelDetails, OfficeDetails, HallDetails, LandDetails, FrameDetails
+}

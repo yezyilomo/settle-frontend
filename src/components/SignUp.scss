@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .signup{
     border-radius: 10px;
     background-color: rgb(253, 253, 253)
@@ -26,6 +28,13 @@
     padding: 0 0 0 3px;
 }
 
+.signup-form input[type="text"], 
+.signup-form input[type="email"],
+.signup-form input[type="password"]{
+    background-color: transparent;
+    box-shadow: 0 0 0 white;
+}
+
 .signup-form input:focus {
     box-shadow: 0 0 0 white;
     border: solid 0 #17a2b8;
@@ -49,4 +58,11 @@
 
 .signup-modal .modal-close img{
     filter: brightness(0%);
+}
+
+
+/* validation */
+.login-form input.error:invalid {
+    border-color: $red;
+    box-shadow: 0 0 0 white;
 }

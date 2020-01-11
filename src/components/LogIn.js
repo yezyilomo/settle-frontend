@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useGlobalState } from 'simple-react-state';
-import './LogIn.css';
+import './LogIn.scss';
 import {API_URL} from '../';
 import {Modal, Nav} from 'react-bootstrap';
+import { setErrorClass } from '../utils';
 
 
 function LogIn(props) {
@@ -11,6 +12,8 @@ function LogIn(props) {
     const [,updateUser] = useGlobalState('user');
     const [loginError, setLoginError] = useState('');
     const [modalShow, setModalShow] = useState(false);
+
+    useEffect(setErrorClass, []);
     
     var metaThemeColor = document.querySelector("meta[name=theme-color]");
     if(modalShow){
@@ -78,13 +81,15 @@ function LogIn(props) {
                         <form class="login-form text-secondary" onSubmit={login}>
                             <div class="row justify-content-center">
                                 <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                                    <div class="col-12 px-2">
-                                        <input type="text" name="username" class="form-control" placeholder="Username" required />
+                                    <div class="col-12 px-2 floating">
+                                        <input type="text" name="username" class="form-control floating__input" placeholder="Username" required />
+                                        <label for="username" class="floating__label" data-content="Username"></label>
                                     </div>
                                 </div>
                                 <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                                    <div class="col-12 px-2">
-                                        <input type="password" name="password" class="form-control" placeholder="Password" required />
+                                    <div class="col-12 px-2 floating">
+                                        <input type="password" name="password" class="form-control floating__input" placeholder="Password" required />
+                                        <label for="password" class="floating__label" data-content="Password"></label>
                                     </div>
                                 </div>
                                 <div class="text-danger">

@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, MemoryRouter } from 'react-router-dom';
-import './SignUp.css';
+import './SignUp.scss';
 import { useGlobalState, useLocalState } from 'simple-react-state';
 import { API_URL } from '../';
 import { Modal, Nav } from 'react-bootstrap';
+import { setErrorClass } from '../utils';
 
 
 function About(props) {
     let [form, updateForm] = useGlobalState("signUp");
+
+    useEffect(setErrorClass, []);
+
     let handleValueChange = (e) => {
         updateForm({
             field: e.target.name, 
@@ -79,6 +83,9 @@ function About(props) {
 
 function Account(props) {
     let [form, updateForm] = useGlobalState("signUp");
+
+    useEffect(setErrorClass, []);
+
     let handleValueChange = (e) => {
         updateForm({
             field: e.target.name, 
@@ -164,6 +171,8 @@ function Finish(props) {
     let [form, updateForm] = useGlobalState("signUp");
     let [, updateUser] = useGlobalState("user");
     let [errors, updateErrors] = useLocalState({});
+
+    useEffect(setErrorClass, []);
 
     let handleValueChange = (e) => {
         updateForm({
@@ -255,8 +264,11 @@ function Finish(props) {
             <div class="row progress-tab m-0 p-0">
                 <div class="col text-center text-secondary">FINISH</div>
             </div>
+            <div class="text-danger text-center mt-3">
+                {errors.signupError}
+            </div>
             <form class="signup-form text-secondary" onClick={handleSubmit}>
-                <div class="row justify-content-center mt-1">
+                <div class="row justify-content-center mt-0">
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
@@ -280,9 +292,6 @@ function Finish(props) {
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="text-danger text-center">
-                            {errors.signupError}
-                        </div>
                         <div class="row px-2">
                             <div class="col-5">
                                 <input type="button" class="col-12 btn btn-info my-3" value="Back" onClick={

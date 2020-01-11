@@ -1,7 +1,10 @@
 import {App} from './App';
 import {Home} from './Home';
 import {PropertyOverview} from './PropertyOverview';
-import {PropertyDetails} from './PropertyDetails';
+import {
+    PropertyDetails, RoomDetails, HouseDetails, ApartmentDetails, 
+    HostelDetails, OfficeDetails, HallDetails, LandDetails, FrameDetails
+} from './PropertyDetails';
 import {
     GenericResourcesGroup, PropertiesGroup, 
     SliderPropertiesGroup, TwoRowsPropertiesGroup
@@ -32,9 +35,10 @@ import {PageNotFound} from './PageNotFound';
 import {Carousel} from './Carousel';
 
 export {
-    App, Home, PropertyOverview, TopBar, SideBar, PropertyDetails,
-    UploadProperty, SelectMultiValue, Select, FeaturesInput, LogIn, SignUp,
-    LocalFetcher, GlobalFetcher, Loader, EditProperty, ImageUploader, 
+    App, Home, PropertyOverview, TopBar, SideBar, PropertyDetails, RoomDetails, 
+    HouseDetails, ApartmentDetails, HostelDetails, OfficeDetails, HallDetails, 
+    LandDetails, FrameDetails, UploadProperty, SelectMultiValue, Select, FeaturesInput, 
+    LogIn, SignUp, LocalFetcher, GlobalFetcher, Loader, EditProperty, ImageUploader, 
     MultipleImageUploader, UserProperties, SearchProperties, FilterPropertiesByCategory, 
     Rating, BottomNavBar, InlineLoader, GlowInlineLoader, TopScroller, PageError,
     InlineError, PageNotFound, Carousel, GenericFilter ,PropertiesFilter,

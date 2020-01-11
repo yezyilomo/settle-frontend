@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .login{
     border-radius: 10px;
     background-color: rgb(253, 253, 253)
@@ -5,16 +7,17 @@
 .login-form input{
     height: 45px;
     font-size: 1em;
-    border-radius: 0;
-    border: solid 0 #e2e2e2;
-    border-bottom-width: 1px;
     padding: 0 0 0 3px;
+}
+
+.login-form input[type="text"], 
+.login-form input[type="password"]{
+    background-color: transparent;
+    box-shadow: 0 0 0 white;
 }
 
 .login-form input:focus {
     box-shadow: 0 0 0 white;
-    border: solid 0 #17a2b8;
-    border-bottom-width: 2px;
 }
 
 .login-form input[type="submit"]{
@@ -34,4 +37,10 @@
 
 .login-modal .modal-close img{
     filter: brightness(0%);
+}
+
+/* validation */
+.login-form input.error:invalid {
+    border-color: $red;
+    box-shadow: 0 0 0 white;
 }

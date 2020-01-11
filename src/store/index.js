@@ -36,7 +36,10 @@ const initialState = {
     sideBar: {
         price__lt: "",
         price__gt: "",
+        currency: "",
         location: "",
+        available_for: "",
+        property_type: "",
         amenities: []
     }
 }

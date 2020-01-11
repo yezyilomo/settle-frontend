@@ -9,7 +9,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import store from './store';
 
 
-let API_URL = "http://localhost:8000/api";
+let API_URL = "http://157.245.134.5/api";
 
 window.onScrollActions = {}
 

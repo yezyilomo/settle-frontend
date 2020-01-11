@@ -44,7 +44,7 @@ function SelectMultiValue(props) {
     
     return (
         <>
-            <select class={props.class} onChange={handleSelection}>
+            <select class={props.className} onChange={handleSelection}>
                 {placeholder()}
                 {props.options.map(options)}
             </select>
