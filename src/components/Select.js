@@ -148,7 +148,7 @@ function Select(props) {
             </div>
             <div>
                 <SelectMultiValue
-                    class="custom-select"
+                    className={props.className}
                     options={options}
                     onSelect={addToSelected}
                     optionValue={optionValue}
