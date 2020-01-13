@@ -1,3 +1,4 @@
+@import "../variables.scss";
 
 .bottom-nav-bar{
     padding: 0 10px 0 10px;
@@ -6,23 +7,31 @@
 }
 
 .bottom-nav-bar>div{
+	cursor: pointer;
     padding: 7px 5px 0 5px;
     border-radius: 15px;
-    margin: 0 10px 0 10px;
+	margin: 0 10px 0 10px;
 }
 
-.bottom-nav-bar>div>img{
-    cursor: pointer;
+.bottom-nav-bar .icon{
+	display: block;
+	margin: 0 auto 0 auto;
 }
 
 .bottom-nav-bar .icon-label{
     font-size: 11px;
     text-align: center;
-    font-weight: 400;
+	font-weight: 400;
+}
+
+.bottom-nav-bar .active-icon{
+	background: $primaryColor;
+	display: block;
+	margin: 0 auto 0 auto;
 }
 
 .bottom-nav-bar .active-text{
-	color: #17a2b8;
+	color: $primaryColor;
 	visibility: visible;
 }
 
@@ -30,9 +39,6 @@
 	visibility: hidden;
 }
 
-.bottom-nav-bar .btn-ripple>img{
-	filter: opacity(70%);
-}
 
 .bottom-nav-bar .btn-ripple {
 	display: inline-block;

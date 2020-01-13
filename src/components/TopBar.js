@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './TopBar.css';
+import './TopBar.scss';
 import { useGlobalState } from 'simple-react-state';
 import { LogIn, SignUp } from './'
 import { Nav, Navbar, Dropdown } from 'react-bootstrap';
@@ -50,12 +50,12 @@ function TopBar(props) {
                     type="search" placeholder="Search location..." aria-label="Search" />
                 <Link onClick={validateKey()} to={{ pathname: "/search", search: `?q=${key}`}}>
                     <button class="btn m-0 px-sm-3" >
-                        <img class="search-button" src="icons/search.svg" width="21" height="21" alt=""/>
+                        <span class="icon icon-search search-button"></span>
                     </button>
                 </Link>
             </form>
             <Navbar.Toggle className="navbar-toggler" aria-controls="basic-navbar-nav">
-                <img class="menu-icon" src="icons/menu.svg" width="45" height="45" alt=""/>
+                <span class="icon icon-menu menu-icon"></span>
             </Navbar.Toggle>
             <Navbar.Collapse className="col-12 col-lg-4 m-0 px-1 px-lg-3" id="basic-navbar-nav">
                 <hr class="line p-0 m-0 d-lg-none" />

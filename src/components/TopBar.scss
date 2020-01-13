@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 #top-navbar {
     border: 0;
     box-shadow: 0 -7px 10px black;
@@ -14,7 +16,7 @@
     font-family: 'Grand Hotel';
     font-size: 33px;
     overflow: hidden;
-    color: rgb(76, 76, 76);
+    color: rgb(80, 80, 80);
     text-decoration: none;
     outline: none;
 }
@@ -33,7 +35,8 @@
 }
 
 .menu-icon {
-    filter: contrast(30%);
+    width: 45px;
+    height: 45px;
 }
 
 .search-input {
@@ -67,7 +70,10 @@
 .search-button {
     position: relative;
     right: 4px;
-    bottom: 1px;
+    top: 3px;
+    width: 21px;
+    height: 21px;
+    background: rgb(120, 110, 120);
 }
 
 .search-form a {
@@ -96,10 +102,10 @@
 
 .nav-dropdown-item:focus{
     background-color: unset;
-    color: #17a2b8;
+    color: $primaryColor;
 }
 
 .nav-dropdown-menu .active{
     background-color: unset;
-    color: #17a2b8;
+    color: $primaryColor;
 }
