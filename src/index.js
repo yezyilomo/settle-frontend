@@ -4,12 +4,14 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'simple-react-state';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss';
+import './icons.scss';
 import { App } from './components';
 import { HashRouter as Router } from 'react-router-dom';
 import store from './store';
 
 
-let API_URL = "http://157.245.134.5/api";
+//let API_URL = "http://192.168.43.129:8000/api";
+let API_URL = "http://yezyilomo.com:8001/api";
 
 window.onScrollActions = {}
 

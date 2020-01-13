@@ -1,5 +1,5 @@
 import React from 'react';
-import './BottomNavBar.css';
+import './BottomNavBar.scss';
 import { useHistory } from 'react-router';
 
 
@@ -30,7 +30,7 @@ function BottomNavBar(props){
     let active = (iconPath) => {
         let currentPath = history.location.pathname;
         if(currentPath === iconPath){
-            return ["_neg", "active-text"];
+            return ["active-icon", "active-text"];
         }
         return ["", ""]
     }
@@ -38,23 +38,23 @@ function BottomNavBar(props){
     return (
         <div class="bottom-nav-bar d-lg-none row fixed-bottom">
             <div class="col text-center btn-ripple" onClick={goToHome}>
-                <img src={`icons/magnifying-glass${active(homePath)[0]}.svg`} width="24" height="24" alt=""/>
-                <div class={`icon-label ${active(homePath)[1]}`}>&nbsp;&nbsp;&nbsp;EXPLORE</div>
+                <span class={`icon icon-search ${active(homePath)[0]}`}></span>
+                <div class={`icon-label ${active(homePath)[1]}`}>&nbsp;&nbsp;EXPLORE</div>
             </div>
             <div class="col text-center btn-ripple" onClick={goToRent}>
-                <img src={`icons/house${active(rentPath)[0]}.svg`} width="24" height="24" alt=""/>
+                <span class={`icon icon-house ${active(rentPath)[0]}`}></span>
                 <div class={`icon-label ${active(rentPath)[1]}`}>RENT</div>
             </div>
             <div class="col text-center btn-ripple" onClick={goToBuy}>
-                <img src={`icons/tag${active(buyPath)[0]}.svg`} width="24" height="24" alt=""/>
-                <div class={`icon-label ${active(buyPath)[1]}`}>&nbsp;&nbsp;BUY</div>
+                <span class={`icon icon-tag ${active(buyPath)[0]}`}></span>
+                <div class={`icon-label ${active(buyPath)[1]}`}>BUY</div>
             </div>
             <div class="col text-center btn-ripple" onClick={goToBook}>
-                <img src={`icons/star${active(bookPath)[0]}.svg`} width="24" height="24" alt=""/>
-                <div class={`icon-label ${active(bookPath)[1]}`}>&nbsp;BOOK</div>
+                <span class={`icon icon-star ${active(bookPath)[0]}`}></span>
+                <div class={`icon-label ${active(bookPath)[1]}`}>BOOK</div>
             </div>
             <div class="col text-center btn-ripple" onClick={goToFilter}>
-                <img src={`icons/settings${active(filterPath)[0]}.svg`} width="24" height="24" alt=""/>
+                <span class={`icon icon-settings ${active(filterPath)[0]}`}></span>
                 <div class={`icon-label ${active(filterPath)[1]}`}>FILTER</div>
             </div>
         </div>
