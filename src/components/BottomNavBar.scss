@@ -1,0 +1,72 @@
+@import "../variables.scss";
+
+.bottom-nav-bar{
+    padding: 0 10px 0 10px;
+    background-color: white;
+    box-shadow: 0 8px 10px black;
+}
+
+.bottom-nav-bar>div{
+	cursor: pointer;
+    padding: 7px 5px 0 5px;
+    border-radius: 15px;
+	margin: 0 10px 0 10px;
+}
+
+.bottom-nav-bar .icon{
+	display: block;
+	margin: 0 auto 0 auto;
+}
+
+.bottom-nav-bar .icon-label{
+    font-size: 11px;
+    text-align: center;
+	font-weight: 400;
+}
+
+.bottom-nav-bar .active-icon{
+	background: $primaryColor;
+	display: block;
+	margin: 0 auto 0 auto;
+}
+
+.bottom-nav-bar .active-text{
+	color: $primaryColor;
+	visibility: visible;
+}
+
+.icon-label{
+	visibility: hidden;
+}
+
+
+.bottom-nav-bar .btn-ripple {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	transition: all ease-in-out 0s;
+}
+
+.bottom-nav-bar .btn-ripple::after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 25%;
+	height: 100%;
+	width: 50%;
+	background-color: #000;
+	border-radius: 50%;
+	opacity: 0;
+	pointer-events: none;
+	transition: all ease-in-out 0.4s;
+	transform: scale(10, 10);
+}
+
+.bottom-nav-bar .btn-ripple:active::after {
+	padding: 0;
+	margin: 0;
+	opacity: .2;
+	transition: 0s;
+	transform: scale(0, 0);
+}
