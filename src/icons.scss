@@ -1,0 +1,36 @@
+.icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: rgb(70, 70, 70);
+    mask-size: cover;
+}
+
+.icon-menu {
+    mask: url(icons/menu.svg);
+}
+
+.icon-search {
+    mask: url(icons/magnifying-glass.svg);
+}
+
+.icon-house {
+    mask: url(icons/house.svg);
+}
+
+.icon-tag {
+    mask: url(icons/tag.svg);
+}
+
+.icon-star {
+    mask: url(icons/star.svg);
+}
+
+.icon-settings {
+    mask: url(icons/settings.svg);
+}
+
+.icon-up-arrow {
+    mask: url(icons/up-arrow.svg);
+}
+
