@@ -10,8 +10,8 @@ import { HashRouter as Router } from 'react-router-dom';
 import store from './store';
 
 
-//let API_URL = "http://192.168.43.129:8000/";
-let API_URL = "https://api.yezyilomo.com";
+//let API_URL = "http://192.168.43.129:8000";
+let API_URL = "http://api.yezyilomo.com";
 
 window.onScrollActions = {}
 
