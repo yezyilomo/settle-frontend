@@ -158,7 +158,7 @@ function UploadProperty(props){
                                     <select class="custom-select" name="available_for" value={fields.available_for} onChange={updateValue} required>
                                         <option value="" disabled selected>Select Category</option>
                                         <option value="rent">Rent</option>
-                                        <option value="sell">Sell</option>
+                                        <option value="sale">Sale</option>
                                         <option value="book">Book</option>
                                     </select>
                                 </div>
@@ -220,21 +220,21 @@ function UploadProperty(props){
                                 <label class="form-check-label col-12 p-0 m-0">Features</label>
                                 <div class="row mt-1 mb-3">
                                     <div class="col-12">
-                                        <Select class="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
+                                        <Select className="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
                                          optionName={optionName} optionValue={optionValue} placeholder="Amenities"/>
                                     </div>
                                 </div>
 
                                 <div class="row my-3 my-lg-3">
                                     <div class="col-12">
-                                        <Select class="custom-select" name="services" options={props.options.services} onChange={updateSelection}
+                                        <Select className="custom-select" name="services" options={props.options.services} onChange={updateSelection}
                                          optionName={optionName} optionValue={optionValue} placeholder="Services"/>
                                     </div>
                                 </div>
 
                                 <div class="row my-3 my-lg-3">
                                     <div class="col-12">
-                                        <Select class="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
+                                        <Select className="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
                                         optionName={optionName} optionValue={optionValue} placeholder="Potentials"/>
                                     </div>
                                 </div>

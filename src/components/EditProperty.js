@@ -26,8 +26,6 @@ function EditProperty(props){
 
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
-    let categories = ["rent", "sale", "book" ];
-    let types = ["room", "house", "apartment", "land", "frame", "office"];
 
     let createImage = (img) => {
         let postData = new FormData();
@@ -226,7 +224,9 @@ function EditProperty(props){
                                 <div class="col-12 p-0 m-0 my-1">
                                     <select class="custom-select" data-field="available_for" name="available_for" value={fields.available_for} onChange={updateValue} required>
                                         <option value="" disabled selected>Select Category</option>
-                                        {categories.map((available_for)=><option value={available_for}>{available_for}</option>)}
+                                        <option value="rent">Rent</option>
+                                        <option value="sale">Sale</option>
+                                        <option value="book">Book</option>
                                     </select>
                                 </div>
                             </div>
@@ -286,7 +286,7 @@ function EditProperty(props){
                             <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                                 <label class="form-check-label col-12 p-0 m-0">Amenities</label>
                                 <div class="col-12 p-0 m-0">
-                                    <Select class="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
+                                    <Select className="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
                                      value={fields.amenities} optionName={optionName} optionValue={optionValue} placeholder="Select Amenity"/>
                                 </div>
                             </div>
@@ -294,7 +294,7 @@ function EditProperty(props){
                             <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                                 <label class="form-check-label col-12 p-0 m-0">Services</label>
                                 <div class="col-12 p-0 m-0">
-                                    <Select class="custom-select" name="services" options={props.options.services} onChange={updateSelection}
+                                    <Select className="custom-select" name="services" options={props.options.services} onChange={updateSelection}
                                      value={fields.services} optionName={optionName} optionValue={optionValue} placeholder="Select Service"/>
                                 </div>
                             </div>
@@ -302,7 +302,7 @@ function EditProperty(props){
                             <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                                 <label class="form-check-label col-12 p-0 m-0">Potentials</label>
                                 <div class="col-12 p-0 m-0">
-                                    <Select class="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
+                                    <Select className="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
                                       value={fields.potentials} optionName={optionName} optionValue={optionValue} placeholder="Select Potential"/>
                                 </div>
                             </div>
