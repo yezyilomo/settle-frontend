@@ -64,7 +64,6 @@ function LogIn(props) {
         fetch(loginUrl, {method: 'POST', body: formdata})
         .then(response => response.json())
         .then(res => updateLogin(res))
-        .catch(error => console.log(error));
     }
   
     return (

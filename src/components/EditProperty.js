@@ -41,7 +41,6 @@ function EditProperty(props){
         return fetch(postUrl, {method: 'POST', body: postData, headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => obj)
-        .catch(error => console.log(error));
     }
 
     /*
@@ -58,7 +57,6 @@ function EditProperty(props){
         return fetch(postUrl, {method: 'PUT', body: JSON.stringify(imgInfo), headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => obj)
-        .catch(error => console.log(error));
     }
     */
 
@@ -71,7 +69,6 @@ function EditProperty(props){
         return fetch(postUrl, {method: 'DELETE', body: "", headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => obj)
-        .catch(error => console.log(error));
     }
 
     let updateImages = (prevResponse) => {
@@ -151,7 +148,6 @@ function EditProperty(props){
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => updateImages(obj))
         .then(obj => redirect(obj))
-        .catch(error => console.log(error));
     }
 
     let updateValue = (e) => {
@@ -370,17 +366,14 @@ function PropertyFetcher(props){
         fetch(`${API_URL}/amenities/?query={id,name}&format=json`)
         .then(res => res.json())
         .then(results => setAmenities(results.results))
-        .catch(error => console.log(error))
 
         fetch(`${API_URL}/services/?query={id,name}&format=json`)
         .then(res => res.json())
         .then(results => setServices(results.results))
-        .catch(error => console.log(error))
 
         fetch(`${API_URL}/potentials/?query={id,name}&format=json`)
         .then(res => res.json())
         .then(results => setPotentials(results.results))
-        .catch(error => console.log(error))
     }
 
     let options = {

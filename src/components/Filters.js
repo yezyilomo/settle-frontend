@@ -14,7 +14,6 @@ function GenericFilter(props) {
     let fetchResources = () => {
         return fetch(`${API_URL}/${endpoint}`)
         .then(res => res.json())
-        .catch(error => console.log(error))
     }
 
     let getMoreResourcesFetcher = (updateResources) => {
@@ -29,7 +28,6 @@ function GenericFilter(props) {
             fetch(currentResources.next)
             .then(res => res.json())
             .then(data => updateData(data, currentResources))
-            .catch(error => console.log(error))
         }
         return fetchMoreResources
     }

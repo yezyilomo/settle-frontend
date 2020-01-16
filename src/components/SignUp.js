@@ -241,7 +241,6 @@ function Finish(props) {
         fetch(loginUrl, {method: 'POST', body: formdata})
         .then(res => res.json())
         .then(results => updateLogin(results))
-        .catch(error => console.log(error));
     }
 
     let submit = (e) => {
@@ -256,7 +255,6 @@ function Finish(props) {
         let registerUrl = `${API_URL}/register/`
         fetch(registerUrl, {method: 'POST', body: formdata})
         .then(res => login(res))
-        .catch(error => console.log(error));
     }
 
     return (
