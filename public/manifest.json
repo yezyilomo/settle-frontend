@@ -1,6 +1,7 @@
 {
   "short_name": "Settle",
   "name": "Settle",
+  "description": "Real Estate App",
   "icons": [
     {
       "src": "favicon.ico",
