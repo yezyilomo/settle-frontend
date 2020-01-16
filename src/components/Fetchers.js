@@ -12,7 +12,7 @@ const LocalFetcher = ({ action, placeholder, children, error }) => {
     }
     if (fetchError) return error;
 
-    if (!data) return null;
+    if (!data) return error;  // Timeout, No Network Connection 
 
     return children(data, updateData);
 };
@@ -29,7 +29,7 @@ const GlobalFetcher = ({ action, placeholder, children, error, selection }) => {
     }
     if (fetchError) return error;
 
-    if (!data) return null;
+    if (!data) return error;  // Timeout, No Network Connection 
 
     return children(data, updateData);
 };
