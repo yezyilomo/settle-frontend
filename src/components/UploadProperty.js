@@ -46,7 +46,6 @@ function UploadProperty(props){
         fetch(postUrl, {method: 'POST', body: postData, headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => postImages(propertyID, pictures))
-        .catch(error => console.log(error));
     }
 
     let updatePropertyImages = (response) => {
@@ -100,7 +99,6 @@ function UploadProperty(props){
         fetch(postUrl, {method: 'POST', body: JSON.stringify(formData), headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => updatePropertyImages(obj))
-        .catch(error => alert(error));
     }
 
     let updateValue = (e) => {
@@ -293,17 +291,14 @@ function OptionsFetcher(props) {
         fetch(`${API_URL}/amenities/?query={id,name}&format=json`)
         .then(res => res.json())
         .then(results => setAmenities(results.results))
-        .catch(error => console.log(error));
 
         fetch(`${API_URL}/services/?query={id,name}&format=json`)
         .then(res => res.json())
         .then(results => setServices(results.results))
-        .catch(error => console.log(error));
 
         fetch(`${API_URL}/potentials/?query={id,name}&format=json`)
         .then(res => res.json())
         .then(results => setPotentials(results.results))
-        .catch(error => console.log(error));
     }
     useEffect(fetchOptions, []);
     let options = {
@@ -313,9 +308,7 @@ function OptionsFetcher(props) {
     }
 
     return (
-        amenities !== null && services !== null && potentials !== null?
-            <UploadProperty options={options} {...props}/>:
-            <Loader/>
+        <UploadProperty options={options} {...props}/>
     );
 }
 

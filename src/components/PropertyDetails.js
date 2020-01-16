@@ -299,7 +299,6 @@ function PropertyDetails(props) {
                 fetch(postUrl, {method: 'DELETE', headers: headers})
                 .then(res =>  res.status)
                 .then(status => redirect(status))
-                .catch(error => console.log(error));
             }
             return (
                 <div class="row p-0 m-0">
