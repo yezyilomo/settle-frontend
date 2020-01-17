@@ -30,21 +30,30 @@
 
 <style>
     .add-button {
-        left:0;
-        right:0;
-        bottom: 70px;
-        margin-left: auto;
-        margin-right: auto;
-        position: absolute;
-        width: 50%;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding: 16px 0;
+        font-size: 1.1em;
+        z-index: 5000;
+        background-color: #085763;
+        text-align: center;
+        color: #eeeeee;
         display: none;
+    }
+    .add-button .icon-close{
+        float: right;
+        width: 20px;
+        height: 20px;
+        margin-right: 15px;
+        background-color: #eeeeee;
     }
 </style>
 
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <button class="add-button btn btn-secondary">Add to home screen</button>
+    <div class="add-button">Add Settle to home screen<span class="icon icon-close"></span class="icon icon-close"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -62,8 +71,7 @@
     addBtn.style.display = 'none';
 
     window.addEventListener('beforeinstallprompt', (e) => {
-        alert("Hello");
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        //Prevent Chrome 67 and earlier from automatically showing the prompt
         e.preventDefault();
         // Stash the event so it can be triggered later.
         deferredPrompt = e;

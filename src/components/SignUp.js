@@ -323,10 +323,11 @@ function SignUp(props) {
     
     return (
         <>
-          <Nav.Link onClick={() => setModalShow(true)}>Sign up</Nav.Link>
-          <Modal animation={false} dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+          <Nav.Link href="#" onClick={() => setModalShow(true)}>Sign up</Nav.Link>
+          
+          <Modal animation={false} scrollable={true} className="signup-modal" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
               <div class="modal-close" onClick={() => setModalShow(false)}>
-                  <img src="icons/cancel.svg" width="23" height="23" alt=""/>
+                  <span class="icon icon-close"></span>
               </div>
               <Modal.Body className="p-0 m-0">
                     <div class="container-fluid signup py-4">

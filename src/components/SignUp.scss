@@ -49,15 +49,15 @@
 
 .signup-modal .modal-close{
     position: absolute;
-    right: 8px;
+    right: 6px;
     top: 6px;
     cursor: pointer;
     z-index: 3;
     padding: 5px;
 }
 
-.signup-modal .modal-close img{
-    filter: brightness(0%);
+.signup-modal .modal-close .icon-close{
+    background: rgb(100, 100, 100);
 }
 
 

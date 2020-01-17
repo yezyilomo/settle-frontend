@@ -2,7 +2,7 @@
 
 .login{
     border-radius: 10px;
-    background-color: rgb(253, 253, 253)
+    background-color: rgb(253, 253, 253);
 }
 .login-form input{
     height: 45px;
@@ -28,15 +28,15 @@
 
 .login-modal .modal-close{
     position: absolute;
-    right: 8px;
+    right: 6px;
     top: 6px;
     cursor: pointer;
     z-index: 3;
     padding: 5px;
 }
 
-.login-modal .modal-close img{
-    filter: brightness(0%);
+.login-modal .modal-close .icon-close{
+    background: rgb(100, 100, 100);
 }
 
 /* validation */
