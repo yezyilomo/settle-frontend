@@ -19,7 +19,6 @@ function TopScroller(props) {
         scrollY > 800 ?
             <div class="scroll-up click-effect d-lg-none">
                 <span class="icon icon-up-arrow" onClick={scrollUp}></span>
-                <img src="icons/up-arrow.svg" onClick={scrollUp} width="24" height="24" alt="" />
             </div> :
             null
     );

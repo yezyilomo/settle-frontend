@@ -68,13 +68,13 @@ function LogIn(props) {
   
     return (
         <>
-          <Nav.Link onClick={() => setModalShow(true)}>Login</Nav.Link>
+          <Nav.Link href="#" onClick={() => setModalShow(true)}>Login</Nav.Link>
 
-          <Modal animation={false} dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+          <Modal animation={false} scrollable={true} className="login-modal" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="" centered>
               <div class="modal-close" onClick={() => setModalShow(false)}>
-                  <img src="icons/cancel.svg" width="23" height="23" alt=""/>
+                  <span class="icon icon-close"></span>
               </div>
-              <Modal.Body className="p-0 m-0">
+              <Modal.Body className="p-0 m-0 modal-body">
                     <div class="container-fluid login py-4">
                         <center class="header col-12 h4 pt-2 text-secondary">Login to Your Account</center>
                         <form class="login-form text-secondary" onSubmit={login}>

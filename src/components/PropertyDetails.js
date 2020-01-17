@@ -26,7 +26,7 @@ function InfoModal(props) {
               {props.modalButton}
           </Button>
     
-          <Modal className="info-modal" scrollable={true} animation={false} backdropClassName="modal-backdrop-" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+          <Modal className="info-modal" animation={false} backdropClassName="modal-backdrop-" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
               <Modal.Header className="modal-header p-2 pt-3 bg-light" closeButton>
                   <Modal.Title>
                    <h4 class="modal-title">{props.header}</h4>
