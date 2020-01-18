@@ -1,12 +1,3 @@
 * {
     box-sizing: border-box;
 }
-
-.scroll-up .icon-up-arrow {
-    position: fixed;
-    bottom: 60px;
-    right: 15px;
-    cursor: pointer;
-    width: 25px;
-    height: 25px;
-}

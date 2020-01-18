@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import './EditProperty.css';
 import { useHistory } from 'react-router';
 import {
-    Select, FeaturesInput, LocalFetcher, Loader,
+    Select, FeaturesInput, GlobalFetcher, Loader,
     ImageUploader, MultipleImageUploader, PageError
 } from './';
 import {API_URL} from '../';
 import { useLocalState, useGlobalState } from 'simple-react-state';
 import { getPropertyRoute } from '../utils';
+import { useRestoreScrollState } from '../hooks';
 
 
 function EditProperty(props){
+    useRestoreScrollState();
     let history = useHistory();
     let [fields, updateFields] = useLocalState(props.property);
     let [user, ] = useGlobalState("user");
@@ -382,17 +384,18 @@ function PropertyFetcher(props){
         potentials: potentials
     }
 
-    useEffect(fetchOptions, [])
+    //useEffect(fetchOptions, [])
 
     return (
-        <LocalFetcher 
+        <GlobalFetcher 
+         selection={`property/${props.id}`}
          action={fetchProperty}
          placeholder={<Loader/>} 
          error={<PageError/>}>
              {property => {
                 return <EditProperty property={property} options={options} {...props}/>
              }}
-         </LocalFetcher>
+         </GlobalFetcher>
     );
 }
 

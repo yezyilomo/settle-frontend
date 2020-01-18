@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import './PropertyDetails.scss';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { LocalFetcher, Loader, Rating, PageError, Carousel as Slider } from './';
+import { GlobalFetcher, Loader, Rating, PageError, Carousel as Slider } from './';
 import { API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'simple-react-state';
 import { getPropertyRoute } from '../utils';
+import { useRestoreScrollState } from '../hooks';
 
 
 function InfoModal(props) {
@@ -26,7 +27,7 @@ function InfoModal(props) {
               {props.modalButton}
           </Button>
     
-          <Modal className="info-modal" animation={false} backdropClassName="modal-backdrop-" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+          <Modal className="info-modal" animation={false} dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
               <Modal.Header className="modal-header p-2 pt-3 bg-light" closeButton>
                   <Modal.Title>
                    <h4 class="modal-title">{props.header}</h4>
@@ -201,7 +202,7 @@ function OthersPropertyImages(props) {
               );
           })}
     
-          <Modal className="hey" animation={false} backdropClassName="img-modal-backdrop-md" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+          <Modal animation={false} backdropClassName="img-modal-backdrop-md" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
               <div class="modal-close" onClick={() => setModalShow(false)}>
                   <img src="icons/cancel.svg" width="23" height="23" alt=""/>
               </div>
@@ -262,6 +263,7 @@ function Badges(props) {
 }
 
 function PropertyDetails(props) {
+    useRestoreScrollState()
     let history = useHistory();
     let [user, ] = useGlobalState("user");
     let fetchProperty = () => {
@@ -270,7 +272,7 @@ function PropertyDetails(props) {
     }
 
     return (
-        <LocalFetcher action={fetchProperty}
+        <GlobalFetcher action={fetchProperty} selection={`property/${props.id}`}
         placeholder={<Loader/>} error={<PageError/>}>{property => {
             let isAllowedToEdit = user.id == property.owner.id
 
@@ -336,7 +338,7 @@ function PropertyDetails(props) {
                       null
                     }
                 </div>)
-        }}</LocalFetcher>
+        }}</GlobalFetcher>
     )
 }
 
