@@ -7,7 +7,7 @@ import {
     LandDetails, FrameDetails, UploadProperty, EditProperty, 
     PropertiesFilter, UserProperties, SearchProperties, Home, 
     BottomNavBar, TopScroller, PageNotFound, ShowGroupProperties, 
-    FilterPropertiesByCategory,
+    FilterPropertiesByCategory, AddToHomeScreen
 } from './';
 
 
@@ -178,7 +178,7 @@ function App(props) {
 
             <BottomNavBar/>
             <TopScroller/>
-
+            <AddToHomeScreen/>
         </div>
     );
 }

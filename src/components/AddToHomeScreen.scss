@@ -1,0 +1,25 @@
+.add-to-home-screen {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 1.1em;
+    z-index: 5000;
+    background-color: #085763;
+    text-align: center;
+    color: #eeeeee;
+    display: none;
+}
+
+.add-to-home-screen .add-button,
+.add-to-home-screen .cancel-button{
+    padding: 16px 0;
+}
+
+.add-to-home-screen .icon-close{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 2px;
+    background-color: #eeeeee;
+}
