@@ -33,6 +33,7 @@ import {TopScroller} from './TopScroller';
 import {PageError, InlineError} from './Errors';
 import {PageNotFound} from './PageNotFound';
 import {Carousel} from './Carousel';
+import {AddToHomeScreen} from './AddToHomeScreen';
 
 export {
     App, Home, PropertyOverview, TopBar, SideBar, PropertyDetails, RoomDetails, 
@@ -42,6 +43,6 @@ export {
     MultipleImageUploader, UserProperties, SearchProperties, FilterPropertiesByCategory, 
     Rating, BottomNavBar, InlineLoader, GlowInlineLoader, TopScroller, PageError,
     InlineError, PageNotFound, Carousel, GenericFilter ,PropertiesFilter,
-    EndpointPropertiesFilter, GenericResourcesGroup, PropertiesGroup,
+    EndpointPropertiesFilter, GenericResourcesGroup, PropertiesGroup, AddToHomeScreen,
     SliderPropertiesGroup, TwoRowsPropertiesGroup, ShowGroupProperties
 };
