@@ -6,8 +6,8 @@ import {
     ApartmentDetails, HostelDetails, OfficeDetails, HallDetails, 
     LandDetails, FrameDetails, UploadProperty, EditProperty, 
     PropertiesFilter, UserProperties, SearchProperties, Home, 
-    BottomNavBar, TopScroller, PageNotFound, ShowGroupProperties, 
-    FilterPropertiesByCategory, AddToHomeScreen
+    BottomNavBar, TopScroller, PageNotFound, AddToHomeScreen,
+    FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties
 } from './';
 
 
@@ -157,7 +157,8 @@ function App(props) {
                             return <SideBar setting="sidebar-sm px-2 d-relative d-lg-none col-12 pb-4" />
                         }} />
                         <Route exact path="/search/" component={SearchProperties}/>
-                        <Route exact path="/group-properties/" component={ShowGroupProperties}/>
+                        <Route exact path="/explore/rent-properties" component={ShowRentProperties}/>
+                        <Route exact path="/explore/buy-properties" component={ShowBuyProperties}/>
 
 
                         <Route exact path="/rent-property" render={() => {

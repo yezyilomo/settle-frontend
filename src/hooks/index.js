@@ -5,21 +5,16 @@ import { useGlobalState, useLocalState } from 'simple-react-state';
 
 function useRestoreScrollState(){
     let history = useHistory();
-    let prefix = "location__";  // This is for avoiding empty key when location  is '/'
-    let location = prefix + history.location.hash;
+    let location = history.location.pathname;
 
     if(window.scrollState === undefined){
         window.scrollState = {}  // Initialize scrollState
     }
 
-    window.onhashchange = () => {
-        // use onhashchange to avoid page jumping when scrolling
-        if (window.scrollState !== undefined){
+    useEffect(() => {
+        if (window.scrollState !== undefined && window.scrollState[location] !== undefined){
             window.scrollTo({top: window.scrollState[location]})
         }
-    }
-
-    useEffect(() => {
         return () => {
             window.scrollState[location] = window.scrollY;
         }

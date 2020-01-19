@@ -55,10 +55,37 @@ function GenericFilter(props) {
 }
 
 
+function EndpointPropertiesFilter(props) {
+    return (
+        <GenericFilter placeholder={<Loader/>} error={<PageError/>} {...props}>
+            {(properties, fetchMoreProperties) => {
+                let header = "";
+                if (typeof(props.header) == "function"){
+                    header = props.header(properties);
+                }
+                else{
+                    header = props.header;
+                }
+                return (
+                    <div class="p-0 m-0 px-1 px-sm-3 mt-2 mt-md-3">
+                        <GenericResourcesGroup header={header} resources={properties} onScrollToBottom={fetchMoreProperties}>
+                            {property => 
+                                <PropertyOverview property={property}/>
+                            }
+                        </GenericResourcesGroup>
+                    </div>
+                );
+            }}
+        </GenericFilter>
+    );
+}
+
+
 function PropertiesFilter(props) {
     let [filters, ] = useGlobalState("sideBar");
-    let {property_type, available_for, price__gt, price__lt, location, amenities, currency} = filters
-    let amenity_ids = JSON.stringify(amenities)
+    let {property_type, available_for, price__gt, price__lt, location, amenities, currency} = filters;
+    let amenity_ids = JSON.stringify(amenities);
+    let header = (properties) => `Filter results(${properties.count})..`;
     let endpoint = `${property_type}/?
     query={
         id,
@@ -76,48 +103,15 @@ function PropertiesFilter(props) {
     price__lt=${price__lt}&currency=${currency||""}&
     search=${location}&amenities__contains=${amenity_ids}&format=json`
 
-    return (
-        <GenericFilter endpoint={endpoint} placeholder={<Loader/>} error={<PageError/>}>
-            {(properties, fetchMoreProperties) => {
-                let header = `Filter results(${properties.count})..`
-                return (
-                    <div class="p-0 m-0 px-1 px-sm-3 mt-2 mt-md-3">
-                        <GenericResourcesGroup header={header} resources={properties} onScrollToBottom={fetchMoreProperties}>
-                            {property => 
-                                <PropertyOverview property={property}/>
-                            }
-                        </GenericResourcesGroup>
-                    </div>
-                );
-            }}
-        </GenericFilter>
-    );
-}
-
-
-function EndpointPropertiesFilter(props) {
-    return (
-        <GenericFilter endpoint={props.endpoint} placeholder={<Loader/>} error={<PageError/>}>
-            {(properties, fetchMoreProperties) => {
-                return (
-                    <div class="p-0 m-0 px-1 px-sm-3 mt-2 mt-md-3">
-                        <GenericResourcesGroup header={props.header} resources={properties} onScrollToBottom={fetchMoreProperties}>
-                            {property => 
-                                <PropertyOverview property={property}/>
-                            }
-                        </GenericResourcesGroup>
-                    </div>
-                );
-            }}
-        </GenericFilter>
-    );
+    return <EndpointPropertiesFilter endpoint={endpoint} header={header}/>;
 }
 
 
 function SearchProperties(props) {
     useRestoreScrollState();
-    let location = props.location.search.slice(3)
-    let selection = props.location.pathname + props.location.search
+    let location = props.location.search.slice(3);
+    let selection = props.location.pathname + props.location.search;
+    let header = (properties) => `Search results(${properties.count})..`;
     let endpoint = `properties/?
     query={
         id,
@@ -131,25 +125,9 @@ function SearchProperties(props) {
         currency,
         location,
         rating
-    }&search=${location}&format=json`
+    }&search=${location}&format=json`;
 
-    return (
-        <GenericFilter endpoint={endpoint} global selection={selection}
-        placeholder={<Loader/>} error={<PageError/>}>
-            {(properties, fetchMoreProperties) => {
-                let header = `Search results(${properties.count})..`
-                return (
-                    <div class="p-0 m-0 px-1 px-sm-3 mt-2 mt-md-3">
-                        <GenericResourcesGroup header={header} resources={properties} onScrollToBottom={fetchMoreProperties}>
-                            {property => 
-                                <PropertyOverview property={property}/>
-                            }
-                        </GenericResourcesGroup>
-                    </div>
-                );
-            }}
-        </GenericFilter>
-    );
+    return <EndpointPropertiesFilter global selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -167,28 +145,17 @@ function FilterPropertiesByCategory(props) {
         currency,
         location,
         rating
-    }&available_for=${props.availableFor}&format=json`
-    return (
-        <GenericFilter endpoint={endpoint} placeholder={<Loader/>} error={<PageError/>}>
-            {(properties, fetchMoreProperties) => {
-                return (
-                    <div class="p-0 m-0 px-1 px-sm-3 mt-2 mt-md-3">
-                        <GenericResourcesGroup header={props.header} resources={properties} onScrollToBottom={fetchMoreProperties}>
-                            {property => 
-                                <PropertyOverview property={property}/>
-                            }
-                        </GenericResourcesGroup>
-                    </div>
-                );
-            }}
-        </GenericFilter>
-    );
+    }&available_for=${props.availableFor}&format=json`;
+
+    return <EndpointPropertiesFilter endpoint={endpoint} header={props.header}/>;
 }
 
 
 function UserProperties(props) {
     useRestoreScrollState();
     const [user, ] = useGlobalState("user");
+    let selection = `my-${getPropertyRoute(props.type)}`;
+    let header = (properties) => `My properties(${properties.count})..`;
     let endpoint = `${getPropertyRoute(props.type)}/?
     query={
         id,
@@ -202,43 +169,59 @@ function UserProperties(props) {
         currency,
         location,
         rating
-    }&owner=${user.id}&format=json`
+    }&owner=${user.id}&format=json`;
 
-    return (
-        <GenericFilter endpoint={endpoint} global selection={`my-${getPropertyRoute(props.type)}`}
-        placeholder={<Loader/>} error={<PageError/>}>
-            {(properties, fetchMoreProperties) => {
-                let header = `My properties(${properties.count})..`
-                return (
-                    <div class="p-0 m-0 px-1 px-sm-3 mt-2 mt-md-3">
-                        <GenericResourcesGroup header={header} resources={properties} onScrollToBottom={fetchMoreProperties}>
-                            {property => 
-                                <PropertyOverview property={property}/>
-                            }
-                        </GenericResourcesGroup>
-                    </div>
-                );
-            }}
-        </GenericFilter>
-    );
+    return <EndpointPropertiesFilter global selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
-function ShowGroupProperties(props) {
-    let endpoint = props.location.state.endpoint
-    let header = props.location.state.header
-    return (
-        <>
-          {endpoint ?
-              <EndpointPropertiesFilter endpoint={endpoint} header={header}/>:
-              null
-          }
-        </>
-    );
+function ShowRentProperties(props){
+    useRestoreScrollState();
+    let header = "Properties available for rent";
+    let selection = "explore/rent-properties";
+    let endpoint = `properties/?
+    query={
+        id,
+        available_for,
+        price,
+        type,
+        pictures{
+            src,
+            is_main
+        },
+        currency,
+        location,
+        rating
+    }&available_for=rent&format=json`;
+
+    return <EndpointPropertiesFilter global selection={selection} endpoint={endpoint} header={header}/>;
+}
+
+
+function ShowBuyProperties(props){
+    useRestoreScrollState();
+    let header = "Properties available for sale";
+    let selection = "explore/buy-properties";
+    let endpoint = `properties/?
+    query={
+        id,
+        available_for,
+        price,
+        type,
+        pictures{
+            src,
+            is_main
+        },
+        currency,
+        location,
+        rating
+    }&available_for=sale&format=json`;
+
+    return <EndpointPropertiesFilter global selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
 export {
-    GenericFilter ,PropertiesFilter, SearchProperties, ShowGroupProperties,
-    FilterPropertiesByCategory, UserProperties, EndpointPropertiesFilter
+    GenericFilter ,PropertiesFilter, SearchProperties, EndpointPropertiesFilter,
+    FilterPropertiesByCategory, UserProperties, ShowRentProperties, ShowBuyProperties
 }
