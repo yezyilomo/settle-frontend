@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { Route, MemoryRouter } from 'react-router-dom';
 import './SignUp.scss';
-import { useGlobalState, useLocalState } from 'simple-react-state';
+import { useGlobalState } from 'simple-react-state';
 import { API_URL } from '../';
-import { Modal, Nav } from 'react-bootstrap';
+import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
 import { setErrorClass } from '../utils';
 
 
@@ -49,23 +50,26 @@ function About(props) {
             <form class="signup-form text-secondary" onSubmit={handleSubmit}>
                 <div class="row justify-content-center mt-1">
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="text" name="first_name" value={form.first_name} required
-                            onChange={handleValueChange} class="form-control" placeholder="First Name" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="First Name" />
+                            <label for="first_name" class="floating__label" data-content="First Name"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="text" name="last_name" value={form.last_name} required
-                            onChange={handleValueChange}class="form-control" placeholder="Last Name" />
+                            onChange={handleValueChange}class="form-control floating__input" placeholder="Last Name" />
+                            <label for="last_name" class="floating__label" data-content="Last Name"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="email" name="email" value={form.email} required
-                            onChange={handleValueChange} class="form-control" placeholder="Email" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Email" />
+                            <label for="email" class="floating__label" data-content="Email"></label>
                         </div>
                     </div>
 
@@ -132,16 +136,18 @@ function Account(props) {
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="text" name="username" value={form.username} required
-                            onChange={handleValueChange} class="form-control" placeholder="Choose a username" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Choose a username" />
+                            <label for="username" class="floating__label" data-content="Choose a username"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="password" name="password" value={form.password} required
-                            onChange={handleValueChange} class="form-control" placeholder="Choose a password" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Choose a password" />
+                            <label for="password" class="floating__label" data-content="Password"></label>
                         </div>
                     </div>
 
@@ -168,18 +174,21 @@ function Account(props) {
 }
 
 function Finish(props) {
+    let history = useHistory();
     let [form, updateForm] = useGlobalState("signUp");
     let [, updateUser] = useGlobalState("user");
-    let [errors, updateErrors] = useLocalState({});
+    let [signupError, setSignupError] = useState("");
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(setErrorClass, []);
 
     let handleValueChange = (e) => {
         updateForm({
-            field: e.target.name, 
+            field: e.target.name,
             value: e.target.value
         });
     }
+
     let isFormValid = () => {
         if(
             form.country.length > 0 &&
@@ -220,30 +229,34 @@ function Finish(props) {
                     email: response.email
                 }
             });
-            window.location = "/";
+            history.push("/");
         }
         else{
             // Report Errors
         }
     }
 
+    let buildErrorMessage = (data) => {
+        let messages = [];
+        for(let key in data){
+            messages.push(`${data[key]}`);
+        }
+        return messages.join(", ");
+    }
+
     let login = (response) => {
         if(response.status !== 200){
-            updateErrors({action: "assign", field: "signupError", value: "Signup Failed"});
-            return
+            let errorMsg = buildErrorMessage(response.data);
+            setSignupError(errorMsg);
         }
-        let username = form.username;
-        let password = form.password;
-        var formdata = new FormData();
-        formdata.append("username", username);
-        formdata.append("password", password);
-        let loginUrl = `${API_URL}/auth/`
-        fetch(loginUrl, {method: 'POST', body: formdata})
-        .then(res => res.json())
-        .then(results => updateLogin(results))
+        else {
+            updateLogin(response.data);
+        }
     }
 
     let submit = (e) => {
+        setSignupError("");
+        setLoading(true);
         e.preventDefault();
         var formdata = new FormData();
         formdata.append("first_name", form.first_name);
@@ -254,7 +267,16 @@ function Finish(props) {
 
         let registerUrl = `${API_URL}/register/`
         fetch(registerUrl, {method: 'POST', body: formdata})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(res => login(res))
+        .catch(error => {
+            // Network error
+            setSignupError("No network connection, please try again!.");
+        })
+        .finally(() => {
+            // Enable button
+            setLoading(false);
+        });
     }
 
     return (
@@ -263,29 +285,32 @@ function Finish(props) {
                 <div class="col text-center text-secondary">FINISH</div>
             </div>
             <div class="text-danger text-center mt-3">
-                {errors.signupError}
+                {signupError}
             </div>
-            <form class="signup-form text-secondary" onClick={handleSubmit}>
+            <form class="signup-form text-secondary" onSubmit={handleSubmit}>
                 <div class="row justify-content-center mt-0">
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
-                            <input type="text" name="country" value={form.country}
-                            onChange={handleValueChange} class="form-control" placeholder="Country" />
+                        <div class="col-12 px-2 floating">
+                            <input type="text" name="country" value={form.country} required
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Country" />
+                            <label for="country" class="floating__label" data-content="Country"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
-                            <input type="text" name="city" value={form.city}
-                            onChange={handleValueChange} class="form-control" placeholder="City" />
+                        <div class="col-12 px-2 floating">
+                            <input type="text" name="city" value={form.city} required
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="City" />
+                            <label for="city" class="floating__label" data-content="City"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
-                            <input type="text" name="street" value={form.street}
-                            onChange={handleValueChange} class="form-control" placeholder="Street" />
+                        <div class="col-12 px-2 floating">
+                            <input type="text" name="street" value={form.street} required
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Street" />
+                            <label for="street" class="floating__label" data-content="Street"></label>
                         </div>
                     </div>
 
@@ -300,7 +325,9 @@ function Finish(props) {
                             </div>
                             <div class="col-2"></div>
                             <div class="col-5">
-                                <input type="submit" class="col-12 btn btn-info my-3" value="Finish" />
+                                <Button className="col-12 my-3" variant="info" disabled={isLoading} type="submit">
+                                    {isLoading ? <Spinner animation="border" size="sm" /> : 'Finish'}
+                                </Button>
                             </div>
                         </div>
                     </div>

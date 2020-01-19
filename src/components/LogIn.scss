@@ -20,7 +20,8 @@
     box-shadow: 0 0 0 white;
 }
 
-.login-form input[type="submit"]{
+.login-form button[type="submit"]{
+    height: 45px;
     border-radius: 5px;
     border-width: 0;
     padding: 0;

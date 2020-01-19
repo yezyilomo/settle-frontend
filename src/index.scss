@@ -41,7 +41,7 @@ body {
 }
 
 .floating__label::before {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.4);
   content: attr(data-content);
   display: inline-block;
   filter: blur(0);

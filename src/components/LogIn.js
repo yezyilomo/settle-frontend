@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { useGlobalState } from 'simple-react-state';
 import './LogIn.scss';
 import {API_URL} from '../';
-import {Modal, Nav} from 'react-bootstrap';
+import {Modal, Nav, Button, Spinner} from 'react-bootstrap';
 import { setErrorClass } from '../utils';
 
 
@@ -12,6 +12,7 @@ function LogIn(props) {
     const [,updateUser] = useGlobalState('user');
     const [loginError, setLoginError] = useState('');
     const [modalShow, setModalShow] = useState(false);
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(setErrorClass, []);
     
@@ -41,7 +42,6 @@ function LogIn(props) {
                     email: response.email
                 }
             });
-            setLoginError("");
             history.push("/");
         }
         else if(response.non_field_errors !== undefined){
@@ -53,6 +53,8 @@ function LogIn(props) {
     }
 
     let login = (event) => {
+        setLoginError("");
+        setLoading(true);
         event.preventDefault();
         let form = event.target
         let username = form.username.value;
@@ -64,6 +66,14 @@ function LogIn(props) {
         fetch(loginUrl, {method: 'POST', body: formdata})
         .then(response => response.json())
         .then(res => updateLogin(res))
+        .catch(error => {
+            // Network error
+            setLoginError("No network connection, please try again!.");
+        })
+        .finally(() => {
+            // Enable button
+            setLoading(false);
+        })
     }
   
     return (
@@ -96,7 +106,9 @@ function LogIn(props) {
                                 </div>
                                 <div class="col-10 p-0 m-0 my-2 my-lg-3">
                                     <div class="col-12 px-2">
-                                        <input type="submit" class="col-12 btn btn-info my-3" value="Submit" />
+                                        <Button className="col-12 my-3" variant="info" disabled={isLoading} type="submit">
+                                            {isLoading ? <Spinner animation="border" size="sm" /> : 'Login'}
+                                        </Button>
                                     </div>
                                 </div>
                             </div>

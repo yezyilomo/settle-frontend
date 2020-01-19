@@ -18,7 +18,7 @@
     padding-top: 10px;
 }
 
-.signup-form input{
+.signup-form input, .signup-form button{
     height: 45px;
     font-size: 1em;
     border-radius: 0;
@@ -41,7 +41,9 @@
     border-bottom-width: 2px;
 }
 
-.signup-form input[type="submit"], .signup-form input[type="button"]{
+.signup-form input[type="submit"], 
+.signup-form input[type="button"],
+.signup-form button[type="submit"]{
     border-radius: 5px;
     border-width: 0;
     padding: 0;
