@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useLocation } from 'react-router';
 import { useGlobalState, useLocalState } from 'simple-react-state';
 
 
 function useRestoreScrollState(){
-    let history = useHistory();
-    let location = history.location.pathname;
+    let locationObj = useLocation();
+    let location = locationObj.pathname;
 
     if(window.scrollState === undefined){
         window.scrollState = {}  // Initialize scrollState
@@ -16,6 +16,7 @@ function useRestoreScrollState(){
             window.scrollTo({top: window.scrollState[location]})
         }
         return () => {
+            //alert(location + `   :  ${window.scrollY}`)
             window.scrollState[location] = window.scrollY;
         }
     }, [])
