@@ -50,23 +50,26 @@ function About(props) {
             <form class="signup-form text-secondary" onSubmit={handleSubmit}>
                 <div class="row justify-content-center mt-1">
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="text" name="first_name" value={form.first_name} required
-                            onChange={handleValueChange} class="form-control" placeholder="First Name" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="First Name" />
+                            <label for="first_name" class="floating__label" data-content="First Name"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="text" name="last_name" value={form.last_name} required
-                            onChange={handleValueChange}class="form-control" placeholder="Last Name" />
+                            onChange={handleValueChange}class="form-control floating__input" placeholder="Last Name" />
+                            <label for="last_name" class="floating__label" data-content="Last Name"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="email" name="email" value={form.email} required
-                            onChange={handleValueChange} class="form-control" placeholder="Email" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Email" />
+                            <label for="email" class="floating__label" data-content="Email"></label>
                         </div>
                     </div>
 
@@ -133,16 +136,18 @@ function Account(props) {
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="text" name="username" value={form.username} required
-                            onChange={handleValueChange} class="form-control" placeholder="Choose a username" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Choose a username" />
+                            <label for="username" class="floating__label" data-content="Choose a username"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="password" name="password" value={form.password} required
-                            onChange={handleValueChange} class="form-control" placeholder="Choose a password" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Choose a password" />
+                            <label for="password" class="floating__label" data-content="Password"></label>
                         </div>
                     </div>
 
@@ -286,23 +291,26 @@ function Finish(props) {
                 <div class="row justify-content-center mt-0">
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="text" name="country" value={form.country} required
-                            onChange={handleValueChange} class="form-control" placeholder="Country" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Country" />
+                            <label for="country" class="floating__label" data-content="Country"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="text" name="city" value={form.city} required
-                            onChange={handleValueChange} class="form-control" placeholder="City" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="City" />
+                            <label for="city" class="floating__label" data-content="City"></label>
                         </div>
                     </div>
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
-                        <div class="col-12 px-2">
+                        <div class="col-12 px-2 floating">
                             <input type="text" name="street" value={form.street} required
-                            onChange={handleValueChange} class="form-control" placeholder="Street" />
+                            onChange={handleValueChange} class="form-control floating__input" placeholder="Street" />
+                            <label for="street" class="floating__label" data-content="Street"></label>
                         </div>
                     </div>
 
