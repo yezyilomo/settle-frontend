@@ -25,7 +25,8 @@ import {MultipleImageUploader} from './MultipleImageUploader';
 import {
     GenericFilter ,PropertiesFilter, UserProperties,
     SearchProperties, FilterPropertiesByCategory,
-    EndpointPropertiesFilter, ShowGroupProperties
+    EndpointPropertiesFilter, ShowBuyProperties,
+    ShowRentProperties
 } from './Filters';
 import {Rating} from './Rating';
 import {BottomNavBar} from './BottomNavBar';
@@ -44,5 +45,5 @@ export {
     Rating, BottomNavBar, InlineLoader, GlowInlineLoader, TopScroller, PageError,
     InlineError, PageNotFound, Carousel, GenericFilter ,PropertiesFilter,
     EndpointPropertiesFilter, GenericResourcesGroup, PropertiesGroup, AddToHomeScreen,
-    SliderPropertiesGroup, TwoRowsPropertiesGroup, ShowGroupProperties
+    SliderPropertiesGroup, TwoRowsPropertiesGroup, ShowBuyProperties, ShowRentProperties
 };
