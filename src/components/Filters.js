@@ -82,6 +82,7 @@ function EndpointPropertiesFilter(props) {
 
 
 function PropertiesFilter(props) {
+    useRestoreScrollState();
     let [filters, ] = useGlobalState("sideBar");
     let {property_type, available_for, price__gt, price__lt, location, amenities, currency} = filters;
     let amenity_ids = JSON.stringify(amenities);
@@ -132,6 +133,7 @@ function SearchProperties(props) {
 
 
 function FilterPropertiesByCategory(props) {
+    useRestoreScrollState();
     let endpoint = `properties/?
     query={
         id,
@@ -147,7 +149,7 @@ function FilterPropertiesByCategory(props) {
         rating
     }&available_for=${props.availableFor}&format=json`;
 
-    return <EndpointPropertiesFilter endpoint={endpoint} header={props.header}/>;
+    return <EndpointPropertiesFilter endpoint={endpoint} {...props}/>;
 }
 
 
