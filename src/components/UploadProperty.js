@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UploadProperty.css';
 import { useHistory } from 'react-router';
+import { Button, Spinner } from 'react-bootstrap';
 import { useGlobalState, useLocalState } from 'simple-react-state';
 import {
     Select, FeaturesInput, ImageUploader,
@@ -21,9 +22,11 @@ let initialData = {
 
 
 function UploadProperty(props){
-    let history = useHistory();
-    let [fields, setFields] = useLocalState(initialData);
-    let [user, ] = useGlobalState("user");
+    const history = useHistory();
+    const [fields, setFields] = useLocalState(initialData);
+    const [user, ] = useGlobalState("user");
+    const [isLoading, setLoading] = useState(false);
+    const [createError, setCreateError] = useState('');
 
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
@@ -43,23 +46,25 @@ function UploadProperty(props){
         let headers = {
             'Authorization': `Token ${user.authToken}`
         }
-        fetch(postUrl, {method: 'POST', body: postData, headers: headers})
+        return fetch(postUrl, {method: 'POST', body: postData, headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => postImages(propertyID, pictures))
     }
 
-    let updatePropertyImages = (response) => {
+    let updatePropertyImages = async (response) => {
         if(response.status !== 201){
             // Report error
             return
         }
         let id = response.data.id;
         let pictures = [...fields.main_picture, ...fields.other_pictures]
-        postImages(id, pictures)
+        await postImages(id, pictures)
     }
 
     let createProperty = (e) => {
         e.preventDefault();
+        setCreateError("");
+        setLoading(true);
         let form = e.target
         let formData = {
             available_for: form.available_for.value,
@@ -99,6 +104,14 @@ function UploadProperty(props){
         fetch(postUrl, {method: 'POST', body: JSON.stringify(formData), headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => updatePropertyImages(obj))
+        .catch(error => {
+            // Network error
+            setCreateError("No network connection, please try again!.");
+        })
+        .finally(() => {
+            // Enable button
+            setLoading(false);
+        })
     }
 
     let updateValue = (e) => {
@@ -274,8 +287,13 @@ function UploadProperty(props){
                     </div>
                 </div>
 
-                <div class="row p-0 m-0 justify-content-center mt-4">
-                    <button type="submit" class="col-12 col-sm-6 btn btn-info">Submit</button>
+                <div class="row p-0 m-0 justify-content-center py-2 mt-4">
+                    <div class="col-12 mb-2 text-center text-danger">
+                        {createError}
+                    </div>
+                    <Button className="col-12 col-md-6" variant="info" disabled={isLoading} type="submit">
+                        {isLoading ? <Spinner animation="border" size="sm" /> : 'Submit'}
+                    </Button>
                 </div>
 
             </form>

@@ -4,6 +4,7 @@
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    z-index: 1;
 }
 
 .sidebar-lg{
@@ -21,17 +22,18 @@
 .sidebar select{
     font-size: 1em;
     padding: 0 0 0 2px;
+    background-color: transparent;
+}
+
+.sidebar input:focus,
+.sidebar select:focus{
+    box-shadow: 0 0 0 white;
+    background-color: transparent;
 }
 
 .sidebar button {
     font-size: 1.09em;
     color: #eeeeee;
-}
-
-.sidebar input:focus,
-.sidebar select:focus,
-.sidebar button:focus {
-    box-shadow: 0 0 0 white;
 }
 
 .sidebar label{

@@ -255,9 +255,9 @@ function Finish(props) {
     }
 
     let submit = (e) => {
+        e.preventDefault();
         setSignupError("");
         setLoading(true);
-        e.preventDefault();
         var formdata = new FormData();
         formdata.append("first_name", form.first_name);
         formdata.append("last_name", form.last_name);
