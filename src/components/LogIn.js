@@ -53,9 +53,9 @@ function LogIn(props) {
     }
 
     let login = (event) => {
+        event.preventDefault();
         setLoginError("");
         setLoading(true);
-        event.preventDefault();
         let form = event.target
         let username = form.username.value;
         let password = form.password.value;

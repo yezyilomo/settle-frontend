@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './EditProperty.css';
 import { useHistory } from 'react-router';
+import { Button, Spinner } from 'react-bootstrap';
 import {
     Select, FeaturesInput, GlobalFetcher, Loader,
     ImageUploader, MultipleImageUploader, PageError
@@ -14,7 +15,10 @@ import { useRestoreScrollState } from '../hooks';
 function EditProperty(props){
     useRestoreScrollState();
     let history = useHistory();
+    const [isLoading, setLoading] = useState(false);
+    const [editError, setEditError] = useState('');
     let [fields, updateFields] = useLocalState(props.property);
+    let [,setProperty] = useGlobalState(`property/${fields.id}`);
     let [user, ] = useGlobalState("user");
     let [featuresToDelete, ] = useState([]);
     let [imgsToDelete, ] = useState([]);
@@ -65,36 +69,37 @@ function EditProperty(props){
     let deleteImage = (imgID) => {
         let postUrl = `${API_URL}/pictures/${imgID}/`;
         let headers = {
-            'Authorization': `Token ${user.authToken}`,
-            'Content-Type': 'application/json'
+            'Authorization': `Token ${user.authToken}`
         }
         return fetch(postUrl, {method: 'DELETE', body: "", headers: headers})
-        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => obj)
     }
 
-    let updateImages = (prevResponse) => {
+    let updateImages = async (prevResponse) => {
         let pictures = [...mainImg, ...otherImgs]
         for(let picture of pictures){
             if(picture.id === null){
-                createImage(picture);
+                await createImage(picture);
             }
             else{
                 //updateImage(picture);
             }
         }
         for(let pictureID of imgsToDelete){
-            deleteImage(pictureID)
+            await deleteImage(pictureID);
         }
-        return prevResponse
     }
 
     let redirect = (response) => {
+        setProperty({
+            value: null
+        })
         return history.replace(`/${getPropertyRoute(props.type)}/${fields.id}`)
     }
 
     let updateProperty = (e) => {
         e.preventDefault();
+        setEditError("");
+        setLoading(true);
         let form = e.target
 
         let features = {
@@ -150,6 +155,14 @@ function EditProperty(props){
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => updateImages(obj))
         .then(obj => redirect(obj))
+        .catch(error => {
+            // Network error
+            setEditError("No network connection, please try again!.");
+        })
+        .finally(() => {
+            // Enable button
+            setLoading(false);
+        })
     }
 
     let updateValue = (e) => {
@@ -345,8 +358,13 @@ function EditProperty(props){
                     </div>
                 </div>
 
-                <div class="row p-0 m-0 justify-content-center mt-4">
-                    <button type="submit" class="col-12 col-sm-6 btn btn-info">Save</button>
+                <div class="row p-0 m-0 justify-content-center py-2 mt-4">
+                    <div class="col-12 mb-2 text-center text-danger">
+                        {editError}
+                    </div>
+                    <Button className="col-12 col-md-6" variant="info" disabled={isLoading} type="submit">
+                        {isLoading ? <Spinner animation="border" size="sm" /> : 'Save'}
+                    </Button>
                 </div>
 
             </form>

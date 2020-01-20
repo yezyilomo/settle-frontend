@@ -266,6 +266,8 @@ function PropertyDetails(props) {
     useRestoreScrollState()
     let history = useHistory();
     let [user, ] = useGlobalState("user");
+    let [,setProperty] = useGlobalState(`property/${props.id}`);
+
     let fetchProperty = () => {
         return fetch(`${API_URL}/${getPropertyRoute(props.type)}/${props.id}/`)
         .then(res => res.json())
@@ -283,10 +285,13 @@ function PropertyDetails(props) {
             else {
                 main_img = main_img[0];
             }
-            let other_imgs = property.pictures.filter((picture) => !picture.is_main).slice(0, 4)
+            let other_imgs = property.pictures.filter((picture) => !picture.is_main).slice(0, 4);
 
             let redirect = (status) => {
                 if(status === 204){
+                    setProperty({
+                        value: null
+                    })
                     return history.replace('/properties/');
                 }
                 // Report Error
