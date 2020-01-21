@@ -18,7 +18,7 @@ function App(props) {
         <div class="container-fluid">
             <TopBar />
             <div class="row contents">
-                <SideBar setting="sidebar-lg sticky-top d-none d-lg-block col-12 col-lg-2 pt-2" />
+                <SideBar setting="sidebar-lg sticky-top d-none d-lg-block col-lg-2 pt-2" />
 
                 <div class="contents-body col-12 col-lg-10 p-0 m-0 mb-5 pb-5">
                     <Switch location={location}>

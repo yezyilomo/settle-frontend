@@ -9,6 +9,8 @@ import {
 } from './';
 import { API_URL } from '../';
 import { getPropertyRoute } from '../utils';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 let initialData = {
@@ -77,6 +79,7 @@ function UploadProperty(props){
                 street1: form.street1.value,
                 street2: form.street2.value
             },
+            descriptions: fields.descriptions,
             contact: {
                 name: form.full_name.value,
                 email: form.email.value,
@@ -158,146 +161,171 @@ function UploadProperty(props){
     }
 
     return (
-        <div class="custom-container mt-2 mt-sm-3">
-            <form class="property-form text-secondary px-3 px-sm-4" onSubmit={createProperty}>
-                <div class="row">
-                    <div class="col-12 col-md-6">
+        <form class="property-form text-secondary px-3 px-sm-4 mt-2 mt-sm-3" onSubmit={createProperty}>
+            <div class="row mt-3">
+                <div class="col-12 col-md-6">
 
-                            <div class="row p-0 m-0 my-0 my-lg-1">
-                                <label class="form-check-label col-12 p-0 m-0">Available for</label>
-                                <div class="col-12 p-0 m-0 my-1">
-                                    <select class="custom-select" name="available_for" value={fields.available_for} onChange={updateValue} required>
-                                        <option value="" disabled selected>Select Category</option>
-                                        <option value="rent">Rent</option>
-                                        <option value="sale">Sale</option>
-                                        <option value="book">Book</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row p-0 m-0 my-4">
-                                <label class="form-check-label col-12 p-0 m-0">Pricing</label>
-                                <div class="col-12 p-0 m-0 my-1">
-                                    <div class="row">
-                                        <div class="col-8 pr-1">
-                                            <input type="number" name="price" value={fields.price} onChange={updateValue}
-                                                class="form-control" placeholder="Price" required/>
-                                        </div>
-                                        <div class="col-4 pl-1">
-                                            <select class="custom-select" name="currency" value={fields.currency} onChange={updateValue} required>
-                                                <option value="" disabled selected>Currency</option>
-                                                {currencies.map((currency)=><option  value={currency}>{currency}</option>)}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row p-0 m-0 my-4">
-                                <label class="form-check-label col-12 p-0 m-0">Location</label>
-                                <div class="col-12 p-0 m-0 my-1">
-                                    <select class="custom-select" name="country" value={fields.country} onChange={updateValue}>
-                                        <option value="" disabled selected>Country</option>
-                                        {countries.map((country)=><option value={country}>{country}</option>)}
-                                    </select>
-                                </div>
-                                <div class="col-12 p-0 m-0 my-1">
-                                    <div class="row">
-                                        <div class="col pr-1">
-                                            <input type="text" name="region" value={fields.region} onChange={updateValue}
-                                            class="form-control" placeholder="Region" />
-                                        </div>
-                                        <div class="col pl-1">
-                                            <input type="text" name="distric" value={fields.distric} onChange={updateValue}
-                                            class="form-control" placeholder="Distric" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 p-0 m-0 my-1">
-                                    <div class="row">
-                                        <div class="col pr-1">
-                                            <input type="text" name="street1" value={fields.street1} onChange={updateValue}
-                                            class="form-control" placeholder="Street1" />
-                                        </div>
-                                        <div class="col pl-1">
-                                            <input type="text" name="street2" value={fields.street2} onChange={updateValue}
-                                            class="form-control" placeholder="Street2" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="my-4">
-                                <label class="form-check-label col-12 p-0 m-0">Features</label>
-                                <div class="row mt-1 mb-3">
-                                    <div class="col-12">
-                                        <Select className="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
-                                         optionName={optionName} optionValue={optionValue} placeholder="Amenities"/>
-                                    </div>
-                                </div>
-
-                                <div class="row my-3 my-lg-3">
-                                    <div class="col-12">
-                                        <Select className="custom-select" name="services" options={props.options.services} onChange={updateSelection}
-                                         optionName={optionName} optionValue={optionValue} placeholder="Services"/>
-                                    </div>
-                                </div>
-
-                                <div class="row my-3 my-lg-3">
-                                    <div class="col-12">
-                                        <Select className="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
-                                        optionName={optionName} optionValue={optionValue} placeholder="Potentials"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 p-0 m-0 my-4">
-                                <FeaturesInput label="Add Other Features" onChange={updateFeatures} value={fields.other_features}/>
-                            </div>
+                    <div class="row p-0 m-0 mb-lg-1">
+                        <label class="form-check-label col-12 p-0 m-0">Available for</label>
+                        <div class="col-12 p-0 m-0 my-1">
+                            <select class="custom-select" name="available_for" value={fields.available_for} onChange={updateValue} required>
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="rent">Rent</option>
+                                <option value="sale">Sale</option>
+                                <option value="book">Book</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <div class="col-12 col-md-6">
-                        <label class="form-check-label col-12 p-0 m-0 my-1">Main Picture</label>
-                        <ImageUploader name="main_picture" onChange={updateMainImage} />
-                        <hr class="line p-0 m-0 my-2"/>
-
-                        <label class="form-check-label col-12 p-0 m-0 my-1">Other Pictures</label>
-                        <MultipleImageUploader name="other_pictures" onChange={updateOtherImages}/>
-                        <hr class="line p-0 m-0 my-2"/>
-
-                        <div class="row p-0 m-0 my-4">
-                            <label class="form-check-label col-12 p-0 m-0">Contact</label>
-                            <div class="col-12 my-1 px-0">
-                                <input type="text" name="phone" value={fields.phone} onChange={updateValue}
-                                class="form-control" placeholder="Phone Number" required/>
+                    <div class="row p-0 m-0 my-4">
+                        <label class="form-check-label col-12 p-0 m-0">Pricing</label>
+                        <div class="col-12 p-0 m-0 my-1">
+                            <div class="row">
+                                <div class="col-8 pr-1">
+                                    <input type="number" name="price" value={fields.price} onChange={updateValue}
+                                        class="form-control" placeholder="Price" required />
+                                </div>
+                                <div class="col-4 pl-1">
+                                    <select class="custom-select" name="currency" value={fields.currency} onChange={updateValue} required>
+                                        <option value="" disabled selected>Currency</option>
+                                        {currencies.map((currency) => <option value={currency}>{currency}</option>)}
+                                    </select>
+                                </div>
                             </div>
-                            <div class="col-12 my-1">
-                                <div class="row">
-                                    <div class="col m-0 p-0 pr-1">
-                                        <input type="text" name="full_name" value={fields.name} onChange={updateValue}
-                                        class="form-control" placeholder="Name" required/>
-                                    </div>
-                                    <div class="col m-0 p-0 pl-1">
-                                        <input type="text" name="email" value={fields.email} onChange={updateValue}
-                                        class="form-control" placeholder="Email" required/>
-                                    </div>
+                        </div>
+                    </div>
+
+                    <div class="row p-0 m-0 my-4">
+                        <label class="form-check-label col-12 p-0 m-0">Location</label>
+                        <div class="col-12 p-0 m-0 my-1">
+                            <select class="custom-select" name="country" value={fields.country} onChange={updateValue}>
+                                <option value="" disabled selected>Country</option>
+                                {countries.map((country) => <option value={country}>{country}</option>)}
+                            </select>
+                        </div>
+                        <div class="col-12 p-0 m-0 my-1">
+                            <div class="row">
+                                <div class="col pr-1">
+                                    <input type="text" name="region" value={fields.region} onChange={updateValue}
+                                        class="form-control" placeholder="Region" />
+                                </div>
+                                <div class="col pl-1">
+                                    <input type="text" name="distric" value={fields.distric} onChange={updateValue}
+                                        class="form-control" placeholder="Distric" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 p-0 m-0 my-1">
+                            <div class="row">
+                                <div class="col pr-1">
+                                    <input type="text" name="street1" value={fields.street1} onChange={updateValue}
+                                        class="form-control" placeholder="Street1" />
+                                </div>
+                                <div class="col pl-1">
+                                    <input type="text" name="street2" value={fields.street2} onChange={updateValue}
+                                        class="form-control" placeholder="Street2" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="my-4">
+                        <label class="form-check-label col-12 p-0 m-0">Features</label>
+                        <div class="row mt-1 mb-3">
+                            <div class="col-12">
+                                <Select className="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
+                                    optionName={optionName} optionValue={optionValue} placeholder="Amenities" />
+                            </div>
+                        </div>
+
+                        <div class="row my-3 my-lg-3">
+                            <div class="col-12">
+                                <Select className="custom-select" name="services" options={props.options.services} onChange={updateSelection}
+                                    optionName={optionName} optionValue={optionValue} placeholder="Services" />
+                            </div>
+                        </div>
+
+                        <div class="row my-3 my-lg-3">
+                            <div class="col-12">
+                                <Select className="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
+                                    optionName={optionName} optionValue={optionValue} placeholder="Potentials" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 p-0 m-0 my-4">
+                        <FeaturesInput label="Add Other Features" onChange={updateFeatures} value={fields.other_features} />
+                    </div>
+
+                    <label class="form-check-label col-12 p-0 m-0">Description</label>
+                    <div class="editor-container">
+                        <CKEditor
+                            editor={ClassicEditor}
+                            data={fields.descriptions}
+                            onInit={editor => {
+                                // You can store the "editor" and use when it is needed.
+                                console.log('Editor is ready to use!', editor);
+                            }}
+                            onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setFields({
+                                    field: "descriptions",
+                                    value: data
+                                })
+                            }}
+                            onBlur={(event, editor) => {
+                                console.log('Blur.', editor);
+                            }}
+                            onFocus={(event, editor) => {
+                                console.log('Focus.', editor);
+                            }}
+                        />
+                    </div>
+
+                    <div class="row p-0 m-0 mt-4">
+                        <label class="form-check-label col-12 p-0 m-0">Contact</label>
+                        <div class="col-12 my-1 px-0">
+                            <input type="text" name="phone" value={fields.phone} onChange={updateValue}
+                                class="form-control" placeholder="Phone Number" required />
+                        </div>
+                        <div class="col-12 my-1">
+                            <div class="row">
+                                <div class="col m-0 p-0 pr-1">
+                                    <input type="text" name="full_name" value={fields.name} onChange={updateValue}
+                                        class="form-control" placeholder="Name" required />
+                                </div>
+                                <div class="col m-0 p-0 pl-1">
+                                    <input type="text" name="email" value={fields.email} onChange={updateValue}
+                                        class="form-control" placeholder="Email" required />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row p-0 m-0 justify-content-center py-2 mt-4">
-                    <div class="col-12 mb-2 text-center text-danger">
-                        {createError}
+                <div class="col-12 col-md-6 mt-4 mt-md-0">
+                    <div class="prop-pics-card sticky-top m-0 mb-md-1">
+                        <label class="form-check-label col-12 p-0 m-0 mb-1">Main Picture</label>
+                        <ImageUploader name="main_picture" onChange={updateMainImage} />
+                        <hr class="line p-0 m-0 my-3" />
+    
+                        <label class="form-check-label col-12 p-0 m-0 my-1">Other Pictures</label>
+                        <MultipleImageUploader name="other_pictures" onChange={updateOtherImages} />
                     </div>
-                    <Button className="col-12 col-md-6" variant="info" disabled={isLoading} type="submit">
-                        {isLoading ? <Spinner animation="border" size="sm" /> : 'Submit'}
-                    </Button>
                 </div>
+            </div>
 
-            </form>
-        </div>
+            <hr class="line p-0 m-0 my-3" />
+
+            <div class="row p-0 m-0 justify-content-center py-2 mt-4">
+                <div class="col-12 mb-2 text-center text-danger">
+                    {createError}
+                </div>
+                <Button className="col-12 col-md-6" variant="info" disabled={isLoading} type="submit">
+                    {isLoading ? <Spinner animation="border" size="sm" /> : 'Submit'}
+                </Button>
+            </div>
+        </form>
     )
 }
 

@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 /* load background  */
 .property-form .other-img, .property-form .main-img{
     padding: 0;
@@ -13,4 +15,22 @@
 .property-form .other-img img, .property-form .main-img img {
     height: auto;
     width: 100%;
+}
+
+
+.prop-pics-card {
+    top: 74px;
+    border-color: #dddddd;
+    border-radius: 2px;
+    z-index: 1;
+}
+
+@include media-breakpoint-up(lg) {
+    .prop-pics-card{
+        top: 82px;
+    }
+}
+
+.editor-container{
+    overflow: hidden;
 }

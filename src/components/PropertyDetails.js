@@ -8,6 +8,8 @@ import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'simple-react-state';
 import { getPropertyRoute } from '../utils';
 import { useRestoreScrollState } from '../hooks';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 function InfoModal(props) {
@@ -262,6 +264,14 @@ function Badges(props) {
     )
 }
 
+
+function Descriptions(props){
+    return (
+        <div dangerouslySetInnerHTML={{__html: props.value}} />
+    );
+}
+
+
 function PropertyDetails(props) {
     useRestoreScrollState()
     let history = useHistory();
@@ -351,9 +361,9 @@ function RoomDetails(props){
     return (
         <PropertyDetails type="room" id={props.id}>
             {property => 
-                    <div class="col-12 p-0 m-0">
+                <div class="col-12 p-0 m-0">
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
-                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
                                 <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
@@ -373,7 +383,8 @@ function RoomDetails(props){
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
                         
-                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
+                            <Descriptions value={property.descriptions}/>
                             <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                             <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
                             <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
@@ -389,9 +400,9 @@ function HouseDetails(props){
     return (
         <PropertyDetails type="house" id={props.id}>
             {property => 
-                    <div class="col-12 p-0 m-0">
+                <div class="col-12 p-0 m-0">
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
-                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
                                 <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
@@ -411,7 +422,8 @@ function HouseDetails(props){
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
                         
-                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
+                            <Descriptions value={property.descriptions}/>
                             <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                             <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
                             <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
@@ -427,9 +439,9 @@ function ApartmentDetails(props){
     return (
         <PropertyDetails type="apartment" id={props.id}>
             {property => 
-                    <div class="col-12 p-0 m-0">
+                <div class="col-12 p-0 m-0">
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
-                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
                                 <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
@@ -449,7 +461,8 @@ function ApartmentDetails(props){
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
                         
-                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
+                            <Descriptions value={property.descriptions}/>
                             <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                             <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
                             <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
@@ -465,9 +478,9 @@ function HostelDetails(props){
     return (
         <PropertyDetails type="hostel" id={props.id}>
             {property => 
-                    <div class="col-12 p-0 m-0">
+                <div class="col-12 p-0 m-0">
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
-                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
                                 <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
@@ -487,7 +500,8 @@ function HostelDetails(props){
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
                         
-                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
+                            <Descriptions value={property.descriptions}/>
                             <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                             <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
                             <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
@@ -503,9 +517,9 @@ function OfficeDetails(props){
     return (
         <PropertyDetails type="office" id={props.id}>
             {property => 
-                    <div class="col-12 p-0 m-0">
+                <div class="col-12 p-0 m-0">
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
-                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
                                 <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
@@ -525,7 +539,8 @@ function OfficeDetails(props){
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
                         
-                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
+                            <Descriptions value={property.descriptions}/>
                             <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                             <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
                             <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
@@ -541,9 +556,9 @@ function HallDetails(props){
     return (
         <PropertyDetails type="hall" id={props.id}>
             {property => 
-                    <div class="col-12 p-0 m-0">
+                <div class="col-12 p-0 m-0">
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
-                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
                                 <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
@@ -563,7 +578,8 @@ function HallDetails(props){
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
                         
-                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
+                            <Descriptions value={property.descriptions}/>
                             <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                             <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
                             <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
@@ -579,9 +595,9 @@ function LandDetails(props){
     return (
         <PropertyDetails type="land" id={props.id}>
             {property => 
-                    <div class="col-12 p-0 m-0">
+                <div class="col-12 p-0 m-0">
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
-                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
                                 <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
@@ -601,7 +617,8 @@ function LandDetails(props){
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
                         
-                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
+                            <Descriptions value={property.descriptions}/>
                             <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                             <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
                             <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
@@ -617,9 +634,9 @@ function FrameDetails(props){
     return (
         <PropertyDetails type="frame" id={props.id}>
             {property => 
-                    <div class="col-12 p-0 m-0">
+                <div class="col-12 p-0 m-0">
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
-                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 order-1 order-md-2">
+                        <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
                                 <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
@@ -639,7 +656,8 @@ function FrameDetails(props){
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
                         
-                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 text-dark order-2 order-md-1">
+                        <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
+                            <Descriptions value={property.descriptions}/>
                             <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                             <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
                             <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
