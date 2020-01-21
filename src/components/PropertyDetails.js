@@ -357,6 +357,19 @@ function PropertyDetails(props) {
     )
 }
 
+function Contact(props){
+    let contact = props.value;
+    return (
+        <>
+            <div class="h5 p-0 m-0 mt-3">Contact</div>
+            <hr class="line m-0 p-0 mt-1 mb-2"/>
+            <div class="other-feature"><b>Name:</b> {contact.name}</div>
+            <div class="other-feature"><b>Phone:</b> {contact.phone}</div>
+            <div class="other-feature"><b>Email:</b> {contact.email}</div>
+        </>
+    );
+}
+
 function RoomDetails(props){
     return (
         <PropertyDetails type="room" id={props.id}>
@@ -379,6 +392,7 @@ function RoomDetails(props){
                                 {property.other_features.map((feature) => {
                                     return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                                 })}
+                                <Contact value={property.contact}/>
                             </div>
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
@@ -418,6 +432,7 @@ function HouseDetails(props){
                                 {property.other_features.map((feature) => {
                                     return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                                 })}
+                                <Contact value={property.contact}/>
                             </div>
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
@@ -457,6 +472,7 @@ function ApartmentDetails(props){
                                 {property.other_features.map((feature) => {
                                     return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                                 })}
+                                <Contact value={property.contact}/>
                             </div>
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
@@ -496,6 +512,7 @@ function HostelDetails(props){
                                 {property.other_features.map((feature) => {
                                     return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                                 })}
+                                <Contact value={property.contact}/>
                             </div>
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
@@ -535,6 +552,7 @@ function OfficeDetails(props){
                                 {property.other_features.map((feature) => {
                                     return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                                 })}
+                                <Contact value={property.contact}/>
                             </div>
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
@@ -574,6 +592,7 @@ function HallDetails(props){
                                 {property.other_features.map((feature) => {
                                     return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                                 })}
+                                <Contact value={property.contact}/>
                             </div>
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
@@ -613,6 +632,7 @@ function LandDetails(props){
                                 {property.other_features.map((feature) => {
                                     return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                                 })}
+                                <Contact value={property.contact}/>
                             </div>
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
@@ -652,6 +672,7 @@ function FrameDetails(props){
                                 {property.other_features.map((feature) => {
                                     return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                                 })}
+                                <Contact value={property.contact}/>
                             </div>
                             <hr class="line d-md-none m-0 p-0"/>
                         </div>
