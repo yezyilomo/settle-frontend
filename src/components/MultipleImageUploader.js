@@ -49,7 +49,9 @@ function MultipleImageUploader(props){
                         <div class="p-0 m-0 row">
                             <i class="fas fa-times remove-other-img" onClick={(e)=>{removeImg(img)}}></i>
                             <div class="other-img col-12">
-                                <img src={img.img_link} alt="" />
+                                <div class="lazy-container">
+                                    <img src={img.img_link} alt="" />
+                                </div>
                             </div>
                         </div>
                     </div>
