@@ -13,6 +13,39 @@ body {
   height: 2px;
 }
 
+/* Lazy load placeholder */
+.lazy-container {
+  display: block;
+  position: relative;
+  height: 0;
+  padding-bottom: 66.3%;
+}
+
+.lazy-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lazy-container.lazy-load-animation {
+  animation: load-image 2s linear 0s infinite;
+  background: gray;
+  background: linear-gradient(to right, gray 4%, #9c9c9c 30%, gray 40%);
+  background-size: 2000px 100%;
+}
+
+@keyframes load-image{
+0% {
+  background-position: -1000px 0;
+}
+100% {
+  background-position: 1000px 0;
+}
+}
+/* End of Lazy load placeholder*/
+
 
 
 /* Floating Label Input */
