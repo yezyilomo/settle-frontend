@@ -4,8 +4,7 @@ import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import { useGlobalState, useLocalState } from 'simple-react-state';
 import {
-    Select, FeaturesInput, ImageUploader,
-    MultipleImageUploader, Loader
+    Select, FeaturesInput, ImageUploader, MultipleImageUploader
 } from './';
 import { API_URL } from '../';
 import { getPropertyRoute } from '../utils';

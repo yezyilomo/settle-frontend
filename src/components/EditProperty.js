@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './EditProperty.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';

@@ -113,7 +113,7 @@ function ImagesModalCarousel(props) {
     <>
       <Slider {...settings}>
         {props.images.map((image) =>
-            <div class="lazy-container">
+            <div class="lazy-container d-flex">
                 <img class="full-img d-block w-100" src={image.src} alt="" onClick={() => setModalShow(true)}/>
             </div>
         )}
