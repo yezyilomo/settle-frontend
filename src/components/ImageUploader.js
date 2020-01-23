@@ -57,8 +57,10 @@ function ImageUploader(props){
             {files.length > 0?
                 <>
                     <i class="fas fa-times remove-main-img" onClick={(e)=>{removeImg(files[0])}}></i>
-                    <div class="main-img">
-                        <img class="main-img-preview" src={src()} alt=""/>
+                    <div class="main-img lazy-container">
+                        <div class="lazy-container">
+                            <img class="main-img-preview" src={src()} alt=""/>
+                        </div>
                     </div>
                 </>:
                 null

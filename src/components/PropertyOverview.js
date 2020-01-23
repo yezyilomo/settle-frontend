@@ -23,8 +23,8 @@ function PropertyOverview(props) {
 
     return (
         <div class="prop-overview row p-0 m-0">
-            <div class="prop-img col-12">
-                <Link to={{pathname: `/${getPropertyRoute(props.property.type)}/${props.property.id}`}}>
+            <div class="prop-img col-12 p-0 m-0">
+                <Link className="lazy-container lazy-load-animation" to={{pathname: `/${getPropertyRoute(props.property.type)}/${props.property.id}`}}>
                     <img src={main_img.src} alt="" />
                 </Link>
             </div>
@@ -55,8 +55,8 @@ function PropertySliderOverview(props) {
 
     return (
         <div class="prop-slider-overview row p-0 m-0">
-            <div class="prop-img col-12">
-                <Link to={{pathname: `/${getPropertyRoute(props.property.type)}/${props.property.id}`}}>
+            <div class="prop-img col-12 p-0 m-0">
+                <Link className="lazy-container lazy-load-animation" to={{pathname: `/${getPropertyRoute(props.property.type)}/${props.property.id}`}}>
                     <img src={main_img.src} alt="" />
                 </Link>
             </div>

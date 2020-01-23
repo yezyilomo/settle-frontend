@@ -8,8 +8,6 @@ import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'simple-react-state';
 import { getPropertyRoute } from '../utils';
 import { useRestoreScrollState } from '../hooks';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 function InfoModal(props) {
@@ -64,7 +62,9 @@ function ImagesCarousel(props) {
       <>
         <Slider {...settings}>
           {props.images.map((image) =>
-              <img class="full-img d-block w-100" src={image.src} alt="" />
+              <div class="lazy-container">
+                  <img class="full-img d-block w-100" src={image.src} alt="" />
+              </div>
           )}
         </Slider>
         <div class="corousel-items-counter">{index+1}/{props.images.length}</div>
@@ -113,7 +113,9 @@ function ImagesModalCarousel(props) {
     <>
       <Slider {...settings}>
         {props.images.map((image) =>
-            <img class="full-img d-block w-100" src={image.src} alt="" onClick={() => setModalShow(true)}/>
+            <div class="lazy-container">
+                <img class="full-img d-block w-100" src={image.src} alt="" onClick={() => setModalShow(true)}/>
+            </div>
         )}
       </Slider>
       <Modal animation={false} backdropClassName="img-modal-backdrop" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -143,7 +145,9 @@ function MainPropertyImage(props) {
     return (
         <>
           <div class="main-prop-img col-12 col-lg-6 mx-0 px-0">
-              <img class="main-img" src={props.activeImage.src} alt="" onClick={() => setModalShow(true)}/>
+              <div class="lazy-container">
+                  <img class="main-img" src={props.activeImage.src} alt="" onClick={() => setModalShow(true)}/>
+              </div>
           </div>
 
           <Modal animation={false} backdropClassName="img-modal-backdrop-md" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
@@ -198,7 +202,9 @@ function OthersPropertyImages(props) {
               return (
                   <div class="pictures col-6 m-0 p-0">
                       <div class="other-prop-img col-12">
-                          <img class="small-img" style={style} src={image.src} alt="" onClick={() => openModal(image)} />
+                          <div class="lazy-container">
+                              <img class="small-img" style={style} src={image.src} alt="" onClick={() => openModal(image)} />
+                          </div>
                       </div>
                   </div>
               );
