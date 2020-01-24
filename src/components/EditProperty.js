@@ -3,7 +3,7 @@ import './EditProperty.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import {
-    Select, FeaturesInput, GlobalFetcher, Loader,
+    Select, FeaturesInput, GlobalFetcher, GlowPageLoader,
     ImageUploader, MultipleImageUploader, PageError
 } from './';
 import { API_URL } from '../';
@@ -433,7 +433,7 @@ function PropertyFetcher(props){
         <GlobalFetcher 
          selection={`property/${props.id}`}
          action={fetchProperty}
-         placeholder={<Loader/>} 
+         placeholder={<GlowPageLoader/>} 
          error={<PageError/>}>
              {property => {
                 return <EditProperty property={property} options={options} {...props}/>

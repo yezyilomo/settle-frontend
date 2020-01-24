@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
 import {
-    GenericFilter, PageError, GlowInlineLoader, Loader,
+    GenericFilter, PageError, GlowInlineLoader, GlowPageLoader,
     TwoRowsPropertiesGroup, SliderPropertiesGroup
 } from './';
 import { useRestoreScrollState } from '../hooks';
@@ -57,7 +57,7 @@ function Home(props) {
     return (
         <>
           <GenericFilter endpoint={proertiesToRentEndpoint} global selection="propertiesToRent"
-            placeholder={<Loader/>} error={<PageError/>}>{properties => {
+            placeholder={<GlowPageLoader/>} error={<PageError/>}>{properties => {
               let footer = `Show all (${properties.count}+)`;
               let footerLink = "/explore/rent-properties/";
               return (

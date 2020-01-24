@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './PropertyDetails.scss';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { GlobalFetcher, Loader, Rating, PageError, Carousel as Slider } from './';
+import { GlobalFetcher, GlowPageLoader, Rating, PageError, Carousel as Slider } from './';
 import { API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'simple-react-state';
@@ -291,7 +291,7 @@ function PropertyDetails(props) {
 
     return (
         <GlobalFetcher action={fetchProperty} selection={`property/${props.id}`}
-        placeholder={<Loader/>} error={<PageError/>}>{property => {
+        placeholder={<GlowPageLoader/>} error={<PageError/>}>{property => {
             let isAllowedToEdit = user.id == property.owner.id
 
             let main_img = property.pictures.filter((picture) => picture.is_main)
