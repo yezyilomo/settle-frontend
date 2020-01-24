@@ -12,7 +12,7 @@
 
 .navbar-brand a {
     font-family: 'Grand Hotel';
-    font-size: 33px;
+    font-size: 30px;
     overflow: hidden;
     color: rgb(80, 80, 80);
     text-decoration: none;
@@ -36,17 +36,17 @@
 }
 
 .navbar-toggler .icon-menu {
-    width: 45px;
-    height: 45px;
+    width: 41px;
+    height: 41px;
 }
 
 .search-input {
     color: rgb(190, 190, 190);
-    height: 40px;
+    height: 37px;
     border-radius: 8px;
     padding-left: 40px;
     text-align: center;
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(240, 240, 240);
     border-color: white;
     border-width: 1px;
     transition: background-color 0.1s linear, box-shadow 0.1s linear, border-width 0.1s linear, border-color 0.1s linear;
@@ -56,6 +56,10 @@
     .search-input {
         height: 43px;
         border-radius: 7px;
+    }
+
+    .navbar-brand a{
+        font-size: 33px;
     }
 }
 

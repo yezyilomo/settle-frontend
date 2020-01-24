@@ -5,7 +5,7 @@ import {Spinner} from 'react-bootstrap';
 
 let LOADER_DELAY = 150
 
-function PageLoader(props) {
+function SpinnerPageLoader(props) {
     let [visible, setVisibility] = useState(false);
     setTimeout(function(){setVisibility(true)}, LOADER_DELAY);
 
@@ -21,7 +21,7 @@ function PageLoader(props) {
     );
 }
 
-function InlineLoader(props) {
+function SpinnerInlineLoader(props) {
     let [visible, setVisibility] = useState(false);
     setTimeout(function(){setVisibility(true)}, LOADER_DELAY);
 
@@ -32,6 +32,24 @@ function InlineLoader(props) {
         <div class="col-12 text-center mx-0 px-0">
             <div class="col-12 inline-loader">
                 <Spinner animation="border" variant="secondary" size="sm"/>
+            </div>
+        </div>
+    );
+}
+
+function GlowPageLoader(props) {
+    let [visible, setVisibility] = useState(false);
+    setTimeout(function(){setVisibility(true)}, LOADER_DELAY);
+
+    if(!visible){
+        return null
+    }
+    return (
+        <div class="col-12 text-center">
+            <div class="col-12 page-loader">
+                <Spinner animation="grow" variant="info" size="sm"/>
+                <Spinner animation="grow" variant="info" size="sm"/>
+                <Spinner animation="grow" variant="info" size="sm"/>
             </div>
         </div>
     );
@@ -53,4 +71,4 @@ function GlowInlineLoader(props){
     );
 }
 
-export { PageLoader as Loader, InlineLoader, GlowInlineLoader};
+export { SpinnerPageLoader, SpinnerInlineLoader, GlowPageLoader, GlowInlineLoader};

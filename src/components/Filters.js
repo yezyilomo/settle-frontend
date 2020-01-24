@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGlobalState } from 'simple-react-state';
 import {
-    LocalFetcher, GlobalFetcher, Loader, PageError,
+    LocalFetcher, GlobalFetcher, GlowPageLoader, PageError,
     PropertyOverview, GenericResourcesGroup
 } from '.';
 import { API_URL } from '..';
@@ -57,7 +57,7 @@ function GenericFilter(props) {
 
 function EndpointPropertiesFilter(props) {
     return (
-        <GenericFilter placeholder={<Loader/>} error={<PageError/>} {...props}>
+        <GenericFilter placeholder={<GlowPageLoader/>} error={<PageError/>} {...props}>
             {(properties, fetchMoreProperties) => {
                 let header = "";
                 if (typeof(props.header) == "function"){

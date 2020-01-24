@@ -18,7 +18,10 @@ import {FeaturesInput} from './FeaturesInput';
 import {LogIn} from './LogIn';
 import {SignUp} from './SignUp';
 import {LocalFetcher, GlobalFetcher} from './Fetchers';
-import {Loader, InlineLoader, GlowInlineLoader} from './Loaders';
+import {
+    SpinnerPageLoader, SpinnerInlineLoader, 
+    GlowPageLoader, GlowInlineLoader
+}from './Loaders';
 import {EditProperty} from './EditProperty';
 import {ImageUploader} from './ImageUploader';
 import {MultipleImageUploader} from './MultipleImageUploader';
@@ -40,10 +43,11 @@ export {
     App, Home, PropertyOverview, TopBar, SideBar, PropertyDetails, RoomDetails, 
     HouseDetails, ApartmentDetails, HostelDetails, OfficeDetails, HallDetails, 
     LandDetails, FrameDetails, UploadProperty, SelectMultiValue, Select, FeaturesInput, 
-    LogIn, SignUp, LocalFetcher, GlobalFetcher, Loader, EditProperty, ImageUploader, 
+    LogIn, SignUp, LocalFetcher, GlobalFetcher, EditProperty, ImageUploader, 
     MultipleImageUploader, UserProperties, SearchProperties, FilterPropertiesByCategory, 
-    Rating, BottomNavBar, InlineLoader, GlowInlineLoader, TopScroller, PageError,
-    InlineError, PageNotFound, Carousel, GenericFilter ,PropertiesFilter,
-    EndpointPropertiesFilter, GenericResourcesGroup, PropertiesGroup, AddToHomeScreen,
-    SliderPropertiesGroup, TwoRowsPropertiesGroup, ShowBuyProperties, ShowRentProperties
+    Rating, BottomNavBar, SpinnerPageLoader, SpinnerInlineLoader, GlowPageLoader,
+    GlowInlineLoader, TopScroller, PageError, InlineError, PageNotFound, Carousel,
+    GenericFilter ,PropertiesFilter, EndpointPropertiesFilter, GenericResourcesGroup,
+    PropertiesGroup, AddToHomeScreen, SliderPropertiesGroup, TwoRowsPropertiesGroup,
+    ShowBuyProperties, ShowRentProperties
 };
