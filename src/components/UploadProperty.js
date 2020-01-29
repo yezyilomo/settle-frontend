@@ -43,7 +43,7 @@ function UploadProperty(props){
         postData.append("tool_tip", img.tool_tip)
         postData.append("src", img.src)
 
-        let postUrl = `${API_URL}/pictures/`;
+        let postUrl = `${API_URL}/property-pictures/`;
         let headers = {
             'Authorization': `Token ${user.authToken}`
         }

@@ -7,7 +7,8 @@ import {
     LandDetails, FrameDetails, UploadProperty, EditProperty,
     PropertiesFilter, UserProperties, SearchProperties, Home,
     BottomNavBar, TopScroller, PageNotFound, AddToHomeScreen,
-    FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties
+    FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties,
+    EditProfile
 } from './';
 
 
@@ -151,6 +152,9 @@ function App(props) {
                         <Route exact path="/edit/properties/:id/" render={({ match }) => {
                             return <EditProperty key={match.path} id={match.params.id} type="generic" />
                         }} />
+
+
+                        <Route exact path="/edit-profile" component={EditProfile} />
 
 
                         <Route exact path="/ft" component={PropertiesFilter} />
