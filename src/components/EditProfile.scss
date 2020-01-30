@@ -2,3 +2,33 @@
     border-color: #dddddd;
     border-radius: 3px;
 }
+
+.profile-form input,
+.profile-form select {
+    font-size: 1em;
+    border-color: rgb(238, 238, 238);
+    height: 40px;
+    padding: 0 5px 0 5px;
+    background-color: rgb(250, 250, 250);
+}
+
+.profile-form textarea{
+    font-size: 1em;
+    border-color: rgb(238, 238, 238);
+    background-color: rgb(250, 250, 250);
+}
+
+.profile-form input:focus,
+.profile-form select:focus,
+.profile-form textarea:focus {
+    border-width: 1px;
+    box-shadow: 0 0 0 white;
+}
+
+.profile-form label{
+    font-weight: bold;
+}
+
+.profile-form button{
+    height: 45px;
+}
