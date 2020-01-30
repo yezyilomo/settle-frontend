@@ -7,6 +7,7 @@ import {
 import { API_URL } from '..';
 import { useRestoreScrollState } from '../hooks';
 import { getPropertyRoute } from '../utils';
+import store from '../store';
 
 
 function GenericFilter(props) {
@@ -153,10 +154,15 @@ function FilterPropertiesByCategory(props) {
 }
 
 
+store.setState({
+    field: "myProperties",
+    value: {}
+})
+
 function UserProperties(props) {
     useRestoreScrollState();
     const [user, ] = useGlobalState("user");
-    let selection = `my-${getPropertyRoute(props.type)}`;
+    let selection = `myProperties.${getPropertyRoute(props.type)}`;
     let header = (properties) => `My properties(${properties.count})..`;
     let endpoint = `${getPropertyRoute(props.type)}/?
     query={

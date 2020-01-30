@@ -6,7 +6,23 @@ import { useGlobalState } from 'simple-react-state';
 import { API_URL } from '../';
 import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
 import { setErrorClass } from '../utils';
+import store from '../store';
 
+
+store.setState({
+    field: "signUp",
+    value: {
+        first_name: "", 
+        last_name: "", 
+        email: "",
+        profile_pic: "", 
+        username: "", 
+        password: "",
+        country: "", 
+        city: "", 
+        street: ""
+    }
+})
 
 function About(props) {
     let [form, updateForm] = useGlobalState("signUp");

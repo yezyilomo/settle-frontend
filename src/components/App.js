@@ -10,7 +10,30 @@ import {
     FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties,
     EditProfile
 } from './';
+import store from '../store';
+import { getCookie } from '../utils';
 
+
+let isLoggedIn = false;
+let authToken = getCookie("auth_token");
+let id = getCookie("id");
+let username = getCookie("usernamen");
+let email = getCookie("email");
+
+if (authToken !== null) {
+    isLoggedIn = true;
+}
+
+store.setState({
+    field: "user",
+    value: {
+        isLoggedIn: isLoggedIn,
+        authToken: authToken,
+        id: id,
+        email: email,
+        username: username
+    }
+})
 
 function App(props) {
     let location = useLocation();
