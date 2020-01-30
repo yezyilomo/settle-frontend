@@ -4,6 +4,7 @@ import { useGlobalState } from 'simple-react-state';
 import './SideBar.scss';
 import { Select } from   './';
 import { setErrorClass } from '../utils';
+import store from '../store';
 
 
 let options = [
@@ -14,6 +15,20 @@ let options = [
     {id: 5, name: "five"},
     {id: 1, name: "Repeat One"}
 ];
+
+
+store.setState({
+    field: "sideBar",
+    value: {
+        price__lt: "",
+        price__gt: "",
+        currency: "",
+        location: "",
+        available_for: "",
+        property_type: "",
+        amenities: []
+    }
+})
 
 function SideBar(props) {
     let history = useHistory();

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './TopBar.scss';
 import { useGlobalState } from 'simple-react-state';
 import { LogIn, SignUp } from './'
@@ -7,8 +7,10 @@ import { Nav, Navbar, Dropdown } from 'react-bootstrap';
 
 
 function TopBar(props) {
-    let [key, setKey] = useState("");
-    const [user , updateUser] = useGlobalState("user");
+    const history = useHistory();
+    const [key, setKey] = useState("");
+    const [user,] = useGlobalState("user");
+    const [,updateStore] = useGlobalState();
 
     let updateField = (e) => {
         let value = e.target.value;
@@ -29,15 +31,29 @@ function TopBar(props) {
         document.cookie = `id=;path=/;expires=${d.toGMTString()};`;
         document.cookie = `username=;path=/;expires=${d.toGMTString()};`;
         document.cookie = `email=;path=/;expires=${d.toGMTString()};`;
-        updateUser({
-            value: {
-                isLoggedIn: false,
-                authToken: null,
-                id: null,
-                username: null,
-                email: null
+
+        // Clean up store
+        updateStore([
+            {
+                field: "user",
+                value: {
+                    isLoggedIn: false,
+                    authToken: null,
+                    id: null,
+                    username: null,
+                    email: null
+                }
+            },
+            {
+                field: "my-profile",
+                value: null
+            },
+            {
+                field: "myProperties",
+                value: {}
             }
-        });
+        ])
+        history.push("/");
     }
 
     return (

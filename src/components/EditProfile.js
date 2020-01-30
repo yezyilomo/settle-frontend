@@ -3,7 +3,7 @@ import './EditProfile.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import {
-    GlobalFetcher, GlowPageLoader, ImageUploader, PageError
+    GlobalFetcher, GlowPageLoader, ProfilePictureUploader, PageError
 } from './';
 import { API_URL } from '../';
 import { useLocalState, useGlobalState } from 'simple-react-state';
@@ -12,16 +12,17 @@ import { useRestoreScrollState } from '../hooks';
 
 function EditProfile(props) {
     useRestoreScrollState();
-    let history = useHistory();
+    const history = useHistory();
     const [isLoading, setLoading] = useState(false);
     const [editError, setEditError] = useState('');
     const [profile, updateProfile] = useLocalState(props.profile);
-    const [user, updateUser] = useGlobalState("user");
+    const [user,] = useGlobalState("user");
     const [, setProfile] = useGlobalState("my-profile");
+    const [profilePicture, setProfilePicture] = useState(null);
 
-    let createImage = (img) => {
+    let createProfilePicture = (img) => {
         let postData = new FormData();
-        postData.append("src", img.src)
+        postData.append("src", img.src);
 
         let postUrl = `${API_URL}/profile-pictures/`;
         let headers = {
@@ -32,7 +33,7 @@ function EditProfile(props) {
             .then(obj => obj)
     }
 
-    let deleteImage = (imgID) => {
+    let deleteProfilePicture = (imgID) => {
         let postUrl = `${API_URL}/profile-pictures/${imgID}/`;
         let headers = {
             'Authorization': `Token ${user.authToken}`
@@ -40,15 +41,42 @@ function EditProfile(props) {
         return fetch(postUrl, { method: 'DELETE', body: "", headers: headers })
     }
 
-    let updateImages = async (prevResponse) => {
-        // Delete or Replace a picture
+    /*
+    let updateProfilePicture = (img) => {
+        let postData = new FormData();
+        postData.append("src", img.src);
+
+        let postUrl = `${API_URL}/profile-pictures/${profile.picture.id}/`;
+        let headers = {
+            'Authorization': `Token ${user.authToken}`
+        }
+        return fetch(postUrl, {method: 'PATCH', body: postData, headers: headers})
+        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
+        .then(obj => obj)
+    }
+    */
+
+    let updateProfilePicture = async (prevResponse) => {
+        if (profilePicture && profile.picture){
+            // Profile picture is replaced(delete & create)
+            await deleteProfilePicture(profile.picture.id);
+            await createProfilePicture(profilePicture);
+        }
+        else if (profilePicture && !profile.picture){
+            // Profile picture is created
+            await createProfilePicture(profilePicture);
+        }
+        else if (!profilePicture && profile.picture){
+            // Profile picture is deleted
+            await deleteProfilePicture(profile.picture.id);
+        }
     }
 
     let redirect = (response) => {
         setProfile({
             value: null
         })
-        return history.replace(`/edit-profile/`)
+        return history.replace(`/edit-profile/`);
     }
 
     let handleProfileUpdate = (e) => {
@@ -58,10 +86,11 @@ function EditProfile(props) {
         let form = e.target
 
         let formData = {
-           first_name: form.first_name.value,
+            first_name: form.first_name.value,
             last_name: form.last_name.value,
             email: form.email.value,
-            phone: form.phone.value
+            phone: form.phone.value,
+            biography: form.biography.value
         }
 
         let postUrl = `${API_URL}/users/${user.id}/`;
@@ -71,7 +100,7 @@ function EditProfile(props) {
         }
         fetch(postUrl, { method: 'PATCH', body: JSON.stringify(formData), headers: headers })
             .then(res => res.json().then(data => ({ status: res.status, data: data })))
-            .then(obj => updateImages(obj))
+            .then(obj => updateProfilePicture(obj))
             .then(obj => redirect(obj))
             .catch(error => {
                 // Network error
@@ -91,9 +120,9 @@ function EditProfile(props) {
     }
 
     return (
-        <form class="property-form text-secondary px-3 px-sm-4 mt-2 mt-sm-3" onSubmit={handleProfileUpdate}>
+        <form class="profile-form text-secondary px-3 px-sm-4 mt-2 mt-sm-4" onSubmit={handleProfileUpdate}>
             <div class="row mt-4 justify-content-end">
-                <div class="col-12 col-md-6 bw-md-1 p-md-4 edit-profile">
+                <div class="col-12 col-md-6 pr-md-4 edit-profile order-2 order-md-1">
 
                     <div class="row p-0 m-0 mb-3">
                         <label class="form-check-label col-12 p-0 m-0">First Name</label>
@@ -145,6 +174,23 @@ function EditProfile(props) {
                         </Button>
                     </div>
 
+                </div>
+
+                <div class="col-12 col-md-6 order-1 order-md-2">
+                    <div class="row p-0 m-0">
+                        <div class="col-12 p-0 m-0 text-center">
+                            <ProfilePictureUploader name="picture" pictureModel={profile.picture}
+                            onChange={setProfilePicture} />
+                        </div>
+                    </div>
+                    
+                    <div class="row p-0 m-0 mt-4 mb-3">
+                        <label class="form-check-label col-12 p-0 m-0">Biography</label>
+                        <div class="col-12 p-0 m-0 my-1">
+                            <textarea type="text" data-field="biography" name="biography" placeholder=""
+                            value={profile.biography} onChange={updateValue} class="form-control" rows="5"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>

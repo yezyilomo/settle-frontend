@@ -36,10 +36,6 @@ function ImageUploader(props){
             value: img
         })
 
-        if(props.onChange !== undefined){
-            let value = files.map(file=>file.img)
-            props.onChange(value);
-        }
         if(props.onDelete !== undefined){
             props.onDelete(img.img)
         }
