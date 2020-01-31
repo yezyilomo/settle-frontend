@@ -18,11 +18,11 @@ function EditProfile(props) {
     const [profile, updateProfile] = useLocalState(props.profile);
     const [user,] = useGlobalState("user");
     const [, setProfile] = useGlobalState("my-profile");
-    const [profilePicture, setProfilePicture] = useState(null);
+    const [profilePicture, setProfilePicture] = useState(undefined);
 
     let createProfilePicture = (img) => {
         let postData = new FormData();
-        postData.append("src", img.src);
+        postData.append("src", img);
 
         let postUrl = `${API_URL}/profile-pictures/`;
         let headers = {
@@ -57,6 +57,10 @@ function EditProfile(props) {
     */
 
     let updateProfilePicture = async (prevResponse) => {
+        if (profilePicture === undefined){
+            // Nothing changed
+            return
+        }
         if (profilePicture && profile.picture){
             // Profile picture is replaced(delete & create)
             await deleteProfilePicture(profile.picture.id);
@@ -119,6 +123,13 @@ function EditProfile(props) {
         })
     }
 
+    let src = (pictureModel) => {
+        if (pictureModel) {
+            return pictureModel.src;
+        }
+        return null;
+    }
+
     return (
         <form class="profile-form text-secondary px-3 px-sm-4 mt-2 mt-sm-4" onSubmit={handleProfileUpdate}>
             <div class="row mt-4 justify-content-end">
@@ -179,8 +190,7 @@ function EditProfile(props) {
                 <div class="col-12 col-md-6 order-1 order-md-2">
                     <div class="row p-0 m-0">
                         <div class="col-12 p-0 m-0 text-center">
-                            <ProfilePictureUploader name="picture" pictureModel={profile.picture}
-                            onChange={setProfilePicture} />
+                            <ProfilePictureUploader name="picture" src={src(profile.picture)} onChange={setProfilePicture}/>
                         </div>
                     </div>
                     
