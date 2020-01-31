@@ -5,16 +5,16 @@ import { useLocalState } from 'simple-react-state';
 
 function ProfilePictureUploader(props) {
     let pictureState = null;
-    if (props.pictureModel) {
+    if (props.src) {
         pictureState = {
-            src: props.pictureModel.src,
-            model: props.pictureModel
+            src: props.src,
+            file: undefined
         }
     }
     else {
         pictureState = {
             src: null,
-            model: null
+            file: undefined
         }
     }
 
@@ -23,7 +23,7 @@ function ProfilePictureUploader(props) {
     // Trigger sythentic onChange event when files is updated
     useEffect(() => {
         if (props.onChange !== undefined) {
-            props.onChange(picture.model);
+            props.onChange(picture.file);
         }
     }, [picture]);
 
@@ -31,17 +31,14 @@ function ProfilePictureUploader(props) {
         let src = URL.createObjectURL(e.target.files[0]);
         setPicture({
             src: src,
-            model: {
-                id: null,
-                src: e.target.files[0]
-            }
+            file: e.target.files[0]
         });
     }
 
     let removePicture = (img) => {
         setPicture({
             src: null,
-            model: null
+            file: null
         });
     }
 
