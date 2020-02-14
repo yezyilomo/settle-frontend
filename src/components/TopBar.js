@@ -22,7 +22,7 @@ function CreateProperty(props){
         <InfoModal header="Select Property To Create" modalShow={modalShow} setModalShow={setModalShow}>
             {property_types.map((val) => {
                 return (
-                    <ul class="m-0 p-0" style={{"font-size": "1.05em"}}>
+                    <ul class="m-0 p-0 create-property-list" style={{"font-size": "1.05em"}}>
                         <li class="p-0 m-0">
                             <Link class="d-block m-0 p-0 px-2 pb-2 pt-3 h5 create-property-link" to={`/create/${getPropertyRoute(val)}`} onClick={() => setModalShow(false)}>
                                 {val.charAt(0).toUpperCase() + val.slice(1)}
