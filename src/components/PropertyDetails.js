@@ -2,44 +2,12 @@ import React, { useState } from 'react';
 import './PropertyDetails.scss';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { GlobalFetcher, GlowPageLoader, Rating, PageError, Carousel as Slider } from './';
+import { GlobalFetcher, GlowPageLoader, Rating, PageError, InfoModal, Carousel as Slider } from './';
 import { API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'simple-react-state';
 import { getPropertyRoute } from '../utils';
 import { useRestoreScrollState } from '../hooks';
-
-
-function InfoModal(props) {
-    const [modalShow, setModalShow] = useState(false);
-    
-    var metaThemeColor = document.querySelector("meta[name=theme-color]");
-    if(modalShow){
-        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");    
-    }
-    else{
-        metaThemeColor.setAttribute("content", "white"); 
-    }
-    
-    return (
-        <>
-          <Button className="c-anchor m-0 p-0 mt-2 w-100 text-left" variant="link" onClick={() => setModalShow(true)}>
-              {props.modalButton}
-          </Button>
-    
-          <Modal className="info-modal" animation={false} dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-              <Modal.Header className="modal-header p-2 pt-3 bg-light" closeButton>
-                  <Modal.Title>
-                   <h4 class="modal-title">{props.header}</h4>
-                  </Modal.Title>
-              </Modal.Header>
-              <Modal.Body className="modal-body p-0 m-0 pb-5 bg-light">
-                  {props.children}
-              </Modal.Body>
-          </Modal>
-        </>
-    );
-}
 
 
 function ImagesCarousel(props) {
@@ -232,6 +200,7 @@ function shortenString(str, to) {
 }
 
 function Badges(props) {
+    const [modalShow, setModalShow] = useState(false);
     let maxValue = 7
     let values = []
     if(props.values && props.values.length > 0 ){
@@ -252,7 +221,11 @@ function Badges(props) {
                     );
                 })}
                 { props.values.length > (maxValue) ?
-                    <InfoModal header={props.label} modalButton={`Show all ${props.values.length} ${props.label}`}>
+                    <>
+                    <Button className="c-anchor m-0 p-0 mt-2 w-100 text-left" variant="link" onClick={() => setModalShow(true)}>
+                        {`Show all ${props.values.length} ${props.label}`}
+                    </Button>
+                    <InfoModal header={props.label} modalShow={modalShow} setModalShow={setModalShow}>
                         {values.map((val) => {
                             return (
                                 <div class="px-2 pt-3" style={{"font-size": "1.05em"}}>
@@ -261,7 +234,8 @@ function Badges(props) {
                                 </div>
                             )
                         })}
-                    </InfoModal>:
+                    </InfoModal>
+                    </>:
                     null
                 }
             <hr class="line d-md-none m-0 mt-2 p-0"/>
