@@ -113,3 +113,13 @@
     background-color: unset;
     color: $primaryColor;
 }
+
+.create-property-link{
+    text-decoration: none;
+    color: rgb(80, 80, 80);
+}
+
+.create-property-link:hover{
+    text-decoration: none;
+    color: rgb(20, 20, 20);
+}
