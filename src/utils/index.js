@@ -74,5 +74,5 @@ function onScrollToBottom(handleScrollToBottom, y = 1) {
 }
 
 export {
-    setErrorClass, getCookie, onScrollToBottom, getPropertyRoute, getPropertyType
+    setErrorClass, getCookie, onScrollToBottom, propertyTypes, getPropertyRoute, getPropertyType
 }

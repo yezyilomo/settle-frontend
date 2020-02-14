@@ -2,9 +2,40 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './TopBar.scss';
 import { useGlobalState } from 'simple-react-state';
-import { LogIn, SignUp } from './'
+import { LogIn, SignUp, InfoModal } from './'
 import { Nav, Navbar, Dropdown } from 'react-bootstrap';
+import {propertyTypes, getPropertyRoute} from '../utils';
 
+
+function CreateProperty(props){
+    const [modalShow, setModalShow] = useState(false);
+
+    let property_types = []
+    for(let type in propertyTypes){
+        if(type !== "generic"){
+            property_types.push(type);
+        }
+    }
+    return (
+        <>
+        <Nav.Link href="#" onClick={() => setModalShow(true)}>Create</Nav.Link>
+        <InfoModal header="Select Property To Create" modalShow={modalShow} setModalShow={setModalShow}>
+            {property_types.map((val) => {
+                return (
+                    <ul class="m-0 p-0" style={{"font-size": "1.05em"}}>
+                        <li class="p-0 m-0">
+                            <Link class="d-block m-0 p-0 px-2 pb-2 pt-3 h5 create-property-link" to={`/create/${getPropertyRoute(val)}`} onClick={() => setModalShow(false)}>
+                                {val.charAt(0).toUpperCase() + val.slice(1)}
+                            </Link>
+                        </li>
+                        <hr class="line m-0 p-0"/>
+                    </ul>
+                )
+            })}
+        </InfoModal>
+        </>
+    );
+}
 
 function TopBar(props) {
     const history = useHistory();
@@ -98,7 +129,7 @@ function TopBar(props) {
                   }
                   { user.isLoggedIn?
                       <>
-                        <Nav.Link href="#create/properties/">Create</Nav.Link>
+                        <CreateProperty/>
                         <hr class="line p-0 m-0 d-lg-none" />
                       </>:
                       null

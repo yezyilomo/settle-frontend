@@ -40,6 +40,7 @@ import {Carousel} from './Carousel';
 import {AddToHomeScreen} from './AddToHomeScreen';
 import {EditProfile} from './EditProfile';
 import {ProfilePictureUploader} from './ProfilePictureUploader';
+import {InfoModal} from './InfoModal';
 
 export {
     App, Home, PropertyOverview, TopBar, SideBar, PropertyDetails, RoomDetails, 
@@ -51,5 +52,5 @@ export {
     GlowInlineLoader, TopScroller, PageError, InlineError, PageNotFound, Carousel,
     GenericFilter ,PropertiesFilter, EndpointPropertiesFilter, GenericResourcesGroup,
     PropertiesGroup, AddToHomeScreen, SliderPropertiesGroup, TwoRowsPropertiesGroup,
-    ShowBuyProperties, ShowRentProperties, EditProfile, ProfilePictureUploader
+    ShowBuyProperties, ShowRentProperties, EditProfile, ProfilePictureUploader, InfoModal
 };
