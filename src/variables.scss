@@ -1,7 +1,7 @@
-// Required
-@import "../node_modules/bootstrap/scss/functions";
-@import "../node_modules/bootstrap/scss/variables";
-@import "../node_modules/bootstrap/scss/mixins";
+// Inherit bootstrap functions, variables & mixins
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
 
-$primaryColor: #17a2b8;
-$secondaryColor: #f2f5f8;
+// Override bootstrap color variables
+@import "theme.scss";

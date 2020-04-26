@@ -91,7 +91,7 @@ function About(props) {
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2">
-                            <input type="submit" class="col-12 btn btn-info my-3" value="Next" />
+                            <input type="submit" class="col-12 btn btn-primary my-3" value="Next" />
                         </div>
                     </div>
 
@@ -170,7 +170,7 @@ function Account(props) {
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="row px-2">
                             <div class="col-5">
-                                <input type="button" class="col-12 btn btn-info my-3" value="Back" onClick={
+                                <input type="button" class="col-12 btn btn-primary my-3" value="Back" onClick={
                                     (event) => {
                                         props.history.goBack();
                                     }
@@ -178,7 +178,7 @@ function Account(props) {
                             </div>
                             <div class="col-2"></div>
                             <div class="col-5">
-                                <input type="submit" class="col-12 btn btn-info my-3" value="Next" />
+                                <input type="submit" class="col-12 btn btn-primary my-3" value="Next" />
                             </div>
                         </div>
                     </div>
@@ -333,7 +333,7 @@ function Finish(props) {
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="row px-2">
                             <div class="col-5">
-                                <input type="button" class="col-12 btn btn-info my-3" value="Back" onClick={
+                                <input type="button" class="col-12 btn btn-primary my-3" value="Back" onClick={
                                     (event) => {
                                         props.history.goBack();
                                     }

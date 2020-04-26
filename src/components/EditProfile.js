@@ -180,7 +180,7 @@ function EditProfile(props) {
                         <div class="col-12 mb-2 text-center text-danger">
                             {editError}
                         </div>
-                        <Button className="col-12" variant="info" disabled={isLoading} type="submit">
+                        <Button className="col-12" variant="primary" disabled={isLoading} type="submit">
                             {isLoading ? <Spinner animation="border" size="sm" /> : 'Save'}
                         </Button>
                     </div>

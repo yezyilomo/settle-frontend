@@ -29,7 +29,7 @@ function PropertyOverview(props) {
                 </Link>
             </div>
             <div class="prop-info col-12 px-1">
-                <div class="prop-type">Available for <span class="bg-info">{props.property.available_for}</span></div>
+                <div class="prop-type">Available for <span class="bg-primary">{props.property.available_for}</span></div>
                 <div class="prop-location"> <i class="fa fa-map-marker-alt"></i>
                     &nbsp;{props.property.location.region}, {props.property.location.country}
                 </div>
@@ -62,7 +62,7 @@ function PropertySliderOverview(props) {
             </div>
             <div class="prop-info col-12 px-1">
                 <div class="prop-type">
-                    Available for <span class="bg-info">{props.property.available_for}</span>
+                    Available for <span class="bg-primary">{props.property.available_for}</span>
                 </div>
                 <div class="prop-price">
                     {props.property.currency} {props.property.price} / Month

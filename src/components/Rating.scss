@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .star-rating__checkbox {
   position: absolute;
   overflow: hidden;
@@ -22,7 +24,7 @@
   cursor: pointer;
 }
 .star-rating__star.is-selected {
-  color: #17a2b8;
+  color: $primary;
 }
 .star-rating__star.is-disabled:hover {
   cursor: default;

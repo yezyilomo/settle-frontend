@@ -1,0 +1,10 @@
+// This is for defining custom color theme
+
+// Override color variables e.g $primary
+$primary: #008489;
+
+
+// Override $theme-colors(class based theme e.g btn-primary)
+$theme-colors: (
+  "primary": $primary
+);

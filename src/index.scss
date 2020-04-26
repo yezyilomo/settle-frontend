@@ -1,3 +1,4 @@
+// This is the global sytle
 @import "variables.scss";
 
 body {
@@ -97,7 +98,7 @@ body {
   margin-top: -0.1rem;
   transform: scale3d(0, 1, 1);
   width: 100%;
-  background-color: $primaryColor;
+  background-color: $primary;
 }
 
 .floating__input:focus + .floating__label::after {
@@ -115,45 +116,15 @@ body {
 }
 
 .floating__input:focus + .floating__label::before {
-  color: $primaryColor;
+  color: $primary;
 }
 /* End of Floating Label Input */  
 
 
 
-/* Theme */
-.c-bg-primary{
-    background-color: $primaryColor;
-}
-
-.c-text-primary{
-  color: unset;
-}
-
-.c-bg-secondary{
-  background-color: $secondaryColor;
-}
-
-.c-text-secondary{
-  color: unset;
-}
-
-
-a, .c-anchor{
-  color: $primaryColor;
-  text-decoration: none;
-}
-.a:hover, .c-anchor:hover{
-  color: $primaryColor;
-  text-decoration: none;
-}
-
-/* End of Theme */
-
 /* Extra small devices (portrait phones, less than 576px)
   No media query for `xs` since this is the default in Bootstrap
 */
-
 
 /* Extra small devices (landscape phones, 575px and below) */
 @media (min-width: 0) {

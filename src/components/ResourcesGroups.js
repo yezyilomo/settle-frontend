@@ -132,11 +132,11 @@ function TwoRowsPropertiesGroup(props) {
             {props.footer?
                 <div class="group-footer col-12 m-0 p-0 px-1 px-sm-2 mt-2">
                     <div class="row p-0 m-0">
-                        <Link to={props.footerLink} class="show-all-btn btn-ripple c-anchor col-12 text-center d-md-none py-2 bw-1">
+                        <Link to={props.footerLink} class="show-all-btn btn-ripple text-decoration-none col-12 text-center d-md-none py-2 bw-1">
                             {props.footer}
                         </Link>
 
-                        <Link to={props.footerLink} class="show-all-btn-md c-anchor d-none d-md-inline bw-1 bw-md-0">
+                        <Link to={props.footerLink} class="show-all-btn-md text-decoration-none d-none d-md-inline bw-1 bw-md-0">
                             {props.footer}
                         </Link>
                     </div>

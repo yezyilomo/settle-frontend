@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'simple-react-state';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './custom.scss';
 import './index.scss';
 import './icons.scss';
 import { App } from './components';
@@ -11,7 +11,7 @@ import store from './store';
 
 
 //let API_URL = "http://192.168.43.129:8000";  //For testing purpose
-//let API_URL = "http://localhost:8000";  //For testing purpose
+//let API_URL = "http://192.168.8.102:8000";  //For testing purpose
 let API_URL = "https://api.yezyilomo.com";
 
 window.onScrollActions = {}
