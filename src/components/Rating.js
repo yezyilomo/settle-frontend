@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Rating.css';
+import './Rating.scss';
 
 
 function App(props) {
