@@ -47,9 +47,9 @@ function GlowPageLoader(props) {
     return (
         <div class="col-12 text-center">
             <div class="col-12 page-loader">
-                <Spinner animation="grow" variant="info" size="sm"/>
-                <Spinner animation="grow" variant="info" size="sm"/>
-                <Spinner animation="grow" variant="info" size="sm"/>
+                <Spinner animation="grow" variant="primary" size="sm"/>
+                <Spinner animation="grow" variant="primary" size="sm"/>
+                <Spinner animation="grow" variant="primary" size="sm"/>
             </div>
         </div>
     );
@@ -64,9 +64,9 @@ function GlowInlineLoader(props){
     }
     return (
         <div class="glow-inline-loader col-12 my-3 text-center">
-            <Spinner animation="grow" variant="info" size="sm"/>
-            <Spinner animation="grow" variant="info" size="sm"/>
-            <Spinner animation="grow" variant="info" size="sm"/>
+            <Spinner animation="grow" variant="primary" size="sm"/>
+            <Spinner animation="grow" variant="primary" size="sm"/>
+            <Spinner animation="grow" variant="primary" size="sm"/>
         </div>
     );
 }

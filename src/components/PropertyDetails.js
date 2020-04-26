@@ -222,7 +222,7 @@ function Badges(props) {
                 })}
                 { props.values.length > (maxValue) ?
                     <>
-                    <Button className="c-anchor m-0 p-0 mt-2 w-100 text-left" variant="link" onClick={() => setModalShow(true)}>
+                    <Button className="text-decoration-none m-0 p-0 mt-2 w-100 text-left" variant="link" onClick={() => setModalShow(true)}>
                         {`Show all ${props.values.length} ${props.label}`}
                     </Button>
                     <InfoModal header={props.label} modalShow={modalShow} setModalShow={setModalShow}>
@@ -318,7 +318,7 @@ function PropertyDetails(props) {
                                     <b class="delete-property" onClick={deleteProperty}>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 delete-property-icon"/></b>
                                 </div>
                                 <div class="col text-center py-2">
-                                    <Link to={`/edit/${getPropertyRoute(props.type)}/${property.id}`} class="edit-property c-anchor">
+                                    <Link to={`/edit/${getPropertyRoute(props.type)}/${property.id}`} class="edit-property text-decoration-none">
                                         <b>Edit <span class="fas fa-edit mt-2 ml-1 ml-lg-3 edit-property-icon"/></b>
                                     </Link>
                                 </div>
@@ -358,7 +358,7 @@ function RoomDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -398,7 +398,7 @@ function HouseDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -438,7 +438,7 @@ function ApartmentDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -478,7 +478,7 @@ function HostelDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -518,7 +518,7 @@ function OfficeDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -558,7 +558,7 @@ function HallDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -598,7 +598,7 @@ function LandDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -638,7 +638,7 @@ function FrameDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-info">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>

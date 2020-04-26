@@ -128,7 +128,7 @@ function SideBar(props) {
                     <Select className="custom-select floating__input" name="amenities" options={options} placeholder="Select amenity"
                     onChange={updateSelectionField} value={filterFields.amenities.selected} optionName={optionName} optionValue={optionValue}/>
                 </div>
-                <button type="submit" class="col-12 btn btn-info my-5 my-md-4 py-2 py-md-1">Submit</button>
+                <button type="submit" class="col-12 btn btn-primary my-5 my-md-4 py-2 py-md-1">Submit</button>
             </form>
         </div>
     );
