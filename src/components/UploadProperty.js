@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import { useGlobalState, useLocalState } from 'simple-react-state';
 import {
-    Select, FeaturesInput, ImageUploader, MultipleImageUploader
+    FeaturesInput, ImageUploader, MultipleImageUploader
 } from './';
 import { API_URL } from '../';
 import { getPropertyRoute } from '../utils';
@@ -135,14 +135,6 @@ function UploadProperty(props){
             field: e.target.name,
             value: e.target.value
         })
-    }
-
-    let optionName = (opt) => {
-        return opt.name
-    }
-
-    let optionValue = (opt) => {
-        return opt.id
     }
 
     let updateOtherImages = (value) => {
@@ -299,7 +291,7 @@ function UploadProperty(props){
                         <label class="form-check-label col-12 p-0 m-0">Potentials</label>
                         <div class="row mt-1 mb-3">
                             <div class="col-12">
-                            <AsyncCreatableSelect classNamePrefix="react-select" className="react-select-container" isMulti cacheOptions defaultOptions 
+                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions defaultOptions 
                             loadOptions={getPotentials} onChange={updatePotentials}/>
                             </div>
                         </div>
