@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './UploadProperty.css';
+import './UploadProperty.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import { useGlobalState, useLocalState } from 'simple-react-state';
@@ -10,12 +10,13 @@ import { API_URL } from '../';
 import { getPropertyRoute } from '../utils';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 
 
 let initialData = {
-    amenities: {"add": []},
-    service: {"add": []},
-    potentials: {"add": []},
+    amenities: [],
+    services: [],
+    potentials: [],
     main_picture: [],
     other_pictures: [],
     other_features: []
@@ -62,6 +63,16 @@ function UploadProperty(props){
         await postImages(id, pictures)
     }
 
+    let getAddList = options => {
+        return options.filter(option => !option.__isNew__)
+        .map(option => option.value)
+    }
+
+    let getCreateList = options => {
+         return options.filter(option => option.__isNew__)
+         .map(option => {return {name: option.label}})
+    }
+
     let createProperty = (e) => {
         e.preventDefault();
         setCreateError("");
@@ -85,13 +96,16 @@ function UploadProperty(props){
                 phone: form.phone.value
             },
             amenities: {
-                "add": fields.amenities.add
+                "add": getAddList(fields.amenities),
+                "create": getCreateList(fields.amenities)
             },
             services: {
-                "add": fields.services.add
+                "add": getAddList(fields.services),
+                "create": getCreateList(fields.services)
             },
             potentials: {
-                "add": fields.potentials.add
+                "add": getAddList(fields.potentials),
+                "create": getCreateList(fields.potentials)
             },
             other_features: {
                 "create": fields.other_features
@@ -131,13 +145,6 @@ function UploadProperty(props){
         return opt.id
     }
 
-    let updateSelection = (target) => {
-        setFields({
-            field: target.name,
-            value: target.values
-        })
-    }
-
     let updateOtherImages = (value) => {
         setFields({
             field: 'other_pictures',
@@ -156,6 +163,50 @@ function UploadProperty(props){
         setFields({
             field: 'other_features',
             value: features
+        })
+    }
+
+    let getOptions = (url) => {
+        return fetch(url)
+        .then(res => res.json())
+        .then(results => results.results.map(
+            amenity => {return {value: amenity.id, label: amenity.name}}
+        ))
+    }
+
+    let getAmenities = inputValue => {
+        const URL = `${API_URL}/amenities/?query={id,name}&format=json&name__icontains=${inputValue}`
+        return getOptions(URL)
+    }
+
+    let getServices = inputValue => {
+        const URL = `${API_URL}/services/?query={id,name}&format=json&name__icontains=${inputValue}`
+        return getOptions(URL)
+    }
+
+    let getPotentials = inputValue => {
+        const URL = `${API_URL}/potentials/?query={id,name}&format=json&name__icontains=${inputValue}`
+        return getOptions(URL)
+    }
+
+    let updateAmenities = (amenities) => {
+        setFields({
+            field: 'amenities',
+            value: amenities
+        })
+    }
+
+    let updateServices = (services) => {
+        setFields({
+            field: 'services',
+            value: services
+        })
+    }
+
+    let updatePotentials = (potentials) => {
+        setFields({
+            field: 'potentials',
+            value: potentials
         })
     }
 
@@ -229,25 +280,27 @@ function UploadProperty(props){
                     </div>
 
                     <div class="my-4">
-                        <label class="form-check-label col-12 p-0 m-0">Features</label>
+                        <label class="form-check-label col-12 p-0 m-0">Amenities</label>
                         <div class="row mt-1 mb-3">
                             <div class="col-12">
-                                <Select className="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
-                                    optionName={optionName} optionValue={optionValue} placeholder="Amenities" />
+                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions defaultOptions 
+                            loadOptions={getAmenities} onChange={updateAmenities}/>
                             </div>
                         </div>
 
-                        <div class="row my-3 my-lg-3">
+                        <label class="form-check-label col-12 p-0 m-0">Services</label>
+                        <div class="row mt-1 mb-3">
                             <div class="col-12">
-                                <Select className="custom-select" name="services" options={props.options.services} onChange={updateSelection}
-                                    optionName={optionName} optionValue={optionValue} placeholder="Services" />
+                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions defaultOptions 
+                            loadOptions={getServices} onChange={updateServices}/>
                             </div>
                         </div>
 
-                        <div class="row my-3 my-lg-3">
+                        <label class="form-check-label col-12 p-0 m-0">Potentials</label>
+                        <div class="row mt-1 mb-3">
                             <div class="col-12">
-                                <Select className="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
-                                    optionName={optionName} optionValue={optionValue} placeholder="Potentials" />
+                            <AsyncCreatableSelect classNamePrefix="react-select" className="react-select-container" isMulti cacheOptions defaultOptions 
+                            loadOptions={getPotentials} onChange={updatePotentials}/>
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 .property-form input,
 .property-form select {
     font-size: 1em;
@@ -19,4 +21,9 @@
 
 .property-form button{
     height: 45px;
+}
+
+
+.react-select-container>div{
+    background-color: #fafafa;
 }

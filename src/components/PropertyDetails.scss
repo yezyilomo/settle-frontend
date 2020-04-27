@@ -67,8 +67,10 @@
     cursor: pointer;
 }
 
-.modal-close img {
-    -webkit-filter: invert(65%);
+.modal-close .icon-close {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(150, 150, 150);
 }
 
 .full-img {

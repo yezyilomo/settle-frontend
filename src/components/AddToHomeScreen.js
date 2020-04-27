@@ -29,6 +29,7 @@ function AddToHomeScreen(props){
                         console.log('User dismissed the A2HS prompt');
                     }
                     deferredPrompt = null;
+                    addBtnContainer.style.display = "none";
                 });
             });
         });

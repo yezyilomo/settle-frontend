@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 .add-to-home-screen {
     position: fixed;
     bottom: 0;
@@ -5,7 +7,7 @@
     width: 100%;
     font-size: 1.1em;
     z-index: 5000;
-    background-color: #085763;
+    background-color: $primary;
     text-align: center;
     color: #eeeeee;
     display: none;

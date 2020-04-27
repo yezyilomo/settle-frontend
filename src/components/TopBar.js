@@ -109,8 +109,6 @@ function TopBar(props) {
                 <Nav className="col-12 p-0 d-flex justify-content-end">
                   <Nav.Link href="#/">Home</Nav.Link>
                   <hr class="line p-0 m-0 d-lg-none" />
-                  <Nav.Link href="#/">Help</Nav.Link>
-                  <hr class="line p-0 m-0 d-lg-none" />
                   { !user.isLoggedIn?
                       <>
                         <LogIn/>

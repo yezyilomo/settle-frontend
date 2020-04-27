@@ -65,7 +65,7 @@ function ImageUploader(props){
             {files.length === 0?
                 <label for={props.name} class="file-input-label">
                     <div class="upload-main-img d-flex flex-column align-content-center justify-content-center flex-wrap">
-                        <div>Upload main image</div>
+                        <div>Upload main picture</div>
                         <div class="d-flex flex-row justify-content-end">
                             <span class="camera fa fa-camera"/>
                             <span class="plus fa fa-plus"/>
