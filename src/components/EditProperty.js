@@ -3,7 +3,7 @@ import './EditProperty.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import {
-    Select, FeaturesInput, GlobalFetcher, GlowPageLoader,
+    FeaturesInput, GlobalFetcher, GlowPageLoader,
     ImageUploader, MultipleImageUploader, PageError
 } from './';
 import { API_URL } from '../';
@@ -12,6 +12,7 @@ import { getPropertyRoute } from '../utils';
 import { useRestoreScrollState } from '../hooks';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 
 
 function EditProperty(props) {
@@ -19,17 +20,24 @@ function EditProperty(props) {
     let history = useHistory();
     const [isLoading, setLoading] = useState(false);
     const [editError, setEditError] = useState('');
+
     let [fields, updateFields] = useLocalState(props.property);
     let [, setProperty] = useGlobalState(`property/${fields.id}`);
     let [user,] = useGlobalState("user");
+
     let [featuresToDelete,] = useState([]);
     let [imgsToDelete,] = useState([]);
     let [mainImg, setMainImg] = useState([]);
     let [otherImgs, setOtherImgs] = useState([]);
+
+    let formatOptions = (options) => {
+        return options.map(option => {return {value: option.id, label: option.name}})
+    }
+
     let [selectionFields, updateSelectionFields] = useLocalState({
-        amenities: { "add": [], "remove": [] },
-        service: { "add": [], "remove": [] },
-        potentials: { "add": [], "remove": [] },
+        amenities: formatOptions(props.property.amenities),
+        services: formatOptions(props.property.services),
+        potentials: formatOptions(props.property.potentials)
     })
 
     let currencies = ["TZS", "USD"];
@@ -98,6 +106,29 @@ function EditProperty(props) {
         return history.replace(`/${getPropertyRoute(props.type)}/${fields.id}`)
     }
 
+    let formatSelection = selection => {
+        let newValue = selectionFields[selection];
+        let oldValue = fields[selection];
+
+        let toCreate = newValue.filter(option => option.__isNew__)
+        .map(option => {return {name: option.label}})
+
+        let newValueIDS = newValue.filter(option => !option.__isNew__)
+        .map(option => option.value)
+
+        let oldValueIDS = oldValue.map(option => option.id)
+
+        let toAdd = newValueIDS.filter(id => !oldValueIDS.includes(id));
+        let toDelete = oldValueIDS.filter(id => !newValueIDS.includes(id));
+        
+        let data = {
+            "add": toAdd,
+            "create": toCreate,
+            "remove": toDelete
+        };
+        return data;
+    }
+
     let updateProperty = (e) => {
         e.preventDefault();
         setEditError("");
@@ -130,9 +161,9 @@ function EditProperty(props) {
             available_for: form.available_for.value,
             price: form.price.value,
             currency: form.currency.value,
-            amenities: selectionFields.amenities,
-            services: selectionFields.services,
-            potentials: selectionFields.potentials,
+            amenities: formatSelection("amenities"),
+            services: formatSelection("services"),
+            potentials: formatSelection("potentials"),
             descriptions: fields.descriptions,
             location: {
                 country: form.country.value,
@@ -175,21 +206,6 @@ function EditProperty(props) {
         })
     }
 
-    let optionName = (opt) => {
-        return opt.name
-    }
-
-    let optionValue = (opt) => {
-        return opt.id
-    }
-
-    let updateSelection = (target) => {
-        updateSelectionFields({
-            field: target.name,
-            value: target.values
-        });
-    }
-
     let updateOtherImages = (value) => {
         setOtherImgs(value);
     }
@@ -216,6 +232,52 @@ function EditProperty(props) {
             imgsToDelete.push(img.id);
         }
     }
+
+    let getOptions = (url) => {
+        return fetch(url)
+        .then(res => res.json())
+        .then(results => results.results.map(
+            amenity => {return {value: amenity.id, label: amenity.name}}
+        ))
+    }
+
+    let getAmenities = inputValue => {
+        const URL = `${API_URL}/amenities/?query={id,name}&format=json&name__icontains=${inputValue}`
+        return getOptions(URL)
+    }
+
+    let getServices = inputValue => {
+        const URL = `${API_URL}/services/?query={id,name}&format=json&name__icontains=${inputValue}`
+        return getOptions(URL)
+    }
+
+    let getPotentials = inputValue => {
+        const URL = `${API_URL}/potentials/?query={id,name}&format=json&name__icontains=${inputValue}`
+        return getOptions(URL)
+    }
+
+    let updateAmenities = (amenities) => {
+        updateSelectionFields({
+            field: 'amenities',
+            value: amenities
+        })
+    }
+
+    let updateServices = (services) => {
+        updateSelectionFields({
+            field: 'services',
+            value: services
+        })
+    }
+
+    let updatePotentials = (potentials) => {
+        updateSelectionFields({
+            field: 'potentials',
+            value: potentials
+        })
+    }
+
+
     return (
         <form class="property-form text-secondary px-3 px-sm-4 mt-2 mt-sm-3" onSubmit={updateProperty}>
             <div class="row mt-3">
@@ -294,27 +356,32 @@ function EditProperty(props) {
                         </div>
                     </div>
 
-                    <div class="row col-12 p-0 m-0 my-3 my-lg-3">
+                    <div class="my-4">
                         <label class="form-check-label col-12 p-0 m-0">Amenities</label>
-                        <div class="col-12 p-0 m-0">
-                            <Select className="custom-select" name="amenities" options={props.options.amenities} onChange={updateSelection}
-                                value={fields.amenities} optionName={optionName} optionValue={optionValue} placeholder="Select Amenity" />
+                        <div class="row mt-1 mb-3">
+                            <div class="col-12">
+                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions
+                            defaultOptions value={selectionFields.amenities}
+                            loadOptions={getAmenities} onChange={updateAmenities}/>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                         <label class="form-check-label col-12 p-0 m-0">Services</label>
-                        <div class="col-12 p-0 m-0">
-                            <Select className="custom-select" name="services" options={props.options.services} onChange={updateSelection}
-                                value={fields.services} optionName={optionName} optionValue={optionValue} placeholder="Select Service" />
+                        <div class="row mt-1 mb-3">
+                            <div class="col-12">
+                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions 
+                            defaultOptions value={selectionFields.services}
+                            loadOptions={getServices} onChange={updateServices}/>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row col-12 p-0 m-0 my-3 my-lg-3">
                         <label class="form-check-label col-12 p-0 m-0">Potentials</label>
-                        <div class="col-12 p-0 m-0">
-                            <Select className="custom-select" name="potentials" options={props.options.potentials} onChange={updateSelection}
-                                value={fields.potentials} optionName={optionName} optionValue={optionValue} placeholder="Select Potential" />
+                        <div class="row mt-1 mb-3">
+                            <div class="col-12">
+                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions 
+                            defaultOptions value={selectionFields.potentials}
+                            loadOptions={getPotentials} onChange={updatePotentials}/>
+                            </div>
                         </div>
                     </div>
 
@@ -403,32 +470,6 @@ function PropertyFetcher(props){
         .then(res => res.json())
     }
 
-    let [amenities, setAmenities] = useState([]);
-    let [services, setServices] = useState([]);
-    let [potentials, setPotentials] = useState([]);
-
-    let fetchOptions = () => {
-        fetch(`${API_URL}/amenities/?query={id,name}&format=json`)
-        .then(res => res.json())
-        .then(results => setAmenities(results.results))
-
-        fetch(`${API_URL}/services/?query={id,name}&format=json`)
-        .then(res => res.json())
-        .then(results => setServices(results.results))
-
-        fetch(`${API_URL}/potentials/?query={id,name}&format=json`)
-        .then(res => res.json())
-        .then(results => setPotentials(results.results))
-    }
-
-    let options = {
-        amenities: amenities,
-        services: services,
-        potentials: potentials
-    }
-
-    //useEffect(fetchOptions, [])
-
     return (
         <GlobalFetcher 
          selection={`property/${props.id}`}
@@ -436,7 +477,7 @@ function PropertyFetcher(props){
          placeholder={<GlowPageLoader/>} 
          error={<PageError/>}>
              {property => {
-                return <EditProperty property={property} options={options} {...props}/>
+                return <EditProperty property={property} {...props}/>
              }}
          </GlobalFetcher>
     );

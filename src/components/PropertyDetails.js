@@ -88,7 +88,7 @@ function ImagesModalCarousel(props) {
       </Slider>
       <Modal animation={false} backdropClassName="img-modal-backdrop" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <div class="modal-close" onClick={() => setModalShow(false)}>
-            <img src="icons/cancel.svg" width="23" height="23" alt=""/>
+            <span class="icon icon-close"></span>
         </div>
         <Modal.Body className="p-0 m-0">
             <ImagesCarousel activeImage={props.images[index]} images={props.images}/>
@@ -120,7 +120,7 @@ function MainPropertyImage(props) {
 
           <Modal animation={false} backdropClassName="img-modal-backdrop-md" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
               <div class="modal-close" onClick={() => setModalShow(false)}>
-                  <img src="icons/cancel.svg" width="23" height="23" alt=""/>
+                  <span class="icon icon-close"></span>
               </div>
               <Modal.Body className="p-0 m-0">
                   <ImagesCarousel activeImage={props.activeImage} images={props.images}/>
@@ -180,7 +180,7 @@ function OthersPropertyImages(props) {
     
           <Modal animation={false} backdropClassName="img-modal-backdrop-md" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
               <div class="modal-close" onClick={() => setModalShow(false)}>
-                  <img src="icons/cancel.svg" width="23" height="23" alt=""/>
+                  <span class="icon icon-close"></span>
               </div>
               <Modal.Body className="p-0 m-0">
                   <ImagesCarousel activeImage={activeImage} images={props.images}/>
@@ -358,7 +358,7 @@ function RoomDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -398,7 +398,7 @@ function HouseDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -438,7 +438,7 @@ function ApartmentDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -478,7 +478,7 @@ function HostelDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -518,7 +518,7 @@ function OfficeDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -558,7 +558,7 @@ function HallDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -598,7 +598,7 @@ function LandDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
@@ -638,7 +638,7 @@ function FrameDetails(props){
                     <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                         <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                             <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                <div class="property-type">Available for <span class="bg-primary">{property.available_for}</span></div>
+                                <div class="property-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                 <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                     &nbsp;{property.location.region + "," + property.location.country}
                                 </div>
