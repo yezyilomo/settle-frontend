@@ -12,8 +12,6 @@ import {
 import {TopBar} from './TopBar';
 import {SideBar} from './SideBar';
 import {UploadProperty} from './UploadProperty';
-import {SelectMultiValue} from './SelectMultiValue';
-import {Select} from './Select';
 import {FeaturesInput} from './FeaturesInput';
 import {LogIn} from './LogIn';
 import {SignUp} from './SignUp';
@@ -45,7 +43,7 @@ import {InfoModal} from './InfoModal';
 export {
     App, Home, PropertyOverview, TopBar, SideBar, PropertyDetails, RoomDetails, 
     HouseDetails, ApartmentDetails, HostelDetails, OfficeDetails, HallDetails, 
-    LandDetails, FrameDetails, UploadProperty, SelectMultiValue, Select, FeaturesInput, 
+    LandDetails, FrameDetails, UploadProperty, FeaturesInput, 
     LogIn, SignUp, LocalFetcher, GlobalFetcher, EditProperty, ImageUploader, 
     MultipleImageUploader, UserProperties, SearchProperties, FilterPropertiesByCategory, 
     Rating, BottomNavBar, SpinnerPageLoader, SpinnerInlineLoader, GlowPageLoader,

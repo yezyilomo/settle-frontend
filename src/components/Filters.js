@@ -86,7 +86,7 @@ function PropertiesFilter(props) {
     useRestoreScrollState();
     let [filters, ] = useGlobalState("sideBar");
     let {property_type, available_for, price__gt, price__lt, location, amenities, currency} = filters;
-    let amenity_ids = JSON.stringify(amenities);
+    let amenity_ids = JSON.stringify(amenities.map(amenity => amenity.value)  );
     let header = (properties) => `Filter results(${properties.count})..`;
     let endpoint = `${property_type}/?
     query={

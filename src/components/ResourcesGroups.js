@@ -107,9 +107,9 @@ function SliderPropertiesGroup(props) {
     return (
         <div class="property-container row m-0 p-0">
             <div class="group-header col-12 p-0 m-0 px-2 px-sm-4">{props.header}</div>
-            <Carousel className="col-12 p-0 m-0 mt-2" {...settings}>
+            <Carousel className="col-12 p-0 m-0 mt-2 slider" {...settings}>
                 {properties.map(property =>
-                    <div class="m-0 p-0 pl-2    pl-sm-0   ml-sm-4 pr-sm-3">
+                    <div class="m-0 p-0 pl-2  pl-sm-0 ml-sm-4 pr-sm-3">
                         <PropertySliderOverview property={property}/>
                     </div>
                 )}

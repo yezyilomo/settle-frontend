@@ -80,7 +80,7 @@ function LogIn(props) {
         <>
           <Nav.Link href="#" onClick={() => setModalShow(true)}>Login</Nav.Link>
 
-          <Modal animation={false} scrollable={true} className="login-modal" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="" centered>
+          <Modal animation={false} scrollable={true} className="login-modal" dialogClassName="custom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="" centered>
               <div class="modal-close" onClick={() => setModalShow(false)}>
                   <span class="icon icon-close"></span>
               </div>

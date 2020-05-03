@@ -201,7 +201,7 @@ function shortenString(str, to) {
 
 function Badges(props) {
     const [modalShow, setModalShow] = useState(false);
-    let maxValue = 7
+    let maxValue = 15
     let values = []
     if(props.values && props.values.length > 0 ){
         values = props.values.slice(0, maxValue)
@@ -226,7 +226,7 @@ function Badges(props) {
                         {`Show all ${props.values.length} ${props.label}`}
                     </Button>
                     <InfoModal header={props.label} modalShow={modalShow} setModalShow={setModalShow}>
-                        {values.map((val) => {
+                        {props.values.map((val) => {
                             return (
                                 <div class="px-2 pt-3" style={{"font-size": "1.05em"}}>
                                     {val}

@@ -22,7 +22,7 @@ function EditProfile(props) {
 
     let createProfilePicture = (img) => {
         let postData = new FormData();
-        postData.append("src", img);
+        postData.append("src", img, img.name);
 
         let postUrl = `${API_URL}/profile-pictures/`;
         let headers = {

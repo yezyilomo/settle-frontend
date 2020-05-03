@@ -42,7 +42,7 @@ function UploadProperty(props){
         postData.append("property", propertyID)
         postData.append("is_main", Number(img.is_main))
         postData.append("tool_tip", img.tool_tip)
-        postData.append("src", img.src)
+        postData.append("src", img.src, img.src.name)
 
         let postUrl = `${API_URL}/property-pictures/`;
         let headers = {
@@ -166,40 +166,25 @@ function UploadProperty(props){
         ))
     }
 
-    let getAmenities = inputValue => {
-        const URL = `${API_URL}/amenities/?query={id,name}&format=json&name__icontains=${inputValue}`
-        return getOptions(URL)
+    let get = (selection) => {
+        let getSelection = inputValue => {
+            const URL = `${API_URL}/${selection}/?query={id,name}&format=json&name__icontains=${inputValue}`
+            return getOptions(URL)
+        }
+        return getSelection;
     }
 
-    let getServices = inputValue => {
-        const URL = `${API_URL}/services/?query={id,name}&format=json&name__icontains=${inputValue}`
-        return getOptions(URL)
-    }
-
-    let getPotentials = inputValue => {
-        const URL = `${API_URL}/potentials/?query={id,name}&format=json&name__icontains=${inputValue}`
-        return getOptions(URL)
-    }
-
-    let updateAmenities = (amenities) => {
-        setFields({
-            field: 'amenities',
-            value: amenities
-        })
-    }
-
-    let updateServices = (services) => {
-        setFields({
-            field: 'services',
-            value: services
-        })
-    }
-
-    let updatePotentials = (potentials) => {
-        setFields({
-            field: 'potentials',
-            value: potentials
-        })
+    let update = (selection) => {
+        let updateSelection = (value) => {
+            if(!value){
+                value = []
+            }
+            setFields({
+                field: selection,
+                value: value
+            })
+        }
+        return updateSelection;
     }
 
     return (
@@ -276,23 +261,23 @@ function UploadProperty(props){
                         <div class="row mt-1 mb-3">
                             <div class="col-12">
                             <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions defaultOptions 
-                            loadOptions={getAmenities} onChange={updateAmenities}/>
+                            loadOptions={get('amenities')} onChange={update('amenities')}/>
                             </div>
                         </div>
 
-                        <label class="form-check-label col-12 p-0 m-0">Services</label>
+                        <label class="form-check-label col-12 p-0 m-0">Nearby Services</label>
                         <div class="row mt-1 mb-3">
                             <div class="col-12">
                             <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions defaultOptions 
-                            loadOptions={getServices} onChange={updateServices}/>
+                            loadOptions={get('services')} onChange={update('services')}/>
                             </div>
                         </div>
 
-                        <label class="form-check-label col-12 p-0 m-0">Potentials</label>
+                        <label class="form-check-label col-12 p-0 m-0">Potential For</label>
                         <div class="row mt-1 mb-3">
                             <div class="col-12">
                             <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions defaultOptions 
-                            loadOptions={getPotentials} onChange={updatePotentials}/>
+                            loadOptions={get('potentials')} onChange={update('potentials')}/>
                             </div>
                         </div>
                     </div>

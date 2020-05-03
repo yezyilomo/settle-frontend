@@ -47,3 +47,8 @@
 	transition: 0s;
 	transform: scale(0, 0);
 }
+
+// Remove outline on a slider
+.slider div{
+	outline: none;
+}

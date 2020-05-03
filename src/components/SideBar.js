@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useGlobalState } from 'simple-react-state';
 import './SideBar.scss';
-import { Select } from   './';
+import { API_URL } from '../';
 import { setErrorClass } from '../utils';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 import store from '../store';
 
 
@@ -45,25 +46,34 @@ function SideBar(props) {
         });
     }
 
-    let optionName = (opt) => {
-        return opt.name
-    }
-
-    let optionValue = (opt) => {
-        return opt.id
-    }
-
-    let updateSelectionField = (target) => {
-        updateFilterFields({
-            field: target.name,
-            value: target.values.add
-        });
-    }
-
     let handleSubmit = (e) => {
         e.preventDefault();
         history.push("/ft");
     }
+
+    let getOptions = (url) => {
+        return fetch(url)
+        .then(res => res.json())
+        .then(results => results.results.map(
+            amenity => {return {value: amenity.id, label: amenity.name}}
+        ))
+    }
+
+    let getAmenities = inputValue => {
+        const URL = `${API_URL}/amenities/?query={id,name}&format=json&name__icontains=${inputValue}`
+        return getOptions(URL)
+    }
+
+    let updateAmenities = (amenities) => {
+        if (!amenities){
+            amenities = []
+        }
+        updateFilterFields({
+            field: 'amenities',
+            value: amenities
+        })
+    }
+
     return (
         <div class={`sidebar text-secondary p-0 m-0 ${props.setting}`}>
             <h5 class="m-0 p-0 px-2 mt-3 mt-md-0 col-12">Quick Filter</h5>
@@ -124,9 +134,15 @@ function SideBar(props) {
                 </div>
 
                 <div class="m-0 p-0 mt-4 mb-2">
-                    <label class="form-check-label col-12 m-0 p-0">Amenities</label>
-                    <Select className="custom-select floating__input" name="amenities" options={options} placeholder="Select amenity"
-                    onChange={updateSelectionField} value={filterFields.amenities.selected} optionName={optionName} optionValue={optionValue}/>
+                        <label class="form-check-label col-12 p-0 m-0">Amenities</label>
+                        <div class="row mt-1 mb-3">
+                            <div class="col-12">
+                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions 
+                            defaultOptions value={filterFields.amenities}
+                            loadOptions={getAmenities} onChange={updateAmenities}/>
+                            </div>
+                        </div>
+
                 </div>
                 <button type="submit" class="col-12 btn btn-primary my-5 my-md-4 py-2 py-md-1">Submit</button>
             </form>
