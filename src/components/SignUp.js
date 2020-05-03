@@ -368,7 +368,7 @@ function SignUp(props) {
         <>
           <Nav.Link href="#" onClick={() => setModalShow(true)}>Sign up</Nav.Link>
           
-          <Modal animation={false} scrollable={true} className="signup-modal" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+          <Modal animation={false} scrollable={true} className="signup-modal" dialogClassName="custom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
               <div class="modal-close" onClick={() => setModalShow(false)}>
                   <span class="icon icon-close"></span>
               </div>

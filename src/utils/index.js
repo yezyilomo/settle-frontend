@@ -73,6 +73,47 @@ function onScrollToBottom(handleScrollToBottom, y = 1) {
     return scrollToBottomEventHandler
 }
 
+/**
+ * @param {HTMLImageElement} image - Image File Object
+ * @param {Object} crop - crop Object
+ * @param {String} fileName - Name of the returned file in Promise
+ */
+function cropImage(image, crop, saveImage) {
+    image.onload = function () {
+        const canvas = document.createElement('canvas');
+
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+
+        canvas.width = crop.width * scaleX;
+        canvas.height = crop.height * scaleY;
+
+        const sx = crop.x * scaleX;
+        const sy = crop.y * scaleY;
+        const sw = crop.width * scaleX;
+        const sh = crop.height * scaleY;
+        const dx = 0;
+        const dy = 0;
+        const dw = crop.width * scaleX;
+        const dh = crop.height * scaleY;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(
+            image,
+            sx, sy, sw, sh,  // Source dimensions
+            dx, dy, dw, dh  // Destination dimensions
+        );
+
+        //const base64Image = canvas.toDataURL('image/jpeg');
+        //return base64Image
+
+        // As a blob
+        canvas.toBlob(saveImage, 'image/jpeg', 1);
+    }
+}
+
+
 export {
-    setErrorClass, getCookie, onScrollToBottom, propertyTypes, getPropertyRoute, getPropertyType
+    setErrorClass, getCookie, onScrollToBottom, propertyTypes,
+    getPropertyRoute, getPropertyType, cropImage
 }
