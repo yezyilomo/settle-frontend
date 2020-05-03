@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { } from 'react-router-dom';
 import './MultipleImageUploader.css';
 import { useLocalState } from 'simple-react-state';
 import { Modal } from 'react-bootstrap';
 import ReactCrop from 'react-image-crop';
 import {cropImage} from '../utils';
 import 'react-image-crop/lib/ReactCrop.scss';
-
-
 
 
 function MultipleImageUploader(props) {
