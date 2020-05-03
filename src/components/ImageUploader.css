@@ -54,3 +54,8 @@
     border: solid 2px white;
     padding: 3px 6px;
 }
+
+
+.crop-img{
+    width: 100%;
+}
