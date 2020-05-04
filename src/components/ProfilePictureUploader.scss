@@ -1,9 +1,9 @@
 
 .profile-picture-container{
-    width: 300px;
-    height: 300px;
+    //width: 300px;     // To override
+    //height: 300px;    // To override
     display: inline-block;
-    border: 1px solid #eeeeee;
+    border: 2px solid #eeeeee;
     border-radius: 50%;
     overflow: hidden;
     text-align: right;
@@ -16,9 +16,9 @@
 
 .profile-picture-container .icon-user{
     position: relative;
-    top: 60px;
-    width: 250px;
-    height: 250px;
+    //top: 60px;        // To override
+    //width: 250px;     // To override
+    //height: 250px;    // To override
     border-radius: 0;
     background: rgb(170, 170, 170);
 }
@@ -48,7 +48,7 @@
 
 .profile-picture-remove-icon {
     cursor: pointer;
-    font-size: 24px;
+    //font-size: 24px;      // To override
     position: absolute;
     bottom: -8px;
     color: #eeeeee;

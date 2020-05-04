@@ -62,6 +62,8 @@ function TopBar(props) {
         document.cookie = `id=;path=/;expires=${d.toGMTString()};`;
         document.cookie = `username=;path=/;expires=${d.toGMTString()};`;
         document.cookie = `email=;path=/;expires=${d.toGMTString()};`;
+        document.cookie = `phone=;path=/;expires=${d.toGMTString()};`;
+        document.cookie = `full_name=;path=/;expires=${d.toGMTString()};`;
 
         // Clean up store
         updateStore([
@@ -72,7 +74,9 @@ function TopBar(props) {
                     authToken: null,
                     id: null,
                     username: null,
-                    email: null
+                    email: null,
+                    phone: null,
+                    full_name: null
                 }
             },
             {

@@ -90,8 +90,7 @@ function EditProfile(props) {
         let form = e.target
 
         let formData = {
-            first_name: form.first_name.value,
-            last_name: form.last_name.value,
+            full_name: form.full_name.value,
             email: form.email.value,
             phone: form.phone.value,
             biography: form.biography.value
@@ -136,18 +135,10 @@ function EditProfile(props) {
                 <div class="col-12 col-md-6 pr-md-4 edit-profile order-2 order-md-1">
 
                     <div class="row p-0 m-0 mb-3">
-                        <label class="form-check-label col-12 p-0 m-0">First Name</label>
+                        <label class="form-check-label col-12 p-0 m-0">Full Name</label>
                         <div class="col-12 p-0 m-0 my-1">
-                            <input type="text" data-field="first_name" name="first_name" placeholder="First Name"
-                            value={profile.first_name} onChange={updateValue} class="form-control"  />
-                        </div>
-                    </div>
-
-                    <div class="row p-0 m-0 mb-3">
-                        <label class="form-check-label col-12 p-0 m-0">Last Name</label>
-                        <div class="col-12 p-0 m-0 my-1">
-                            <input type="text" data-field="last_name" name="last_name" placeholder="Last Name"
-                            value={profile.last_name} onChange={updateValue} class="form-control"  />
+                            <input type="text" data-field="full_name" name="full_name" placeholder="Full Name"
+                            value={profile.full_name} onChange={updateValue} class="form-control"  />
                         </div>
                     </div>
 
@@ -189,7 +180,7 @@ function EditProfile(props) {
 
                 <div class="col-12 col-md-6 order-1 order-md-2">
                     <div class="row p-0 m-0">
-                        <div class="col-12 p-0 m-0 text-center">
+                        <div class="col-12 p-0 m-0 text-center edit-profile-picture">
                             <ProfilePictureUploader name="picture" src={src(profile.picture)} onChange={setProfilePicture}/>
                         </div>
                     </div>

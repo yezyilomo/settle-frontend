@@ -32,3 +32,21 @@
 .profile-form button{
     height: 45px;
 }
+
+
+// Customize Profile picture component
+.edit-profile-picture .profile-picture-container{
+    width: 200px;
+    height: 200px;
+}
+
+.edit-profile-picture .profile-picture-container .icon-user{
+    top: 30px;
+    width: 180px;
+    height: 180px;
+}
+
+.edit-profile-picture .profile-picture-remove-icon{
+    font-size: 24px;
+}
+// End customize profile picture component

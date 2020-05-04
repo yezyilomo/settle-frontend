@@ -33,13 +33,18 @@ function LogIn(props) {
             document.cookie = `id=${response.id};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
             document.cookie = `username=${response.username};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
             document.cookie = `email=${response.email};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
+            document.cookie = `phone=${response.phone};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
+            document.cookie = `full_name=${response.full_name};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
+        
             updateUser({
                 value: {
                     isLoggedIn: true,
                     authToken: authToken,
                     id: response.id,
                     username: response.username,
-                    email: response.email
+                    email: response.email,
+                    full_name: response.full_name,
+                    phone: response.phone
                 }
             });
             history.push("/");

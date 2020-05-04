@@ -19,16 +19,32 @@ let initialData = {
     potentials: [],
     main_picture: [],
     other_pictures: [],
-    other_features: []
+    other_features: [],
+    contact: {
+
+    }
+
 }
 
 
 function UploadProperty(props){
     const history = useHistory();
-    const [fields, setFields] = useLocalState(initialData);
     const [user, ] = useGlobalState("user");
+    const [fields, setFields] = useLocalState(initialData);
     const [isLoading, setLoading] = useState(false);
     const [createError, setCreateError] = useState('');
+
+    useEffect(()=>{
+        
+        setFields({
+            field: "contact",
+            value: {
+                email: user.email,
+                phone: user.phone,
+                full_name: user.full_name
+            }
+        })
+    }, []);
 
     let currencies = ["TZS", "USD"];
     let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
@@ -91,9 +107,9 @@ function UploadProperty(props){
             },
             descriptions: fields.descriptions,
             contact: {
-                name: form.full_name.value,
-                email: form.email.value,
-                phone: form.phone.value
+                name: fields.contact.full_name,
+                email: fields.contact.email,
+                phone: fields.contact.phone
             },
             amenities: {
                 "add": getAddList(fields.amenities),
@@ -314,17 +330,17 @@ function UploadProperty(props){
                     <div class="row p-0 m-0 mt-4">
                         <label class="form-check-label col-12 p-0 m-0">Contact</label>
                         <div class="col-12 my-1 px-0">
-                            <input type="text" name="phone" value={fields.phone} onChange={updateValue}
+                            <input type="text" name="contact.phone" value={fields.contact.phone} onChange={updateValue}
                                 class="form-control" placeholder="Phone Number" required />
                         </div>
                         <div class="col-12 my-1">
                             <div class="row">
                                 <div class="col m-0 p-0 pr-1">
-                                    <input type="text" name="full_name" value={fields.name} onChange={updateValue}
+                                    <input type="text" name="contact.full_name" value={fields.contact.full_name} onChange={updateValue}
                                         class="form-control" placeholder="Name" required />
                                 </div>
                                 <div class="col m-0 p-0 pl-1">
-                                    <input type="text" name="email" value={fields.email} onChange={updateValue}
+                                    <input type="text" name="contact.email" value={fields.contact.email} onChange={updateValue}
                                         class="form-control" placeholder="Email" required />
                                 </div>
                             </div>
@@ -350,7 +366,7 @@ function UploadProperty(props){
                 <div class="col-12 mb-2 text-center text-danger">
                     {createError}
                 </div>
-                <Button className="col-12 col-md-6" variant="info" disabled={isLoading} type="submit">
+                <Button className="col-12 col-md-6" variant="primary" disabled={isLoading} type="submit">
                     {isLoading ? <Spinner animation="border" size="sm" /> : 'Submit'}
                 </Button>
             </div>
@@ -358,34 +374,6 @@ function UploadProperty(props){
     )
 }
 
-function OptionsFetcher(props) {
-    let [amenities, setAmenities] = useState(null);
-    let [services, setServices] = useState(null);
-    let [potentials, setPotentials] = useState(null);
-    let fetchOptions = () => {
-        fetch(`${API_URL}/amenities/?query={id,name}&format=json`)
-        .then(res => res.json())
-        .then(results => setAmenities(results.results))
-
-        fetch(`${API_URL}/services/?query={id,name}&format=json`)
-        .then(res => res.json())
-        .then(results => setServices(results.results))
-
-        fetch(`${API_URL}/potentials/?query={id,name}&format=json`)
-        .then(res => res.json())
-        .then(results => setPotentials(results.results))
-    }
-    useEffect(fetchOptions, []);
-    let options = {
-        amenities: amenities,
-        services: services,
-        potentials: potentials
-    }
-
-    return (
-        <UploadProperty options={options} {...props}/>
-    );
-}
 
 
-export { OptionsFetcher as UploadProperty }
+export { UploadProperty }
