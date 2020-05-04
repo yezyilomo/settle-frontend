@@ -9,10 +9,27 @@
     width: 100%;
 }
 
-.prof-picture{
-    cursor: pointer;
-    filter: contrast(0%);
+
+// Customize Profile picture component
+.upload-profile-pic .profile-picture-container{
+    width: 100px;
+    height: 100px;
 }
+
+.upload-profile-pic .profile-picture-container .icon-user{
+    top: 20px;
+    width: 90px;
+    height: 90px;
+}
+
+.upload-profile-pic .profile-picture-remove-icon{
+    font-size: 15px;
+}
+
+.modal-on-modal{
+    background-color: transparentize($color: #000000, $amount: 0.1)
+}
+// End customize profile picture component
 
 .progress-tab>div{
     padding-top: 10px;

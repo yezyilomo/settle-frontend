@@ -173,7 +173,7 @@ function EditProperty(props) {
                 street2: form.street2.value
             },
             contact: {
-                name: form._name.value,
+                name: form.full_name.value,
                 email: form.email.value,
                 phone: form.phone.value
             },
@@ -409,7 +409,7 @@ function EditProperty(props) {
                         <div class="col-12 my-1">
                             <div class="row">
                                 <div class="col m-0 p-0 pr-1">
-                                    <input type="text" data-field="contact.name" name="_name" value={fields.contact.name} onChange={updateValue}
+                                    <input type="text" data-field="contact.name" name="full_name" value={fields.contact.name} onChange={updateValue}
                                         class="form-control" placeholder="Name" />
                                 </div>
                                 <div class="col m-0 p-0 pl-1">

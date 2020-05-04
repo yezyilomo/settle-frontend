@@ -19,6 +19,8 @@ let authToken = getCookie("auth_token");
 let id = getCookie("id");
 let username = getCookie("usernamen");
 let email = getCookie("email");
+let phone = getCookie("phone");
+let full_name = getCookie("full_name");
 
 if (authToken !== null) {
     isLoggedIn = true;
@@ -31,7 +33,9 @@ store.setState({
         authToken: authToken,
         id: id,
         email: email,
-        username: username
+        username: username,
+        phone: phone,
+        full_name: full_name
     }
 })
 
