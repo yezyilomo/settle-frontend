@@ -1,35 +1,11 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { useGlobalState } from 'simple-react-state';
+import { useGlobalState } from 'state-pool';
 import './SideBar.scss';
 import { API_URL } from '../';
 import { setErrorClass } from '../utils';
 import AsyncCreatableSelect from 'react-select/async-creatable';
-import store from '../store';
 
-
-let options = [
-    {id: 1, name: "one"},
-    {id: 2, name: "two"},
-    {id: 3, name: "three"},
-    {id: 4, name: "four"},
-    {id: 5, name: "five"},
-    {id: 1, name: "Repeat One"}
-];
-
-
-store.setState({
-    field: "sideBar",
-    value: {
-        price__lt: "",
-        price__gt: "",
-        currency: "",
-        location: "",
-        available_for: "",
-        property_type: "",
-        amenities: []
-    }
-})
 
 function SideBar(props) {
     let history = useHistory();
@@ -40,9 +16,8 @@ function SideBar(props) {
     let updateFieldValue = (e) => {
         let field = e.target.name;
         let value = e.target.value;
-        updateFilterFields({
-            field: field,
-            value: value
+        updateFilterFields(filter => {
+            filter[field] = value;
         });
     }
 
@@ -68,9 +43,8 @@ function SideBar(props) {
         if (!amenities){
             amenities = []
         }
-        updateFilterFields({
-            field: 'amenities',
-            value: amenities
+        updateFilterFields(filter => {
+            filter['amenities'] = amenities;
         })
     }
 

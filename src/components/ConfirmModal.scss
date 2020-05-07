@@ -1,0 +1,14 @@
+@import '../variables.scss';
+
+.confirm-modal .modal-body {
+    border-radius: 10px 10px 0 0;
+}
+
+.confirm-modal .modal-footer {
+    border-radius: 0 0 10px 10px;
+}
+
+.confirm-modal-backdrop{
+    opacity: .9 !important;
+    background-color: rgb(14, 14, 14);
+}

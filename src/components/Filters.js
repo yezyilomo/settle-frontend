@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGlobalState } from 'simple-react-state';
+import { useGlobalState } from 'state-pool';
 import {
     LocalFetcher, GlobalFetcher, GlowPageLoader, PageError,
     PropertyOverview, GenericResourcesGroup
@@ -7,7 +7,6 @@ import {
 import { API_URL } from '..';
 import { useRestoreScrollState } from '../hooks';
 import { getPropertyRoute } from '../utils';
-import store from '../store';
 
 
 function GenericFilter(props) {
@@ -20,9 +19,7 @@ function GenericFilter(props) {
     let getMoreResourcesFetcher = (updateResources) => {
         let updateData = (data, currentResources) => {
             data.results = [...currentResources.results, ...data.results];
-            updateResources({
-                value: data
-            })
+            updateResources(oldData => data)
         }
 
         let fetchMoreResources = (currentResources) => {
@@ -153,11 +150,6 @@ function FilterPropertiesByCategory(props) {
     return <EndpointPropertiesFilter endpoint={endpoint} {...props}/>;
 }
 
-
-store.setState({
-    field: "myProperties",
-    value: {}
-})
 
 function UserProperties(props) {
     useRestoreScrollState();

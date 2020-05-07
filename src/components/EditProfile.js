@@ -6,7 +6,7 @@ import {
     GlobalFetcher, GlowPageLoader, ProfilePictureUploader, PageError
 } from './';
 import { API_URL } from '../';
-import { useLocalState, useGlobalState } from 'simple-react-state';
+import { useGlobalState, useLocalState } from 'state-pool';
 import { useRestoreScrollState } from '../hooks';
 
 
@@ -17,7 +17,7 @@ function EditProfile(props) {
     const [editError, setEditError] = useState('');
     const [profile, updateProfile] = useLocalState(props.profile);
     const [user,] = useGlobalState("user");
-    const [, setProfile] = useGlobalState("my-profile");
+    const [, updateGlobalProfile] = useGlobalState("my-profile");
     const [profilePicture, setProfilePicture] = useState(undefined);
 
     let createProfilePicture = (img) => {
@@ -77,9 +77,7 @@ function EditProfile(props) {
     }
 
     let redirect = (response) => {
-        setProfile({
-            value: null
-        })
+        updateGlobalProfile(draftProfile => null);
         return history.replace(`/edit-profile/`);
     }
 
@@ -116,9 +114,10 @@ function EditProfile(props) {
     }
 
     let updateValue = (e) => {
-        updateProfile({
-            field: e.target.getAttribute("data-field"),
-            value: e.target.value
+        updateProfile(profile => {
+            let field = e.target.getAttribute("data-field");
+            let value = e.target.value;
+            profile[field] = value;
         })
     }
 
@@ -145,7 +144,7 @@ function EditProfile(props) {
                     <div class="row p-0 m-0 mb-3">
                         <label class="form-check-label col-12 p-0 m-0">Username</label>
                         <div class="col-12 p-0 m-0 my-1">
-                            <input type="text" data-field="username" name="username" placeholder="Username"
+                            <input disabled type="text" data-field="username" name="username" placeholder="Username"
                             value={profile.username} onChange={updateValue} class="form-control"  />
                         </div>
                     </div>

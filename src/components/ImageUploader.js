@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { } from 'react-router-dom';
 import './ImageUploader.css';
-import { useLocalState } from 'simple-react-state';
+import { useLocalState } from 'state-pool';
 import { Modal } from 'react-bootstrap';
 import ReactCrop from 'react-image-crop';
 import { cropImage } from '../utils';
@@ -52,9 +52,8 @@ function ImageUploader(props) {
     }
 
     let removeImg = (img) => {
-        updateFiles({
-            type: "REMOVE",
-            value: img
+        updateFiles(draftFiles => {
+            return files.filter(file => file !== img);
         })
 
         if (props.onDelete !== undefined) {
@@ -68,15 +67,14 @@ function ImageUploader(props) {
 
         let src = URL.createObjectURL(blob);
 
-        updateFiles({
-            type: "PUSH",
-            value: {
+        updateFiles(files => {
+            files.push({
                 img_link: src,
                 img: {
                     id: null, tool_tip: null,
                     is_main: true, src: blob
                 }
-            }
+            })
         });
         setImageToCrop(null);
     }

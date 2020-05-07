@@ -2,24 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { Route, MemoryRouter } from 'react-router-dom';
 import './SignUp.scss';
-import { useGlobalState } from 'simple-react-state';
+import { useGlobalState } from 'state-pool';
 import { API_URL } from '../';
 import {ProfilePictureUploader} from './'
 import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
 import { setErrorClass } from '../utils';
-import store from '../store';
 
-
-store.setState({
-    field: "signUp",
-    value: {
-        full_name: "",
-        email: "",
-        profile_pic: null,
-        username: "",
-        password: ""
-    }
-})
 
 function About(props) {
     let [form, updateForm] = useGlobalState("signUp");
@@ -27,9 +15,10 @@ function About(props) {
     useEffect(setErrorClass, []);
 
     let handleValueChange = (e) => {
-        updateForm({
-            field: e.target.name,
-            value: e.target.value
+        updateForm(user => {
+            let field = e.target.name;
+            let value= e.target.value;
+            user[field] = value;
         });
     }
     let isFormValid = () => {
@@ -99,16 +88,16 @@ function Account(props) {
     useEffect(setErrorClass, []);
 
     let handleValueChange = (e) => {
-        updateForm({
-            field: e.target.name,
-            value: e.target.value
+        updateForm(user => {
+            let field = e.target.name;
+            let value= e.target.value;
+            user[field] = value;
         });
     }
 
     let setProfilePicture = (img) => {
-        updateForm({
-            field: "profile_pic",
-            value: img
+        updateForm(user => {
+            user["profile_pic"] = img
         })
     }
 
@@ -141,8 +130,8 @@ function Account(props) {
             document.cookie = `phone=${response.phone};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
             document.cookie = `full_name=${response.full_name};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
 
-            updateUser({
-                value: {
+            updateUser(user => {
+                return {
                     isLoggedIn: true,
                     authToken: authToken,
                     id: response.id,
