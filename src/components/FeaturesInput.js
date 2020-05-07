@@ -1,15 +1,14 @@
 import React, { } from 'react';
 import './FeaturesInput.css';
-import { useLocalState } from 'simple-react-state';
+import { useLocalState } from 'state-pool';
 
 function FeaturesInput(props) {
     let initialState = props.value||[];
     let [features, updateFeatures] = useLocalState(initialState);
 
     let addFeature = (event) => {
-        updateFeatures({
-            type: "PUSH",
-            value: {id: null, name: "", value: ""}
+        updateFeatures(features => {
+            features.push({id: null, name: "", value: ""});
         });
         if(props.onChange !== undefined){
             props.onChange(features)
@@ -17,9 +16,8 @@ function FeaturesInput(props) {
     }
 
     let deleteFeature = (featureToDelete) => {
-        updateFeatures({
-            type: "FILTER",
-            value: (feature) => feature !== featureToDelete
+        updateFeatures(draftFeatures => {
+            return features.filter((feature) => feature !== featureToDelete);
         })
         if(props.onChange !== undefined){
             props.onChange(features)
@@ -32,20 +30,20 @@ function FeaturesInput(props) {
 
     let updateValue = (event, feature) => {
         let value = event.target.value;
-        feature.value = value;
-        updateFeatures({
-            value: features
+        updateFeatures(draftFeatures => {
+            let index = features.indexOf(feature);
+            draftFeatures[index].value = value;
         });
         if(props.onChange !== undefined){
-            props.onChange(features)
+            props.onChange(features);
         }
     }
 
     let updateName = (event, feature) => {
         let name = event.target.value;
-        feature.name = name;
-        updateFeatures({
-            value: features
+        updateFeatures(draftFeatures => {
+            let index = features.indexOf(feature);
+            draftFeatures[index].name = name;
         });
         if(props.onChange !== undefined){
             props.onChange(features)

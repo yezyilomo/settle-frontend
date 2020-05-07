@@ -1,7 +1,7 @@
 import React, { } from 'react';
 import './PropertyOverview.css';
 import { Link } from 'react-router-dom';
-import { useGlobalState } from 'simple-react-state';
+import { useGlobalState } from 'state-pool';
 import { Rating } from './';
 import { getPropertyRoute } from '../utils';
 

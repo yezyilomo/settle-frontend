@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './UploadProperty.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
-import { useGlobalState, useLocalState } from 'simple-react-state';
+import { useGlobalState, useLocalState } from 'state-pool';
 import {
     FeaturesInput, ImageUploader, MultipleImageUploader
 } from './';
@@ -30,15 +30,14 @@ let initialData = {
 function UploadProperty(props){
     const history = useHistory();
     const [user, ] = useGlobalState("user");
-    const [fields, setFields] = useLocalState(initialData);
+    const [fields, updateFields] = useLocalState(initialData);
     const [isLoading, setLoading] = useState(false);
     const [createError, setCreateError] = useState('');
 
     useEffect(()=>{
         
-        setFields({
-            field: "contact",
-            value: {
+        updateFields(fields => {
+            fields["contact"] = {
                 email: user.email,
                 phone: user.phone,
                 full_name: user.full_name
@@ -51,6 +50,7 @@ function UploadProperty(props){
 
     let postImages = (propertyID, pictures) => {
         if(pictures.length === 0){
+            // Redirect to created property
             return history.push(`/${getPropertyRoute(props.type)}/${propertyID}`);
         }
         let img = pictures.pop();
@@ -147,30 +147,32 @@ function UploadProperty(props){
     }
 
     let updateValue = (e) => {
-        setFields({
-            field: e.target.name,
-            value: e.target.value
+        updateFields(fields => {
+            fields[e.target.name] = e.target.value;
+        })
+    }
+
+    let updateContact = (e) => {
+        updateFields(fields => {
+            fields.contact[e.target.name] = e.target.value;
         })
     }
 
     let updateOtherImages = (value) => {
-        setFields({
-            field: 'other_pictures',
-            "value": value
+        updateFields(fields => {
+            fields['other_pictures'] = value;
         })
     }
 
     let updateMainImage = (value) => {
-        setFields({
-            field: 'main_picture',
-            "value": value
+        updateFields(fields => {
+            fields['main_picture'] = value;
         })
     }
 
     let updateFeatures = (features) => {
-        setFields({
-            field: 'other_features',
-            value: features
+        updateFields(fields => {
+            fields['other_features'] = features;
         })
     }
 
@@ -195,9 +197,8 @@ function UploadProperty(props){
             if(!value){
                 value = []
             }
-            setFields({
-                field: selection,
-                value: value
+            updateFields(fields => {
+                fields[selection] = value
             })
         }
         return updateSelection;
@@ -313,9 +314,8 @@ function UploadProperty(props){
                             }}
                             onChange={(event, editor) => {
                                 const data = editor.getData();
-                                setFields({
-                                    field: "descriptions",
-                                    value: data
+                                updateFields(fields => {
+                                    fields["descriptions"] = data;
                                 })
                             }}
                             onBlur={(event, editor) => {
@@ -330,17 +330,17 @@ function UploadProperty(props){
                     <div class="row p-0 m-0 mt-4">
                         <label class="form-check-label col-12 p-0 m-0">Contact</label>
                         <div class="col-12 my-1 px-0">
-                            <input type="text" name="contact.phone" value={fields.contact.phone} onChange={updateValue}
+                            <input type="text" name="phone" value={fields.contact.phone} onChange={updateContact}
                                 class="form-control" placeholder="Phone Number" required />
                         </div>
                         <div class="col-12 my-1">
                             <div class="row">
                                 <div class="col m-0 p-0 pr-1">
-                                    <input type="text" name="contact.full_name" value={fields.contact.full_name} onChange={updateValue}
+                                    <input type="text" name="full_name" value={fields.contact.full_name} onChange={updateContact}
                                         class="form-control" placeholder="Name" required />
                                 </div>
                                 <div class="col m-0 p-0 pl-1">
-                                    <input type="text" name="contact.email" value={fields.contact.email} onChange={updateValue}
+                                    <input type="text" name="email" value={fields.contact.email} onChange={updateContact}
                                         class="form-control" placeholder="Email" required />
                                 </div>
                             </div>

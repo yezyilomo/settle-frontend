@@ -7,7 +7,7 @@ import {
     ImageUploader, MultipleImageUploader, PageError
 } from './';
 import { API_URL } from '../';
-import { useLocalState, useGlobalState } from 'simple-react-state';
+import { useGlobalState, useLocalState } from 'state-pool';
 import { getPropertyRoute } from '../utils';
 import { useRestoreScrollState } from '../hooks';
 import CKEditor from '@ckeditor/ckeditor5-react';
@@ -22,7 +22,7 @@ function EditProperty(props) {
     const [editError, setEditError] = useState('');
 
     let [fields, updateFields] = useLocalState(props.property);
-    let [, setProperty] = useGlobalState(`property/${fields.id}`);
+    let [, updateGlobalProperty] = useGlobalState(`property/${fields.id}`);
     let [user,] = useGlobalState("user");
 
     let [featuresToDelete,] = useState([]);
@@ -100,9 +100,7 @@ function EditProperty(props) {
     }
 
     let redirect = (response) => {
-        setProperty({
-            value: null
-        })
+        updateGlobalProperty(property => null)
         return history.replace(`/${getPropertyRoute(props.type)}/${fields.id}`)
     }
 
@@ -200,9 +198,26 @@ function EditProperty(props) {
     }
 
     let updateValue = (e) => {
-        updateFields({
-            field: e.target.getAttribute("data-field"),
-            value: e.target.value
+        updateFields(fields => {
+            let field = e.target.getAttribute("data-field");
+            let value = e.target.value;
+            fields[field] = value
+        })
+    }
+
+    let updateLocation = (e) => {
+        updateFields(fields => {
+            let field = e.target.getAttribute("data-field");
+            let value = e.target.value;
+            fields.location[field] = value
+        })
+    }
+
+    let updateContact = (e) => {
+        updateFields(fields => {
+            let field = e.target.getAttribute("data-field");
+            let value = e.target.value;
+            fields.contact[field] = value
         })
     }
 
@@ -215,9 +230,8 @@ function EditProperty(props) {
     }
 
     let updateFeatures = (features) => {
-        updateFields({
-            field: "other_features",
-            value: features
+        updateFields(fields => {
+            fields["other_features"] = features
         })
     }
 
@@ -254,9 +268,8 @@ function EditProperty(props) {
             if(!value){
                 value = []
             }
-            updateSelectionFields({
-                field: selection,
-                value: value
+            updateSelectionFields(selectionFields => {
+                selectionFields[selection] = value;
             })
         }
         return updateSelection;
@@ -310,7 +323,7 @@ function EditProperty(props) {
                     <div class="row p-0 m-0 my-4">
                         <label class="form-check-label col-12 p-0 m-0">Location</label>
                         <div class="col-12 p-0 m-0 my-1">
-                            <select class="custom-select" data-field="location.country" name="country" value={fields.location.country} onChange={updateValue}>
+                            <select class="custom-select" data-field="country" name="country" value={fields.location.country} onChange={updateLocation}>
                                 <option value="" disabled selected>Country</option>
                                 {countries.map((country) => <option value={country}>{country}</option>)}
                             </select>
@@ -318,11 +331,11 @@ function EditProperty(props) {
                         <div class="col-12 p-0 m-0 my-1">
                             <div class="row">
                                 <div class="col pr-1">
-                                    <input type="text" data-field="location.region" name="region" value={fields.location.region} onChange={updateValue}
+                                    <input type="text" data-field="region" name="region" value={fields.location.region} onChange={updateLocation}
                                         class="form-control" placeholder="Region" />
                                 </div>
                                 <div class="col pl-1">
-                                    <input type="text" data-field="location.distric" name="distric" value={fields.location.distric} onChange={updateValue}
+                                    <input type="text" data-field="distric" name="distric" value={fields.location.distric} onChange={updateLocation}
                                         class="form-control" placeholder="Distric" />
                                 </div>
                             </div>
@@ -330,11 +343,11 @@ function EditProperty(props) {
                         <div class="col-12 p-0 m-0 my-1">
                             <div class="row">
                                 <div class="col pr-1">
-                                    <input type="text" data-field="location.street1" name="street1" value={fields.location.street1} onChange={updateValue}
+                                    <input type="text" data-field="street1" name="street1" value={fields.location.street1} onChange={updateLocation}
                                         class="form-control" placeholder="Street1" />
                                 </div>
                                 <div class="col pl-1">
-                                    <input type="text" data-field="location.street2" name="street2" value={fields.location.street2} onChange={updateValue}
+                                    <input type="text" data-field="street2" name="street2" value={fields.location.street2} onChange={updateLocation}
                                         class="form-control" placeholder="Street2" />
                                 </div>
                             </div>
@@ -386,9 +399,8 @@ function EditProperty(props) {
                             }}
                             onChange={(event, editor) => {
                                 const data = editor.getData();
-                                updateFields({
-                                    field: "descriptions",
-                                    value: data
+                                updateFields(fields => {
+                                    fields["descriptions"] = data;
                                 })
                             }}
                             onBlur={(event, editor) => {
@@ -403,17 +415,17 @@ function EditProperty(props) {
                     <div class="row p-0 m-0 mt-4">
                         <label class="form-check-label col-12 p-0 m-0">Contact</label>
                         <div class="col-12 my-1 px-0">
-                            <input type="text" data-field="contact.phone" name="phone" value={fields.contact.phone} onChange={updateValue}
+                            <input type="text" data-field="phone" name="phone" value={fields.contact.phone} onChange={updateContact}
                                 class="form-control" placeholder="Phone Number" />
                         </div>
                         <div class="col-12 my-1">
                             <div class="row">
                                 <div class="col m-0 p-0 pr-1">
-                                    <input type="text" data-field="contact.name" name="full_name" value={fields.contact.name} onChange={updateValue}
+                                    <input type="text" data-field="name" name="full_name" value={fields.contact.name} onChange={updateContact}
                                         class="form-control" placeholder="Name" />
                                 </div>
                                 <div class="col m-0 p-0 pl-1">
-                                    <input type="text" data-field="contact.email" name="email" value={fields.contact.email} onChange={updateValue}
+                                    <input type="text" data-field="email" name="email" value={fields.contact.email} onChange={updateContact}
                                         class="form-control" placeholder="Email" />
                                 </div>
                             </div>

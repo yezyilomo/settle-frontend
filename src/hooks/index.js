@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
-import { useGlobalState, useLocalState } from 'simple-react-state';
+import { useGlobalState, useLocalState } from 'state-pool';
 
 
 function useRestoreScrollState(){
@@ -31,9 +31,7 @@ function useLocalFetcher(action) {
         try {
             setLoading(true);
             const actionData = await action();
-            updateData({
-                value:actionData
-            });
+            updateData(data => actionData);
         } catch (e) {
             setError(e);
         } finally {
@@ -51,15 +49,13 @@ function useLocalFetcher(action) {
 function useGlobalFetcher(action, selection) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [data, updateData] = useGlobalState(selection);
+    const [data, updateData] = useGlobalState(selection, null);
 
     async function loadData() {
         try {
             setLoading(true);
             const actionData = await action();
-            updateData({
-                value: actionData
-            });
+            updateData(data => actionData);
         } catch (e) {
             setError(e);
         } finally {

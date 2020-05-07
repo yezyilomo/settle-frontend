@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { useGlobalState } from 'simple-react-state';
+import { useGlobalState } from 'state-pool';
 import './LogIn.scss';
 import {API_URL} from '../';
 import {Modal, Nav, Button, Spinner} from 'react-bootstrap';
@@ -36,8 +36,8 @@ function LogIn(props) {
             document.cookie = `phone=${response.phone};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
             document.cookie = `full_name=${response.full_name};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
         
-            updateUser({
-                value: {
+            updateUser(user => {
+                return {
                     isLoggedIn: true,
                     authToken: authToken,
                     id: response.id,

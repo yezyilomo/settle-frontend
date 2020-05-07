@@ -39,11 +39,12 @@ import {AddToHomeScreen} from './AddToHomeScreen';
 import {EditProfile} from './EditProfile';
 import {ProfilePictureUploader} from './ProfilePictureUploader';
 import {InfoModal} from './InfoModal';
+import {ConfirmModal} from './ConfirmModal';
 
 export {
     App, Home, PropertyOverview, TopBar, SideBar, PropertyDetails, RoomDetails, 
     HouseDetails, ApartmentDetails, HostelDetails, OfficeDetails, HallDetails, 
-    LandDetails, FrameDetails, UploadProperty, FeaturesInput, 
+    LandDetails, FrameDetails, UploadProperty, FeaturesInput, ConfirmModal,
     LogIn, SignUp, LocalFetcher, GlobalFetcher, EditProperty, ImageUploader, 
     MultipleImageUploader, UserProperties, SearchProperties, FilterPropertiesByCategory, 
     Rating, BottomNavBar, SpinnerPageLoader, SpinnerInlineLoader, GlowPageLoader,
