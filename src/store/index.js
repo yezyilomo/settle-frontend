@@ -4,7 +4,6 @@ import { store } from 'state-pool'
 
 const initialState = {}
 
-
 function initializeStore(){
     store.init(initialState);
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { } from 'react-router-dom';
 import './ProfilePictureUploader.scss';
 import { Modal, Spinner } from 'react-bootstrap';
 import ReactCrop from 'react-image-crop';
 import { cropImage } from '../utils';
 import 'react-image-crop/lib/ReactCrop.scss';
+
 
 function ProfilePictureUploader(props) {
     let initialImageState = null;
@@ -106,7 +106,7 @@ function ProfilePictureUploader(props) {
 
     return (
         <>
-            <Modal animation={false} scrollable={true} className={`crop-image-modal ${props.modalClass||''}`}
+            <Modal animation={false} scrollable={true} className={`crop-image-modal ${props.modalClass || ''}`}
                 dialogClassName="custom-modal-dialog" show={imageToCrop !== null}
                 onHide={() => setImageToCrop(null)} size="lg" aria-labelledby="" centered>
                 <div class="modal-close" onClick={() => setImageToCrop(null)}>

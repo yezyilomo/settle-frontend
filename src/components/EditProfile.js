@@ -5,7 +5,7 @@ import { Button, Spinner } from 'react-bootstrap';
 import {
     GlobalFetcher, GlowPageLoader, ProfilePictureUploader, PageError
 } from './';
-import { API_URL } from '../';
+import { BASE_API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
 import { useRestoreScrollState } from '../hooks';
 import { saveUserInfoToCookies, getUserInfoFromCookies } from '../utils';
@@ -25,17 +25,16 @@ function EditProfile(props) {
         let postData = new FormData();
         postData.append("src", img, img.name);
 
-        let postUrl = `${API_URL}/profile-pictures/`;
+        let postUrl = `${BASE_API_URL}/profile-pictures/`;
         let headers = {
             'Authorization': `Token ${user.auth_token}`
         }
         return fetch(postUrl, { method: 'POST', body: postData, headers: headers })
             .then(res => res.json().then(data => ({ status: res.status, data: data })))
-            .then(obj => obj)
     }
 
     let deleteProfilePicture = (imgID) => {
-        let postUrl = `${API_URL}/profile-pictures/${imgID}/`;
+        let postUrl = `${BASE_API_URL}/profile-pictures/${imgID}/`;
         let headers = {
             'Authorization': `Token ${user.auth_token}`
         }
@@ -81,7 +80,7 @@ function EditProfile(props) {
             biography: form.biography.value
         }
 
-        let postUrl = `${API_URL}/users/${user.id}/`;
+        let postUrl = `${BASE_API_URL}/users/${user.id}/`;
         let headers = {
             'Authorization': `Token ${user.auth_token}`,
             'Content-Type': 'application/json'
@@ -226,8 +225,9 @@ function ProfileFetcher(props){
         'Authorization': `Token ${user.auth_token}`,
         'Content-Type': 'application/json'
     }
+    
     let fetchProfile = () => {
-        return fetch(`${API_URL}/users/${user.id}/`, { method: 'GET', headers: headers })
+        return fetch(`${BASE_API_URL}/users/${user.id}/`, { method: 'GET', headers: headers })
         .then(res => { return {response: res, data: res.json()} })
         .then(obj => updateUserData(obj))
     }

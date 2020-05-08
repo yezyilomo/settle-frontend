@@ -4,13 +4,14 @@ import { Button, Modal } from 'react-bootstrap';
 
 
 function ConfirmModal(props) {
-    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+    let metaThemeColor = document.querySelector("meta[name=theme-color]");
     if (props.modalShow) {
         metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
     }
     else {
         metaThemeColor.setAttribute("content", "white");
     }
+
     return (
         <Modal animation={false} className="confirm-modal" backdropClassName="confirm-modal-backdrop" show={props.modalShow} onHide={() => props.setModalShow(false)} size={props.size} aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Body className="modal-body p-4 m-0 bg-light">
@@ -25,4 +26,4 @@ function ConfirmModal(props) {
     );
 }
 
-export {ConfirmModal}
+export { ConfirmModal }

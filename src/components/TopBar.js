@@ -8,16 +8,16 @@ import { propertyTypes, getPropertyRoute, deleteUserInfoFromCookies } from '../u
 import { initializeStore } from '../store';
 
 
-
 function CreateProperty(props) {
     const [modalShow, setModalShow] = useState(false);
 
-    let property_types = []
+    let property_types = [];
     for (let type in propertyTypes) {
         if (type !== "generic") {
             property_types.push(type);
         }
     }
+    
     return (
         <>
             <Nav.Link href="#" onClick={() => setModalShow(true)}>Create</Nav.Link>

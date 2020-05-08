@@ -6,37 +6,33 @@ import { useGlobalState, useLocalState } from 'state-pool';
 import {
     FeaturesInput, ImageUploader, MultipleImageUploader
 } from './';
-import { API_URL } from '../';
+import { BASE_API_URL } from '../';
 import { getPropertyRoute } from '../utils';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 
 
-let initialData = {
+let initialFieldsData = {
     amenities: [],
     services: [],
     potentials: [],
     main_picture: [],
     other_pictures: [],
     other_features: [],
-    contact: {
-
-    }
-
+    contact: {}
 }
-
 
 function UploadProperty(props){
     const history = useHistory();
     const [user, ] = useGlobalState("user");
-    const [fields, updateFields] = useLocalState(initialData);
+    const [fields, updateFields] = useLocalState(initialFieldsData);
     const [isLoading, setLoading] = useState(false);
     const [createError, setCreateError] = useState('');
 
     useEffect(()=>{
-        
         updateFields(fields => {
+            // Suggest user contacts
             fields["contact"] = {
                 email: user.email,
                 phone: user.phone,
@@ -45,10 +41,11 @@ function UploadProperty(props){
         })
     }, []);
 
-    let currencies = ["TZS", "USD"];
-    let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
+    let currencies = ["TZS", "USD", "KTSH"];
+    let countries = ["Tanzania", "Kenya", "Uganda", "Zanzibar"];
 
     let postImages = (propertyID, pictures) => {
+        // Post Images recusively until they are all done
         if(pictures.length === 0){
             // Redirect to created property
             return history.push(`/${getPropertyRoute(props.type)}/${propertyID}`);
@@ -60,7 +57,7 @@ function UploadProperty(props){
         postData.append("tool_tip", img.tool_tip)
         postData.append("src", img.src, img.src.name)
 
-        let postUrl = `${API_URL}/property-pictures/`;
+        let postUrl = `${BASE_API_URL}/property-pictures/`;
         let headers = {
             'Authorization': `Token ${user.auth_token}`
         }
@@ -74,6 +71,7 @@ function UploadProperty(props){
             // Report error
             return
         }
+
         let id = response.data.id;
         let pictures = [...fields.main_picture, ...fields.other_pictures]
         await postImages(id, pictures)
@@ -93,7 +91,8 @@ function UploadProperty(props){
         e.preventDefault();
         setCreateError("");
         setLoading(true);
-        let form = e.target
+
+        let form = e.target;
         let formData = {
             available_for: form.available_for.value,
             price: form.price.value,
@@ -128,11 +127,12 @@ function UploadProperty(props){
             }
         }
 
-        let postUrl = `${API_URL}/${getPropertyRoute(props.type)}/`;
+        let postUrl = `${BASE_API_URL}/${getPropertyRoute(props.type)}/`;
         let headers = {
             'Authorization': `Token ${user.auth_token}`,
             'Content-Type': 'application/json'
         }
+        
         fetch(postUrl, {method: 'POST', body: JSON.stringify(formData), headers: headers})
         .then(res =>  res.json().then(data => ({status: res.status, data: data})))
         .then(obj => updatePropertyImages(obj))
@@ -186,7 +186,7 @@ function UploadProperty(props){
 
     let get = (selection) => {
         let getSelection = inputValue => {
-            const URL = `${API_URL}/${selection}/?query={id,name}&format=json&name__icontains=${inputValue}`
+            const URL = `${BASE_API_URL}/${selection}/?query={id,name}&format=json&name__icontains=${inputValue}`
             return getOptions(URL)
         }
         return getSelection;

@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useGlobalState } from 'state-pool';
 import './SideBar.scss';
-import { API_URL } from '../';
+import { BASE_API_URL } from '../';
 import { setErrorClass } from '../utils';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 
 
 function SideBar(props) {
-    let history = useHistory();
-    let [filterFields, updateFilterFields] = useGlobalState("sideBar");
+    const history = useHistory();
+    const [filterFields, updateFilterFields] = useGlobalState("sideBar");
 
-    useEffect(setErrorClass, [])
+    useEffect(setErrorClass, []);
 
     let updateFieldValue = (e) => {
         let field = e.target.name;
@@ -30,12 +30,12 @@ function SideBar(props) {
         return fetch(url)
             .then(res => res.json())
             .then(results => results.results.map(
-                amenity => { return { value: amenity.id, label: amenity.name } }
+                amenity => { return {value: amenity.id, label: amenity.name} }
             ))
     }
 
     let getAmenities = inputValue => {
-        const URL = `${API_URL}/amenities/?query={id,name}&format=json&name__icontains=${inputValue}`
+        const URL = `${BASE_API_URL}/amenities/?query={id,name}&format=json&name__icontains=${inputValue}`
         return getOptions(URL)
     }
 

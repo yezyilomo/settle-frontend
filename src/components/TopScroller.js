@@ -10,7 +10,8 @@ function scrollUp(event) {
 }
 
 function TopScroller(props) {
-    let [scrollY, setScrollY] = useState(0);
+    const [scrollY, setScrollY] = useState(0);
+    
     let setY = () => {
         setScrollY(window.scrollY)
     }

@@ -4,15 +4,16 @@ import {
     LocalFetcher, GlobalFetcher, GlowPageLoader, PageError,
     PropertyOverview, GenericResourcesGroup
 } from '.';
-import { API_URL } from '..';
+import { BASE_API_URL } from '../';
 import { useRestoreScrollState } from '../hooks';
 import { getPropertyRoute } from '../utils';
 
 
 function GenericFilter(props) {
     let endpoint = props.endpoint.replace(/[\n ]/g, "");
+
     let fetchResources = () => {
-        return fetch(`${API_URL}/${endpoint}`)
+        return fetch(`${BASE_API_URL}/${endpoint}`)
         .then(res => res.json())
     }
 
@@ -81,9 +82,10 @@ function EndpointPropertiesFilter(props) {
 
 function PropertiesFilter(props) {
     useRestoreScrollState();
-    let [filters, ] = useGlobalState("sideBar");
+
+    const [filters, ] = useGlobalState("sideBar");
     let {property_type, available_for, price__gt, price__lt, location, amenities, currency} = filters;
-    let amenity_ids = JSON.stringify(amenities.map(amenity => amenity.value)  );
+    let amenity_ids = JSON.stringify(amenities.map(amenity => amenity.value));
     let header = (properties) => `Filter results(${properties.count})..`;
     let endpoint = `${property_type}/?
     query={
@@ -108,6 +110,7 @@ function PropertiesFilter(props) {
 
 function SearchProperties(props) {
     useRestoreScrollState();
+    
     let location = props.location.search.slice(3);
     let selection = props.location.pathname + props.location.search;
     let header = (properties) => `Search results(${properties.count})..`;

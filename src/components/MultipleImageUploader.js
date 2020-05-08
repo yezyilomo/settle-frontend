@@ -3,7 +3,7 @@ import './MultipleImageUploader.css';
 import { useLocalState } from 'state-pool';
 import { Modal, Spinner } from 'react-bootstrap';
 import ReactCrop from 'react-image-crop';
-import {cropImage} from '../utils';
+import { cropImage } from '../utils';
 import 'react-image-crop/lib/ReactCrop.scss';
 
 

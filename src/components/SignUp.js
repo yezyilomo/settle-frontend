@@ -3,14 +3,14 @@ import { useHistory } from 'react-router';
 import { Route, MemoryRouter } from 'react-router-dom';
 import './SignUp.scss';
 import { useGlobalState } from 'state-pool';
-import { API_URL } from '../';
+import { BASE_API_URL } from '../';
 import {ProfilePictureUploader} from './'
 import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
 import { setErrorClass, saveUserInfoToCookies } from '../utils';
 
 
 function About(props) {
-    let [form, updateForm] = useGlobalState("signUp");
+    const [form, updateForm] = useGlobalState("signUp");
 
     useEffect(setErrorClass, []);
 
@@ -21,6 +21,7 @@ function About(props) {
             user[field] = value;
         });
     }
+
     let isFormValid = () => {
         if (
             form.full_name.length > 0 &&
@@ -40,7 +41,6 @@ function About(props) {
         else {
             // Report errors
         }
-
     }
 
     return (
@@ -79,10 +79,10 @@ function About(props) {
 }
 
 function Account(props) {
-    let history = useHistory();
-    let [form, updateForm] = useGlobalState("signUp");
-    let [, updateUser] = useGlobalState("user");
-    let [signupError, setSignupError] = useState("");
+    const history = useHistory();
+    const [form, updateForm] = useGlobalState("signUp");
+    const [, updateUser] = useGlobalState("user");
+    const [signupError, setSignupError] = useState("");
     const [isLoading, setLoading] = useState(false);
     
     useEffect(setErrorClass, []);
@@ -172,10 +172,11 @@ function Account(props) {
     let createProfilePicture = (img, response) => {
         let postData = new FormData();
         postData.append("src", img, img.name);
-        let postUrl = `${API_URL}/profile-pictures/`;
+        let postUrl = `${BASE_API_URL}/profile-pictures/`;
         let headers = {
             'Authorization': `Token ${response.data.token}`
         }
+
         return fetch(postUrl, { method: 'POST', body: postData, headers: headers })
             .then(res => res.json().then(data => ({ status: res.status, data: data })))
             .then(obj => history.push("/"))
@@ -205,7 +206,7 @@ function Account(props) {
         formdata.append("username", form.username);
         formdata.append("password", form.password);
 
-        let registerUrl = `${API_URL}/register/`
+        let registerUrl = `${BASE_API_URL}/register/`
         fetch(registerUrl, { method: 'POST', body: formdata })
             .then(res => res.json().then(data => ({ status: res.status, data: data })))
             .then(res => login(res))
@@ -290,7 +291,8 @@ function Account(props) {
 
 function SignUp(props) {
     const [modalShow, setModalShow] = useState(false);
-    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+
+    let metaThemeColor = document.querySelector("meta[name=theme-color]");
     if (modalShow) {
         metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
     }

@@ -12,17 +12,17 @@ import { initializeStore } from './store';
 // Do this before calling ReactDOM.render
 initializeStore()
 
-//let API_URL = "http://192.168.43.129:8000";  //For testing purpose
-//let API_URL = "http://192.168.8.102:8000";  //For testing purpose
-let API_URL = "https://api.yezyilomo.com";
+//let BASE_API_URL = "http://192.168.43.129:8000";  //For testing purpose
+//let BASE_API_URL = "http://192.168.8.102:8000";  //For testing purpose
+let BASE_API_URL = "https://api.yezyilomo.com";
 
-window.onScrollActions = {}
+window.onScrollActions = {};
 
 window.onscroll = () => {
     for (let action in window.onScrollActions) {
         window.onScrollActions[action]();
     }
-}
+};
 
 function Application(props) {
     return (
@@ -39,4 +39,4 @@ ReactDOM.render(<Application />, document.getElementById('root'));
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.register();
 
-export { API_URL }
+export { BASE_API_URL }
