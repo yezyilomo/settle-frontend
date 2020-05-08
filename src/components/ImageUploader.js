@@ -3,7 +3,7 @@ import './ImageUploader.css';
 import { useLocalState } from 'state-pool';
 import { Modal, Spinner } from 'react-bootstrap';
 import ReactCrop from 'react-image-crop';
-import { cropImage } from '../utils';
+import { cropImage, setTabColorDark } from '../utils';
 import 'react-image-crop/lib/ReactCrop.scss';
 
 
@@ -27,6 +27,8 @@ function ImageUploader(props) {
         x: 0,
         y: 0
     });
+
+    setTabColorDark(imageToCrop !== null);
 
     // Trigger sythentic onChange event when files is updated
     useEffect(() => {

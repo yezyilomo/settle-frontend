@@ -1,16 +1,11 @@
 import React from 'react';
 import './ConfirmModal.scss';
 import { Button, Modal } from 'react-bootstrap';
+import { setTabColorDark } from '../utils';
 
 
 function ConfirmModal(props) {
-    let metaThemeColor = document.querySelector("meta[name=theme-color]");
-    if (props.modalShow) {
-        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
-    }
-    else {
-        metaThemeColor.setAttribute("content", "white");
-    }
+    setTabColorDark(props.modalShow);
 
     return (
         <Modal animation={false} className="confirm-modal" backdropClassName="confirm-modal-backdrop" show={props.modalShow} onHide={() => props.setModalShow(false)} size={props.size} aria-labelledby="contained-modal-title-vcenter" centered>

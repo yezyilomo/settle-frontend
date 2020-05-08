@@ -9,7 +9,7 @@ import {
 import { BASE_API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'state-pool';
-import { getPropertyRoute } from '../utils';
+import { getPropertyRoute, setTabColorDark } from '../utils';
 import { useRestoreScrollState } from '../hooks';
 
 
@@ -64,14 +64,8 @@ function ImagesModalCarousel(props) {
 
     const [index, setIndex] = useState(activeImageIndex);
     const [modalShow, setModalShow] = useState(false);
+    setTabColorDark(modalShow);
 
-    let metaThemeColor = document.querySelector("meta[name=theme-color]");
-    if (modalShow) {
-        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
-    }
-    else {
-        metaThemeColor.setAttribute("content", "white");
-    }
     const settings = {
         dots: true,
         infinite: true,
@@ -111,14 +105,7 @@ function ImagesModalCarousel(props) {
 
 function MainPropertyImage(props) {
     const [modalShow, setModalShow] = useState(false);
-
-    let metaThemeColor = document.querySelector("meta[name=theme-color]");
-    if (modalShow) {
-        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
-    }
-    else {
-        metaThemeColor.setAttribute("content", "white");
-    }
+    setTabColorDark(modalShow);
 
     return (
         <>
@@ -149,13 +136,7 @@ function OthersPropertyImages(props) {
     const [modalShow, setModalShow] = useState(false);
     const [activeImage, setActiveImage] = useState(props.images[0]);
 
-    let metaThemeColor = document.querySelector("meta[name=theme-color]");
-    if (modalShow) {
-        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
-    }
-    else {
-        metaThemeColor.setAttribute("content", "white");
-    }
+    setTabColorDark(modalShow);
 
     let getStyle = (index) => {
         let width = 2;
