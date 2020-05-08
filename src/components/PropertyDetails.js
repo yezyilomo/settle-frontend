@@ -292,7 +292,7 @@ function PropertyDetails(props) {
                 let deleteProperty = (e) => {
                     let postUrl = `${API_URL}/${getPropertyRoute(props.type)}/${property.id}/`;
                     let headers = {
-                        'Authorization': `Token ${user.authToken}`,
+                        'Authorization': `Token ${user.auth_token}`,
                         'Content-Type': 'application/json'
                     }
                     fetch(postUrl, { method: 'DELETE', headers: headers })
@@ -300,7 +300,7 @@ function PropertyDetails(props) {
                         .then(status => redirect(status))
                 }
                 const confirmDeletionOptions = [
-                    { label: "Yes", onClick: deleteProperty, variant: "danger"},
+                    { label: "Yes", onClick: deleteProperty, variant: "primary"},
                     { label: "No", onClick: function (e) {setDeleteModalShow(false)}, variant: "secondary" }
                 ]
                 const confirmDeletionText = "Are you sure you want to delete this property permanently?."
@@ -322,7 +322,7 @@ function PropertyDetails(props) {
                             <div class="col-12 p-0 m-0">
                                 <div class="actions row m-0 p-0">
                                     <div class="col text-center py-2">
-                                        <ConfirmModal modalShow={deleteModalShow} setModalShow={setDeleteModalShow} options={confirmDeletionOptions} text={confirmDeletionText} />
+                                        <ConfirmModal size="md" modalShow={deleteModalShow} setModalShow={setDeleteModalShow} options={confirmDeletionOptions} text={confirmDeletionText} />
                                         <b class="delete-property" onClick={()=>{setDeleteModalShow(true)}}>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 delete-property-icon" /></b>
                                     </div>
                                     <div class="col text-center py-2">
