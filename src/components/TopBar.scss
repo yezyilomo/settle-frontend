@@ -8,17 +8,18 @@
 .navbar-brand {
     overflow: visible;
     outline: none;
+    height: 45px;
 }
 
 .navbar-brand a {
     font-family: 'Grand Hotel';
-    font-size: 30px;
+    font-size: 32px;
     overflow: hidden;
     color: rgb(80, 80, 80);
     text-decoration: none;
     outline: none;
     position: relative;
-    top: 5px;
+    top: 2px;
 }
 
 .click-effect:active {
@@ -80,8 +81,13 @@
         border-radius: 7px;
     }
 
+    .navbar-brand {
+        height: 49px;
+    }
+
     .navbar-brand a{
-        font-size: 33px;
+        font-size: 35px;
+        top: 1px;
     }
 }
 
