@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { } from 'react-router-dom';
 import './ProfilePictureUploader.scss';
-import { Modal } from 'react-bootstrap';
+import { Modal, Spinner } from 'react-bootstrap';
 import ReactCrop from 'react-image-crop';
 import { cropImage } from '../utils';
 import 'react-image-crop/lib/ReactCrop.scss';
@@ -27,6 +27,7 @@ function ProfilePictureUploader(props) {
         width: 0,
         height: 0
     });
+    const [isLoading, setLoading] = useState(false);
     const [crop, setCrop] = useState({
         unit: '%',
         aspect: 1,
@@ -80,9 +81,11 @@ function ProfilePictureUploader(props) {
         });
 
         setImageToCrop(null);
+        setLoading(false);
     }
 
     function finishCroping(e) {
+        setLoading(true);
         let img = document.createElement('img');
         img.src = URL.createObjectURL(imageToCrop);
         img.height = imageToCropDimensions.height;
@@ -114,7 +117,9 @@ function ProfilePictureUploader(props) {
                         crop={crop} onChange={newCrop => setCrop(newCrop)}
                         circularCrop onImageLoaded={setImageDimensions} />
                     <div class="col-12 text-center crop-done-btn">
-                        <div class="btn btn-primary mt-2 col-6 col-md-3" onClick={finishCroping}>Done</div>
+                        <div class="btn btn-primary mt-2 col-6 col-md-3" onClick={finishCroping}>
+                            {isLoading ? <Spinner animation="border" size="sm" /> : 'Done'}
+                        </div>
                     </div>
                 </Modal.Body>
             </Modal>

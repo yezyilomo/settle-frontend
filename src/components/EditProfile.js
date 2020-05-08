@@ -8,6 +8,7 @@ import {
 import { API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
 import { useRestoreScrollState } from '../hooks';
+import { saveUserInfoToCookies, getUserInfoFromCookies } from '../utils';
 
 
 function EditProfile(props) {
@@ -26,7 +27,7 @@ function EditProfile(props) {
 
         let postUrl = `${API_URL}/profile-pictures/`;
         let headers = {
-            'Authorization': `Token ${user.authToken}`
+            'Authorization': `Token ${user.auth_token}`
         }
         return fetch(postUrl, { method: 'POST', body: postData, headers: headers })
             .then(res => res.json().then(data => ({ status: res.status, data: data })))
@@ -36,25 +37,10 @@ function EditProfile(props) {
     let deleteProfilePicture = (imgID) => {
         let postUrl = `${API_URL}/profile-pictures/${imgID}/`;
         let headers = {
-            'Authorization': `Token ${user.authToken}`
+            'Authorization': `Token ${user.auth_token}`
         }
         return fetch(postUrl, { method: 'DELETE', body: "", headers: headers })
     }
-
-    /*
-    let updateProfilePicture = (img) => {
-        let postData = new FormData();
-        postData.append("src", img.src);
-
-        let postUrl = `${API_URL}/profile-pictures/${profile.picture.id}/`;
-        let headers = {
-            'Authorization': `Token ${user.authToken}`
-        }
-        return fetch(postUrl, {method: 'PATCH', body: postData, headers: headers})
-        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => obj)
-    }
-    */
 
     let updateProfilePicture = async (prevResponse) => {
         if (profilePicture === undefined){
@@ -77,6 +63,7 @@ function EditProfile(props) {
     }
 
     let redirect = (response) => {
+        // Get fresh profile data
         updateGlobalProfile(draftProfile => null);
         return history.replace(`/edit-profile/`);
     }
@@ -96,7 +83,7 @@ function EditProfile(props) {
 
         let postUrl = `${API_URL}/users/${user.id}/`;
         let headers = {
-            'Authorization': `Token ${user.authToken}`,
+            'Authorization': `Token ${user.auth_token}`,
             'Content-Type': 'application/json'
         }
         fetch(postUrl, { method: 'PATCH', body: JSON.stringify(formData), headers: headers })
@@ -199,15 +186,50 @@ function EditProfile(props) {
 
 
 function ProfileFetcher(props){
-    const [user, ] = useGlobalState("user");
+    const [user, updateUser] = useGlobalState("user");
+
+    let updateUserData = (obj) => {
+        // This is for updating user data when the profile is edited
+        // It updates both cookies and user global state
+        if (obj.response.status === 200){
+            obj.data.then(data => {
+                let profile_picture = "";
+                if (data.picture){
+                    profile_picture = data.picture.src
+                }
+    
+                let userInfo = {
+                    id: data.id,
+                    username: data.username,
+                    email: data.email,
+                    full_name: data.full_name,
+                    phone: data.phone,
+                    profile_picture: profile_picture
+                }
+                
+                saveUserInfoToCookies(userInfo);
+
+                let savedUserInfo = getUserInfoFromCookies([
+                    "auth_token", "id", "username", "email",
+                    "phone", "full_name", "profile_picture"
+                ])
+                // Reload user state
+                updateUser(draftUser => {
+                    return {...user, ...savedUserInfo};
+                })
+            })
+        }
+        return obj.data;
+    }
 
     let headers = {
-        'Authorization': `Token ${user.authToken}`,
+        'Authorization': `Token ${user.auth_token}`,
         'Content-Type': 'application/json'
     }
     let fetchProfile = () => {
         return fetch(`${API_URL}/users/${user.id}/`, { method: 'GET', headers: headers })
-        .then(res => res.json())
+        .then(res => { return {response: res, data: res.json()} })
+        .then(obj => updateUserData(obj))
     }
 
     return (

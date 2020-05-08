@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './ConfirmModal.scss';
 import { Button, Modal } from 'react-bootstrap';
 
@@ -12,7 +12,7 @@ function ConfirmModal(props) {
         metaThemeColor.setAttribute("content", "white");
     }
     return (
-        <Modal animation={false} className="confirm-modal" backdropClassName="confirm-modal-backdrop" show={props.modalShow} onHide={() => props.setModalShow(false)} size="sm" aria-labelledby="contained-modal-title-vcenter" centered>
+        <Modal animation={false} className="confirm-modal" backdropClassName="confirm-modal-backdrop" show={props.modalShow} onHide={() => props.setModalShow(false)} size={props.size} aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Body className="modal-body p-4 m-0 bg-light">
                 {props.text}
             </Modal.Body>

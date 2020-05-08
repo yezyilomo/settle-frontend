@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './MultipleImageUploader.css';
 import { useLocalState } from 'state-pool';
-import { Modal } from 'react-bootstrap';
+import { Modal, Spinner } from 'react-bootstrap';
 import ReactCrop from 'react-image-crop';
 import {cropImage} from '../utils';
 import 'react-image-crop/lib/ReactCrop.scss';
@@ -17,6 +17,7 @@ function MultipleImageUploader(props) {
         width: 0,
         height: 0
     });
+    const [isLoading, setLoading] = useState(false);
     const [crop, setCrop] = useState({
         unit: '%',
         aspect: 1.5,
@@ -78,21 +79,15 @@ function MultipleImageUploader(props) {
             })
         });
         setImageToCrop(null);
+        setLoading(false);
     }
 
     function finishCroping(e) {
+        setLoading(true);
         let img = document.createElement('img');
         img.src = URL.createObjectURL(imageToCrop);
         img.height = imageToCropDimensions.height;
         img.width = imageToCropDimensions.width;
-
-
-        // As base64
-        //var b64 = cropImage(img, crop, 6);
-        //var blob = b64toBlob(b64);
-        //saveImage(blob);
-
-        // As blob
         cropImage(img, crop, saveImage)
     }
 
@@ -105,13 +100,6 @@ function MultipleImageUploader(props) {
             return URL.createObjectURL(imageToCrop);
         }
         return null;
-    }
-
-    let croppedImageSrc = () => {
-        if (files.length === 0) {
-            return null;
-        }
-        return files[0].img_link
     }
 
     return (
@@ -127,7 +115,9 @@ function MultipleImageUploader(props) {
                         crop={crop} onChange={newCrop => setCrop(newCrop)}
                         onImageLoaded={setImageDimensions} />
                     <div class="col-12 text-center crop-done-btn">
-                        <div class="btn btn-primary mt-2 col-6 col-md-3" onClick={finishCroping}>Done</div>
+                        <div class="btn btn-primary mt-2 col-6 col-md-3" onClick={finishCroping}>
+                            {isLoading ? <Spinner animation="border" size="sm" /> : 'Done'}
+                        </div>
                     </div>
                 </Modal.Body>
             </Modal>

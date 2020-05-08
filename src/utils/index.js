@@ -37,6 +37,10 @@ function getPropertyType(propertyRoute){
     return propertyRoutes[propertyRoute]
 }
 
+function setCookie({name, value, expires, path='/', sameSite='Lax'}){
+    document.cookie = `${name}=${value};path=${path};expires=${expires};SameSite=${sameSite};`;
+}
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -50,6 +54,26 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+function saveUserInfoToCookies(userData){
+    var d = new Date();
+    d.setTime(d.getTime() + 30*24*60*60*1000); // in milliseconds
+    for(let infoName in userData){
+        setCookie({name: infoName, value: userData[infoName], expires: d.toGMTString()})
+    }
+}
+
+function getUserInfoFromCookies(cookieNames){
+    let userInfo = {}
+    cookieNames.forEach(cookieName => { userInfo[cookieName] = getCookie(cookieName)})
+    return userInfo;
+}
+
+function deleteUserInfoFromCookies(cookieNames){
+    var d = new Date();
+    d.setTime(d.getTime() - 24 * 60 * 60 * 1000); // in milliseconds
+    cookieNames.forEach(cookieName => setCookie({name: cookieName, value: "", expires: d.toGMTString()}))
 }
 
 function onScrollToBottom(handleScrollToBottom, y = 1) {
@@ -114,6 +138,7 @@ function cropImage(image, crop, saveImage) {
 
 
 export {
-    setErrorClass, getCookie, onScrollToBottom, propertyTypes,
-    getPropertyRoute, getPropertyType, cropImage
+    setErrorClass, setCookie, getCookie, saveUserInfoToCookies, 
+    getUserInfoFromCookies, deleteUserInfoFromCookies, onScrollToBottom, 
+    propertyTypes, getPropertyRoute, getPropertyType, cropImage
 }

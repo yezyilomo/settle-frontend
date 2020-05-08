@@ -52,7 +52,7 @@ function EditProperty(props) {
 
         let postUrl = `${API_URL}/property-pictures/`;
         let headers = {
-            'Authorization': `Token ${user.authToken}`
+            'Authorization': `Token ${user.auth_token}`
         }
         return fetch(postUrl, { method: 'POST', body: postData, headers: headers })
             .then(res => res.json().then(data => ({ status: res.status, data: data })))
@@ -67,7 +67,7 @@ function EditProperty(props) {
         }
         let postUrl = `${API_URL}/picture/${img.id}/`;
         let headers = {
-            'Authorization': `Token ${user.authToken}`,
+            'Authorization': `Token ${user.auth_token}`,
             'Content-Type': 'application/json'
         }
         return fetch(postUrl, {method: 'PUT', body: JSON.stringify(imgInfo), headers: headers})
@@ -79,7 +79,7 @@ function EditProperty(props) {
     let deleteImage = (imgID) => {
         let postUrl = `${API_URL}/property-pictures/${imgID}/`;
         let headers = {
-            'Authorization': `Token ${user.authToken}`
+            'Authorization': `Token ${user.auth_token}`
         }
         return fetch(postUrl, { method: 'DELETE', body: "", headers: headers })
     }
@@ -180,7 +180,7 @@ function EditProperty(props) {
 
         let postUrl = `${API_URL}/${getPropertyRoute(props.type)}/${fields.id}/?format=json`;
         let headers = {
-            'Authorization': `Token ${user.authToken}`,
+            'Authorization': `Token ${user.auth_token}`,
             'Content-Type': 'application/json'
         }
         fetch(postUrl, { method: 'PUT', body: JSON.stringify(formData), headers: headers })
