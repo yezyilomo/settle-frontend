@@ -4,7 +4,7 @@ import './TopBar.scss';
 import { useGlobalState, store } from 'state-pool';
 import { LogIn, SignUp, InfoModal } from './'
 import { Nav, Navbar, Dropdown } from 'react-bootstrap';
-import { propertyTypes, getPropertyRoute } from '../utils';
+import { propertyTypes, getPropertyRoute, deleteUserInfoFromCookies } from '../utils';
 import { initializeStore } from '../store';
 
 
@@ -57,20 +57,16 @@ function TopBar(props) {
     }
 
     let logOut = (event) => {
-        var d = new Date();
-        d.setTime(d.getTime() - 24 * 60 * 60 * 1000); // in milliseconds
-        document.cookie = `auth_token=;path=/;expires=${d.toGMTString()};`;
-        document.cookie = `id=;path=/;expires=${d.toGMTString()};`;
-        document.cookie = `username=;path=/;expires=${d.toGMTString()};`;
-        document.cookie = `email=;path=/;expires=${d.toGMTString()};`;
-        document.cookie = `phone=;path=/;expires=${d.toGMTString()};`;
-        document.cookie = `full_name=;path=/;expires=${d.toGMTString()};`;
+        deleteUserInfoFromCookies([
+            "auth_token", "id", "username", "email",
+            "phone", "full_name", "profile_picture"
+        ])
 
         // Clean up store
         // Do this before calling ReactDOM.render
         initializeStore();
         store.setState("my-profile", null);
-        store.setState("myProperties", {})
+        store.setState("myProperties", {});
         history.push("/");
     }
 
@@ -89,7 +85,15 @@ function TopBar(props) {
                 </Link>
             </form>
             <Navbar.Toggle className="navbar-toggler m-0 py-0 px-2" aria-controls="basic-navbar-nav">
-                <span class="icon icon-menu"></span>
+                {user.isLoggedIn ?
+                    <div class="profile-picture text-center">
+                        {!user.profile_picture ?
+                            <span class="icon icon-user" /> :
+                            <img src={user.profile_picture} alt="" />
+                        }
+                    </div> :
+                    <span class="icon icon-menu"></span>
+                }
             </Navbar.Toggle>
             <Navbar.Collapse className="col-12 col-lg-4 m-0 px-1 px-lg-3" id="basic-navbar-nav">
                 <hr class="line p-0 m-0 mt-1 d-lg-none" />

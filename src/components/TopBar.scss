@@ -27,8 +27,6 @@
 
 .navbar-toggler {
     border-width: 0;
-    position: relative;
-    top: 2px;
 }
 
 .navbar-toggler:focus {
@@ -38,6 +36,30 @@
 .navbar-toggler .icon-menu {
     width: 41px;
     height: 41px;
+    position: relative;
+    top: 2px;
+}
+
+.navbar-toggler .profile-picture {
+    border: 1px solid rgb(170, 170, 170);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    overflow: hidden;
+    background-color: rgb(240, 240, 240);
+}
+
+.navbar-toggler .profile-picture img {
+    height: 100%;
+    width: 100%;
+}
+
+.navbar-toggler .profile-picture .icon-user {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 5px;
+    background-color: rgb(117, 117, 117);
 }
 
 .search-input {
