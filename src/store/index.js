@@ -36,8 +36,8 @@ function initializeStore(){
             price__gt: "",
             currency: "",
             location: "",
-            available_for: "",
-            property_type: "",
+            available_for: "rent",
+            property_type: "houses",
             amenities: []
         }
     )

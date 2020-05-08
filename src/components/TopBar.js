@@ -131,7 +131,7 @@ function TopBar(props) {
                                     <hr class="line p-0 m-0 d-lg-none" />
                                     <Dropdown.Item className="nav-dropdown-item" href="#properties/">My Properties</Dropdown.Item>
                                     <hr class="line p-0 m-0" />
-                                    <Dropdown.Item className="nav-dropdown-item" href="#edit-profile/">Edit Profile</Dropdown.Item>
+                                    <Dropdown.Item className="nav-dropdown-item" href="#edit-profile/">Edit My Profile</Dropdown.Item>
                                     <hr class="line p-0 m-0" />
                                     <Dropdown.Item className="nav-dropdown-item" href="#/" onClick={logOut}>
                                         Logout

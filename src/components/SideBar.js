@@ -28,10 +28,10 @@ function SideBar(props) {
 
     let getOptions = (url) => {
         return fetch(url)
-        .then(res => res.json())
-        .then(results => results.results.map(
-            amenity => {return {value: amenity.id, label: amenity.name}}
-        ))
+            .then(res => res.json())
+            .then(results => results.results.map(
+                amenity => { return { value: amenity.id, label: amenity.name } }
+            ))
     }
 
     let getAmenities = inputValue => {
@@ -40,7 +40,7 @@ function SideBar(props) {
     }
 
     let updateAmenities = (amenities) => {
-        if (!amenities){
+        if (!amenities) {
             amenities = []
         }
         updateFilterFields(filter => {
@@ -50,21 +50,20 @@ function SideBar(props) {
 
     return (
         <div class={`sidebar text-secondary p-0 m-0 ${props.setting}`}>
-            <h5 class="m-0 p-0 px-2 mt-3 mt-md-0 col-12">Quick Filter</h5>
+            <div class="m-0 p-0 px-2 mt-4 mt-md-0 col-12 filter-header">Quick Filter</div>
             <form id="filter-form" class="p-0 m-0 px-2 pr-md-3" onSubmit={handleSubmit}>
-                <div class="floating m-0 p-0 mt-4">
-                  <select class="custom-select floating__input" name="available_for" value={filterFields.available_for} onChange={updateFieldValue} required>
-                      <option selected disabled value=""></option>
-                      <option value="rent">Rent</option>
-                      <option value="sale">Buy</option>
-                      <option value="book">Book</option>
-                  </select>
-                  <label for="price__gt" class="floating__label" data-content="I want to"></label>
+                <div class="m-0 p-0 mt-2">
+                    <label class="form-check-label col-12 p-0 m-0">I want to</label>
+                    <select class="custom-select" name="available_for" value={filterFields.available_for} onChange={updateFieldValue} required>
+                        <option value="rent">Rent</option>
+                        <option value="sale">Buy</option>
+                        <option value="book">Book</option>
+                    </select>
                 </div>
 
-                <div class="floating m-0 p-0 mt-5">
-                    <select class="custom-select floating__input" name="property_type" value={filterFields.property_type} onChange={updateFieldValue} required>
-                        <option selected disabled value=""></option>
+                <div class="m-0 p-0 mt-2">
+                    <label class="form-check-label col-12 p-0 m-0">Property</label>
+                    <select class="custom-select" name="property_type" value={filterFields.property_type} onChange={updateFieldValue} required>
                         <option value="rooms">Room</option>
                         <option value="apartments">Apartment</option>
                         <option value="houses">House</option>
@@ -74,51 +73,50 @@ function SideBar(props) {
                         <option value="hostels">Hostel</option>
                         <option value="lands">Land</option>
                     </select>
-                    <label for="property_type" class="floating__label" data-content="Property"></label>
                 </div>
 
-                <label class="form-check-label p-0 m-0 m-0 p-0 mt-4">Price range</label>
-                <div class="row col-12 p-0 m-0 mt-2">
-                    <div class="floating p-0 m-0 col-5">
-                        <input type="number" name="price__gt" class="form-control floating__input"
-                        value={filterFields.price__gt} onChange={updateFieldValue} placeholder="From" />
-                        <label for="price__gt" class="floating__label" data-content="From"></label>
+                <label class="form-check-label p-0 m-0 m-0 p-0 mt-5 mt-lg-4">Price range</label>
+                <div class="row col-12 p-0 m-0 mt-1">
+                    <div class="p-0 m-0 col-5">
+                        <label class="form-check-label col-12 p-0 m-0">From</label>
+                        <input type="number" name="price__gt" class="form-control"
+                            value={filterFields.price__gt} onChange={updateFieldValue} placeholder="20000" />
                     </div>
-                    <div class="col-2 p-0 m-0"></div>
-                    <div class="floating p-0 m-0 col-5">
-                        <input type="number" name="price__lt" class="form-control floating__input"
-                        value={filterFields.price__lt} onChange={updateFieldValue} placeholder="To" />
-                        <label for="price__lt" class="floating__label" data-content="To"></label>
+                    <div class="col-2 p-0 m-0 px-2"><hr class="line-separator"/></div>
+                    <div class="p-0 m-0 col-5">
+                        <label class="form-check-label col-12 p-0 m-0">To</label>
+                        <input type="number" name="price__lt" class="form-control"
+                            value={filterFields.price__lt} onChange={updateFieldValue} placeholder="60000" />
                     </div>
                 </div>
 
-                <div class="floating m-0 p-0 mt-4">
-                    <select class="custom-select floating__input" name="currency" value={filterFields.currency} onChange={updateFieldValue}>
+                <div class="m-0 p-0 mt-1">
+                    <label class="form-check-label col-12 p-0 m-0">Currency</label>
+                    <select class="custom-select" name="currency" value={filterFields.currency} onChange={updateFieldValue}>
                         <option value="">All</option>
                         <option value="TZS">TZS</option>
                         <option value="USD">USD</option>
                     </select>
-                    <label for="currency" class="floating__label" data-content="Currency"></label>
                 </div>
 
-                <div class="floating m-0 p-0 mt-5">
-                    <input type="text" name="location" class="form-control col-12 floating__input" value={filterFields.location}
-                    onChange={updateFieldValue} placeholder="Location" />
-                    <label for="location" class="floating__label" data-content="Location"></label>
+                <div class="m-0 p-0 mt-5 mt-lg-4">
+                    <label class="form-check-label col-12 p-0 m-0">Location</label>
+                    <input type="text" name="location" class="form-control col-12" value={filterFields.location}
+                        onChange={updateFieldValue} placeholder="City, Region or Street" />
                 </div>
 
-                <div class="m-0 p-0 mt-4 mb-2">
-                        <label class="form-check-label col-12 p-0 m-0">Amenities</label>
-                        <div class="row mt-1 mb-3">
-                            <div class="col-12">
-                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions 
-                            defaultOptions value={filterFields.amenities}
-                            loadOptions={getAmenities} onChange={updateAmenities}/>
-                            </div>
+                <div class="m-0 p-0 mt-3 mb-2">
+                    <label class="form-check-label col-12 p-0 m-0">Amenities</label>
+                    <div class="row mt-1 mb-3">
+                        <div class="col-12">
+                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions
+                                defaultOptions value={filterFields.amenities}
+                                loadOptions={getAmenities} onChange={updateAmenities} />
                         </div>
+                    </div>
 
                 </div>
-                <button type="submit" class="col-12 btn btn-primary my-5 my-md-4 py-2 py-md-1">Submit</button>
+                <button type="submit" class="col-12 btn btn-primary mt-4 my-md-2 py-2 py-md-1">Submit</button>
             </form>
         </div>
     );

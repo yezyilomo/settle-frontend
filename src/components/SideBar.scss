@@ -28,6 +28,11 @@ $thumbBG: transparent;
     z-index: 1;
 }
 
+.sidebar .filter-header{
+  font-size: 18px;
+  font-weight: 600;
+}
+
 .sidebar-lg{
     height: calc(100vh - 66px);
     top: 65px;
@@ -42,14 +47,34 @@ $thumbBG: transparent;
 .sidebar input,
 .sidebar select{
     font-size: 1em;
-    padding: 0 0 0 2px;
-    background-color: transparent;
+    border-color: rgb(238, 238, 238);
+    height: 40px;
+    padding: 0 5px 0 5px;
+    background-color: rgb(250, 250, 250);
 }
+
+.sidebar .react-select-container>div{
+  background-color: rgb(250, 250, 250);
+  border-color: rgb(238, 238, 238);
+}
+
+.sidebar .react-select-container input{
+  padding: 0;
+  height: 27px;
+}
+
+.sidebar .line-separator{
+  position: relative;
+  top: 28px;
+  color: rgb(238, 238, 238);
+}
+
 
 .sidebar input:focus,
 .sidebar select:focus{
+    border-width: 1px;
     box-shadow: 0 0 0 white;
-    background-color: transparent;
+    border-color: $primary;
 }
 
 .sidebar button {
@@ -58,6 +83,7 @@ $thumbBG: transparent;
 
 .sidebar label{
     font-weight: bold;
+    font-size: 14px;
 }
 
 /* validation */
