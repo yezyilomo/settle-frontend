@@ -4,7 +4,7 @@ import { useGlobalState, useLocalState } from 'state-pool';
 
 
 function useRestoreScrollState(){
-    let locationObj = useLocation();
+    const locationObj = useLocation();
     let location = locationObj.pathname;
 
     if(window.scrollState === undefined){
@@ -13,14 +13,16 @@ function useRestoreScrollState(){
 
     useEffect(() => {
         if (window.scrollState !== undefined && window.scrollState[location] !== undefined){
-            window.scrollTo({top: window.scrollState[location]})
+            // Restore scroll position when the component mounts
+            window.scrollTo({top: window.scrollState[location]});
         }
         return () => {
-            //alert(location + `   :  ${window.scrollY}`)
+            // Save scroll position when the component unmount
             window.scrollState[location] = window.scrollY;
         }
     }, [])
 }
+
 
 function useLocalFetcher(action) {
     const [loading, setLoading] = useState(false);

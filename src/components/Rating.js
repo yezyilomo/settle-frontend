@@ -2,21 +2,17 @@ import React, { useState } from 'react';
 import './Rating.scss';
 
 
-function App(props) {
-  return <Rating rating={props.rating} />
-}
-
 function Rating(props) {
     let initialState = {
-      rating: props.rating || null,
-      temp_rating: null
+        rating: props.rating || null,
+        temp_rating: null
     }
-    let [state, setState] = useState(initialState);
+    const [state, setState] = useState(initialState);
 
     let rate = (rating) => {
         setState({
-          rating: rating,
-          temp_rating: rating
+            rating: rating,
+            temp_rating: rating
         });
     }
 
@@ -25,8 +21,8 @@ function Rating(props) {
         state.rating = rating;
 
         setState({
-          rating: state.rating,
-          temp_rating: state.temp_rating
+            rating: state.rating,
+            temp_rating: state.temp_rating
         });
     }
 
@@ -42,20 +38,19 @@ function Rating(props) {
         }
         return (
             <label className={cls}
-            onClick={(e)=>rate(i)}
-            onMouseOver={(e)=>star_over(i)}
-            onMouseOut={(e)=>star_out(i)}>
+                onClick={(e) => rate(i)}
+                onMouseOver={(e) => star_over(i)}
+                onMouseOut={(e) => star_out(i)}>
                 <i class="fa fa-star"></i>
-           </label>
-       );
+            </label>
+        );
     }
 
     return (
         <span className="star-rating">
-            {[1,2,3,4,5].map(i=>getStars(i))}
+            {[1, 2, 3, 4, 5].map(i => getStars(i))}
         </span>
     );
 }
 
-
-export { App as Rating }
+export { Rating }

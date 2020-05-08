@@ -6,7 +6,7 @@ import {
     GlobalFetcher, GlowPageLoader, Rating, PageError,
     ConfirmModal, InfoModal, Carousel as Slider
 } from './';
-import { API_URL } from '../';
+import { BASE_API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'state-pool';
 import { getPropertyRoute } from '../utils';
@@ -29,6 +29,7 @@ function ImagesCarousel(props) {
             setIndex(sliderIndex)
         }
     };
+
     return (
         <>
             <Slider {...settings}>
@@ -42,6 +43,8 @@ function ImagesCarousel(props) {
         </>
     );
 }
+
+
 function ImageDescription(props) {
     return (
         <>
@@ -55,11 +58,14 @@ function ImageDescription(props) {
     );
 }
 
+
 function ImagesModalCarousel(props) {
     let activeImageIndex = props.images.indexOf(props.activeImage);
+
     const [index, setIndex] = useState(activeImageIndex);
     const [modalShow, setModalShow] = useState(false);
-    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+
+    let metaThemeColor = document.querySelector("meta[name=theme-color]");
     if (modalShow) {
         metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
     }
@@ -102,10 +108,11 @@ function ImagesModalCarousel(props) {
     );
 }
 
+
 function MainPropertyImage(props) {
     const [modalShow, setModalShow] = useState(false);
 
-    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+    let metaThemeColor = document.querySelector("meta[name=theme-color]");
     if (modalShow) {
         metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
     }
@@ -137,11 +144,12 @@ function MainPropertyImage(props) {
     );
 }
 
+
 function OthersPropertyImages(props) {
     const [modalShow, setModalShow] = useState(false);
-    const [activeImage, setActiveImage] = useState(props.images[0])
+    const [activeImage, setActiveImage] = useState(props.images[0]);
 
-    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+    let metaThemeColor = document.querySelector("meta[name=theme-color]");
     if (modalShow) {
         metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
     }
@@ -194,6 +202,7 @@ function OthersPropertyImages(props) {
     );
 }
 
+
 function shortenString(str, to) {
     let long = str.slice(to);
     if (long) {
@@ -202,13 +211,16 @@ function shortenString(str, to) {
     return str;
 }
 
+
 function Badges(props) {
     const [modalShow, setModalShow] = useState(false);
-    let maxValue = 15
-    let values = []
+
+    let maxValue = 15;
+    let values = [];
     if (props.values && props.values.length > 0) {
-        values = props.values.slice(0, maxValue)
+        values = props.values.slice(0, maxValue);
     }
+
     return (
         values.length > 0 ?
             <div class="mb-3">
@@ -256,14 +268,15 @@ function Descriptions(props) {
 
 
 function PropertyDetails(props) {
-    useRestoreScrollState()
-    let history = useHistory();
-    let [user,] = useGlobalState("user");
-    let [, updateProperty] = useGlobalState(`property/${props.id}`, null);
+    useRestoreScrollState();
+    
+    const history = useHistory();
+    const [user,] = useGlobalState("user");
+    const [, updateProperty] = useGlobalState(`property/${props.id}`, null);
     const [deleteModalShow, setDeleteModalShow] = useState(false);
 
     let fetchProperty = () => {
-        return fetch(`${API_URL}/${getPropertyRoute(props.type)}/${props.id}/`)
+        return fetch(`${BASE_API_URL}/${getPropertyRoute(props.type)}/${props.id}/`)
             .then(res => res.json())
     }
 
@@ -279,6 +292,7 @@ function PropertyDetails(props) {
                 else {
                     main_img = main_img[0];
                 }
+
                 let other_imgs = property.pictures.filter((picture) => !picture.is_main).slice(0, 4);
 
                 let redirect = (status) => {
@@ -290,7 +304,7 @@ function PropertyDetails(props) {
                 }
 
                 let deleteProperty = (e) => {
-                    let postUrl = `${API_URL}/${getPropertyRoute(props.type)}/${property.id}/`;
+                    let postUrl = `${BASE_API_URL}/${getPropertyRoute(props.type)}/${property.id}/`;
                     let headers = {
                         'Authorization': `Token ${user.auth_token}`,
                         'Content-Type': 'application/json'
@@ -299,11 +313,13 @@ function PropertyDetails(props) {
                         .then(res => res.status)
                         .then(status => redirect(status))
                 }
+
                 const confirmDeletionOptions = [
                     { label: "Yes", onClick: deleteProperty, variant: "primary"},
                     { label: "No", onClick: function (e) {setDeleteModalShow(false)}, variant: "secondary" }
                 ]
                 const confirmDeletionText = "Are you sure you want to delete this property permanently?."
+                
                 return (
                     <div class="row p-0 m-0">
                         <div class="property-images col-12 p-0 m-0 d-md-none">
@@ -345,6 +361,7 @@ function PropertyDetails(props) {
     )
 }
 
+
 function Contact(props) {
     let contact = props.value;
     return (
@@ -357,6 +374,7 @@ function Contact(props) {
         </>
     );
 }
+
 
 function RoomDetails(props) {
     return (
@@ -398,6 +416,7 @@ function RoomDetails(props) {
     );
 }
 
+
 function HouseDetails(props) {
     return (
         <PropertyDetails type="house" id={props.id}>
@@ -437,6 +456,7 @@ function HouseDetails(props) {
         </PropertyDetails>
     );
 }
+
 
 function ApartmentDetails(props) {
     return (
@@ -478,6 +498,7 @@ function ApartmentDetails(props) {
     );
 }
 
+
 function HostelDetails(props) {
     return (
         <PropertyDetails type="hostel" id={props.id}>
@@ -517,6 +538,7 @@ function HostelDetails(props) {
         </PropertyDetails>
     );
 }
+
 
 function OfficeDetails(props) {
     return (
@@ -558,6 +580,7 @@ function OfficeDetails(props) {
     );
 }
 
+
 function HallDetails(props) {
     return (
         <PropertyDetails type="hall" id={props.id}>
@@ -598,6 +621,7 @@ function HallDetails(props) {
     );
 }
 
+
 function LandDetails(props) {
     return (
         <PropertyDetails type="land" id={props.id}>
@@ -637,6 +661,7 @@ function LandDetails(props) {
         </PropertyDetails>
     );
 }
+
 
 function FrameDetails(props) {
     return (

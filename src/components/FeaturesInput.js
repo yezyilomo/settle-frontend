@@ -2,6 +2,7 @@ import React, { } from 'react';
 import './FeaturesInput.css';
 import { useLocalState } from 'state-pool';
 
+
 function FeaturesInput(props) {
     let initialState = props.value||[];
     let [features, updateFeatures] = useLocalState(initialState);
@@ -18,7 +19,8 @@ function FeaturesInput(props) {
     let deleteFeature = (featureToDelete) => {
         updateFeatures(draftFeatures => {
             return features.filter((feature) => feature !== featureToDelete);
-        })
+        });
+
         if(props.onChange !== undefined){
             props.onChange(features)
         }
@@ -26,7 +28,6 @@ function FeaturesInput(props) {
             props.onDelete(featureToDelete)
         }
     }
-
 
     let updateValue = (event, feature) => {
         let value = event.target.value;

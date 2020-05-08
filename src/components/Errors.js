@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 function PageError(props) {
-    let history = useHistory();
+    const history = useHistory();
     let path = history.location.pathname;
     let search = history.location.search||"";
     return (

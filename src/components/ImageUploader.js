@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { } from 'react-router-dom';
 import './ImageUploader.css';
 import { useLocalState } from 'state-pool';
 import { Modal, Spinner } from 'react-bootstrap';
@@ -11,6 +10,7 @@ import 'react-image-crop/lib/ReactCrop.scss';
 function ImageUploader(props) {
     let images = props.src || []
     images = images.map(img => ({ img_link: img.src, img: img }))
+
     const [files, updateFiles] = useLocalState(images);
     const [imageToCrop, setImageToCrop] = useState(null);
     const [imageToCropDimensions, setImageToCropDimensions] = useState({

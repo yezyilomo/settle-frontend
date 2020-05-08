@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 
 
 function BottomNavBar(props){
-    let history = useHistory();
+    const history = useHistory();
     let homePath = "/";
     let filterPath = "/filter";
     let rentPath = "/rent-property";

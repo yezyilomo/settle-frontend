@@ -100,7 +100,7 @@ function onScrollToBottom(handleScrollToBottom, y = 1) {
 /**
  * @param {HTMLImageElement} image - Image File Object
  * @param {Object} crop - crop Object
- * @param {String} fileName - Name of the returned file in Promise
+ * @param {Function} saveImage- Function which receives cropped image and saves
  */
 function cropImage(image, crop, saveImage) {
     image.onload = function () {
@@ -128,10 +128,6 @@ function cropImage(image, crop, saveImage) {
             dx, dy, dw, dh  // Destination dimensions
         );
 
-        //const base64Image = canvas.toDataURL('image/jpeg');
-        //return base64Image
-
-        // As a blob
         canvas.toBlob(saveImage, 'image/jpeg', 1);
     }
 }

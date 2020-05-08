@@ -13,7 +13,7 @@ import {
 
 
 function App(props) {
-    let location = useLocation();
+    const location = useLocation();
 
     return (
         <div class="container-fluid">

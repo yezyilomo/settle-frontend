@@ -6,7 +6,7 @@ import {
     FeaturesInput, GlobalFetcher, GlowPageLoader,
     ImageUploader, MultipleImageUploader, PageError
 } from './';
-import { API_URL } from '../';
+import { BASE_API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
 import { getPropertyRoute } from '../utils';
 import { useRestoreScrollState } from '../hooks';
@@ -17,31 +17,30 @@ import AsyncCreatableSelect from 'react-select/async-creatable';
 
 function EditProperty(props) {
     useRestoreScrollState();
-    let history = useHistory();
+    const history = useHistory();
     const [isLoading, setLoading] = useState(false);
     const [editError, setEditError] = useState('');
 
-    let [fields, updateFields] = useLocalState(props.property);
-    let [, updateGlobalProperty] = useGlobalState(`property/${fields.id}`);
-    let [user,] = useGlobalState("user");
-
-    let [featuresToDelete,] = useState([]);
-    let [imgsToDelete,] = useState([]);
-    let [mainImg, setMainImg] = useState([]);
-    let [otherImgs, setOtherImgs] = useState([]);
+    const [fields, updateFields] = useLocalState(props.property);
+    const [, updateGlobalProperty] = useGlobalState(`property/${fields.id}`);
+    const [user,] = useGlobalState("user");
+    const [featuresToDelete,] = useState([]);
+    const [imgsToDelete,] = useState([]);
+    const [mainImg, setMainImg] = useState([]);
+    const [otherImgs, setOtherImgs] = useState([]);
 
     let formatOptions = (options) => {
         return options.map(option => {return {value: option.id, label: option.name}})
     }
 
-    let [selectionFields, updateSelectionFields] = useLocalState({
+    const [selectionFields, updateSelectionFields] = useLocalState({
         amenities: formatOptions(props.property.amenities),
         services: formatOptions(props.property.services),
         potentials: formatOptions(props.property.potentials)
     })
 
-    let currencies = ["TZS", "USD"];
-    let countries = ["Tanzania", "Kenya", "Uganda", "Zambia", "Zanzibar"];
+    let currencies = ["TZS", "USD", "KSH"];
+    let countries = ["Tanzania", "Kenya", "Uganda", "Zanzibar"];
 
     let createImage = (img) => {
         let postData = new FormData();
@@ -50,7 +49,7 @@ function EditProperty(props) {
         postData.append("tool_tip", img.tool_tip)
         postData.append("src", img.src, img.src.name)
 
-        let postUrl = `${API_URL}/property-pictures/`;
+        let postUrl = `${BASE_API_URL}/property-pictures/`;
         let headers = {
             'Authorization': `Token ${user.auth_token}`
         }
@@ -65,7 +64,7 @@ function EditProperty(props) {
             tool_tip: img.tool_tip,
             is_main: img.is_main
         }
-        let postUrl = `${API_URL}/picture/${img.id}/`;
+        let postUrl = `${BASE_API_URL}/picture/${img.id}/`;
         let headers = {
             'Authorization': `Token ${user.auth_token}`,
             'Content-Type': 'application/json'
@@ -77,7 +76,7 @@ function EditProperty(props) {
     */
 
     let deleteImage = (imgID) => {
-        let postUrl = `${API_URL}/property-pictures/${imgID}/`;
+        let postUrl = `${BASE_API_URL}/property-pictures/${imgID}/`;
         let headers = {
             'Authorization': `Token ${user.auth_token}`
         }
@@ -100,8 +99,9 @@ function EditProperty(props) {
     }
 
     let redirect = (response) => {
-        updateGlobalProperty(property => null)
-        return history.replace(`/${getPropertyRoute(props.type)}/${fields.id}`)
+        // Get a fresh property(This will trigger property fetching)
+        updateGlobalProperty(property => null);
+        return history.replace(`/${getPropertyRoute(props.type)}/${fields.id}`);
     }
 
     let formatSelection = selection => {
@@ -178,11 +178,12 @@ function EditProperty(props) {
             other_features: features
         }
 
-        let postUrl = `${API_URL}/${getPropertyRoute(props.type)}/${fields.id}/?format=json`;
+        let postUrl = `${BASE_API_URL}/${getPropertyRoute(props.type)}/${fields.id}/?format=json`;
         let headers = {
             'Authorization': `Token ${user.auth_token}`,
             'Content-Type': 'application/json'
         }
+
         fetch(postUrl, { method: 'PUT', body: JSON.stringify(formData), headers: headers })
             .then(res => res.json().then(data => ({ status: res.status, data: data })))
             .then(obj => updateImages(obj))
@@ -235,7 +236,7 @@ function EditProperty(props) {
         })
     }
 
-    let markToDelete = (feature) => {
+    let markFeatureToDelete = (feature) => {
         if (feature.id !== null) {
             featuresToDelete.push(feature.id);
         }
@@ -257,7 +258,7 @@ function EditProperty(props) {
 
     let get = (selection) => {
         let getSelection = inputValue => {
-            const URL = `${API_URL}/${selection}/?query={id,name}&format=json&name__icontains=${inputValue}`
+            const URL = `${BASE_API_URL}/${selection}/?query={id,name}&format=json&name__icontains=${inputValue}`
             return getOptions(URL)
         }
         return getSelection;
@@ -385,7 +386,7 @@ function EditProperty(props) {
 
                     <div class="row p-0 m-0 my-4">
                         <FeaturesInput label="Add Other Features" onChange={updateFeatures}
-                            onDelete={markToDelete} value={fields.other_features} />
+                            onDelete={markFeatureToDelete} value={fields.other_features} />
                     </div>
 
                     <label class="form-check-label col-12 p-0 m-0">Description</label>
@@ -463,7 +464,7 @@ function EditProperty(props) {
 
 function PropertyFetcher(props){
     let fetchProperty = () => {
-        return fetch(`${API_URL}/${getPropertyRoute(props.type)}/${props.id}/`)
+        return fetch(`${BASE_API_URL}/${getPropertyRoute(props.type)}/${props.id}/`)
         .then(res => res.json())
     }
 

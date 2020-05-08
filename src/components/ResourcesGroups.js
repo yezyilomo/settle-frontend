@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
+import './ResourcesGroups.scss';
 import { Link } from 'react-router-dom';
 import { PropertyOverview, GlowInlineLoader, Carousel } from '.'
 import { PropertySliderOverview } from './PropertyOverview';
-import './ResourcesGroups.scss';
 import {onScrollToBottom} from '../utils';
 
 
 function GenericResourcesGroup(props) {
-    let [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     let { next, results } = props.resources;
 
     let fetchMoreResources = () => {
@@ -60,7 +60,7 @@ function PropertiesGroup(props) {
 
 function SliderPropertiesGroup(props) {
     let properties = props.properties.results;
-    let settings = {
+    const settings = {
         dots: false,
         infinite: false,
         speed: 500,
