@@ -13,6 +13,7 @@
 .property-form select:focus {
     border-width: 1px;
     box-shadow: 0 0 0 white;
+    border-color: $primary;
 }
 
 .property-form label{
@@ -24,6 +25,12 @@
 }
 
 
-.react-select-container>div{
-    background-color: #fafafa;
+.property-form .react-select-container>div{
+    background-color: rgb(250, 250, 250);
+    border-color: rgb(238, 238, 238);
+}
+
+.property-form .react-select-container input{
+    padding: 0;
+    height: 27px;
 }
