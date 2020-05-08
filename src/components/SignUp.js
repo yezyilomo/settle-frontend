@@ -6,7 +6,7 @@ import { useGlobalState } from 'state-pool';
 import { BASE_API_URL } from '../';
 import {ProfilePictureUploader} from './'
 import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
-import { setErrorClass, saveUserInfoToCookies } from '../utils';
+import { setErrorClass, saveUserInfoToCookies, setTabColorDark } from '../utils';
 
 
 function About(props) {
@@ -291,14 +291,7 @@ function Account(props) {
 
 function SignUp(props) {
     const [modalShow, setModalShow] = useState(false);
-
-    let metaThemeColor = document.querySelector("meta[name=theme-color]");
-    if (modalShow) {
-        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
-    }
-    else {
-        metaThemeColor.setAttribute("content", "white");
-    }
+    setTabColorDark(modalShow);
 
     return (
         <>

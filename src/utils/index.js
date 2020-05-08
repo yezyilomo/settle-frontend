@@ -132,9 +132,18 @@ function cropImage(image, crop, saveImage) {
     }
 }
 
+function setTabColorDark(conditionToChangeColor){
+    let metaThemeColor = document.querySelector("meta[name=theme-color]");
+    if (conditionToChangeColor) {
+        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
+    }
+    else {
+        metaThemeColor.setAttribute("content", "white");
+    }
+}
 
 export {
     setErrorClass, setCookie, getCookie, saveUserInfoToCookies, 
     getUserInfoFromCookies, deleteUserInfoFromCookies, onScrollToBottom, 
-    propertyTypes, getPropertyRoute, getPropertyType, cropImage
+    propertyTypes, getPropertyRoute, getPropertyType, cropImage, setTabColorDark
 }

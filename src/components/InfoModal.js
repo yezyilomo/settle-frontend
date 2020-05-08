@@ -1,17 +1,12 @@
 import React from 'react';
 import './InfoModal.scss';
 import { Modal } from 'react-bootstrap';
+import { setTabColorDark } from '../utils';
 
 
 function InfoModal(props) {
-    var metaThemeColor = document.querySelector("meta[name=theme-color]");
-    if (props.modalShow) {
-        metaThemeColor.setAttribute("content", "rgb(14, 14, 14)");
-    }
-    else {
-        metaThemeColor.setAttribute("content", "white");
-    }
-
+    setTabColorDark(props.modalShow);
+    
     return (
         <Modal className="info-modal" animation={false} dialogClassName="cusom-modal-dialog"
             show={props.modalShow} onHide={() => props.setModalShow(false)} size="lg"
