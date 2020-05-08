@@ -1,18 +1,11 @@
-import React, { } from 'react';
+import React from 'react';
 import './PropertyOverview.css';
 import { Link } from 'react-router-dom';
-import { useGlobalState } from 'state-pool';
 import { Rating } from './';
 import { getPropertyRoute } from '../utils';
 
 
 function PropertyOverview(props) {
-    /*
-    const [property, updateProperty] = useGlobalState(`property/${props.property.id}`)
-    if(!property){
-        updateProperty({value: props.property});
-    }
-    */
     let main_img = props.property.pictures.filter((picture) => picture.is_main)
     if (main_img.length < 1) {
         main_img = { is_main: null, src: null, id: null };
