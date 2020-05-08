@@ -6,7 +6,7 @@ import { useGlobalState } from 'state-pool';
 import { API_URL } from '../';
 import {ProfilePictureUploader} from './'
 import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
-import { setErrorClass } from '../utils';
+import { setErrorClass, saveUserInfoToCookies } from '../utils';
 
 
 function About(props) {
@@ -119,26 +119,29 @@ function Account(props) {
     }
 
     let updateLogin = (response) => {
-        let authToken = response.token;
-        if (authToken !== undefined) {
-            var d = new Date();
-            d.setTime(d.getTime() + 30 * 24 * 60 * 60 * 1000); // in milliseconds
-            document.cookie = `auth_token=${authToken};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
-            document.cookie = `id=${response.id};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
-            document.cookie = `username=${response.username};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
-            document.cookie = `email=${response.email};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
-            document.cookie = `phone=${response.phone};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
-            document.cookie = `full_name=${response.full_name};path=/;expires=${d.toGMTString()};SameSite=Lax;`;
+        let auth_token = response.token;
+        if (auth_token !== undefined) {
+            let profile_picture = null;
+            if (response.picture){
+                profile_picture = response.picture.src
+            }
+
+            let userInfo = {
+                auth_token: auth_token,
+                id: response.id,
+                username: response.username,
+                email: response.email,
+                full_name: response.full_name,
+                phone: response.phone,
+                profile_picture: profile_picture
+            }
+
+            saveUserInfoToCookies(userInfo);
 
             updateUser(user => {
                 return {
                     isLoggedIn: true,
-                    authToken: authToken,
-                    id: response.id,
-                    username: response.username,
-                    email: response.email,
-                    full_name: response.full_name,
-                    phone: response.phone
+                    ...userInfo
                 }
             });
         }
