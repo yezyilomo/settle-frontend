@@ -2,11 +2,7 @@ import { getUserInfoFromCookies } from '../utils';
 import { store } from 'state-pool'
 
 
-const initialState = {}
-
 function initializeStore(){
-    store.init(initialState);
-
     let userInfo = getUserInfoFromCookies([
         "auth_token", "id", "username", "email",
         "phone", "full_name", "profile_picture"
