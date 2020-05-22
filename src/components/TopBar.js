@@ -73,7 +73,9 @@ function TopBar(props) {
     return (
         <Navbar collapseOnSelect="true" className="row px-0 py-1 py-lg-2 sticky-top bg-white" expand="lg" id="top-navbar">
             <Navbar.Brand className="navbar-brand col-1 col-sm-2 col-md-2 col-lg-3 m-0 p-0 px-1">
-                <Link className="click-effect col-12 col-sm-4 m-0 p-0 px-0 px-sm-2 pr-sm-3" to="/">Settle</Link>
+                <Link className="col-12 col-sm-4 m-0 p-0 px-0 px-sm-2 pr-sm-3" to="/">
+                    <img src="navbar-brand.png" alt="Settle"/>
+                </Link>
             </Navbar.Brand>
             <form class="search-form form-inline m-0 ml-3 ml-lg-0 p-0 p-lg-0 col-7 col-sm-8 col-md-8 col-lg-5 ">
                 <input autocomplete="off" name="search" onChange={updateField} class="search-input m-0 py-0 py-lg-3 form-control m-0 col-12 col-sm-9 col-md-9 col-lg-12"

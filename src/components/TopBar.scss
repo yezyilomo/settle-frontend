@@ -9,21 +9,31 @@
     overflow: visible;
     outline: none;
     height: 45px;
+
+    // Center logo
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+
+    align-items: center;
 }
 
 .navbar-brand a {
-    font-family: 'Grand Hotel';
-    font-size: 32px;
-    overflow: hidden;
-    color: rgb(80, 80, 80);
     text-decoration: none;
     outline: none;
-    position: relative;
-    top: 2px;
 }
 
-.click-effect:active {
-    color: gray;
+.navbar-brand a img{
+    height: 25px;
+    padding-left: 1px;
+}
+
+.navbar-brand a:active img{
+    filter: opacity(.8);
 }
 
 .navbar-toggler {
@@ -85,9 +95,9 @@
         height: 49px;
     }
 
-    .navbar-brand a{
-        font-size: 35px;
-        top: 1px;
+    .navbar-brand a img{
+        height: 27px;
+        padding-left: 0;
     }
 }
 
