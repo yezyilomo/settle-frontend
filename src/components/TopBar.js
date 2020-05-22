@@ -17,7 +17,7 @@ function CreateProperty(props) {
             property_types.push(type);
         }
     }
-    
+
     return (
         <>
             <Nav.Link href="#" onClick={() => setModalShow(true)}>Create</Nav.Link>
@@ -74,7 +74,7 @@ function TopBar(props) {
         <Navbar collapseOnSelect="true" className="row px-0 py-1 py-lg-2 sticky-top bg-white" expand="lg" id="top-navbar">
             <Navbar.Brand className="navbar-brand col-1 col-sm-2 col-md-2 col-lg-3 m-0 p-0 px-1">
                 <Link className="col-12 col-sm-4 m-0 p-0 px-0 px-sm-2 pr-sm-3" to="/">
-                    <img src="navbar-brand.png" alt="Settle"/>
+                    <img src="navbar-brand.png" alt="Settle" />
                 </Link>
             </Navbar.Brand>
             <form class="search-form form-inline m-0 ml-3 ml-lg-0 p-0 p-lg-0 col-7 col-sm-8 col-md-8 col-lg-5 ">
@@ -88,7 +88,7 @@ function TopBar(props) {
             </form>
             <Navbar.Toggle className="navbar-toggler m-0 py-0 px-2" aria-controls="basic-navbar-nav">
                 {user.isLoggedIn ?
-                    <div class="profile-picture text-center">
+                    <div class="navbar-profile-picture text-center">
                         {!user.profile_picture ?
                             <span class="icon icon-user" /> :
                             <img src={user.profile_picture} alt="" />
@@ -128,7 +128,16 @@ function TopBar(props) {
                     {user.isLoggedIn ?
                         <>
                             <Dropdown alignRight>
-                                <Dropdown.Toggle as={Nav.Link}>Profile</Dropdown.Toggle>
+                                <Dropdown.Toggle as={Nav.Link}>
+                                    <span class="d-none d-lg-block" style={{"margin-left": "30px"}}/>
+                                    <div class="profile-dropdown navbar-profile-picture text-center d-none d-lg-block">
+                                        {!user.profile_picture ?
+                                            <span class="icon icon-user" /> :
+                                            <img src={user.profile_picture} alt="" />
+                                        }
+                                    </div>
+                                    <span class="d-lg-none">Profile</span>
+                                </Dropdown.Toggle>
                                 <Dropdown.Menu className="nav-dropdown-menu bw-0 bw-lg-1">
                                     <hr class="line p-0 m-0 d-lg-none" />
                                     <Dropdown.Item className="nav-dropdown-item" href="#properties/">My Properties</Dropdown.Item>
