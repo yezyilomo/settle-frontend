@@ -51,7 +51,7 @@
     top: 2px;
 }
 
-.navbar-toggler .profile-picture {
+.navbar-profile-picture {
     border: 1px solid rgb(170, 170, 170);
     border-radius: 50%;
     width: 38px;
@@ -60,17 +60,23 @@
     background-color: rgb(240, 240, 240);
 }
 
-.navbar-toggler .profile-picture img {
+.navbar-profile-picture img {
     height: 100%;
     width: 100%;
 }
 
-.navbar-toggler .profile-picture .icon-user {
+.navbar-profile-picture .icon-user {
     width: 100%;
     height: 100%;
     position: relative;
     top: 5px;
     background-color: rgb(117, 117, 117);
+}
+
+.profile-dropdown.navbar-profile-picture{
+    position: absolute;
+    right:0px;
+    top: 0px;
 }
 
 .search-input {
