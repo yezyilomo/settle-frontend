@@ -51,7 +51,7 @@ function useLocalFetcher(action) {
 function useGlobalFetcher(action, selection) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [data, updateData] = useGlobalState(selection, null);
+    const [data, updateData] = useGlobalState(selection, {default: null});
 
     async function loadData() {
         try {

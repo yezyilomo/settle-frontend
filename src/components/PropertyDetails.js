@@ -253,7 +253,7 @@ function PropertyDetails(props) {
     
     const history = useHistory();
     const [user,] = useGlobalState("user");
-    const [, updateProperty] = useGlobalState(`property/${props.id}`, null);
+    const [, updateProperty] = useGlobalState(`property/${props.id}`, {default: null});
     const [deleteModalShow, setDeleteModalShow] = useState(false);
 
     let fetchProperty = () => {
