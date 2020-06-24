@@ -19,11 +19,11 @@
 }
 
 .property-images-md:hover img:hover {
-    opacity: 1;
+    opacity: .75;
 }
 
 .property-images-md:hover img {
-    opacity: .75;
+    opacity: 1;
 }
 
 .view-photos-btn {
@@ -91,7 +91,7 @@
 .prop-info-card {
     top: 90px;
     border-color: #dddddd;
-    border-radius: 2px;
+    border-radius: 4px;
     z-index: 1;
 }
 
