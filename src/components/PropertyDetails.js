@@ -125,7 +125,7 @@ function MainPropertyImage(props) {
                 </Modal.Body>
             </Modal>
             <Button className="view-photos-btn d-none d-md-block" variant="light" onClick={() => setModalShow(true)}>
-                View Photos
+                View all photos
           </Button>
         </>
     );
@@ -210,7 +210,7 @@ function Badges(props) {
                     return (
                         <>
                             <span class="badge badge-secondary mb-1 mr-1">
-                                <span id={val} class={`fa fa-${val} badge-close`} />&nbsp;
+                                <span id={val} class={`fa fa-${val} badge-close`} />
                                 <span class="badge-body">{shortenString(val, 17)}</span>
                             </span>
                         </>
