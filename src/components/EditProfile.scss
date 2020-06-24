@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 .edit-profile{
     border-color: #dddddd;
     border-radius: 3px;
@@ -22,6 +24,7 @@
 .profile-form select:focus,
 .profile-form textarea:focus {
     border-width: 1px;
+    border-color: $primary;
     box-shadow: 0 0 0 white;
 }
 
