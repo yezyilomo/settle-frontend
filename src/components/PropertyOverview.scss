@@ -1,0 +1,158 @@
+@import "../variables.scss";
+
+.prop-overview {
+    overflow: hidden;
+    border-width: 0;
+}
+
+.prop-overview .prop-img{
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+
+// Sytle save button
+.prop-img .save-button{
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    z-index: 1;
+    background-color: white;
+    opacity: .6;
+    padding: 5px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 1px 1px 5px rgb(51, 51, 51);
+    cursor: pointer;
+}
+
+.prop-img .save-button:hover{
+    opacity: 1;
+}
+
+.prop-img .save-button:hover .icon-heart{
+    background-color: $primary;
+}
+
+.prop-img .save-button:hover .icon-heart-solid{
+    background-color: rgb(83, 83, 83);
+}
+
+
+.prop-img .save-button{
+    .icon-heart, .icon-heart-solid{
+        width: 20px;
+        height: 20px;
+        position: relative;
+        top: 1px;
+    }
+
+    .icon-heart-solid{
+        background-color: $primary;
+    }
+}
+// End Sytle save button
+
+
+
+.prop-overview .prop-img img {
+    height: auto;
+    width: 100%;
+}
+
+.prop-overview .prop-info {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.prop-overview .prop-info>div {
+    margin: 3px 0 3px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prop-overview .prop-type span {
+    padding: 0 3px 0 3px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.prop-overview .prop-price {
+    font-weight: 500;
+}
+
+.prop-overview .prop-location i {
+    font-size: 15px;
+    color: gray;
+}
+
+.prop-overview .prop-rating {
+    position: relative;
+    right: 3px;
+}
+
+/* Property Slider Overview */
+
+.prop-slider-overview {
+    overflow: hidden;
+    /* border-radius: 30px; */
+    /* border: 1px solid #dddddd; */
+    border-width: 0;
+}
+
+.prop-slider-overview .prop-img {
+    padding: 0;
+    margin: 0;
+    background-color: gray;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 80px;
+}
+
+.prop-slider-overview .prop-img img {
+    height: auto;
+    width: 100%;
+}
+
+.prop-slider-overview .prop-info {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.prop-slider-overview .prop-info>div {
+    margin: 3px 0 3px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prop-slider-overview .prop-type span {
+    padding: 0 3px 0 3px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.prop-slider-overview .prop-location, .prop-slider-overview .prop-price {
+    font-weight: 500;
+}
+
+.prop-slider-overview .prop-location i {
+    font-size: 15px;
+    color: gray;
+}
+
+.prop-slider-overview .prop-rating {
+    position: relative;
+    right: 3px;
+}
