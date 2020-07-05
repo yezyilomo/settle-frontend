@@ -18,8 +18,8 @@ const LocalFetcher = ({ action, placeholder, children, error }) => {
 };
 
 
-const GlobalFetcher = ({ action, placeholder, children, error, selection }) => {
-    const [data, updateData, loading, fetchError] = useGlobalFetcher(action, selection);
+const GlobalFetcher = ({ action, placeholder, children, error, selection, setter, getter, fetchCondition }) => {
+    const [data, updateData, loading, fetchError] = useGlobalFetcher(action, selection, {setter, fetchCondition});
 
     if (loading){
         if(placeholder){
@@ -29,8 +29,13 @@ const GlobalFetcher = ({ action, placeholder, children, error, selection }) => {
     }
     if (fetchError) return error;
 
-    if (!data) return null;  // Timeout, No Network Connection 
+    // Beware this is the source of a very big bug 
+    // TODO: Find a way to solve this
+    if (!data || (fetchCondition && fetchCondition(data))) return null;  // Timeout, No Network Connection 
 
+    if(getter){
+        return children(getter(data), updateData);
+    }
     return children(data, updateData);
 };
 
