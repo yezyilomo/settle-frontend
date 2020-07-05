@@ -3,12 +3,14 @@ import './App.css';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import {
     SideBar, TopBar, PropertyDetails, RoomDetails, HouseDetails,
-    ApartmentDetails, HostelDetails, OfficeDetails, HallDetails,
-    LandDetails, FrameDetails, UploadProperty, EditProperty,
-    PropertiesFilter, UserProperties, SearchProperties, Home,
-    BottomNavBar, TopScroller, PageNotFound, AddToHomeScreen,
+    ApartmentDetails, HostelDetails, OfficeDetails, LandDetails, 
+    FrameDetails, UploadProperty, UploadRoom, UploadHouse, UploadApartment,
+    UploadHostel, UploadOffice, UploadLand, UploadFrame, EditProperty,
+    EditRoom, EditHouse, EditApartment, EditHostel, EditOffice, EditLand,
+    EditFrame, PropertiesFilter, UserProperties, SearchProperties,
+    Home, BottomNavBar, TopScroller, PageNotFound, AddToHomeScreen,
     FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties,
-    EditProfile
+    EditProfile, UserFavProperties
 } from './';
 
 
@@ -35,10 +37,10 @@ function App(props) {
                             return <RoomDetails id={match.params.id} />
                         }} />
                         <Route exact path="/create/rooms/" render={() => {
-                            return <UploadProperty type="room" />
+                            return <UploadRoom type="room" />
                         }} />
                         <Route exact path="/edit/rooms/:id/" render={({ match }) => {
-                            return <EditProperty id={match.params.id} type="room" />
+                            return <EditRoom id={match.params.id} type="room" />
                         }} />
 
 
@@ -49,10 +51,10 @@ function App(props) {
                             return <HouseDetails id={match.params.id} />
                         }} />
                         <Route exact path="/create/houses/" render={() => {
-                            return <UploadProperty type="house" />
+                            return <UploadHouse type="house" />
                         }} />
                         <Route exact path="/edit/houses/:id/" render={({ match }) => {
-                            return <EditProperty id={match.params.id} type="house" />
+                            return <EditHouse id={match.params.id} type="house" />
                         }} />
 
 
@@ -63,10 +65,10 @@ function App(props) {
                             return <ApartmentDetails id={match.params.id} />
                         }} />
                         <Route exact path="/create/apartments/" render={() => {
-                            return <UploadProperty type="apartment" />
+                            return <UploadApartment type="apartment" />
                         }} />
                         <Route exact path="/edit/apartments/:id/" render={({ match }) => {
-                            return <EditProperty id={match.params.id} type="apartment" />
+                            return <EditApartment id={match.params.id} type="apartment" />
                         }} />
 
 
@@ -77,10 +79,10 @@ function App(props) {
                             return <LandDetails id={match.params.id} />
                         }} />
                         <Route exact path="/create/lands/" render={() => {
-                            return <UploadProperty type="land" />
+                            return <UploadLand type="land" />
                         }} />
                         <Route exact path="/edit/lands/:id/" render={({ match }) => {
-                            return <EditProperty id={match.params.id} type="land" />
+                            return <EditLand id={match.params.id} type="land" />
                         }} />
 
 
@@ -91,10 +93,10 @@ function App(props) {
                             return <FrameDetails id={match.params.id} />
                         }} />
                         <Route exact path="/create/frames/" render={() => {
-                            return <UploadProperty type="frame" />
+                            return <UploadFrame type="frame" />
                         }} />
                         <Route exact path="/edit/frames/:id/" render={({ match }) => {
-                            return <EditProperty id={match.params.id} type="frame" />
+                            return <EditFrame id={match.params.id} type="frame" />
                         }} />
 
 
@@ -105,24 +107,10 @@ function App(props) {
                             return <OfficeDetails id={match.params.id} />
                         }} />
                         <Route exact path="/create/offices/" render={() => {
-                            return <UploadProperty type="office" />
+                            return <UploadOffice type="office" />
                         }} />
                         <Route exact path="/edit/offices/:id/" render={({ match }) => {
-                            return <EditProperty id={match.params.id} type="office" />
-                        }} />
-
-
-                        <Route exact path="/halls/" render={() => {
-                            return <UserProperties type="hall" />
-                        }} />
-                        <Route exact path="/halls/:id/" render={({ match }) => {
-                            return <HallDetails id={match.params.id} />
-                        }} />
-                        <Route exact path="/create/halls/" render={() => {
-                            return <UploadProperty type="hall" />
-                        }} />
-                        <Route exact path="/edit/halls/:id/" render={({ match }) => {
-                            return <EditProperty id={match.params.id} type="hall" />
+                            return <EditOffice id={match.params.id} type="office" />
                         }} />
 
 
@@ -133,10 +121,10 @@ function App(props) {
                             return <HostelDetails id={match.params.id} />
                         }} />
                         <Route exact path="/create/hostels/" render={() => {
-                            return <UploadProperty type="hostel" />
+                            return <UploadHostel type="hostel" />
                         }} />
                         <Route exact path="/edit/hostels/:id/" render={({ match }) => {
-                            return <EditProperty id={match.params.id} type="hostel" />
+                            return <EditHostel id={match.params.id} type="hostel" />
                         }} />
 
 
@@ -174,9 +162,8 @@ function App(props) {
                             return <FilterPropertiesByCategory key={match.path}  global selection={match.path} 
                                     availableFor="sale" header="Properties available for sale" />;
                         }} />
-                        <Route exact path="/book-property" render={({ match }) => {
-                            return <FilterPropertiesByCategory key={match.path}  global selection={match.path} 
-                                    availableFor="book" header="Properties available for booking" />;
+                        <Route exact path="/my-fav-properties" render={({ match }) => {
+                            return <UserFavProperties key={match.path} />;
                         }} />
 
 
