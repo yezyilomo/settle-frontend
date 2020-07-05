@@ -11,6 +11,9 @@
     "react-app-polyfill": "^1.0.6",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.8.6",
+    "react-geocode": "^0.2.1",
+    "react-google-autocomplete": "^1.2.6",
+    "react-google-maps": "^9.4.5",
     "react-image-crop": "^8.6.2",
     "react-redux": "^7.1.1",
     "react-router": "^5.1.2",
@@ -18,7 +21,7 @@
     "react-scripts": "3.0.0",
     "react-select": "^3.1.0",
     "react-slick": "^0.25.2",
-    "state-pool": "^0.1.0"
+    "state-pool": "^0.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
