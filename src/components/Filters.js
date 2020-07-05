@@ -12,8 +12,22 @@ import { getPropertyRoute } from '../utils';
 function GenericFilter(props) {
     let endpoint = props.endpoint.replace(/[\n ]/g, "");
 
+    const [user, ] = useGlobalState("user");
+
+    const headers = {
+        "Content-Type": "application/json",
+    }
+
+    if (user.isLoggedIn) {
+        headers["Authorization"] = `Token ${user.auth_token}`
+    }
+
+    const reqHeaders = {
+        headers: headers
+    }
+
     let fetchResources = () => {
-        return fetch(`${BASE_API_URL}/${endpoint}`)
+        return fetch(`${BASE_API_URL}/${endpoint}`, {...reqHeaders, ...props.fetchConfig, })
         .then(res => res.json())
     }
 
@@ -24,7 +38,7 @@ function GenericFilter(props) {
         }
 
         let fetchMoreResources = (currentResources) => {
-            fetch(currentResources.next)
+            fetch(currentResources.next, {...reqHeaders, ...props.fetchConfig, })
             .then(res => res.json())
             .then(data => updateData(data, currentResources))
         }
@@ -33,8 +47,8 @@ function GenericFilter(props) {
 
     if(props.global){
         return (
-            <GlobalFetcher action={fetchResources} placeholder={props.placeholder} 
-            error={props.error} selection={props.selection}>
+            <GlobalFetcher action={fetchResources} placeholder={props.placeholder} error={props.error}
+            selection={props.selection} setter={props.setter} getter={props.getter} fetchCondition={props.fetchCondition}>
                 {(resources, updateResources) => {
                     let fetchMoreResources = getMoreResourcesFetcher(updateResources);
                     return props.children(resources, fetchMoreResources)
@@ -80,6 +94,24 @@ function EndpointPropertiesFilter(props) {
 }
 
 
+const PROPERTIES_QUERY_PARAM = `
+query={
+    id,
+    available_for,
+    price,
+    price_rate_unit,
+    type,
+    pictures{
+        src,
+        is_main
+    },
+    currency,
+    location,
+    rating,
+    is_my_favourite
+}&format=json`
+
+
 function PropertiesFilter(props) {
     useRestoreScrollState();
 
@@ -87,22 +119,13 @@ function PropertiesFilter(props) {
     let {property_type, available_for, price__gt, price__lt, location, amenities, currency} = filters;
     let amenity_ids = JSON.stringify(amenities.map(amenity => amenity.value));
     let header = (properties) => `Filter results(${properties.count})..`;
-    let endpoint = `${property_type}/?
-    query={
-        id,
-        available_for,
-        price,
-        type,
-        pictures{
-            src,
-            is_main
-        },
-        currency,
-        location,
-        rating
-    }&available_for=${available_for}&price__gt=${price__gt}&
-    price__lt=${price__lt}&currency=${currency||""}&
-    search=${location}&amenities__contains=${amenity_ids}&format=json`
+    let endpoint = `${property_type}/?${PROPERTIES_QUERY_PARAM}
+    &available_for=${available_for}
+    &price__gt=${price__gt}
+    &price__lt=${price__lt}
+    &currency=${currency||""}
+    &search=${location}
+    &amenities__contains=${amenity_ids}`
 
     return <EndpointPropertiesFilter endpoint={endpoint} header={header}/>;
 }
@@ -114,20 +137,7 @@ function SearchProperties(props) {
     let location = props.location.search.slice(3);
     let selection = props.location.pathname + props.location.search;
     let header = (properties) => `Search results(${properties.count})..`;
-    let endpoint = `properties/?
-    query={
-        id,
-        available_for,
-        price,
-        type,
-        pictures{
-            src,
-            is_main
-        },
-        currency,
-        location,
-        rating
-    }&search=${location}&format=json`;
+    let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&search=${location}`;
 
     return <EndpointPropertiesFilter global selection={selection} endpoint={endpoint} header={header}/>;
 }
@@ -135,22 +145,19 @@ function SearchProperties(props) {
 
 function FilterPropertiesByCategory(props) {
     useRestoreScrollState();
-    let endpoint = `properties/?
-    query={
-        id,
-        available_for,
-        price,
-        type,
-        pictures{
-            src,
-            is_main
-        },
-        currency,
-        location,
-        rating
-    }&available_for=${props.availableFor}&format=json`;
+    let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=${props.availableFor}`;
 
     return <EndpointPropertiesFilter endpoint={endpoint} {...props}/>;
+}
+
+
+function UserFavProperties(props) {
+    useRestoreScrollState();
+    let selection = `my-fav-properties`;
+    let header = (properties) => `Saved properties(${properties.count})..`;
+    let endpoint = `my-fav-properties/?${PROPERTIES_QUERY_PARAM}`;
+
+    return <EndpointPropertiesFilter global selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -159,20 +166,7 @@ function UserProperties(props) {
     const [user, ] = useGlobalState("user");
     let selection = `myProperties.${getPropertyRoute(props.type)}`;
     let header = (properties) => `My properties(${properties.count})..`;
-    let endpoint = `${getPropertyRoute(props.type)}/?
-    query={
-        id,
-        available_for,
-        price,
-        type,
-        pictures{
-            src,
-            is_main
-        },
-        currency,
-        location,
-        rating
-    }&owner=${user.id}&format=json`;
+    let endpoint = `${getPropertyRoute(props.type)}/?${PROPERTIES_QUERY_PARAM}&owner=${user.id}`;
 
     return <EndpointPropertiesFilter global selection={selection} endpoint={endpoint} header={header}/>;
 }
@@ -182,20 +176,7 @@ function ShowRentProperties(props){
     useRestoreScrollState();
     let header = "Properties available for rent";
     let selection = "explore/rent-properties";
-    let endpoint = `properties/?
-    query={
-        id,
-        available_for,
-        price,
-        type,
-        pictures{
-            src,
-            is_main
-        },
-        currency,
-        location,
-        rating
-    }&available_for=rent&format=json`;
+    let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=rent`;
 
     return <EndpointPropertiesFilter global selection={selection} endpoint={endpoint} header={header}/>;
 }
@@ -205,20 +186,7 @@ function ShowBuyProperties(props){
     useRestoreScrollState();
     let header = "Properties available for sale";
     let selection = "explore/buy-properties";
-    let endpoint = `properties/?
-    query={
-        id,
-        available_for,
-        price,
-        type,
-        pictures{
-            src,
-            is_main
-        },
-        currency,
-        location,
-        rating
-    }&available_for=sale&format=json`;
+    let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=sale`;
 
     return <EndpointPropertiesFilter global selection={selection} endpoint={endpoint} header={header}/>;
 }
@@ -226,5 +194,6 @@ function ShowBuyProperties(props){
 
 export {
     GenericFilter ,PropertiesFilter, SearchProperties, EndpointPropertiesFilter,
-    FilterPropertiesByCategory, UserProperties, ShowRentProperties, ShowBuyProperties
+    FilterPropertiesByCategory, UserProperties, ShowRentProperties, ShowBuyProperties,
+    UserFavProperties, PROPERTIES_QUERY_PARAM
 }

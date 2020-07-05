@@ -48,7 +48,7 @@ function useLocalFetcher(action) {
     return [data, updateData, loading, error];
 }
 
-function useGlobalFetcher(action, selection) {
+function useGlobalFetcher(action, selection, {setter, fetchCondition}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [data, updateData] = useGlobalState(selection, {default: null});
@@ -57,7 +57,12 @@ function useGlobalFetcher(action, selection) {
         try {
             setLoading(true);
             const actionData = await action();
-            updateData(data => actionData);
+            if(setter){
+                updateData(data => setter(actionData));
+            }
+            else{
+                updateData(data => actionData);
+            }
         } catch (e) {
             setError(e);
         } finally {
@@ -66,9 +71,18 @@ function useGlobalFetcher(action, selection) {
     }
 
     useEffect(() => {
-        if(!data){
-            // fetch only if no data saved
-            loadData();
+        if (fetchCondition){
+            if(fetchCondition(data)){
+                // fetch only if the fetch condition is met
+                loadData();
+            }
+        }
+
+        else{
+            if(!data){
+                // fetch only if no data saved
+                loadData();
+            }
         }
     }, [action]);
 

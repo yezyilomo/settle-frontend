@@ -57,7 +57,6 @@ function SideBar(props) {
                     <select class="custom-select" name="available_for" value={filterFields.available_for} onChange={updateFieldValue} required>
                         <option value="rent">Rent</option>
                         <option value="sale">Buy</option>
-                        <option value="book">Book</option>
                     </select>
                 </div>
 
@@ -67,7 +66,6 @@ function SideBar(props) {
                         <option value="rooms">Room</option>
                         <option value="apartments">Apartment</option>
                         <option value="houses">House</option>
-                        <option value="halls">Hall</option>
                         <option value="frames">Frame</option>
                         <option value="offices">Office</option>
                         <option value="hostels">Hostel</option>

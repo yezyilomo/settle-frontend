@@ -1,15 +1,17 @@
 import React from 'react';
 import './BottomNavBar.scss';
 import { useHistory } from 'react-router';
+import { useGlobalState } from 'state-pool';
 
 
 function BottomNavBar(props){
     const history = useHistory();
+    const [user, ] = useGlobalState("user");
     let homePath = "/";
     let filterPath = "/filter";
     let rentPath = "/rent-property";
     let buyPath = "/buy-property";
-    let bookPath = "/book-property";
+    let savedPropertiesPath = "/my-fav-properties";
 
     let goToHome = (e) => {
         history.push(homePath)
@@ -23,8 +25,8 @@ function BottomNavBar(props){
     let goToBuy = (e) => {
         history.push(buyPath)
     }
-    let goToBook = (e) => {
-        history.push(bookPath)
+    let goToSavedProperties = (e) => {
+        history.push(savedPropertiesPath)
     }
 
     let active = (iconPath) => {
@@ -49,10 +51,13 @@ function BottomNavBar(props){
                 <span class={`icon icon-tag ${active(buyPath)[0]}`}></span>
                 <div class={`icon-label ${active(buyPath)[1]}`}>BUY</div>
             </div>
-            <div class="col text-center btn-ripple" onClick={goToBook}>
-                <span class={`icon icon-star ${active(bookPath)[0]}`}></span>
-                <div class={`icon-label ${active(bookPath)[1]}`}>BOOK</div>
-            </div>
+            { user.isLoggedIn ?
+                <div class="col text-center btn-ripple" onClick={goToSavedProperties}>
+                    <span class={`icon icon-heart ${active(savedPropertiesPath)[0]}`}></span>
+                    <div class={`icon-label ${active(savedPropertiesPath)[1]}`}>SAVED</div>
+                </div>: null
+            }
+
             <div class="col text-center btn-ripple" onClick={goToFilter}>
                 <span class={`icon icon-settings ${active(filterPath)[0]}`}></span>
                 <div class={`icon-label ${active(filterPath)[1]}`}>FILTER</div>

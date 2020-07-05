@@ -19,7 +19,6 @@ let propertyTypes = {
     "apartment": "apartments",
     "hostel": "hostels",
     "office": "offices",
-    "hall": "halls",
     "land": "lands",
     "frame": "frames"
 }
