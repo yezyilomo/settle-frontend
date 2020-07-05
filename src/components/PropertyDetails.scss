@@ -88,6 +88,60 @@
     left: -80px;
 }
 
+
+
+// Sytle save button
+.save .save-button{
+    position: absolute;
+    right: 7px;
+    bottom: 7px;
+    z-index: 1;
+    background-color: white;
+    opacity: .9;
+    padding: 5px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 1px 1px 5px rgb(51, 51, 51);
+    cursor: pointer;
+}
+
+.save .save-button:hover{
+    opacity: 1;
+}
+
+.save .save-button:hover .icon-heart{
+    background-color: $primary;
+}
+
+.save .save-button:hover .icon-heart-solid{
+    background-color: rgb(83, 83, 83);
+}
+
+
+.save .save-button{
+    .icon-heart, .icon-heart-solid{
+        width: 25px;
+        height: 25px;
+        position: relative;
+        top: 4px;
+    }
+
+    .icon-heart-solid{
+        background-color: $primary;
+    }
+}
+
+.property-images-md .save .save-button{
+    // For large devices
+    top: 10px;
+    left: 10px;
+
+}
+// End Sytle save button
+
+
 .prop-info-card {
     top: 90px;
     border-color: #dddddd;
