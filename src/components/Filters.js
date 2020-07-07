@@ -1,11 +1,10 @@
 import React from 'react';
 import { useGlobalState } from 'state-pool';
 import {
-    LocalFetcher, GlobalFetcher, GlowPageLoader, PageError,
+    LocalFetcher, GlobalFetcher, GlowPageLoader, renderPageError,
     PropertyOverview, GenericResourcesGroup
 } from '.';
 import { BASE_API_URL } from '../';
-import { useRestoreScrollState } from '../hooks';
 import { getPropertyRoute } from '../utils';
 
 
@@ -47,8 +46,15 @@ function GenericFilter(props) {
 
     if(props.global){
         return (
-            <GlobalFetcher action={fetchResources} placeholder={props.placeholder} error={props.error}
-            selection={props.selection} setter={props.setter} getter={props.getter} fetchCondition={props.fetchCondition}>
+            <GlobalFetcher
+                action={fetchResources}
+                placeholder={props.placeholder}
+                error={props.error}
+                onError={props.onError}
+                selection={props.selection}
+                setter={props.setter}
+                getter={props.getter}
+                fetchCondition={props.fetchCondition}>
                 {(resources, updateResources) => {
                     let fetchMoreResources = getMoreResourcesFetcher(updateResources);
                     return props.children(resources, fetchMoreResources)
@@ -58,7 +64,11 @@ function GenericFilter(props) {
     }
     
     return (
-        <LocalFetcher action={fetchResources} placeholder={props.placeholder} error={props.error}>
+        <LocalFetcher
+            action={fetchResources}
+            placeholder={props.placeholder}
+            error={props.error}
+            onError={props.onError}>
             {(resources, updateResources) => {
                 let fetchMoreResources = getMoreResourcesFetcher(updateResources);
                 return props.children(resources, fetchMoreResources)
@@ -70,7 +80,7 @@ function GenericFilter(props) {
 
 function EndpointPropertiesFilter(props) {
     return (
-        <GenericFilter placeholder={<GlowPageLoader/>} error={<PageError/>} {...props}>
+        <GenericFilter placeholder={<GlowPageLoader/>} onError={renderPageError} {...props}>
             {(properties, fetchMoreProperties) => {
                 let header = "";
                 if (typeof(props.header) == "function"){
@@ -113,8 +123,6 @@ query={
 
 
 function PropertiesFilter(props) {
-    useRestoreScrollState();
-
     const [filters, ] = useGlobalState("sideBar");
     let {property_type, available_for, price__gt, price__lt, location, amenities, currency} = filters;
     let amenity_ids = JSON.stringify(amenities.map(amenity => amenity.value));
@@ -132,8 +140,6 @@ function PropertiesFilter(props) {
 
 
 function SearchProperties(props) {
-    useRestoreScrollState();
-    
     let location = props.location.search.slice(3);
     let selection = props.location.pathname + props.location.search;
     let header = (properties) => `Search results(${properties.count})..`;
@@ -144,7 +150,6 @@ function SearchProperties(props) {
 
 
 function FilterPropertiesByCategory(props) {
-    useRestoreScrollState();
     let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=${props.availableFor}`;
 
     return <EndpointPropertiesFilter endpoint={endpoint} {...props}/>;
@@ -152,7 +157,6 @@ function FilterPropertiesByCategory(props) {
 
 
 function UserFavProperties(props) {
-    useRestoreScrollState();
     let selection = `my-fav-properties`;
     let header = (properties) => `Saved properties(${properties.count})..`;
     let endpoint = `my-fav-properties/?${PROPERTIES_QUERY_PARAM}`;
@@ -162,7 +166,6 @@ function UserFavProperties(props) {
 
 
 function UserProperties(props) {
-    useRestoreScrollState();
     const [user, ] = useGlobalState("user");
     let selection = `myProperties.${getPropertyRoute(props.type)}`;
     let header = (properties) => `My properties(${properties.count})..`;
@@ -173,7 +176,6 @@ function UserProperties(props) {
 
 
 function ShowRentProperties(props){
-    useRestoreScrollState();
     let header = "Properties available for rent";
     let selection = "explore/rent-properties";
     let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=rent`;
@@ -183,7 +185,6 @@ function ShowRentProperties(props){
 
 
 function ShowBuyProperties(props){
-    useRestoreScrollState();
     let header = "Properties available for sale";
     let selection = "explore/buy-properties";
     let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=sale`;
