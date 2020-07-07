@@ -3,8 +3,8 @@ import './PropertyDetails.scss';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
-    GlobalFetcher, GlowPageLoader, Rating, PageError,
-    ConfirmModal, InfoModal, Carousel as Slider, SaveButton
+    GlobalFetcher, GlowPageLoader, Rating, ConfirmModal, InfoModal,
+    Carousel as Slider, SaveButton, renderPageError
 } from './';
 import { BASE_API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
@@ -279,7 +279,7 @@ function PropertyDetails(props) {
 
     return (
         <GlobalFetcher action={fetchProperty} selection={`property/${props.id}`} fetchCondition={fetchCondition}
-            placeholder={<GlowPageLoader />} error={<PageError />} setter={setter}>{propertyData => {
+            placeholder={<GlowPageLoader />} onError={renderPageError} setter={setter}>{propertyData => {
 
                 let property = propertyData.data;
                 let isAllowedToEdit = user.id == property.owner.id
@@ -315,7 +315,7 @@ function PropertyDetails(props) {
 
                 const confirmDeletionOptions = [
                     { label: "Yes", onClick: deleteProperty, variant: "primary" },
-                    { label: "No", onClick: function (e) { setDeleteModalShow(false) }, variant: "secondary" }
+                    { label: "Cancel", onClick: function (e) { setDeleteModalShow(false) }, variant: "secondary" }
                 ]
                 const confirmDeletionText = "Are you sure you want to delete this property permanently?."
 
