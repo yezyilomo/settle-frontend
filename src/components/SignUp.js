@@ -6,7 +6,7 @@ import { useGlobalState } from 'state-pool';
 import { BASE_API_URL } from '../';
 import {ProfilePictureUploader} from './'
 import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
-import { setErrorClass, saveUserInfoToCookies, setTabColorDark } from '../utils';
+import { setErrorClass, saveUserInfoToCookies, setTabColorDark, clearStore } from '../utils';
 
 
 function About(props) {
@@ -179,7 +179,10 @@ function Account(props) {
 
         return fetch(postUrl, { method: 'POST', body: postData, headers: headers })
             .then(res => res.json().then(data => ({ status: res.status, data: data })))
-            .then(obj => history.push("/"))
+            .then(obj => {
+                clearStore();
+                history.push("/");
+            })
     }
 
     let updateProfilePicture = async (prevResponse) => {
@@ -192,6 +195,7 @@ function Account(props) {
             await createProfilePicture(form.profile_pic, prevResponse);
         }
         else {
+            clearStore();
             history.push("/")
         }
     }

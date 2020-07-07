@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './TopBar.scss';
-import { useGlobalState, store } from 'state-pool';
+import { useGlobalState } from 'state-pool';
 import { LogIn, SignUp, InfoModal } from './'
 import { Nav, Navbar, Dropdown } from 'react-bootstrap';
-import { propertyTypes, getPropertyRoute, deleteUserInfoFromCookies } from '../utils';
-import { initializeStore } from '../store';
+import { propertyTypes, getPropertyRoute, deleteUserInfoFromCookies, clearStore } from '../utils';
 
 
 function CreateProperty(props) {
@@ -62,11 +61,7 @@ function TopBar(props) {
             "phone", "full_name", "profile_picture"
         ])
 
-        // Clean up store
-        // Do this before calling ReactDOM.render
-        initializeStore();
-        store.setState("my-profile", null);
-        store.setState("myProperties", {});
+        clearStore()
         history.push("/");
     }
 

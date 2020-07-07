@@ -3,7 +3,7 @@ import './EditProfile.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import {
-    GlobalFetcher, GlowPageLoader, ProfilePictureUploader, PageError
+    GlobalFetcher, GlowPageLoader, ProfilePictureUploader, renderPageError
 } from './';
 import { BASE_API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
@@ -237,7 +237,7 @@ function ProfileFetcher(props){
          selection="my-profile"
          action={fetchProfile}
          placeholder={<GlowPageLoader/>} 
-         error={<PageError/>}>
+         onError={renderPageError}>
              {profile => {
                 return <EditProfile profile={profile} {...props}/>
              }}

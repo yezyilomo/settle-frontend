@@ -1,21 +1,21 @@
 import React from 'react';
 import './Home.css';
 import {
-    GenericFilter, PageError, GlowInlineLoader, GlowPageLoader,
+    GenericFilter, GlowInlineLoader, GlowPageLoader, renderPageError, renderInlineError,
     TwoRowsPropertiesGroup, SliderPropertiesGroup, PROPERTIES_QUERY_PARAM
 } from './';
 import { useRestoreScrollState } from '../hooks';
 
 
 function Home(props) {
-    useRestoreScrollState()
+    useRestoreScrollState();
     const proertiesToRentEndpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=rent`
     const propertiesToBuyEndpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=sale`
     const propertiesToSlideEndpoint = `properties/?${PROPERTIES_QUERY_PARAM}&price__lt=800000`
 
     return (
         <GenericFilter endpoint={proertiesToRentEndpoint} global selection="propertiesToRent"
-            placeholder={<GlowPageLoader />} error={<PageError />}>{properties => {
+            placeholder={<GlowPageLoader />} onError={renderPageError}>{properties => {
                 let footer = `Show all (${properties.count}+)`;
                 let footerLink = "/explore/rent-properties/";
                 return (
@@ -26,7 +26,7 @@ function Home(props) {
                         </div>
 
                         <GenericFilter endpoint={propertiesToSlideEndpoint} global selection="propertiesToSlide"
-                            placeholder={<GlowInlineLoader />} error={<PageError />}>{properties => {
+                            placeholder={<GlowInlineLoader />} onError={renderInlineError}>{properties => {
                                 return (
                                     <div class="p-0 m-0 mt-4">
                                         <SliderPropertiesGroup header="Amazing Places" properties={properties} />
@@ -36,7 +36,7 @@ function Home(props) {
                         </GenericFilter>
 
                         <GenericFilter endpoint={propertiesToBuyEndpoint} global selection="propertiesToBuy"
-                            placeholder={<GlowInlineLoader />} error={<PageError />}>{properties => {
+                            placeholder={<GlowInlineLoader />} onError={renderInlineError}>{properties => {
                                 let footer = `Show all (${properties.count}+)`;
                                 let footerLink = "/explore/buy-properties/";
                                 return (

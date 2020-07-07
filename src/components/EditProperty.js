@@ -3,9 +3,8 @@ import './EditProperty.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import {
-    FeaturesInput, GlobalFetcher, GlowPageLoader,
-    ImageUploader, MultipleImageUploader, PageError,
-    Map
+    FeaturesInput, GlobalFetcher, GlowPageLoader, ImageUploader,
+    MultipleImageUploader, renderPageError, Map
 } from './';
 import { BASE_API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
@@ -542,7 +541,7 @@ function EditProperty(props) {
             selection={`property/${props.id}`}
             action={fetchProperty}
             placeholder={<GlowPageLoader />}
-            error={<PageError />}
+            onError={renderPageError}
             setter={setter}
             fetchCondition={fetchCondition}>
             {propertyData => {

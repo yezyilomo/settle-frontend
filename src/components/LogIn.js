@@ -4,7 +4,7 @@ import { useGlobalState } from 'state-pool';
 import './LogIn.scss';
 import { BASE_API_URL } from '../';
 import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
-import { setErrorClass, saveUserInfoToCookies, setTabColorDark } from '../utils';
+import { setErrorClass, saveUserInfoToCookies, setTabColorDark, clearStore } from '../utils';
 
 
 function LogIn(props) {
@@ -43,7 +43,9 @@ function LogIn(props) {
                     ...userInfo
                 }
             });
-            history.push("/");
+
+            clearStore();
+            history.push("/")
         }
         else if (response.non_field_errors !== undefined) {
             setLoginError("Invalid credentials, please try again!.");
