@@ -16,7 +16,7 @@ function price(property) {
 
 function PropertyOverview(props) {
     const propertyData = {data: props.property, isPartial: true}
-    const [property, updateProperty] = useGlobalState(
+    const [property] = useGlobalState(
         `property/${props.property.id}`,
         {
             default: propertyData, 
@@ -60,7 +60,7 @@ function PropertyOverview(props) {
 
 function PropertySliderOverview(props) {
     const propertyData = {data: props.property, isPartial: true}
-    const [property, updateProperty] = useGlobalState(
+    const [property] = useGlobalState(
         `property/${props.property.id}`,
         {
             default: propertyData, 

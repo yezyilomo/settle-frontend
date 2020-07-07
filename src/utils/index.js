@@ -1,3 +1,6 @@
+import { store } from 'state-pool';
+import { initializeStore } from '../store';
+
 function setErrorClass(query = "input, select, textarea") {
     const inputs = document.querySelectorAll(query);
 
@@ -141,8 +144,14 @@ function setTabColorDark(conditionToChangeColor){
     }
 }
 
+function clearStore() {
+    store.clear(initializeStore);
+}
+
+
 export {
     setErrorClass, setCookie, getCookie, saveUserInfoToCookies, 
     getUserInfoFromCookies, deleteUserInfoFromCookies, onScrollToBottom, 
-    propertyTypes, getPropertyRoute, getPropertyType, cropImage, setTabColorDark
+    propertyTypes, getPropertyRoute, getPropertyType, cropImage, setTabColorDark,
+    clearStore
 }

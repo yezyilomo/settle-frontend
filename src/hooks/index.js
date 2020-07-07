@@ -45,7 +45,13 @@ function useLocalFetcher(action) {
         loadData();
     }, [action]);
 
-    return [data, updateData, loading, error];
+    function refetch(){
+        // To be used on network error
+        setError(null);
+        loadData();
+    }
+
+    return [data, updateData, loading, error, refetch];
 }
 
 function useGlobalFetcher(action, selection, {setter, fetchCondition}) {
@@ -86,7 +92,13 @@ function useGlobalFetcher(action, selection, {setter, fetchCondition}) {
         }
     }, [action]);
 
-    return [data, updateData, loading, error];
+    function refetch(){
+        // To be used on network error
+        setError(null);
+        loadData();
+    }
+
+    return [data, updateData, loading, error, refetch];
 }
 
 export { useRestoreScrollState, useLocalFetcher, useGlobalFetcher };

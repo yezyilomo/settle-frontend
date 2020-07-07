@@ -9889,10 +9889,10 @@ stack-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/stack-utils/-/stack-utils-1.0.2.tgz#33eba3897788558bebfc2db059dc158ec36cebb8"
   integrity sha512-MTX+MeG5U994cazkjd/9KNAapsHnibjMLnfXodlkXw76JEea0UiNzrqidzo1emMwk7w5Qhc9jd4Bn9TBb1MFwA==
 
-state-pool@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/state-pool/-/state-pool-0.1.1.tgz#95f6a370a77839c2a16695120206e87c4ad456a7"
-  integrity sha512-6E33cMBcFMva+RLJV/RGnAQ4ItHsoYnGh9m3zajV2dsMC4K9b8rwoSg8jtt5/Kb3InaIR/URl2CjIL4eKBgYiA==
+state-pool@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/state-pool/-/state-pool-0.2.0.tgz#a550d5ec3967a5f86c6b09e456004ad3ff84e96d"
+  integrity sha512-SGSia8KCePUfxGGgMkSbjuO8UBEABK9wfM2MFo1X1f6cF4GpooEo9hNHp3g+10LA7C0ERPru5msRduMaqGkK7w==
   dependencies:
     immer "^6.0.3"
     react "^16.8.3"

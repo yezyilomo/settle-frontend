@@ -1,8 +1,8 @@
 import {useLocalFetcher, useGlobalFetcher} from '../hooks';
 
 
-const LocalFetcher = ({ action, placeholder, children, error }) => {
-    const [data, updateData, loading, fetchError] = useLocalFetcher(action);
+const LocalFetcher = ({ action, placeholder, children, error, onError }) => {
+    const [data, updateData, loading, fetchError, refetch] = useLocalFetcher(action);
 
     if (loading){
         if(placeholder){
@@ -10,7 +10,13 @@ const LocalFetcher = ({ action, placeholder, children, error }) => {
         }
         return null;
     }
-    if (fetchError) return error;
+
+    if (fetchError) {
+        if(onError){
+            return onError(refetch);
+        }
+        return error;
+    };
 
     if (!data) return null;  // Timeout, No Network Connection 
 
@@ -18,8 +24,8 @@ const LocalFetcher = ({ action, placeholder, children, error }) => {
 };
 
 
-const GlobalFetcher = ({ action, placeholder, children, error, selection, setter, getter, fetchCondition }) => {
-    const [data, updateData, loading, fetchError] = useGlobalFetcher(action, selection, {setter, fetchCondition});
+const GlobalFetcher = ({ action, placeholder, children, error, onError, selection, setter, getter, fetchCondition }) => {
+    const [data, updateData, loading, fetchError, refetch] = useGlobalFetcher(action, selection, {setter, fetchCondition});
 
     if (loading){
         if(placeholder){
@@ -27,7 +33,13 @@ const GlobalFetcher = ({ action, placeholder, children, error, selection, setter
         }
         return null;
     }
-    if (fetchError) return error;
+
+    if (fetchError) {
+        if(onError){
+            return onError(refetch);
+        }
+        return error;
+    };
 
     // Beware this is the source of a very big bug 
     // TODO: Find a way to solve this
