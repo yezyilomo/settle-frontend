@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import { PropertyOverview, GlowInlineLoader, Carousel } from '.'
 import { PropertySliderOverview } from './PropertyOverview';
 import {onScrollToBottom} from '../utils';
+import { useRestoreScrollState } from '../hooks';
 
 
 function GenericResourcesGroup(props) {
+    useRestoreScrollState();
     const [loading, setLoading] = useState(false);
     let { next, results } = props.resources;
 
