@@ -15,18 +15,6 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 
 
-function GoogleMap(props) {
-    return (
-        <div className="google-map mt-2">
-            <Map
-                google={props.google}
-                center={{ lat: 18.5204, lng: 73.8567 }}
-                height='200px'
-                zoom={15} />
-        </div>
-    );
-}
-
 function EditFetchedProperty(props) {
     useRestoreScrollState();
     const history = useHistory();
@@ -171,7 +159,7 @@ function EditFetchedProperty(props) {
         let formData = {
             available_for: form.available_for.value,
             price: form.price.value,
-            price_rate_unit: form.available_for.value === 'rent'? fields.price_rate_unit: null,
+            price_rate_unit: form.available_for.value === 'rent'? form.price_rate_unit.value: null,
             currency: form.currency.value,
             amenities: formatSelection("amenities"),
             services: formatSelection("services"),
@@ -399,6 +387,8 @@ function EditFetchedProperty(props) {
                             </div>
                         </div>
                     </div>
+
+                    <Map/>
 
                     {child.otherInputs?
                         child.otherInputs(fields, updateFields): null

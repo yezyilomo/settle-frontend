@@ -18,7 +18,7 @@ function TopScroller(props) {
     window.onScrollActions.updateY = setY;
 
     return (
-        scrollY > 800 ?
+        scrollY > 200 ?
             <div class="scroll-up d-lg-none">
                 <span class="icon icon-up-arrow" onClick={scrollUp}></span>
             </div> :
