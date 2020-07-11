@@ -5,10 +5,7 @@ const LocalFetcher = ({ action, placeholder, children, error, onError }) => {
     const [data, updateData, loading, fetchError, refetch] = useLocalFetcher(action);
 
     if (loading){
-        if(placeholder){
-            return placeholder;
-        }
-        return null;
+        return placeholder;
     }
 
     if (fetchError) {
@@ -28,10 +25,7 @@ const GlobalFetcher = ({ action, placeholder, children, error, onError, selectio
     const [data, updateData, loading, fetchError, refetch] = useGlobalFetcher(action, selection, {setter, fetchCondition});
 
     if (loading){
-        if(placeholder){
-            return placeholder;
-        }
-        return null;
+        return placeholder;
     }
 
     if (fetchError) {
