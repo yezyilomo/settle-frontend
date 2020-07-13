@@ -5,6 +5,39 @@ import './SideBar.scss';
 import { BASE_API_URL } from '../';
 import { setErrorClass } from '../utils';
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import { withStyles } from '@material-ui/core/styles';
+import Slider from '@material-ui/core/Slider';
+
+
+const PriceRangeSlider = withStyles({
+    root: {
+        color: '#008489',
+        height: 8,
+    },
+    thumb: {
+        height: 24,
+        width: 24,
+        backgroundColor: '#fff',
+        border: '2px solid currentColor',
+        marginTop: -8,
+        marginLeft: -12,
+        '&:focus, &:hover, &$active': {
+            boxShadow: 'inherit',
+        },
+    },
+    active: {},
+    valueLabel: {
+        left: 'calc(-50% + 4px)',
+    },
+    track: {
+        height: 8,
+        borderRadius: 4,
+    },
+    rail: {
+        height: 8,
+        borderRadius: 4,
+    },
+})(Slider);
 
 
 function SideBar(props) {
@@ -48,9 +81,16 @@ function SideBar(props) {
         })
     }
 
+    const handlePriceRangeChange = (event, newValue) => {
+        updateFilterFields(filter => {
+            filter['price__gt'] = newValue[0];
+            filter['price__lt'] = newValue[1];
+        });
+    };
+
     return (
         <div class={`sidebar text-secondary p-0 m-0 ${props.setting}`}>
-            <div class="m-0 p-0 px-2 mt-4 mt-md-0 col-12 filter-header">Quick Filter</div>
+            <div class="m-0 p-0 px-2 mt-3 mt-md-0 col-12 filter-header">Quick Filter</div>
             <form id="filter-form" class="p-0 m-0 px-2 pr-md-3" onSubmit={handleSubmit}>
                 <div class="m-0 p-0 mt-2">
                     <label class="form-check-label col-12 p-0 m-0">I want to</label>
@@ -76,19 +116,31 @@ function SideBar(props) {
                 <label class="form-check-label p-0 m-0 m-0 p-0 mt-5 mt-lg-4">Price range</label>
                 <div class="row col-12 p-0 m-0 mt-1">
                     <div class="p-0 m-0 col-5">
-                        <label class="form-check-label col-12 p-0 m-0">From</label>
-                        <input type="number" name="price__gt" class="form-control"
+                        <label class="form-check-label col-12 p-0 m-0">Min</label>
+                        <input type="number" name="price__gt" class="form-control number-input"
                             value={filterFields.price__gt} onChange={updateFieldValue} placeholder="20000" />
                     </div>
                     <div class="col-2 p-0 m-0 px-2"><hr class="line-separator"/></div>
                     <div class="p-0 m-0 col-5">
-                        <label class="form-check-label col-12 p-0 m-0">To</label>
-                        <input type="number" name="price__lt" class="form-control"
+                        <label class="form-check-label col-12 p-0 m-0">Max</label>
+                        <input type="number" name="price__lt" class="form-control number-input"
                             value={filterFields.price__lt} onChange={updateFieldValue} placeholder="60000" />
                     </div>
                 </div>
 
-                <div class="m-0 p-0 mt-1">
+                <div className="p-0 m-0 mt-3">
+                    <PriceRangeSlider
+                        className="range-input"
+                        value={[filterFields.price__gt, filterFields.price__lt]}
+                        max={1000000}
+                        min={0}
+                        step={1000}
+                        onChange={handlePriceRangeChange}
+                        valueLabelDisplay="off"
+                        aria-labelledby="range-slider" />
+                </div>
+
+                <div class="m-0 p-0">
                     <label class="form-check-label col-12 p-0 m-0">Currency</label>
                     <select class="custom-select" name="currency" value={filterFields.currency} onChange={updateFieldValue}>
                         <option value="">All</option>
@@ -103,7 +155,7 @@ function SideBar(props) {
                         onChange={updateFieldValue} placeholder="City, Region or Street" />
                 </div>
 
-                <div class="m-0 p-0 mt-3 mb-2">
+                <div class="m-0 p-0 mt-2 mb-2">
                     <label class="form-check-label col-12 p-0 m-0">Amenities</label>
                     <div class="row mt-1 mb-3">
                         <div class="col-12">
@@ -114,7 +166,7 @@ function SideBar(props) {
                     </div>
 
                 </div>
-                <button type="submit" class="col-12 btn btn-primary mt-4 my-md-2 py-2 py-md-1">Submit</button>
+                <button type="submit" class="col-12 btn btn-primary mt-3 my-md-2 py-2 py-md-1">Submit</button>
             </form>
         </div>
     );
