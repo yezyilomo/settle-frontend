@@ -14,11 +14,11 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="logo.svg"
-   inkscape:export-filename="/home/yezy/Projects/personal/settle-frontend/public/logo192.png"
-   inkscape:export-xdpi="33.108547"
-   inkscape:export-ydpi="33.108547">
+   inkscape:export-filename="/home/yezy/Projects/personal/settle-frontend/public/logo16.png"
+   inkscape:export-xdpi="2.7499688"
+   inkscape:export-ydpi="2.7499688">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -30,7 +30,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
      inkscape:cx="164.28571"
-     inkscape:cy="560"
+     inkscape:cy="445.71429"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -56,7 +56,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#008489;fill-opacity:1;stroke:#68d181;stroke-width:0.24018024;stroke-opacity:1"
+       style="fill:#008489;fill-opacity:1;stroke:#000000;stroke-width:0.24018024;stroke-opacity:0"
        id="rect10"
        width="147.43552"
        height="147.54332"

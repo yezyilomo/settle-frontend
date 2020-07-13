@@ -8,9 +8,8 @@
 
 .bottom-nav-bar>div{
 	cursor: pointer;
-    padding: 7px 5px 0 5px;
-    border-radius: 15px;
-	margin: 0 10px 0 10px;
+    padding: 0;
+	margin: 0;
 }
 
 .bottom-nav-bar .icon{
@@ -39,34 +38,46 @@
 	visibility: hidden;
 }
 
-
-.bottom-nav-bar .btn-ripple {
-	display: inline-block;
-	position: relative;
-	overflow: hidden;
-	transition: all ease-in-out 0s;
-}
-
-.bottom-nav-bar .btn-ripple::after {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 25%;
-	height: 100%;
-	width: 50%;
-	background-color: #000;
-	border-radius: 50%;
-	opacity: 0;
-	pointer-events: none;
-	transition: all ease-in-out 0.4s;
-	transform: scale(10, 10);
-}
-
-.bottom-nav-bar .btn-ripple:active::after {
-	padding: 0;
+.ripple-button {
+	border-radius: 0px;
+	border: none;
+	padding: 8px 0 0 0;
 	margin: 0;
-	opacity: .2;
-	transition: 0s;
-	transform: scale(0, 0);
-}
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	cursor: pointer;
+	//position: relative;    //Avoid ripple overflow
+  }
+  
+  .ripple-button > .ripple {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	background: $primary;
+	display: block;
+	content: "";
+	border-radius: 50%;
+	opacity: 0.5;
+	animation: .4s ease 1 forwards ripple-effect;
+  }
+  
+  @keyframes ripple-effect {
+	0% {
+	  transform: scale(1);
+	  opacity: 0.5;
+	}
+	50% {
+	  transform: scale(10);
+	  opacity: 0.375;
+	}
+	100% {
+	  transform: scale(35);
+	  opacity: 0;
+	}
+  }
+  
+  .ripple-button > .content {
+	position: relative;
+	z-index: 2;
+  }
