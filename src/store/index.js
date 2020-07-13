@@ -27,8 +27,8 @@ function initializeStore(){
     store.setState(
         "sideBar",
         {
-            price__lt: "",
-            price__gt: "",
+            price__lt: 200000,
+            price__gt: 800000,
             currency: "",
             location: "",
             available_for: "rent",
