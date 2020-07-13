@@ -86,6 +86,18 @@ $thumbBG: transparent;
     font-size: 14px;
 }
 
+// Remove arrows from number input
+.number-input::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-input {
+  -moz-appearance: textfield;
+}
+// End of remove arrows from number input
+
 /* validation */
 .sidebar select.error:invalid,
 .sidebar input.error:invalid {
