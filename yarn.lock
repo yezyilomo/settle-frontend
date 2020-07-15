@@ -5301,9 +5301,9 @@ immer@1.10.0:
   integrity sha512-O3sR1/opvCDGLEVcvrGTMtLac8GJ5IwZC4puPrLuRj3l7ICKvkmA0vGuU9OW8mV9WIBRnaxp5GJh9IEAaNOoYg==
 
 immer@^6.0.3:
-  version "6.0.8"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-6.0.8.tgz#3758890d66ed7baed5703b9e0763785a16156478"
-  integrity sha512-wmVdrkqL6OzhX5z2k/c0t8g+YzGy+V8B/r1GRdCTO0UcTiFkB0XVAxpJQT045KaNV2u14HzbLCYKJmt7yVCakg==
+  version "6.0.9"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-6.0.9.tgz#b9dd69b8e69b3a12391e87db1e3ff535d1b26485"
+  integrity sha512-SyCYnAuiRf67Lvk0VkwFvwtDoEiCMjeamnHvRfnVDyc7re1/rQrNxuL+jJ7lA3WvdC4uznrvbmm+clJ9+XXatg==
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -10078,10 +10078,10 @@ stack-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/stack-utils/-/stack-utils-1.0.2.tgz#33eba3897788558bebfc2db059dc158ec36cebb8"
   integrity sha512-MTX+MeG5U994cazkjd/9KNAapsHnibjMLnfXodlkXw76JEea0UiNzrqidzo1emMwk7w5Qhc9jd4Bn9TBb1MFwA==
 
-state-pool@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/state-pool/-/state-pool-0.2.0.tgz#a550d5ec3967a5f86c6b09e456004ad3ff84e96d"
-  integrity sha512-SGSia8KCePUfxGGgMkSbjuO8UBEABK9wfM2MFo1X1f6cF4GpooEo9hNHp3g+10LA7C0ERPru5msRduMaqGkK7w==
+state-pool@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/state-pool/-/state-pool-0.2.1.tgz#8fbf2f011f18a7035cd33286d96b5ed854c93396"
+  integrity sha512-7WgoLoBqHQ0Y9adEctzZHEQad2/ly6fF6AefpjaRPzYICRfaodKwXicfhIB1PaZTHxaalZS+mJZG5gjDZtuyEA==
   dependencies:
     immer "^6.0.3"
     react "^16.8.3"
