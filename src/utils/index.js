@@ -148,10 +148,14 @@ function clearStore() {
     store.clear(initializeStore);
 }
 
+function capitalizeFirst(string) {
+    return string[0].toUpperCase() + string.slice(1);
+}
+
 
 export {
     setErrorClass, setCookie, getCookie, saveUserInfoToCookies, 
     getUserInfoFromCookies, deleteUserInfoFromCookies, onScrollToBottom, 
     propertyTypes, getPropertyRoute, getPropertyType, cropImage, setTabColorDark,
-    clearStore
+    clearStore, capitalizeFirst
 }

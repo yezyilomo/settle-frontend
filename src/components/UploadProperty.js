@@ -8,7 +8,7 @@ import {
     GlobalFetcher, GlowInlineLoader
 } from './';
 import { BASE_API_URL } from '../';
-import { getPropertyRoute } from '../utils';
+import { getPropertyRoute, capitalizeFirst } from '../utils';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import AsyncCreatableSelect from 'react-select/async-creatable';
@@ -242,7 +242,7 @@ function UploadProperty(props){
                                         const available_for_options = propertiesAvailability[props.type];
                                         return available_for_options.map(
                                             (available_for) => <option value={available_for}>
-                                                {available_for[0].toUpperCase() + available_for.slice(1)}
+                                                {capitalizeFirst(available_for)}
                                             </option>
                                         )
                                     }}

@@ -4,7 +4,10 @@ import './TopBar.scss';
 import { useGlobalState } from 'state-pool';
 import { LogIn, SignUp, InfoModal } from './'
 import { Nav, Navbar, Dropdown } from 'react-bootstrap';
-import { propertyTypes, getPropertyRoute, deleteUserInfoFromCookies, clearStore } from '../utils';
+import {
+    propertyTypes, getPropertyRoute, deleteUserInfoFromCookies,
+    clearStore, capitalizeFirst
+} from '../utils';
 
 
 function CreateProperty(props) {
@@ -26,7 +29,7 @@ function CreateProperty(props) {
                         <ul class="m-0 p-0 create-property-list" style={{ "font-size": "1.05em" }}>
                             <li class="p-0 m-0">
                                 <Link class="d-block m-0 p-0 px-2 pb-2 pt-3 h5 create-property-link" to={`/create/${getPropertyRoute(val)}`} onClick={() => setModalShow(false)}>
-                                    {val.charAt(0).toUpperCase() + val.slice(1)}
+                                    {capitalizeFirst(val)}
                                 </Link>
                             </li>
                             <hr class="line m-0 p-0" />
