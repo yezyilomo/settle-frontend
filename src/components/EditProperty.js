@@ -8,7 +8,7 @@ import {
 } from './';
 import { BASE_API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
-import { getPropertyRoute } from '../utils';
+import { getPropertyRoute, capitalizeFirst } from '../utils';
 import { useRestoreScrollState } from '../hooks';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -309,7 +309,7 @@ function EditFetchedProperty(props) {
                                 <option value="" disabled selected>Select Category</option>
                                 {fields.available_for_options.map(
                                     (available_for) => <option value={available_for}>
-                                        {available_for[0].toUpperCase() + available_for.slice(1)}
+                                        {capitalizeFirst(available_for)}
                                     </option>
                                 )}
                             </select>

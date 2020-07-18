@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useGlobalState } from 'state-pool';
 import './LogIn.scss';
 import { BASE_API_URL } from '../';
@@ -11,11 +12,12 @@ function LogIn(props) {
     const history = useHistory();
     const [, updateUser] = useGlobalState('user');
     const [loginError, setLoginError] = useState('');
-    const [modalShow, setModalShow] = useState(false);
+    const [showLogInModal, ,setShowLogInModal] = useGlobalState("showLogInModal");
+    const [showSignUpModal, ,setShowSignUpModal] = useGlobalState("showSignUpModal");
     const [isLoading, setLoading] = useState(false);
 
     useEffect(setErrorClass, []);
-    setTabColorDark(modalShow);
+    setTabColorDark(showLogInModal || showSignUpModal);
 
     let updateLogin = (response) => {
         let auth_token = response.token;
@@ -83,17 +85,22 @@ function LogIn(props) {
             })
     }
 
+    let goToSignUp = (e) => {
+        setShowLogInModal(false);
+        setShowSignUpModal(true);
+    }
+
     return (
         <>
-            <Nav.Link href="#" onClick={() => setModalShow(true)}>Login</Nav.Link>
+            <Nav.Link href="#" onClick={() => setShowLogInModal(true)}>Login</Nav.Link>
 
-            <Modal animation={false} scrollable={true} className="login-modal" dialogClassName="custom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="" centered>
-                <div class="modal-close" onClick={() => setModalShow(false)}>
+            <Modal animation={false} scrollable={true} className="login-modal" dialogClassName="custom-modal-dialog" show={showLogInModal} onHide={() => setShowLogInModal(false)} size="lg" aria-labelledby="" centered>
+                <div class="modal-close" onClick={() => setShowLogInModal(false)}>
                     <span class="icon icon-close"></span>
                 </div>
                 <Modal.Body className="p-0 m-0 modal-body">
                     <div class="container-fluid login py-4">
-                        <center class="header col-12 h4 pt-2 text-secondary">Login to Your Account</center>
+                        <center class="header col-12 h5 m-0 p-0 pt-2 text-secondary">Login to your account</center>
                         <form class="login-form text-secondary" onSubmit={login}>
                             <div class="row justify-content-center">
                                 <div class="col-10 p-0 m-0 my-2 my-lg-3">
@@ -120,6 +127,9 @@ function LogIn(props) {
                                 </div>
                             </div>
                         </form>
+                        <div class="col-12 pb-3 text-center">
+                            Don’t have an account? <Link onClick={goToSignUp}>Sign up</Link>
+                        </div>
                     </div>
                 </Modal.Body>
             </Modal>
