@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { Route, MemoryRouter } from 'react-router-dom';
+import { Route, MemoryRouter, Link } from 'react-router-dom';
 import './SignUp.scss';
 import { useGlobalState } from 'state-pool';
 import { BASE_API_URL } from '../';
@@ -46,7 +46,7 @@ function About(props) {
     return (
         <>
             <div class="row progress-tab m-0 p-0">
-                <div class="col text-center text-secondary">ABOUT</div>
+                <div class="col text-center text-secondary">About</div>
             </div>
             <form class="signup-form text-secondary" onSubmit={handleSubmit}>
                 <div class="row justify-content-center mt-1">
@@ -238,7 +238,7 @@ function Account(props) {
     return (
         <>
             <div class="row progress-tab m-0 p-0">
-                <div class="col text-center text-secondary">ACCOUNT</div>
+                <div class="col text-center text-secondary">Account</div>
             </div>
             <form class="signup-form text-secondary" onSubmit={handleSubmit}>
                 <div class="row justify-content-center mt-1">
@@ -294,24 +294,33 @@ function Account(props) {
 }
 
 function SignUp(props) {
-    const [modalShow, setModalShow] = useState(false);
-    setTabColorDark(modalShow);
+    const [showSignUpModal, ,setShowSignUpModal] = useGlobalState("showSignUpModal");
+    const [showLogInModal, ,setShowLogInModal] = useGlobalState("showLogInModal");
+    setTabColorDark(showSignUpModal || showLogInModal);
+
+    let goToLogIn = (e) => {
+        setShowSignUpModal(false);
+        setShowLogInModal(true);
+    }
 
     return (
         <>
-            <Nav.Link href="#" onClick={() => setModalShow(true)}>Sign up</Nav.Link>
+            <Nav.Link href="#" onClick={() => setShowSignUpModal(true)}>Sign up</Nav.Link>
 
-            <Modal animation={false} scrollable={true} className="signup-modal" dialogClassName="custom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-                <div class="modal-close" onClick={() => setModalShow(false)}>
+            <Modal animation={false} scrollable={true} className="signup-modal" dialogClassName="custom-modal-dialog" show={showSignUpModal} onHide={() => setShowSignUpModal(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+                <div class="modal-close" onClick={() => setShowSignUpModal(false)}>
                     <span class="icon icon-close"></span>
                 </div>
                 <Modal.Body className="p-0 m-0">
                     <div class="container-fluid signup py-4">
-                        <center class="header col-12 h4 mt-0 text-secondary">Create Free Account</center>
+                        <center class="header col-12 h5 m-0 p-0 pt2 text-secondary">Create your free account</center>
                         <MemoryRouter initialEntries={["/about", "/account", { pathname: "/" }]} initialIndex={0}>
                             <Route exact path="/about" component={About} />
                             <Route exact path="/account" component={Account} />
                         </MemoryRouter>
+                        <div class="col-12 pb-3 text-center">
+                            Already have an account? <Link onClick={goToLogIn}>Log in</Link>
+                        </div>
                     </div>
                 </Modal.Body>
             </Modal>

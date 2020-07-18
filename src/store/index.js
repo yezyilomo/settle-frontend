@@ -21,6 +21,20 @@ function initializeStore(){
         "user",
         userInfo
     )
+
+    
+    // Set showLogInModal
+    store.setState(
+        "showLogInModal",
+        false
+    )
+
+
+    // Set showSignUpModal
+    store.setState(
+        "showSignUpModal",
+        false
+    )
     
     
     // Sidebar state
