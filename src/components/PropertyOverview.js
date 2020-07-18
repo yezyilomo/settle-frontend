@@ -2,7 +2,7 @@ import React from 'react';
 import './PropertyOverview.scss';
 import { Link } from 'react-router-dom';
 import { Rating, SaveButton } from './';
-import { getPropertyRoute } from '../utils';
+import { getPropertyRoute, capitalizeFirst } from '../utils';
 import { useGlobalState } from 'state-pool';
 
 
@@ -43,7 +43,7 @@ function PropertyOverview(props) {
                 <SaveButton property={property} />
             </div>
             <div class="prop-info col-12 px-1">
-                <div class="prop-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
+                <div class="prop-type">{capitalizeFirst(property.type)}  available for <span class="bg-primary text-light">{property.available_for}</span></div>
                 <div class="prop-location"> <i class="fa fa-map-marker-alt"></i>
                     &nbsp;{property.location.region}, {property.location.country}
                 </div>
@@ -87,7 +87,7 @@ function PropertySliderOverview(props) {
             </div>
             <div class="prop-info col-12 px-1">
                 <div class="prop-type">
-                    Available for <span class="bg-primary text-light">{property.available_for}</span>
+                    {capitalizeFirst(property.type)}  available for <span class="bg-primary text-light">{property.available_for}</span>
                 </div>
                 <div class="prop-price">
                     {price(property)}
