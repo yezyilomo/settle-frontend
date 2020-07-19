@@ -52,3 +52,14 @@
 .slider div{
 	outline: none;
 }
+
+// Style view icon
+.view-icon {
+	position: absolute;
+	right: 10px;
+	top: 13px;
+	font-size: 20px;
+	color: rgb(165, 165, 165);
+	z-index: 1;
+	cursor: pointer;
+}
