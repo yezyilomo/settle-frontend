@@ -44,8 +44,8 @@ function GenericResourcesGroup(props) {
     return (
         <div class="row m-0 p-0">
             {view === "list" ?
-                <span class="view-icon d-sm-none fas fa-th-large d-block" onClick={showGridView}></span>:
-                <span class="view-icon d-sm-none fas fa-list-ul d-block" onClick={showListView}></span>
+                <span class="view-icon d-sm-none fas fa-th-large" onClick={showGridView}></span>:
+                <span class="view-icon d-sm-none fas fa-list-ul" onClick={showListView}></span>
             }
             <div class="group-header col-12 p-0 m-0 px-1 px-sm-2">{props.header}</div>
             {results.length === 0?
