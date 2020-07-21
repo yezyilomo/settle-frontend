@@ -9,9 +9,9 @@ import {
 import { BASE_API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'state-pool';
-import { getPropertyRoute, setTabColorDark } from '../utils';
-import { useRestoreScrollState } from '../hooks';
+import { getPropertyRoute, setTabColorDark, capitalizeFirst } from '../utils';
 import { queryCache } from 'react-query';
+import { useScrollTop } from '../hooks';
 
 
 function ImagesCarousel(props) {
@@ -250,8 +250,7 @@ function Descriptions(props) {
 
 
 function PropertyDetails(props) {
-    useRestoreScrollState();
-
+    useScrollTop();
     const history = useHistory();
     const [user,] = useGlobalState("user");
     const [deleteModalShow, setDeleteModalShow] = useState(false);
@@ -364,7 +363,7 @@ function PropertyDetails(props) {
                             <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
                                 <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
                                     <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                        <div class="property-type">Available for <span class="bg-primary text-light">{property.available_for}</span></div>
+                                        <div class="property-type">{capitalizeFirst(property.type)}  available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                         <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
                                             &nbsp;{property.location.region + "," + property.location.country}
                                         </div>
