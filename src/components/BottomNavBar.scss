@@ -59,7 +59,7 @@
 	content: "";
 	border-radius: 50%;
 	opacity: 0.5;
-	animation: .4s ease 1 forwards ripple-effect;
+	animation: .3s ease 1 forwards ripple-effect;
   }
   
   @keyframes ripple-effect {
@@ -68,11 +68,11 @@
 	  opacity: 0.5;
 	}
 	50% {
-	  transform: scale(10);
+	  transform: scale(5);
 	  opacity: 0.375;
 	}
 	100% {
-	  transform: scale(35);
+	  transform: scale(25);
 	  opacity: 0;
 	}
   }

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useGlobalState } from 'state-pool';
 import './LogIn.scss';
 import { BASE_API_URL } from '../';
+import { queryCache } from 'react-query';
 import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
 import { setErrorClass, saveUserInfoToCookies, setTabColorDark, clearStore } from '../utils';
 
@@ -46,8 +47,9 @@ function LogIn(props) {
                 }
             });
 
+            queryCache.invalidateQueries((query) => true);
             clearStore();
-            history.push("/")
+            history.push("/");
         }
         else if (response.non_field_errors !== undefined) {
             setLoginError("Invalid credentials, please try again!.");

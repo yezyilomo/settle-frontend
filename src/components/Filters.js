@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGlobalState } from 'state-pool';
 import {
-    LocalFetcher, GlobalFetcher, GlowPageLoader, renderPageError,
+    PaginatedDataFetcher, GlowPageLoader, renderPageError,
     PropertyOverview, GenericResourcesGroup
 } from '.';
 import { BASE_API_URL } from '../';
@@ -11,7 +11,7 @@ import { getPropertyRoute, capitalizeFirst } from '../utils';
 function GenericFilter(props) {
     let endpoint = props.endpoint.replace(/[\n ]/g, "");
 
-    const [user, ] = useGlobalState("user");
+    const [user,] = useGlobalState("user");
 
     const headers = {
         "Content-Type": "application/json",
@@ -25,55 +25,21 @@ function GenericFilter(props) {
         headers: headers
     }
 
-    let fetchResources = () => {
-        return fetch(`${BASE_API_URL}/${endpoint}`, {...reqHeaders, ...props.fetchConfig, })
-        .then(res => res.json())
+    let fetchResources = (key, cursor = `${BASE_API_URL}/${endpoint}`) => {
+        return fetch(cursor, { ...reqHeaders, ...props.fetchConfig, }).then(res => res.json())
     }
 
-    let getMoreResourcesFetcher = (updateResources) => {
-        let updateData = (data, currentResources) => {
-            data.results = [...currentResources.results, ...data.results];
-            updateResources(oldData => data)
-        }
-
-        let fetchMoreResources = (currentResources) => {
-            fetch(currentResources.next, {...reqHeaders, ...props.fetchConfig, })
-            .then(res => res.json())
-            .then(data => updateData(data, currentResources))
-        }
-        return fetchMoreResources
-    }
-
-    if(props.global){
-        return (
-            <GlobalFetcher
-                action={fetchResources}
-                placeholder={props.placeholder}
-                error={props.error}
-                onError={props.onError}
-                selection={props.selection}
-                setter={props.setter}
-                getter={props.getter}
-                fetchCondition={props.fetchCondition}>
-                {(resources, updateResources) => {
-                    let fetchMoreResources = getMoreResourcesFetcher(updateResources);
-                    return props.children(resources, fetchMoreResources)
-                }}
-            </GlobalFetcher>
-        );
-    }
-    
     return (
-        <LocalFetcher
+        <PaginatedDataFetcher
             action={fetchResources}
             placeholder={props.placeholder}
             error={props.error}
-            onError={props.onError}>
-            {(resources, updateResources) => {
-                let fetchMoreResources = getMoreResourcesFetcher(updateResources);
-                return props.children(resources, fetchMoreResources)
+            onError={props.onError}
+            selection={props.selection}>
+            {(response) => {
+                return props.children(response);
             }}
-        </LocalFetcher>
+        </PaginatedDataFetcher>
     );
 }
 
@@ -81,10 +47,10 @@ function GenericFilter(props) {
 function EndpointPropertiesFilter(props) {
     return (
         <GenericFilter placeholder={<GlowPageLoader/>} onError={renderPageError} {...props}>
-            {(properties, fetchMoreProperties) => {
+            {(response) => {
                 let header = "";
                 if (typeof(props.header) == "function"){
-                    header = props.header(properties);
+                    header = props.header(response.data[0]);
                 }
                 else{
                     header = props.header;
@@ -94,8 +60,8 @@ function EndpointPropertiesFilter(props) {
                         <GenericResourcesGroup
                             viewKey={props.viewKey}
                             header={header}
-                            resources={properties}
-                            onScrollToBottom={fetchMoreProperties}>
+                            response={response}
+                            FetchMoreOnScrollToBottom>
                             {property =>
                                 <PropertyOverview property={property} />
                             }
@@ -140,7 +106,7 @@ function PropertiesFilter(props) {
     &search=${location}
     &amenities__contains=${amenity_ids}`
 
-    return <EndpointPropertiesFilter viewKey={viewKey} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter selection={endpoint} viewKey={viewKey} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -151,7 +117,7 @@ function SearchProperties(props) {
     let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&search=${location}`;
     let viewKey = "searchPropertiesView";
 
-    return <EndpointPropertiesFilter viewKey={viewKey} global selection={selection} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -168,7 +134,7 @@ function UserFavProperties(props) {
     let endpoint = `my-fav-properties/?${PROPERTIES_QUERY_PARAM}`;
     let viewKey = "myFavPropertiesView";
 
-    return <EndpointPropertiesFilter viewKey={viewKey} global selection={selection} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -179,7 +145,7 @@ function UserProperties(props) {
     let endpoint = `${getPropertyRoute(props.type)}/?${PROPERTIES_QUERY_PARAM}&owner=${user.id}`;
     let viewKey = "userPropertiesView";
 
-    return <EndpointPropertiesFilter viewKey={viewKey} global selection={selection} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -189,7 +155,7 @@ function ShowRentProperties(props){
     let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=rent`;
     let viewKey = "explore/rent-propertiesView";
 
-    return <EndpointPropertiesFilter viewKey={viewKey} global selection={selection} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -199,7 +165,7 @@ function ShowBuyProperties(props){
     let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=sale`;
     let viewKey = "explore/buy-propertiesView";
 
-    return <EndpointPropertiesFilter viewKey={viewKey} global selection={selection} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 

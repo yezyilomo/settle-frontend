@@ -1,26 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './ResourcesGroups.scss';
 import { Link } from 'react-router-dom';
 import { PropertyOverview, GlowInlineLoader, Carousel } from '.'
 import { PropertySliderOverview } from './PropertyOverview';
-import {onScrollToBottom} from '../utils';
+import { onScrollToBottom } from '../utils';
 import { useRestoreScrollState } from '../hooks';
 import { useGlobalState } from 'state-pool';
 
 
 function GenericResourcesGroup(props) {
     useRestoreScrollState();
-    const [loading, setLoading] = useState(false);
     const [view, ,setView] = useGlobalState(props.viewKey, {default: 'grid'});
-    let { next, results } = props.resources;
 
     let fetchMoreResources = () => {
-        if(props.onScrollToBottom !== undefined && next !== null){
-            setLoading(true);
-            props.onScrollToBottom(props.resources);
-        }
-        else{
-            setLoading(false);
+        if (props.response.canFetchMore) {
+            props.response.fetchMore()
         }
     }
 
@@ -39,16 +33,18 @@ function GenericResourcesGroup(props) {
         setView("grid");
     }
 
-    window.onScrollActions.fetchMoreResources = onScrollToBottom(fetchMoreResources);
+    if(props.FetchMoreOnScrollToBottom){
+        window.onScrollActions.fetchMoreResources = onScrollToBottom(fetchMoreResources);
+    }
 
     return (
-        <div class="row m-0 p-0">
+        <div class="row m-0 p-0 animate-page">
             {view === "list" ?
                 <span class="view-icon d-sm-none fas fa-th-large" onClick={showGridView}></span>:
                 <span class="view-icon d-sm-none fas fa-list-ul" onClick={showListView}></span>
             }
             <div class="group-header col-12 p-0 m-0 px-1 px-sm-2">{props.header}</div>
-            {results.length === 0?
+            {props.response.data[0].length === 0?
                 <div class="ml-2 mt-5">
                   <div>
                       No results found!..
@@ -56,12 +52,17 @@ function GenericResourcesGroup(props) {
                 </div>:
                 null
             }
-            {results.map(resource =>
-                <div class={`${getView()} col-md-4 col-lg-3 m-0 p-0 my-2 px-1 px-sm-2`}>
-                    {props.children(resource)}
-                </div>
+            {props.response.data.map((resourcesGroup, i) =>
+                <React.Fragment key={i}>
+                    {resourcesGroup.results.map(resource =>
+                        <div class={`${getView()} col-md-4 col-lg-3 m-0 p-0 my-2 px-1 px-sm-2`}>
+                            {props.children(resource)}
+                        </div>
+                    )}
+                </React.Fragment>
             )}
-            {loading?
+
+            {props.response.isFetchingMore?
                 <GlowInlineLoader/>:
                 null
             }
@@ -75,8 +76,8 @@ function PropertiesGroup(props) {
         <GenericResourcesGroup
             viewKey={props.viewKey}
             header={props.header}
-            resources={props.properties}
-            onScrollToBottom={props.onScrollToBottom}>
+            response={props.response}
+            FetchMoreOnScrollToBottom={props.FetchMoreOnScrollToBottom}>
             {property =>
                 <PropertyOverview property={property} />
             }

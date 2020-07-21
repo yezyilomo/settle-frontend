@@ -1,49 +1,51 @@
-import {useLocalFetcher, useGlobalFetcher} from '../hooks';
+import { useQuery, useInfiniteQuery, queryCache } from 'react-query';
 
 
-const LocalFetcher = ({ action, placeholder, children, error, onError }) => {
-    const [data, updateData, loading, fetchError, refetch] = useLocalFetcher(action);
+const DataFetcher = ({ action, placeholder, children, error, onError, selection }) => {
+    const response = useQuery(selection, action, {retry: 2});
 
-    if (loading){
+    const retry = () => {
+        queryCache.invalidateQueries(selection);
+    }
+
+    if (response.isLoading) {
         return placeholder;
     }
 
-    if (fetchError) {
-        if(onError){
-            return onError(refetch);
+    if (response.isError) {
+        if (onError) {
+            return onError(retry);
         }
         return error;
-    };
+    }
 
-    if (!data) return null;  // Timeout, No Network Connection 
-
-    return children(data, updateData);
+    return children(response);
 };
 
 
-const GlobalFetcher = ({ action, placeholder, children, error, onError, selection, setter, getter, fetchCondition }) => {
-    const [data, updateData, loading, fetchError, refetch] = useGlobalFetcher(action, selection, {setter, fetchCondition});
+const PaginatedDataFetcher = ({ action, placeholder, children, error, onError, selection }) => {
+    const response = useInfiniteQuery(selection, action, {
+        getFetchMore: (lastGroup, allGroups) => lastGroup.next,
+        retry: 2
+    });
 
-    if (loading){
+    const retry = () => {
+        queryCache.invalidateQueries(selection);
+    }
+
+    if (response.isLoading) {
         return placeholder;
     }
 
-    if (fetchError) {
-        if(onError){
-            return onError(refetch);
+    if (response.isError) {
+        if (onError) {
+            return onError(retry);
         }
         return error;
-    };
-
-    // Beware this is the source of a very big bug 
-    // TODO: Find a way to solve this
-    if (!data || (fetchCondition && fetchCondition(data))) return null;  // Timeout, No Network Connection 
-
-    if(getter){
-        return children(getter(data), updateData);
     }
-    return children(data, updateData);
+
+    return children(response);
 };
 
 
-export {LocalFetcher, GlobalFetcher};
+export { DataFetcher, PaginatedDataFetcher };

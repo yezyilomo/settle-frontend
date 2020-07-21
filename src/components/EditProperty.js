@@ -3,7 +3,7 @@ import './EditProperty.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import {
-    FeaturesInput, GlobalFetcher, GlowPageLoader, ImageUploader,
+    FeaturesInput, DataFetcher, GlowPageLoader, ImageUploader,
     MultipleImageUploader, renderPageError, Map
 } from './';
 import { BASE_API_URL } from '../';
@@ -13,6 +13,7 @@ import { useRestoreScrollState } from '../hooks';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import { queryCache } from 'react-query';
 
 
 function EditFetchedProperty(props) {
@@ -22,7 +23,6 @@ function EditFetchedProperty(props) {
     const [editError, setEditError] = useState('');
 
     const [fields, updateFields] = useLocalState({...props.property, otherInputs: {}});
-    const [, updateGlobalProperty] = useGlobalState(`property/${fields.id}`);
     const [user,] = useGlobalState("user");
     const [featuresToDelete,] = useState([]);
     const [imgsToDelete,] = useState([]);
@@ -101,7 +101,7 @@ function EditFetchedProperty(props) {
 
     let redirect = (response) => {
         // Get a fresh property(This will trigger property fetching)
-        updateGlobalProperty(property => null);
+        queryCache.invalidateQueries(`property/${fields.id}`);
         return history.replace(`/${getPropertyRoute(props.type)}/${fields.id}`);
     }
 
@@ -515,34 +515,24 @@ function EditProperty(props) {
 
     let fetchProperty = () => {
         return fetch(`${BASE_API_URL}/${getPropertyRoute(props.type)}/${props.id}/`, {headers: headers})
-            .then(res => res.json())
-    }
-
-    const fetchCondition = (data) => {
-        return !data || data.isPartial;
-    }
-
-    const setter = (data) => {
-        return {data: data, isPartial: false}
+        .then(res => res.json())
     }
 
     return (
-        <GlobalFetcher
+        <DataFetcher
             selection={`property/${props.id}`}
             action={fetchProperty}
             placeholder={<GlowPageLoader />}
-            onError={renderPageError}
-            setter={setter}
-            fetchCondition={fetchCondition}>
-            {propertyData => {
-                let property = propertyData.data;
+            onError={renderPageError}>
+            {response => {
+                const property = response.data;
                 return (
                 <EditFetchedProperty property={property} {...props}>
                     {props.children}
                 </EditFetchedProperty>
                 )
             }}
-        </GlobalFetcher>
+        </DataFetcher>
     );
 }
 

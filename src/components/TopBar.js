@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './TopBar.scss';
+import { queryCache } from 'react-query';
 import { useGlobalState } from 'state-pool';
 import { LogIn, SignUp, InfoModal } from './'
 import { Nav, Navbar, Dropdown } from 'react-bootstrap';
@@ -64,6 +65,7 @@ function TopBar(props) {
             "phone", "full_name", "profile_picture"
         ])
 
+        queryCache.invalidateQueries((query) => true);
         clearStore()
         history.push("/");
     }

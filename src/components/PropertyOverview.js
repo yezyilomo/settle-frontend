@@ -3,7 +3,6 @@ import './PropertyOverview.scss';
 import { Link } from 'react-router-dom';
 import { Rating, SaveButton } from './';
 import { getPropertyRoute, capitalizeFirst } from '../utils';
-import { useGlobalState } from 'state-pool';
 
 
 function price(property) {
@@ -15,17 +14,8 @@ function price(property) {
 }
 
 function PropertyOverview(props) {
-    const propertyData = {data: props.property, isPartial: true}
-    const [property] = useGlobalState(
-        `property/${props.property.id}`,
-        {
-            default: propertyData, 
-            selector: prop => prop.data,
-            patcher: (prop, value) => {prop.data = value}
-        }
-    );
-    
-    let main_img = property.pictures.filter((picture) => picture.is_main)
+    const property = props.property;
+    let main_img = property.pictures.filter((picture) => picture.is_main);
     if (main_img.length < 1) {
         main_img = { is_main: null, src: null, id: null };
     }
@@ -59,17 +49,8 @@ function PropertyOverview(props) {
 }
 
 function PropertySliderOverview(props) {
-    const propertyData = {data: props.property, isPartial: true}
-    const [property] = useGlobalState(
-        `property/${props.property.id}`,
-        {
-            default: propertyData, 
-            selector: prop => prop.data,
-            patcher: (prop, value) => {prop.data = value}
-        }
-    );
-    
-    let main_img = property.pictures.filter((picture) => picture.is_main)
+    const property = props.property;
+    let main_img = property.pictures.filter((picture) => picture.is_main);
     if (main_img.length < 1) {
         main_img = { is_main: null, src: null, id: null };
     }
