@@ -12,6 +12,7 @@ import {
     FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties,
     EditProfile, UserFavProperties
 } from './';
+import { useScrollTop } from '../hooks';
 
 
 function App(props) {
@@ -147,7 +148,7 @@ function App(props) {
 
                         <Route exact path="/ft" component={PropertiesFilter} />
                         <Route exact path="/filter" render={({ match }) => {
-                            return <SideBar key={match.path} setting="animate-page sidebar-sm px-2 d-relative d-lg-none col-12 pb-4" />
+                            return <SideBar key={match.path} hooks={[useScrollTop]} setting="animate-page sidebar-sm px-2 d-relative d-lg-none col-12 pb-4" />
                         }} />
                         <Route exact path="/search/" component={SearchProperties} />
 

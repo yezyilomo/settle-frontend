@@ -13,6 +13,7 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import { queryCache } from 'react-query';
+import { useScrollTop } from '../hooks';
 
 
 let initialFieldsData = {
@@ -27,6 +28,7 @@ let initialFieldsData = {
 }
 
 function UploadProperty(props){
+    useScrollTop();
     const history = useHistory();
     const [user, ] = useGlobalState("user");
     const [fields, updateFields] = useLocalState(initialFieldsData);

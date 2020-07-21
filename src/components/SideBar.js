@@ -41,6 +41,8 @@ const PriceRangeSlider = withStyles({
 
 
 function SideBar(props) {
+    const hooks = props.hooks || [];
+    hooks.map(hook => hook());
     const history = useHistory();
     const [filterFields, updateFilterFields] = useGlobalState("sideBar");
 

@@ -9,15 +9,15 @@ import {
 import { BASE_API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
 import { getPropertyRoute, capitalizeFirst } from '../utils';
-import { useRestoreScrollState } from '../hooks';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import { queryCache } from 'react-query';
+import { useScrollTop } from '../hooks';
 
 
 function EditFetchedProperty(props) {
-    useRestoreScrollState();
+    useScrollTop();
     const history = useHistory();
     const [isLoading, setLoading] = useState(false);
     const [editError, setEditError] = useState('');

@@ -7,13 +7,13 @@ import {
 } from './';
 import { BASE_API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
-import { useRestoreScrollState } from '../hooks';
 import { saveUserInfoToCookies, getUserInfoFromCookies } from '../utils';
 import { queryCache } from 'react-query';
+import { useScrollTop } from '../hooks';
 
 
 function EditProfile(props) {
-    useRestoreScrollState();
+    useScrollTop();
     const history = useHistory();
     const [isLoading, setLoading] = useState(false);
     const [editError, setEditError] = useState('');

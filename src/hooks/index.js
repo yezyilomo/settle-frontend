@@ -2,24 +2,31 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
 
-function useRestoreScrollState(){
+function useRestoreScrollState() {
     const locationObj = useLocation();
     let location = locationObj.pathname;
 
-    if(window.scrollState === undefined){
+    if (window.scrollState === undefined) {
         window.scrollState = {}  // Initialize scrollState
     }
 
     useEffect(() => {
-        if (window.scrollState !== undefined && window.scrollState[location] !== undefined){
+        if (window.scrollState !== undefined && window.scrollState[location] !== undefined) {
             // Restore scroll position when the component mounts
-            window.scrollTo({top: window.scrollState[location]});
+            window.scrollTo({ top: window.scrollState[location] });
         }
         return () => {
             // Save scroll position when the component unmount
-            window.scrollState[location] = window.scrollY;
+            window.scrollState[location] = window.scrollY || 0;
         }
     }, [])
 }
 
-export { useRestoreScrollState };
+
+function useScrollTop() {
+    useEffect(() => {
+        window.scrollTo({ top: 0 });
+    }, [])
+}
+
+export { useRestoreScrollState, useScrollTop };
