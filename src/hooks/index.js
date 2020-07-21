@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router';
-import { useGlobalState, useLocalState } from 'state-pool';
 
 
 function useRestoreScrollState(){
@@ -23,82 +22,4 @@ function useRestoreScrollState(){
     }, [])
 }
 
-
-function useLocalFetcher(action) {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [data, updateData] = useLocalState(null);
-
-    async function loadData() {
-        try {
-            setLoading(true);
-            const actionData = await action();
-            updateData(data => actionData);
-        } catch (e) {
-            setError(e);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        loadData();
-    }, [action]);
-
-    function refetch(){
-        // To be used on network error
-        setError(null);
-        loadData();
-    }
-
-    return [data, updateData, loading, error, refetch];
-}
-
-function useGlobalFetcher(action, selection, {setter, fetchCondition}) {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [data, updateData] = useGlobalState(selection, {default: null});
-
-    async function loadData() {
-        try {
-            setLoading(true);
-            const actionData = await action();
-            if(setter){
-                updateData(data => setter(actionData));
-            }
-            else{
-                updateData(data => actionData);
-            }
-        } catch (e) {
-            setError(e);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        if (fetchCondition){
-            if(fetchCondition(data)){
-                // fetch only if the fetch condition is met
-                loadData();
-            }
-        }
-
-        else{
-            if(!data){
-                // fetch only if no data saved
-                loadData();
-            }
-        }
-    }, [action]);
-
-    function refetch(){
-        // To be used on network error
-        setError(null);
-        loadData();
-    }
-
-    return [data, updateData, loading, error, refetch];
-}
-
-export { useRestoreScrollState, useLocalFetcher, useGlobalFetcher };
+export { useRestoreScrollState };
