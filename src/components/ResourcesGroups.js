@@ -34,7 +34,7 @@ function GenericResourcesGroup(props) {
     }
 
     if(props.FetchMoreOnScrollToBottom){
-        window.onScrollActions.fetchMoreResources = onScrollToBottom(fetchMoreResources);
+        window.onScrollActions.fetchMoreResources = onScrollToBottom(fetchMoreResources, 200);
     }
 
     return (
@@ -62,8 +62,12 @@ function GenericResourcesGroup(props) {
                 </React.Fragment>
             )}
 
+            <div class="col-12 py-2"/>
+
             {props.response.isFetchingMore?
-                <GlowInlineLoader/>:
+                <div class="col-12 m-0 p-0" style={{position: 'relative', bottom: '25px'}}>
+                    <GlowInlineLoader/>
+                </div>:
                 null
             }
         </div>
