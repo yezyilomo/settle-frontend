@@ -10,6 +10,7 @@ import './index.scss';
 import './icons.scss';
 import { App } from './components';
 import { HashRouter as Router } from 'react-router-dom';
+import { ReactQueryConfigProvider } from 'react-query';
 import { initializeStore } from './store';
 
 
@@ -17,7 +18,6 @@ import { initializeStore } from './store';
 initializeStore()
 
 //let BASE_API_URL = "http://192.168.43.129:8000";  //For testing purpose
-//let BASE_API_URL = "http://192.168.8.102:8000";  //For testing purpose
 let BASE_API_URL = "https://api.yezyilomo.com";
 
 window.onScrollActions = {};
@@ -28,11 +28,19 @@ window.onscroll = () => {
     }
 };
 
+const queryConfig = {
+    queries: {
+        staleTime: 1000 * 60 * 5
+    }
+}
+
 function Application(props) {
     return (
-        <Router base="/">
-            <App />
-        </Router>
+        <ReactQueryConfigProvider config={queryConfig}>
+            <Router base="/">
+                <App />
+            </Router>
+        </ReactQueryConfigProvider>
     );
 }
 
