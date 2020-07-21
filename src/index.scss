@@ -48,6 +48,27 @@ body {
 /* End of Lazy load placeholder*/
 
 
+/* Animate page transition */
+.animate-page{
+	opacity: 0;
+	animation-name: page-animation;
+	animation-delay: 0.3s;
+	animation-duration: .05s;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease;
+}
+
+@keyframes page-animation {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+/* End of animate page transition */
+
 
 /* Floating Label Input */
 .floating {

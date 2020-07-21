@@ -18,7 +18,7 @@ import {
 import {FeaturesInput} from './FeaturesInput';
 import {LogIn} from './LogIn';
 import {SignUp} from './SignUp';
-import {LocalFetcher, GlobalFetcher} from './Fetchers';
+import {DataFetcher, PaginatedDataFetcher} from './Fetchers';
 import {
     SpinnerPageLoader, SpinnerInlineLoader, 
     GlowPageLoader, GlowInlineLoader
@@ -54,7 +54,7 @@ export {
     HouseDetails, ApartmentDetails, HostelDetails, OfficeDetails, LandDetails,
     FrameDetails, UploadProperty, UploadRoom, UploadHouse, UploadApartment,
     UploadHostel, UploadOffice, UploadLand, UploadFrame, FeaturesInput, ConfirmModal,
-    LogIn, SignUp, LocalFetcher, GlobalFetcher, EditProperty, EditRoom, EditHouse,
+    LogIn, SignUp, DataFetcher, PaginatedDataFetcher, EditProperty, EditRoom, EditHouse,
     EditApartment, EditHostel, EditOffice, EditLand, EditFrame, ImageUploader, 
     MultipleImageUploader, UserProperties, UserFavProperties, SearchProperties, 
     FilterPropertiesByCategory, Rating, BottomNavBar, SpinnerPageLoader, SpinnerInlineLoader,

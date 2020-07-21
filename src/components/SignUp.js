@@ -5,6 +5,7 @@ import './SignUp.scss';
 import { useGlobalState } from 'state-pool';
 import { BASE_API_URL } from '../';
 import {ProfilePictureUploader} from './'
+import { queryCache } from 'react-query';
 import { Modal, Nav, Button, Spinner } from 'react-bootstrap';
 import { setErrorClass, saveUserInfoToCookies, setTabColorDark, clearStore } from '../utils';
 
@@ -180,6 +181,7 @@ function Account(props) {
         return fetch(postUrl, { method: 'POST', body: postData, headers: headers })
             .then(res => res.json().then(data => ({ status: res.status, data: data })))
             .then(obj => {
+                queryCache.invalidateQueries((query) => true);
                 clearStore();
                 history.push("/");
             })
@@ -195,8 +197,9 @@ function Account(props) {
             await createProfilePicture(form.profile_pic, prevResponse);
         }
         else {
+            queryCache.invalidateQueries((query) => true);
             clearStore();
-            history.push("/")
+            history.push("/");
         }
     }
 

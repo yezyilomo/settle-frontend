@@ -3,12 +3,13 @@ import './EditProfile.scss';
 import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import {
-    GlobalFetcher, GlowPageLoader, ProfilePictureUploader, renderPageError
+    DataFetcher, GlowPageLoader, ProfilePictureUploader, renderPageError
 } from './';
 import { BASE_API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
 import { useRestoreScrollState } from '../hooks';
 import { saveUserInfoToCookies, getUserInfoFromCookies } from '../utils';
+import { queryCache } from 'react-query';
 
 
 function EditProfile(props) {
@@ -18,7 +19,6 @@ function EditProfile(props) {
     const [editError, setEditError] = useState('');
     const [profile, updateProfile] = useLocalState(props.profile);
     const [user,] = useGlobalState("user");
-    const [, updateGlobalProfile] = useGlobalState("my-profile");
     const [profilePicture, setProfilePicture] = useState(undefined);
 
     let createProfilePicture = (img) => {
@@ -62,8 +62,8 @@ function EditProfile(props) {
     }
 
     let redirect = (response) => {
-        // Get fresh profile data
-        updateGlobalProfile(draftProfile => null);
+        // Invalidate user properties
+        queryCache.invalidateQueries(`my-profile`);
         return history.replace(`/edit-profile/`);
     }
 
@@ -233,15 +233,16 @@ function ProfileFetcher(props){
     }
 
     return (
-        <GlobalFetcher 
+        <DataFetcher 
          selection="my-profile"
          action={fetchProfile}
          placeholder={<GlowPageLoader/>} 
          onError={renderPageError}>
-             {profile => {
+             {response => {
+                const profile = response.data;
                 return <EditProfile profile={profile} {...props}/>
              }}
-         </GlobalFetcher>
+         </DataFetcher>
     );
 }
 

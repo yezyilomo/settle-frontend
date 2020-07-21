@@ -15,18 +15,20 @@ function Home(props) {
 
     return (
         <GenericFilter endpoint={proertiesToRentEndpoint} global selection="propertiesToRent"
-            placeholder={<GlowPageLoader />} onError={renderPageError}>{properties => {
+            placeholder={<GlowPageLoader />} onError={renderPageError}>{response => {
+                let properties = response.data[0];
                 let footer = `Show all (${properties.count}+)`;
                 let footerLink = "/explore/rent-properties/";
                 return (
-                    <>
+                    <div class="animate-page">
                         <div class="p-0 m-0 px-1 px-sm-3 mt-2 mt-md-3">
                             <TwoRowsPropertiesGroup header="Rent a place" properties={properties}
                                 footer={footer} footerLink={footerLink} />
                         </div>
 
                         <GenericFilter endpoint={propertiesToSlideEndpoint} global selection="propertiesToSlide"
-                            placeholder={<GlowInlineLoader />} onError={renderInlineError}>{properties => {
+                            placeholder={<GlowInlineLoader />} onError={renderInlineError}>{response => {
+                                let properties = response.data[0];
                                 return (
                                     <div class="p-0 m-0 mt-4">
                                         <SliderPropertiesGroup header="Amazing Places" properties={properties} />
@@ -36,7 +38,8 @@ function Home(props) {
                         </GenericFilter>
 
                         <GenericFilter endpoint={propertiesToBuyEndpoint} global selection="propertiesToBuy"
-                            placeholder={<GlowInlineLoader />} onError={renderInlineError}>{properties => {
+                            placeholder={<GlowInlineLoader />} onError={renderInlineError}>{response => {
+                                let properties = response.data[0];
                                 let footer = `Show all (${properties.count}+)`;
                                 let footerLink = "/explore/buy-properties/";
                                 return (
@@ -47,7 +50,7 @@ function Home(props) {
                                 );
                             }}
                         </GenericFilter>
-                    </>
+                    </div>
                 );
             }}
         </GenericFilter>

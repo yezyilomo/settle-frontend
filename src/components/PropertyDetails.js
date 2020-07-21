@@ -3,7 +3,7 @@ import './PropertyDetails.scss';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
-    GlobalFetcher, GlowPageLoader, Rating, ConfirmModal, InfoModal,
+    DataFetcher, GlowPageLoader, Rating, ConfirmModal, InfoModal,
     Carousel as Slider, SaveButton, renderPageError
 } from './';
 import { BASE_API_URL } from '../';
@@ -11,6 +11,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'state-pool';
 import { getPropertyRoute, setTabColorDark } from '../utils';
 import { useRestoreScrollState } from '../hooks';
+import { queryCache } from 'react-query';
 
 
 function ImagesCarousel(props) {
@@ -253,7 +254,6 @@ function PropertyDetails(props) {
 
     const history = useHistory();
     const [user,] = useGlobalState("user");
-    const [, updateProperty] = useGlobalState(`property/${props.id}`, { default: null });
     const [deleteModalShow, setDeleteModalShow] = useState(false);
 
     const headers = {
@@ -266,22 +266,13 @@ function PropertyDetails(props) {
 
     let fetchProperty = () => {
         return fetch(`${BASE_API_URL}/${getPropertyRoute(props.type)}/${props.id}/`, {headers: headers})
-            .then(res => res.json())
-    }
-
-    const fetchCondition = (data) => {
-        return !data || data.isPartial;
-    }
-
-    const setter = (data) => {
-        return {data: data, isPartial: false}
+        .then(res => res.json())
     }
 
     return (
-        <GlobalFetcher action={fetchProperty} selection={`property/${props.id}`} fetchCondition={fetchCondition}
-            placeholder={<GlowPageLoader />} onError={renderPageError} setter={setter}>{propertyData => {
-
-                let property = propertyData.data;
+        <DataFetcher action={fetchProperty} selection={`property/${props.id}`}
+            placeholder={<GlowPageLoader />} onError={renderPageError}>{response => {
+                const property = response.data;
                 let isAllowedToEdit = user.id == property.owner.id
 
                 let main_img = property.pictures.filter((picture) => picture.is_main)
@@ -296,7 +287,9 @@ function PropertyDetails(props) {
 
                 let redirect = (status) => {
                     if (status === 204) {
-                        updateProperty(property => null)
+                        // Invalidate user properties
+                        queryCache.invalidateQueries(`myProperties.properties`);
+                        queryCache.invalidateQueries(`myProperties.${getPropertyRoute(props.type)}`);
                         return history.replace('/properties/');
                     }
                     // Report Error
@@ -405,7 +398,7 @@ function PropertyDetails(props) {
                             </div>
                         </div>
                     </div>)
-            }}</GlobalFetcher>
+            }}</DataFetcher>
     )
 }
 

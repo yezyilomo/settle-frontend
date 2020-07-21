@@ -5,13 +5,14 @@ import { Button, Spinner } from 'react-bootstrap';
 import { useGlobalState, useLocalState } from 'state-pool';
 import {
     FeaturesInput, ImageUploader, MultipleImageUploader,
-    GlobalFetcher, GlowInlineLoader
+    DataFetcher, GlowInlineLoader
 } from './';
 import { BASE_API_URL } from '../';
 import { getPropertyRoute, capitalizeFirst } from '../utils';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import { queryCache } from 'react-query';
 
 
 let initialFieldsData = {
@@ -50,6 +51,9 @@ function UploadProperty(props){
     let postImages = (propertyID, pictures) => {
         // Post Images recusively until they are all done
         if(pictures.length === 0){
+            // Invalidate user properties
+            queryCache.invalidateQueries(`myProperties.properties`);
+            queryCache.invalidateQueries(`myProperties.${getPropertyRoute(props.type)}`);
             // Redirect to created property
             return history.push(`/${getPropertyRoute(props.type)}/${propertyID}`);
         }
@@ -233,20 +237,20 @@ function UploadProperty(props){
                         <div class="col-12 p-0 m-0 my-1">
                             <select class="custom-select" name="available_for" value={fields.available_for} onChange={updateValue} required>
                                 <option value="" disabled selected>Select Category</option>
-                                <GlobalFetcher
+                                <DataFetcher
                                     selection={`properties-availability`}
                                     action={fetchPropertiesAvailability}
                                     placeholder={<GlowInlineLoader />}
                                     error={`Couldn't load property availability options.`}>
-                                    {propertiesAvailability => {
-                                        const available_for_options = propertiesAvailability[props.type];
+                                    {response => {
+                                        const available_for_options = response.data[props.type];
                                         return available_for_options.map(
                                             (available_for) => <option value={available_for}>
                                                 {capitalizeFirst(available_for)}
                                             </option>
                                         )
                                     }}
-                                </GlobalFetcher>
+                                </DataFetcher>
                             </select>
                         </div>
                     </div>

@@ -9003,6 +9003,13 @@ react-overlays@^2.1.0:
     uncontrollable "^7.0.0"
     warning "^4.0.3"
 
+react-query@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.5.4.tgz#c456d6122b150e3858a8eb262041a9fb36e6c4d0"
+  integrity sha512-gsg9M7eIYjMqrNM8Gzzo0cdXnkuM2git1hWyp9tA9/B779zZQ+HhL6vWOIlObX3gsKfIKAgJ0SKUUn9NdiF2xQ==
+  dependencies:
+    ts-toolbelt "^6.9.4"
+
 react-redux@^7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.1.1.tgz#ce6eee1b734a7a76e0788b3309bf78ff6b34fa0a"
@@ -10586,6 +10593,11 @@ ts-pnp@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.2.tgz#be8e4bfce5d00f0f58e0666a82260c34a57af552"
   integrity sha512-f5Knjh7XCyRIzoC/z1Su1yLLRrPrFCgtUAh/9fCSP6NKbATwpOL1+idQVXQokK9GRFURn/jYPGPfegIctwunoA==
+
+ts-toolbelt@^6.9.4:
+  version "6.13.12"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.13.12.tgz#01b270042246930bc77439739d1e27aa4f0b51f7"
+  integrity sha512-ZVuxvLy5fh1PcndUTbXoJVMY0sq+70kNbXENrLC+Z2wfWuEfPEdvSJu+v8KagYRaidigvfDPRBHQv4ObMcOCjQ==
 
 tslib@^1.8.1, tslib@^1.9.0:
   version "1.9.3"
