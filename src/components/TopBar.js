@@ -97,9 +97,8 @@ function TopBar(props) {
                     <span class="icon icon-menu"></span>
                 }
             </Navbar.Toggle>
-            <Navbar.Collapse className="col-12 col-lg-4 m-0 px-1 px-lg-3" id="basic-navbar-nav">
-                <hr class="line p-0 m-0 mt-1 d-lg-none" />
-                <Nav className="col-12 p-0 d-flex justify-content-end">
+            <Navbar.Collapse className="row collapsible-menu col-lg-4 m-0 px-0 px-lg-3" id="basic-navbar-nav">
+                <Nav className="col-9 col-lg-12 p-0 m-0 d-flex nav-menu">
                     <Nav.Link href="#/">Home</Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
                     {!user.isLoggedIn ?
@@ -122,6 +121,8 @@ function TopBar(props) {
                         <>
                             <CreateProperty />
                             <hr class="line p-0 m-0 d-lg-none" />
+                            <Nav.Link className="d-lg-none" href="#properties/">My Properties</Nav.Link>
+                            <hr class="line p-0 m-0 d-lg-none" />
                         </> :
                         null
                     }
@@ -140,8 +141,8 @@ function TopBar(props) {
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="nav-dropdown-menu bw-0 bw-lg-1">
                                     <hr class="line p-0 m-0 d-lg-none" />
-                                    <Dropdown.Item className="nav-dropdown-item" href="#properties/">My Properties</Dropdown.Item>
-                                    <hr class="line p-0 m-0" />
+                                    <Dropdown.Item className="nav-dropdown-item d-none d-lg-block" href="#properties/">My Properties</Dropdown.Item>
+                                    <hr class="line d-none d-lg-block p-0 m-0" />
                                     <Dropdown.Item className="nav-dropdown-item" href="#edit-profile/">Edit My Profile</Dropdown.Item>
                                     <hr class="line p-0 m-0" />
                                     <Dropdown.Item className="nav-dropdown-item" href="#/" onClick={logOut}>
@@ -155,6 +156,7 @@ function TopBar(props) {
                     }
                     <div class="py-4 d-lg-none"></div>
                 </Nav>
+                <div class="overlay col-3 d-lg-none p-0 m-0"></div>
             </Navbar.Collapse>
         </Navbar>
     );
