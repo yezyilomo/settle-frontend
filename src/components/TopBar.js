@@ -156,7 +156,7 @@ function TopBar(props) {
                     }
                     <div class="py-4 d-lg-none"></div>
                 </Nav>
-                <div class="overlay col-3 d-lg-none p-0 m-0"></div>
+                <Navbar.Toggle className="overlay col-3 d-lg-none p-0 m-0" aria-controls="basic-navbar-nav"/>
             </Navbar.Collapse>
         </Navbar>
     );
