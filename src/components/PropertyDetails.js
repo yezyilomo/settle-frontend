@@ -417,10 +417,11 @@ function Contact(props) {
 
 
 function price(property) {
+    const cash = `${property.currency} ${property.price}`
     if (property.price_rate_unit) {
-        return `${property.price} / ${property.price_rate_unit}`;
+        return `${cash} / ${property.price_rate_unit}`;
     }
-    return `${property.price}`;
+    return cash;
 }
 
 
