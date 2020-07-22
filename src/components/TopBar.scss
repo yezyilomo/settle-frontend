@@ -3,6 +3,7 @@
 #top-navbar {
     box-shadow: 0 -7px 10px black;
     font-size: 1.15em;
+    overflow: visible;
 }
 
 .navbar-brand {
@@ -137,6 +138,56 @@
 .search-form a:hover .search-button {
     color: rgb(76, 76, 76);
 }
+
+
+.collapsible-menu{
+    width: calc(100% + 30px);
+    position: fixed;
+    top: 53px;
+    background-color: transparent;
+    -webkit-transition: none;
+    right: 0;
+
+    .nav-menu{
+        height: 100vh;
+        background-color: white;
+        justify-content: start;
+        box-shadow: inset 20px -7px 10px black;
+        overflow-y: auto;
+    }
+    
+    .overlay{
+        height: 100vh;
+        background-color: black;
+        opacity: .25;
+    }
+    
+    .nav-menu a {
+        margin-left: 40px;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .collapsible-menu{
+        position: initial;
+        background-color: transparent;
+        -webkit-transition: none;
+    
+        .nav-menu{
+            height: auto;
+            background-color: inherit;
+            border: none;
+            justify-content: end;
+            box-shadow: none;
+            overflow: visible;
+        }
+        
+        .nav-menu a {
+            margin: unset;
+        }
+    }
+}
+
 
 .nav-dropdown-menu{
     overflow: hidden;
