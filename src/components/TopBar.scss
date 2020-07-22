@@ -46,10 +46,11 @@
 }
 
 .navbar-toggler .icon-menu {
-    width: 41px;
-    height: 41px;
+    width: 30px;
+    height: 30px;
     position: relative;
     top: 2px;
+    background-color: rgb(88, 88, 88);
 }
 
 .navbar-profile-picture {
@@ -140,13 +141,40 @@
 }
 
 
+@keyframes slide-in-nav-menu {
+    0% {
+        right: 100%;
+    }
+
+    100% {
+        right: 0;
+    }
+}
+
+
+@keyframes fade-in-overlay {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: .3;
+    }
+}
+
 .collapsible-menu{
+    animation-name: slide-in-nav-menu;
+    animation-duration: .1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+
     width: calc(100% + 30px);
     position: fixed;
     top: 53px;
     background-color: transparent;
     -webkit-transition: none;
-    right: 0;
+    transition: none;
+    right: 100%;
 
     .nav-menu{
         height: 100vh;
@@ -159,7 +187,15 @@
     .overlay{
         height: 100vh;
         background-color: black;
-        opacity: .25;
+        opacity: 0;
+        border-radius: 0;
+        cursor: auto;
+        
+        animation-name: fade-in-overlay;
+        animation-delay: .15s;
+        animation-duration: .1s;
+        animation-timing-function: ease-out;
+        animation-fill-mode: forwards;
     }
     
     .nav-menu a {
