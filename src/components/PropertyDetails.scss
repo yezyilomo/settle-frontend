@@ -218,6 +218,29 @@
     color: white;
 }
 
+
+.owner-profile-picture {
+    border: 1px solid rgb(170, 170, 170);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    background-color: rgb(240, 240, 240);
+}
+
+.owner-profile-picture img {
+    height: 100%;
+    width: 100%;
+}
+
+.owner-profile-picture .icon-user {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 5px;
+    background-color: rgb(117, 117, 117);
+}
+
 .badge {
     font-size: 0.95em;
 }
