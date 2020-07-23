@@ -19,7 +19,7 @@
     bottom: 7px;
     z-index: 1;
     background-color: white;
-    opacity: .6;
+    opacity: .75;
     padding: 5px;
     height: 30px;
     width: 30px;
@@ -27,20 +27,12 @@
     text-align: center;
     box-shadow: 1px 1px 5px rgb(51, 51, 51);
     cursor: pointer;
+    transition: opacity .15s;
 }
 
 .prop-img .save-button:hover{
     opacity: 1;
 }
-
-.prop-img .save-button:hover .icon-heart{
-    background-color: $primary;
-}
-
-.prop-img .save-button:hover .icon-heart-solid{
-    background-color: rgb(83, 83, 83);
-}
-
 
 .prop-img .save-button{
     .icon-heart, .icon-heart-solid{
