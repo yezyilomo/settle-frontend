@@ -1,8 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './AddToHomeScreen.scss';
 
 
 function AddToHomeScreen(props){
+    const [display, setDisplay] = useState('');
+
     useEffect(()=>{
         let deferredPrompt;
         const addBtn = document.querySelector('.add-button');
@@ -24,12 +26,11 @@ function AddToHomeScreen(props){
                 // Wait for the user to respond to the prompt
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
-                        console.log('User accepted the A2HS prompt');
+                        setDisplay('d-none');
                     } else {
                         console.log('User dismissed the A2HS prompt');
                     }
                     deferredPrompt = null;
-                    addBtnContainer.style.display = "none";
                 });
             });
         });
@@ -41,7 +42,7 @@ function AddToHomeScreen(props){
     }
 
     return (
-        <div class="add-to-home-screen">
+        <div class={`add-to-home-screen ${display}`}>
             <div class="row p-0 m-0">
                 <div class="col-10 m-0 add-button">Add Settle to home screen</div>
                 <div class="col m-0 cancel-button" onClick={removeAddToHomeScreen}>
