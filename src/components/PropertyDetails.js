@@ -383,9 +383,9 @@ function PropertyDetails(props) {
                                         {property.other_features.map((feature) => {
                                             return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
                                         })}
-                                        <Contact value={property.contact} />
+                                        <Contact property={property} />
                                     </div>
-                                    <hr class="line d-md-none m-0 p-0" />
+                                    <hr class="line d-md-none m-0 p-0 mt-1" />
                                 </div>
 
                                 <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
@@ -403,15 +403,29 @@ function PropertyDetails(props) {
 
 
 function Contact(props) {
-    let contact = props.value;
+    const contact = props.property.contact;
+    const ownerPicture = props.property.owner.picture.src;
     return (
-        <>
-            <div class="h5 p-0 m-0 mt-3">Contact</div>
+        <div class="col-12 p-0 m-0">
+            <div class="h5 p-0 m-0 mt-3">Contact your host</div>
             <hr class="line m-0 p-0 mt-1 mb-2" />
-            <div class="other-feature"><b>Name:</b> {contact.name}</div>
-            <div class="other-feature"><b>Phone:</b> {contact.phone}</div>
-            <div class="other-feature"><b>Email:</b> {contact.email}</div>
-        </>
+
+            <div class="row p-0 m-0">
+                <div class="col-10 p-0 m-0">
+                    <div class="other-feature"><b>Name:</b> {contact.name}</div>
+                    <div class="other-feature"><b>Phone:</b> {contact.phone}</div>
+                    <div class="other-feature"><b>Email:</b> {contact.email}</div>
+                </div>
+                <div class="col-2 p-0 m-0 mt-1 d-flex justify-content-end">
+                    <div class="owner-profile-picture text-center">
+                        {!ownerPicture ?
+                            <span class="icon icon-user" /> :
+                            <img src={ownerPicture} alt="" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 
