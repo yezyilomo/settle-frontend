@@ -5,7 +5,7 @@ import { setTabColorDark } from '../utils';
 
 
 function ConfirmModal(props) {
-    setTabColorDark(props.modalShow);
+    setTabColorDark(props.modalShow, "#252525");
 
     return (
         <Modal animation={false} className="confirm-modal" backdropClassName="confirm-modal-backdrop" show={props.modalShow} onHide={() => props.setModalShow(false)} size={props.size} aria-labelledby="contained-modal-title-vcenter" centered>

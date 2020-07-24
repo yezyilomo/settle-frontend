@@ -18,7 +18,7 @@ function LogIn(props) {
     const [isLoading, setLoading] = useState(false);
 
     useEffect(setErrorClass, []);
-    setTabColorDark(showLogInModal || showSignUpModal);
+    setTabColorDark(showLogInModal || showSignUpModal, "#151515");
 
     let updateLogin = (response) => {
         let auth_token = response.token;

@@ -222,15 +222,20 @@ function Badges(props) {
                         <Button className="text-decoration-none m-0 p-0 mt-2 w-100 text-left" variant="link" onClick={() => setModalShow(true)}>
                             {`Show all ${props.values.length} ${props.label}`}
                         </Button>
-                        <InfoModal header={props.label} modalShow={modalShow} setModalShow={setModalShow}>
-                            {props.values.map((val) => {
-                                return (
-                                    <div class="px-2 pt-3" style={{ "font-size": "1.05em" }}>
-                                        {val}
-                                        <hr class="line m-0 mt-2 p-0" />
-                                    </div>
-                                )
-                            })}
+                        <InfoModal positionBottom header={props.label} modalShow={modalShow} setModalShow={setModalShow}>
+
+                            <ul class="m-0 p-0">
+                                {props.values.map((val) => {
+                                    return (
+                                        <>
+                                            <li class="m-0 p-0">
+                                                <div class="m-0 px-2 pb-2 pt-3">{val}</div>
+                                            </li>
+                                            <hr class="line m-0 p-0" />
+                                        </>
+                                    )
+                                })}
+                            </ul>
                         </InfoModal>
                     </> :
                     null
