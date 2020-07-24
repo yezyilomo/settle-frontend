@@ -2,16 +2,17 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useGlobalState } from 'state-pool';
 import './SideBar.scss';
+import variables from '../variables.scss';
 import { BASE_API_URL } from '../';
+import { AsyncCreatableSelect } from './'
 import { setErrorClass } from '../utils';
-import AsyncCreatableSelect from 'react-select/async-creatable';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 
 
 const PriceRangeSlider = withStyles({
     root: {
-        color: '#008489',
+        color: variables.primaryColor,
         height: 8,
     },
     thumb: {
@@ -161,7 +162,7 @@ function SideBar(props) {
                     <label class="form-check-label col-12 p-0 m-0">Amenities</label>
                     <div class="row mt-1 mb-3">
                         <div class="col-12">
-                            <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions
+                            <AsyncCreatableSelect isMulti cacheOptions
                                 defaultOptions value={filterFields.amenities}
                                 loadOptions={getAmenities} onChange={updateAmenities} />
                         </div>
