@@ -5,3 +5,9 @@
 
 // Override bootstrap color variables
 @import "theme.scss";
+
+// Variables to export to JS
+:export {
+    primaryColor: $primary;
+    transparentPrimaryColor: transparentize($color: $primary, $amount: 0.8);
+}
