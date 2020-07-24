@@ -1,7 +1,42 @@
+@import '../variables.scss';
+
+$border-radius: 15px;
+
 .info-modal .modal-header {
-    border-radius: 15px 15px 0 0;
+    border-radius: $border-radius $border-radius 0 0;
+
+    .modal-title{
+        font-size: 1.2em;
+        font-weight: 500;
+        padding: 2px 0;
+        color: transparentize($color: $dark, $amount: 0.1)
+    }
 }
 
 .info-modal .modal-body {
     border-radius: 0 0 15px 15px;
+    max-height: 70vh;
+}
+
+.bottom-info-modal>div>div{
+    position: fixed;
+    bottom: 0;
+    border-radius: 0;
+
+    .modal-body {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .bottom-info-modal>div>div{
+        position: relative;
+        bottom: unset;
+
+        .modal-body {
+            border-bottom-left-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
+        }
+    }
 }

@@ -47,6 +47,7 @@ import {InfoModal} from './InfoModal';
 import {ConfirmModal} from './ConfirmModal';
 import {Map} from './Map';
 import {SaveButton} from './SaveButton';
+import {AsyncCreatableSelect} from './SelectInputs';
 
 
 export {
@@ -62,5 +63,6 @@ export {
     renderInlineError, PageNotFound, Carousel, GenericFilter ,PropertiesFilter,
     EndpointPropertiesFilter, GenericResourcesGroup, PropertiesGroup, AddToHomeScreen,
     SliderPropertiesGroup, TwoRowsPropertiesGroup, ShowBuyProperties, ShowRentProperties,
-    EditProfile, ProfilePictureUploader, InfoModal, Map, PROPERTIES_QUERY_PARAM, SaveButton
+    EditProfile, ProfilePictureUploader, InfoModal, Map, PROPERTIES_QUERY_PARAM, SaveButton,
+    AsyncCreatableSelect
 };

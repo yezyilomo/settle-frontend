@@ -11,7 +11,7 @@ import { useGlobalState, useLocalState } from 'state-pool';
 import { getPropertyRoute, capitalizeFirst } from '../utils';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import AsyncCreatableSelect from 'react-select/async-creatable';
+import { AsyncCreatableSelect } from './'
 import { queryCache } from 'react-query';
 import { useScrollTop } from '../hooks';
 
@@ -398,7 +398,7 @@ function EditFetchedProperty(props) {
                         <label class="form-check-label col-12 p-0 m-0">Amenities</label>
                         <div class="row mt-1 mb-3">
                             <div class="col-12">
-                                <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions
+                                <AsyncCreatableSelect isMulti cacheOptions
                                     defaultOptions value={selectionFields.amenities}
                                     loadOptions={get('amenities')} onChange={update('amenities')} />
                             </div>
@@ -407,7 +407,7 @@ function EditFetchedProperty(props) {
                         <label class="form-check-label col-12 p-0 m-0">Nearby Services</label>
                         <div class="row mt-1 mb-3">
                             <div class="col-12">
-                                <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions
+                                <AsyncCreatableSelect isMulti cacheOptions
                                     defaultOptions value={selectionFields.services}
                                     loadOptions={get('services')} onChange={update('services')} />
                             </div>
@@ -416,7 +416,7 @@ function EditFetchedProperty(props) {
                         <label class="form-check-label col-12 p-0 m-0">Potential For</label>
                         <div class="row mt-1 mb-3">
                             <div class="col-12">
-                                <AsyncCreatableSelect className="react-select-container" isMulti cacheOptions
+                                <AsyncCreatableSelect isMulti cacheOptions
                                     defaultOptions value={selectionFields.potentials}
                                     loadOptions={get('potentials')} onChange={update('potentials')} />
                             </div>

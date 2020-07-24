@@ -299,7 +299,7 @@ function Account(props) {
 function SignUp(props) {
     const [showSignUpModal, ,setShowSignUpModal] = useGlobalState("showSignUpModal");
     const [showLogInModal, ,setShowLogInModal] = useGlobalState("showLogInModal");
-    setTabColorDark(showSignUpModal || showLogInModal);
+    setTabColorDark(showSignUpModal || showLogInModal, "#151515");
 
     let goToLogIn = (e) => {
         setShowSignUpModal(false);
