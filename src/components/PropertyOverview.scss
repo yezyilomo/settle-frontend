@@ -69,15 +69,16 @@
 
 .prop-overview .prop-type span {
     padding: 0 3px 0 3px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     margin-top: 5px;
     display: inline-block;
     border-radius: 5px;
 }
 
-.prop-overview .prop-price {
+.prop-overview .price, .prop-overview .prop-rating {
     font-weight: 500;
+    font-size: 14px;
 }
 
 .prop-overview .prop-location i {
@@ -135,7 +136,7 @@
     border-radius: 5px;
 }
 
-.prop-slider-overview .prop-location, .prop-slider-overview .prop-price {
+.prop-slider-overview .prop-rating, .prop-slider-overview .price {
     font-weight: 500;
 }
 
