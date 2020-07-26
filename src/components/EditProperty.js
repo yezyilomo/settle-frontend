@@ -161,6 +161,7 @@ function EditFetchedProperty(props) {
             price: form.price.value,
             price_rate_unit: form.available_for.value === 'rent'? form.price_rate_unit.value: null,
             currency: form.currency.value,
+            payment_terms: form.payment_terms.value,
             amenities: formatSelection("amenities"),
             services: formatSelection("services"),
             potentials: formatSelection("potentials"),
@@ -351,6 +352,16 @@ function EditFetchedProperty(props) {
                                     </div>
                                 </div>
                             }
+
+                            <div class="row p-0 m-0 mt-2">
+                                <label class="form-check-label col-12 p-0 m-0">Payment Terms</label>
+                                <div class="col-12 p-0 m-0">
+                                    <textarea type="text" data-field="payment_terms" name="payment_terms"
+                                        value={fields.payment_terms} onChange={updateValue} rows="2"
+                                        class="form-control" placeholder="Example: 6 months in advance." />
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 

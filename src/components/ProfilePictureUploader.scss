@@ -43,14 +43,14 @@
 }
 
 .profile-picture-remove{
-    padding-right: 35px;
+    padding-right: 25px;
 }
 
 .profile-picture-remove-icon {
     cursor: pointer;
     //font-size: 24px;      // To override
     position: absolute;
-    bottom: -8px;
+    bottom: -8px;          // To override
     color: #eeeeee;
     background-color: rgb(95, 95, 95);
     border-radius: 50%;

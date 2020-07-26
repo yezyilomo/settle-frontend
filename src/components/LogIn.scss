@@ -1,7 +1,7 @@
 @import "../variables.scss";
 
 .login{
-    border-radius: 10px;
+    border-radius: 15px;
     background-color: rgb(253, 253, 253);
 }
 .login-form input{
@@ -18,6 +18,14 @@
 
 .login-form input:focus {
     box-shadow: 0 0 0 white;
+    border: solid 0 transparent;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px rgb(253, 253, 253) inset !important;
 }
 
 .login-form button[type="submit"]{
@@ -29,8 +37,8 @@
 
 .login-modal .modal-close{
     position: absolute;
-    right: 6px;
-    top: 6px;
+    right: 7px;
+    top: 7px;
     cursor: pointer;
     z-index: 3;
     padding: 5px;

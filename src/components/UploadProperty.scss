@@ -1,7 +1,8 @@
 @import '../variables.scss';
 
 .property-form input,
-.property-form select {
+.property-form select,
+.property-form textarea {
     font-size: 1em;
     border-color: rgb(238, 238, 238);
     height: 40px;
@@ -9,8 +10,14 @@
     background-color: rgb(250, 250, 250);
 }
 
+.property-form textarea {
+    height: auto;
+    padding: 5px;
+}
+
 .property-form input:focus,
-.property-form select:focus {
+.property-form select:focus,
+.property-form textarea:focus {
     border-width: 1px;
     box-shadow: 0 0 0 white;
     border-color: $primary;

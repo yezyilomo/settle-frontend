@@ -6,9 +6,9 @@ import { getPropertyRoute, capitalizeFirst } from '../utils';
 
 
 function price(property) {
-    const cash = `${property.currency} ${property.price}`
+    const cash = <span class="price">{property.currency} {property.price}</span>
     if (property.price_rate_unit) {
-        return `${cash} / ${property.price_rate_unit}`;
+        return <span>{cash} / {property.price_rate_unit}</span>;
     }
     return cash;
 }

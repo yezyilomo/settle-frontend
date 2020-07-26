@@ -103,7 +103,7 @@ function LogIn(props) {
                 <Modal.Body className="p-0 m-0 modal-body">
                     <div class="container-fluid login py-4">
                         <center class="header col-12 h5 m-0 p-0 pt-2 text-secondary">Login to your account</center>
-                        <form class="login-form text-secondary" onSubmit={login}>
+                        <form class="login-form text-secondary mt-3" onSubmit={login}>
                             <div class="row justify-content-center">
                                 <div class="col-10 p-0 m-0 my-2 my-lg-3">
                                     <div class="col-12 px-2 floating">
@@ -117,9 +117,13 @@ function LogIn(props) {
                                         <label for="password" class="floating__label" data-content="Password"></label>
                                     </div>
                                 </div>
-                                <div class="text-danger">
-                                    {loginError}
-                                </div>
+
+                                {loginError ?
+                                    <div class="col-10 p-0 m-0 text-danger text-center mt-2 mt-lg-3">
+                                        {loginError+loginError}
+                                    </div> : null
+                                }
+
                                 <div class="col-10 p-0 m-0 my-2 my-lg-3">
                                     <div class="col-12 px-2">
                                         <Button className="col-12 my-3" variant="primary" disabled={isLoading} type="submit">

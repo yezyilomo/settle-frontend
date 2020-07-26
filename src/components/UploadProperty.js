@@ -14,6 +14,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { AsyncCreatableSelect } from './'
 import { queryCache } from 'react-query';
 import { useScrollTop } from '../hooks';
+import { TextField } from '@material-ui/core';
 
 
 let initialFieldsData = {
@@ -107,6 +108,7 @@ function UploadProperty(props){
             price: form.price.value,
             price_rate_unit: form.available_for.value === 'rent'? fields.price_rate_unit: null,
             currency: form.currency.value,
+            payment_terms: form.payment_terms.value,
             location: {
                 country: form.country.value,
                 region: form.region.value,
@@ -292,6 +294,16 @@ function UploadProperty(props){
                                     </div>
                                 </div>
                             }
+
+                            <div class="row p-0 m-0 mt-2">
+                                <label class="form-check-label col-12 p-0 m-0">Payment Terms</label>
+                                <div class="col-12 p-0 m-0">
+                                    <textarea type="text" data-field="payment_terms" name="payment_terms"
+                                        value={fields.payment_terms} onChange={updateValue} rows="2"
+                                        class="form-control" placeholder="Example: 6 months in advance." />
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 

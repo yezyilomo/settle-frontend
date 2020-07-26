@@ -156,7 +156,7 @@ function Account(props) {
         for (let key in data) {
             messages.push(`${data[key]}`);
         }
-        return messages.join(", ");
+        return messages.join(" ");
     }
 
     let login = (response) => {
@@ -268,9 +268,11 @@ function Account(props) {
                         </div>
                     </div>
 
-                    <div class="text-danger text-center mt-3">
-                        {signupError}
-                    </div>
+                    {signupError ?
+                        <div class="col-10 p-0 m-0 text-danger text-center mt-2 mt-lg-3">
+                            {signupError}
+                        </div> : null
+                    }
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="row px-2">
@@ -316,7 +318,7 @@ function SignUp(props) {
                 </div>
                 <Modal.Body className="p-0 m-0">
                     <div class="container-fluid signup py-4">
-                        <center class="header col-12 h5 m-0 p-0 pt2 text-secondary">Create your free account</center>
+                        <center class="header col-12 h5 m-0 p-0 pt-2 text-secondary">Create your account</center>
                         <MemoryRouter initialEntries={["/about", "/account", { pathname: "/" }]} initialIndex={0}>
                             <Route exact path="/about" component={About} />
                             <Route exact path="/account" component={Account} />
