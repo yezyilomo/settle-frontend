@@ -13,6 +13,8 @@ import { getPropertyRoute, setTabColorDark, capitalizeFirst } from '../utils';
 import { queryCache } from 'react-query';
 import { useScrollTop } from '../hooks';
 
+import { formatDistance } from 'date-fns'
+
 
 function ImagesCarousel(props) {
     let activeImageIndex = props.images.indexOf(props.activeImage);
@@ -205,8 +207,8 @@ function Badges(props) {
 
     return (
         values.length > 0 ?
-            <div class="mb-3">
-                <div class="h5">{props.label}</div>
+            <div class="mb-4">
+                <div class="h5 m-0 p-0 mb-1">{props.label}</div>
                 {values.map((val) => {
                     return (
                         <>
@@ -248,9 +250,10 @@ function Badges(props) {
 
 
 function Descriptions(props) {
-    return (
-        <div dangerouslySetInnerHTML={{ __html: props.value }} />
-    );
+    if(props.value){
+        return <div class="mb-4" dangerouslySetInnerHTML={{ __html: props.value }} />;
+    }
+    return null;
 }
 
 
@@ -349,13 +352,13 @@ function PropertyDetails(props) {
                         {isAllowedToEdit ?
                             <div class="col-12 p-0 m-0">
                                 <div class="actions row m-0 p-0">
-                                    <div class="col text-center py-2">
+                                    <div class="col text-center py-2 p-0 m-0">
                                         <ConfirmModal size="md" modalShow={deleteModalShow} setModalShow={setDeleteModalShow} options={confirmDeletionOptions} text={confirmDeletionText} />
-                                        <b class="delete-property" onClick={() => { setDeleteModalShow(true) }}>Delete <span class="fa fa-trash mt-2 ml-1 ml-lg-3 delete-property-icon" /></b>
+                                        <b class="delete-property" onClick={() => { setDeleteModalShow(true) }}><span class="fa fa-trash mt-2 mr-1 mr-lg-3 delete-property-icon" /> Delete</b>
                                     </div>
-                                    <div class="col text-center py-2">
+                                    <div class="col text-center py-2 p-0 m-0">
                                         <Link to={`/edit/${getPropertyRoute(props.type)}/${property.id}`} class="edit-property text-decoration-none">
-                                            <b>Edit <span class="fas fa-edit mt-2 ml-1 ml-lg-3 edit-property-icon" /></b>
+                                            <b><span class="fas fa-edit mt-2 mr-1 mr-lg-3 edit-property-icon" /> Edit</b>
                                         </Link>
                                     </div>
                                 </div>
@@ -365,32 +368,57 @@ function PropertyDetails(props) {
                         }
 
                         <div class="col-12 p-0 m-0">
-                            <div class="row p-0 m-0 px-3 px-sm-4 mt-2 mt-md-4 pt-md-2 text-dark">
+                            <div class="row p-0 m-0 px-3 px-sm-4 mt-1 mt-md-4 pt-md-2 text-dark">
                                 <div class="detailed-prop-info col-12 col-md-5 p-0 m-0 pl-md-2 order-1 order-md-2">
-                                    <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-2">
-                                        <div class="property-type">{capitalizeFirst(property.type)}  available for <span class="bg-primary text-light">{property.available_for}</span></div>
-                                        <div class="property-location"> <i class="fa fa-map-marker-alt"></i>
-                                            &nbsp;{property.location.region + "," + property.location.country}
+                                    <div class="prop-info-card sticky-top bw-0 bw-md-1 py-1 px-md-3 py-md-3">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <div class="property-type">{capitalizeFirst(property.type)}  available for <span class="bg-primary text-light">{property.available_for}</span></div>
+                                                <div class="property-location mt-2"> <i class="fa fa-map-marker-alt"></i>
+                                                &nbsp;{property.location.region + "," + property.location.country}
+                                                </div>
+                                                <div class="property-price mt-2">
+                                                    {child.price}
+                                                </div>
+                                            </div>
+
+                                            <div class="col text-right">
+                                                <div class="property-post-time">
+                                                    <i class="fa fa-clock"></i> {formatDistance(new Date(property.post_date), new Date())} ago
+                                                </div>
+                                                <div class="property-rating p-0 m-0 mt-3">
+                                                    <div>(4.6)</div>
+                                                    <Rating rating={property.rating} />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="property-price">
-                                            {child.price}
-                                        </div>
+
                                         {property.payment_terms !== null ?
-                                            <div class="peyment-terms">
-                                                Payment terms: {property.payment_terms}
-                                            </div> :
+                                            <>
+                                                <hr class="line m-0 p-0 mt-1 mb-1" />
+                                                <div class="peyment-terms">
+                                                    Payment terms: {property.payment_terms}
+                                                </div>
+                                            </> :
                                             null
                                         }
-                                        <div class="property-rating">
-                                            <span class="rating-label">Rating</span><Rating rating={property.rating} />
+
+                                        <hr class="line m-0 p-0 my-2" />
+
+                                        <div class="row">
+                                            {child.otherFeatures}
+                                            {property.other_features.map((feature) => {
+                                                return <div class="col-6 other-feature"><b>{feature.name}:</b> {feature.value}</div>;
+                                            })}
                                         </div>
-                                        {child.otherFeatures}
-                                        {property.other_features.map((feature) => {
-                                            return <div class="other-feature"><b>{feature.name}:</b> {feature.value}</div>;
-                                        })}
+
+                                        {child.otherFeatures || property.other_features.length > 0 ?
+                                            <hr class="line m-0 p-0 mt-2 mb-4" />: null
+                                        }
+                                        
                                         <Contact property={property} />
+                                        <hr class="line d-lg-none m-0 p-0 mt-3 mb-2" />
                                     </div>
-                                    <hr class="line d-md-none m-0 p-0 mt-1" />
                                 </div>
 
                                 <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
@@ -412,7 +440,7 @@ function Contact(props) {
     const ownerPicture = props.property.owner.picture.src;
     return (
         <div class="col-12 p-0 m-0">
-            <div class="h5 p-0 m-0 mt-3">Contact your host</div>
+            <div class="h5 p-0 m-0 mt-3">Contact Dealer</div>
             <hr class="line m-0 p-0 mt-1 mb-2" />
 
             <div class="row p-0 m-0">
@@ -436,9 +464,9 @@ function Contact(props) {
 
 
 function price(property) {
-    const cash = `${property.currency} ${property.price}`
+    const cash = <span class="price">{property.currency} {property.price}</span>
     if (property.price_rate_unit) {
-        return `${cash} / ${property.price_rate_unit}`;
+        return <span>{cash} / {property.price_rate_unit}</span>;
     }
     return cash;
 }
@@ -448,7 +476,7 @@ function RoomDetails(props) {
     return (
         <PropertyDetails type="room" id={props.id}>
             {property => ({
-                price: <div>{`Price: ${price(property)}`}</div>
+                price: <div>{price(property)}</div>
             })}
         </PropertyDetails>
     );
@@ -459,7 +487,7 @@ function HouseDetails(props) {
     return (
         <PropertyDetails type="house" id={props.id}>
             {property => ({
-                price: <div>{`Price: ${price(property)}`}</div>
+                price: <div>{price(property)}</div>
             })}
         </PropertyDetails>
     );
@@ -470,7 +498,7 @@ function ApartmentDetails(props) {
     return (
         <PropertyDetails type="apartment" id={props.id}>
             {property => ({
-                price: <div>{`Price: ${price(property)}`}</div>
+                price: <div>{price(property)}</div>
             })}
         </PropertyDetails>
     );
@@ -481,7 +509,7 @@ function HostelDetails(props) {
     return (
         <PropertyDetails type="hostel" id={props.id}>
             {property => ({
-                price: <div>{`Price: ${price(property)}`}</div>
+                price: <div>{price(property)}</div>
             })}
         </PropertyDetails>
     );
@@ -492,7 +520,7 @@ function OfficeDetails(props) {
     return (
         <PropertyDetails type="office" id={props.id}>
             {property => ({
-                price: <div>{`Price: ${price(property)}`}</div>
+                price: <div>{price(property)}</div>
             })}
         </PropertyDetails>
     );
@@ -511,7 +539,7 @@ function LandDetails(props) {
     return (
         <PropertyDetails type="land" id={props.id}>
             {property => ({
-                price: <div>{`Price: ${price(property)}`}</div>,
+                price: <div>{price(property)}</div>,
 
                 otherFeatures: (
                     <>
@@ -546,7 +574,7 @@ function FrameDetails(props) {
     return (
         <PropertyDetails type="frame" id={props.id}>
             {property => ({
-                price: <div>{`Price: ${price(property)}`}</div>
+                price: <div>{price(property)}</div>
             })}
         </PropertyDetails>
     );

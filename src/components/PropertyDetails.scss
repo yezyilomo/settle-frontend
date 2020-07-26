@@ -138,12 +138,12 @@
 .prop-info-card {
     top: 90px;
     border-color: #dddddd;
-    border-radius: 4px;
+    border-radius: 10px;
     z-index: 1;
 }
 
 .prop-info-card>div {
-    padding: 4px 0 4px 0;
+    padding: 5px 0 5px 0;
 }
 
 .property-type span {
@@ -155,14 +155,23 @@
     border-radius: 5px;
 }
 
-.property-location, .property-price {
+.property-rating, .price {
     font-weight: bold;
 }
 
-.property-location i {
+.property-rating, .property-price {
+    font-size: 1.1em;
+}
+
+.property-rating {
+    position: relative;
+}
+
+.property-location i, .property-post-time i {
     font-size: 15px;
     color: gray;
 }
+
 
 .actions {
     background-color: rgb(245, 245, 245);
