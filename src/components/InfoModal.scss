@@ -13,15 +13,29 @@ $border-radius: 15px;
     }
 }
 
+.info-modal .modal-close{
+    position: absolute;
+    right: 7px;
+    top: 15px;
+    cursor: pointer;
+    z-index: 3;
+    padding: 5px;
+}
+
+.info-modal .modal-close .icon-close{
+    width: 20px;
+    height: 20px;
+    background: rgb(100, 100, 100);
+}
+
 .info-modal .modal-body {
-    border-radius: 0 0 15px 15px;
+    border-radius: 0 0 $border-radius $border-radius;
     max-height: 70vh;
 }
 
 .bottom-info-modal>div>div{
     position: fixed;
     bottom: 0;
-    border-radius: 0;
 
     .modal-body {
         border-bottom-left-radius: 0;
