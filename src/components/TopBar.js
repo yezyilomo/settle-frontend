@@ -100,7 +100,7 @@ function TopBar(props) {
                 }
             </Navbar.Toggle>
             <Navbar.Collapse className="row collapsible-menu col-lg-4 m-0 px-0 px-lg-3" id="basic-navbar-nav">
-                <Nav className="col-9 col-lg-12 p-0 m-0 d-flex nav-menu">
+                <Nav className="col-9 col-lg-12 p-0 m-0 nav-menu">
                     <Nav.Link href="#/">Home</Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
                     {!user.isLoggedIn ?

@@ -1,7 +1,7 @@
 @import "../variables.scss";
 
 #top-navbar {
-    box-shadow: 0 -7px 10px black;
+    box-shadow: 0 -2px 10px rgb(190, 190, 190);
     font-size: 1.15em;
     overflow: visible;
 }
@@ -179,8 +179,9 @@
     .nav-menu{
         height: 100vh;
         background-color: white;
-        justify-content: start;
-        box-shadow: inset 20px -7px 10px black;
+        display: flex;
+        justify-content: flex-start;
+        box-shadow: inset 20px -2px 10px rgb(189, 189, 189);
         overflow-y: auto;
     }
     
@@ -213,7 +214,8 @@
             height: auto;
             background-color: inherit;
             border: none;
-            justify-content: end;
+            display: flex;
+            justify-content: flex-end;
             box-shadow: none;
             overflow: visible;
         }
