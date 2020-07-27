@@ -120,7 +120,7 @@ function LogIn(props) {
 
                                 {loginError ?
                                     <div class="col-10 p-0 m-0 text-danger text-center mt-2 mt-lg-3">
-                                        {loginError+loginError}
+                                        {loginError}
                                     </div> : null
                                 }
 
