@@ -93,8 +93,8 @@ function SideBar(props) {
 
     return (
         <div class={`sidebar text-secondary p-0 m-0 ${props.setting}`}>
-            <div class="m-0 p-0 px-2 mt-2 mt-md-0 col-12 filter-header">Quick Filter</div>
-            <form id="filter-form" class="p-0 m-0 px-2 pr-md-3" onSubmit={handleSubmit}>
+            <div class="m-0 p-0 px-2 px-lg-3 mt-2 mt-md-0 col-12 filter-header">Quick Filter</div>
+            <form id="filter-form" class="p-0 m-0 px-2 px-lg-3" onSubmit={handleSubmit}>
                 <div class="m-0 p-0 mt-2">
                     <label class="form-check-label col-12 p-0 m-0">I want to</label>
                     <select class="custom-select" name="available_for" value={filterFields.available_for} onChange={updateFieldValue} required>
