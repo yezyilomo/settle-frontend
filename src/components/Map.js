@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
     GoogleMap,
     useLoadScript,
@@ -29,6 +29,7 @@ const mapContainerStyle = {
     height: "300px",
     width: "100%",
     "border-radius": "3px",
+    border: "solid 1px rgb(238, 238, 238)",
     "margin-top": "8px"
 };
 const options = {
@@ -36,97 +37,14 @@ const options = {
     disableDefaultUI: true,
     zoomControl: true,
 };
-const center = {
-    lat: 43.6532,
-    lng: -79.3832,
-};
 
-function Map() {
-    const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-        libraries,
-    });
-    const [markers, setMarkers] = React.useState([]);
-    const [selected, setSelected] = React.useState(null);
-
-    const onMapClick = React.useCallback((e) => {
-        setMarkers((current) => [
-            ...current,
-            {
-                lat: e.latLng.lat(),
-                lng: e.latLng.lng(),
-                time: new Date(),
-            },
-        ]);
-    }, []);
-
-    const mapRef = React.useRef();
-    const onMapLoad = React.useCallback((map) => {
-        mapRef.current = map;
-    }, []);
-
-    const panTo = React.useCallback(({ lat, lng }) => {
-        mapRef.current.panTo({ lat, lng });
-        mapRef.current.setZoom(14);
-    }, []);
-
-    if (loadError) return "Error";
-    if (!isLoaded) return "Loading...";
-
-    return (
-        <div>
-            <Search panTo={panTo} />
-            <Locate panTo={panTo} />
-
-            <GoogleMap
-                id="map"
-                mapContainerStyle={mapContainerStyle}
-                zoom={8}
-                center={center}
-                options={options}
-                onClick={onMapClick}
-                onLoad={onMapLoad}>
-                {markers.map((marker) => (
-                    <Marker
-                        key={`${marker.lat}-${marker.lng}`}
-                        position={{ lat: marker.lat, lng: marker.lng }}
-                        onClick={() => {
-                            setSelected(marker);
-                        }}
-                        icon={{
-                            url: `/bear.svg`,
-                            origin: new window.google.maps.Point(0, 0),
-                            anchor: new window.google.maps.Point(15, 15),
-                            scaledSize: new window.google.maps.Size(30, 30),
-                        }}
-                    />
-                ))}
-
-                {selected ? (
-                    <InfoWindow
-                        position={{ lat: selected.lat, lng: selected.lng }}
-                        onCloseClick={() => { setSelected(null); }}>
-                        <div>
-                            <h2>
-                                <span role="img" aria-label="bear">
-                                    🐻
-                </span>{" "}
-                Alert
-              </h2>
-                            <p>Spotted {formatRelative(selected.time, new Date())}</p>
-                        </div>
-                    </InfoWindow>
-                ) : null}
-            </GoogleMap>
-        </div>
-    );
-}
 
 function Locate({ panTo }) {
     return (
         <button
             className="locate"
-            onClick={() => {
+            onClick={(e) => {
+                e.preventDefault();
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         panTo({
@@ -143,7 +61,11 @@ function Locate({ panTo }) {
     );
 }
 
-function Search({ panTo }) {
+function Search({ panTo, onSelect, selected}) {
+    let location = { lat: () => 43.6532, lng: () => -79.3832 }
+    if (selected) {
+        location = { lat: () => selected.lat, lng: () => selected.lng }
+    }
     const {
         ready,
         value,
@@ -152,10 +74,14 @@ function Search({ panTo }) {
         clearSuggestions,
     } = usePlacesAutocomplete({
         requestOptions: {
-            location: { lat: () => 43.6532, lng: () => -79.3832 },
+            location: location,
             radius: 100 * 1000,
         },
     });
+
+    useEffect(function(){
+        handleSelect(null, selected);
+    }, [selected])
 
     // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
 
@@ -163,14 +89,27 @@ function Search({ panTo }) {
         setValue(e.target.value);
     };
 
-    const handleSelect = async (address) => {
+    const handleSelect = async (address, selectedLocation) => {
         setValue(address, false);
         clearSuggestions();
 
         try {
-            const results = await getGeocode({ address });
+            const results = await getGeocode({ address, location: selectedLocation });
             const { lat, lng } = await getLatLng(results[0]);
             panTo({ lat, lng });
+
+            if(onSelect && !selectedLocation) {
+                const point = {lat, lng}
+                onSelect({point, address});
+            }
+            if (selectedLocation && !address) {
+                const point = selectedLocation
+                const selectedAddress = results[0].formatted_address
+                setValue(selectedAddress, false);
+                clearSuggestions();
+                onSelect({point, address: selectedAddress});
+                panTo(point);
+            }
         } catch (error) {
             console.log("😱 Error: ", error);
         }
@@ -198,4 +137,66 @@ function Search({ panTo }) {
     );
 }
 
-export {Map}
+function Map(props) {
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        libraries,
+    });
+
+    const [selected, setSelected] = React.useState(props.center);
+
+    const onMapClick = React.useCallback((e) => {
+        setSelected({
+            lat: e.latLng.lat(),
+            lng: e.latLng.lng()
+        })
+    }, []);
+
+    const mapRef = React.useRef();
+    const onMapLoad = React.useCallback((map) => {
+        mapRef.current = map;
+    }, []);
+
+    const panTo = React.useCallback(({ lat, lng }) => {
+        mapRef.current.panTo({ lat, lng });
+        mapRef.current.setZoom(15);
+    }, []);
+
+    const handleSelectSearched = (selectedInfo) => {
+        setSelected(selectedInfo.point);
+        if(props.onChangeLocation) {
+            props.onChangeLocation(selectedInfo);
+        }
+    }
+
+    if (loadError) return "Failed to load Map";
+    if (!isLoaded) return "Loading Map...";
+
+    return (
+        <div>
+            <Search selected={selected} onSelect={handleSelectSearched} panTo={panTo} />
+            <Locate panTo={panTo} />
+
+            <GoogleMap
+                id="map"
+                mapContainerStyle={mapContainerStyle}
+                zoom={10}
+                center={props.center}
+                options={options}
+                onDblClick={onMapClick}
+                onLoad={onMapLoad}>
+                    <Marker
+                        draggable
+                        position={selected}
+                        onDragEnd={onMapClick}
+                        onClick={() => {
+                            // Show Info
+                           // setSelected();
+                        }}
+                    />
+            </GoogleMap>
+        </div>
+    );
+}
+
+export { Map }

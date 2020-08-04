@@ -171,7 +171,10 @@ function EditFetchedProperty(props) {
                 region: form.region.value,
                 distric: form.distric.value,
                 street1: form.street1.value,
-                street2: form.street2.value
+                street2: form.street2.value,
+                address: fields.location.address,
+                point: fields.location.point
+
             },
             contact: {
                 name: form.full_name.value,
@@ -215,6 +218,13 @@ function EditFetchedProperty(props) {
             let field = e.target.getAttribute("data-field");
             let value = e.target.value;
             fields.location[field] = value
+        })
+    }
+
+    let updateLoc = (location) => {
+        updateFields(fields => {
+            fields.location.address = location.address
+            fields.location.point = `POINT (${location.point.lng} ${location.point.lat})`
         })
     }
 
@@ -399,7 +409,7 @@ function EditFetchedProperty(props) {
                         </div>
                     </div>
 
-                    <Map/>
+                    <Map onChangeLocation={updateLoc} center={{lng: fields.location.longitude, lat: fields.location.latitude}}/>
 
                     {child.otherInputs?
                         child.otherInputs(fields, updateFields): null
