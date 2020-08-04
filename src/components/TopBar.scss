@@ -88,7 +88,7 @@
     padding-left: 40px;
     text-align: center;
     background-color: rgb(240, 240, 240);
-    border-color: white;
+    border-color: transparent;
     border-width: 1px;
     transition: background-color 0.1s linear, box-shadow 0.1s linear, border-width 0.1s linear, border-color 0.1s linear;
 }
@@ -112,7 +112,7 @@
 .search-input:focus {
     box-shadow: 0 0 0 0 white;
     border-width: 1px;
-    border-color: white;
+    border-color: transparent;
     background-color: rgb(230, 230, 230);
     text-align: left;
 }
