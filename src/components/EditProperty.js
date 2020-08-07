@@ -40,7 +40,6 @@ function EditFetchedProperty(props) {
     })
 
     const currencies = ["TZS", "USD", "KSH"];
-    const countries = ["Tanzania", "Kenya", "Uganda", "Zanzibar"];
     const terms = ["Week", "Month", "Year"];
 
     let createImage = (img) => {
@@ -167,14 +166,8 @@ function EditFetchedProperty(props) {
             potentials: formatSelection("potentials"),
             descriptions: fields.descriptions,
             location: {
-                country: form.country.value,
-                region: form.region.value,
-                distric: form.distric.value,
-                street1: form.street1.value,
-                street2: form.street2.value,
                 address: fields.location.address,
                 point: fields.location.point
-
             },
             contact: {
                 name: form.full_name.value,
@@ -213,15 +206,7 @@ function EditFetchedProperty(props) {
         })
     }
 
-    let updateLocation = (e) => {
-        updateFields(fields => {
-            let field = e.target.getAttribute("data-field");
-            let value = e.target.value;
-            fields.location[field] = value
-        })
-    }
-
-    let updateLoc = (location) => {
+    let updateLocation = (location) => {
         updateFields(fields => {
             fields.location.address = location.address
             fields.location.point = `POINT (${location.point.lng} ${location.point.lat})`
@@ -375,41 +360,11 @@ function EditFetchedProperty(props) {
                         </div>
                     </div>
 
-                    <div class="row p-0 m-0 my-4">
-                        <label class="form-check-label col-12 p-0 m-0">Location</label>
-                        <div class="col-12 p-0 m-0 my-1">
-                            <select class="custom-select" data-field="country" name="country" value={fields.location.country} onChange={updateLocation}>
-                                <option value="" disabled selected>Country</option>
-                                {countries.map((country) => <option value={country}>{country}</option>)}
-                            </select>
-                        </div>
-                        <div class="col-12 p-0 m-0 my-1">
-                            <div class="row">
-                                <div class="col pr-1">
-                                    <input type="text" data-field="region" name="region" value={fields.location.region} onChange={updateLocation}
-                                        class="form-control" placeholder="Region" />
-                                </div>
-                                <div class="col pl-1">
-                                    <input type="text" data-field="distric" name="distric" value={fields.location.distric} onChange={updateLocation}
-                                        class="form-control" placeholder="Distric" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 p-0 m-0 my-1">
-                            <div class="row">
-                                <div class="col pr-1">
-                                    <input type="text" data-field="street1" name="street1" value={fields.location.street1} onChange={updateLocation}
-                                        class="form-control" placeholder="Street1" />
-                                </div>
-                                <div class="col pl-1">
-                                    <input type="text" data-field="street2" name="street2" value={fields.location.street2} onChange={updateLocation}
-                                        class="form-control" placeholder="Street2" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <Map onChangeLocation={updateLoc} center={{lng: fields.location.longitude, lat: fields.location.latitude}}/>
+                    <Map search onChangeLocation={updateLocation}
+                        location={{
+                            address: fields.location.address,
+                            point: { lng: fields.location.longitude, lat: fields.location.latitude }
+                        }}/>
 
                     {child.otherInputs?
                         child.otherInputs(fields, updateFields): null

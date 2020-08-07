@@ -35,7 +35,7 @@ function PropertyOverview(props) {
             <div class="prop-info col-12 px-1">
                 <div class="prop-type">{capitalizeFirst(property.type)}  available for <span class="bg-primary text-light">{property.available_for}</span></div>
                 <div class="prop-location"> <i class="fa fa-map-marker-alt"></i>
-                    &nbsp;{property.location.region}, {property.location.country}
+                    &nbsp;{property.location.address}
                 </div>
                 <div class="prop-price">
                     {price(property)}
@@ -69,6 +69,9 @@ function PropertySliderOverview(props) {
             <div class="prop-info col-12 px-1">
                 <div class="prop-type">
                     {capitalizeFirst(property.type)}  available for <span class="bg-primary text-light">{property.available_for}</span>
+                </div>
+                <div class="prop-location"> <i class="fa fa-map-marker-alt"></i>
+                    &nbsp;{property.location.address}
                 </div>
                 <div class="prop-price">
                     {price(property)}

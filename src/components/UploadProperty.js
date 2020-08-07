@@ -5,7 +5,7 @@ import { Button, Spinner } from 'react-bootstrap';
 import { useGlobalState, useLocalState } from 'state-pool';
 import {
     FeaturesInput, ImageUploader, MultipleImageUploader,
-    DataFetcher, GlowInlineLoader
+    DataFetcher, GlowInlineLoader, Map
 } from './';
 import { BASE_API_URL } from '../';
 import { getPropertyRoute, capitalizeFirst } from '../utils';
@@ -14,7 +14,6 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { AsyncCreatableSelect } from './'
 import { queryCache } from 'react-query';
 import { useScrollTop } from '../hooks';
-import { TextField } from '@material-ui/core';
 
 
 let initialFieldsData = {
@@ -25,7 +24,11 @@ let initialFieldsData = {
     other_pictures: [],
     other_features: [],
     contact: {},
-    otherInputs: {}
+    otherInputs: {},
+    location: {
+        address: "",
+        point: "POINT (0 0)"
+    }
 }
 
 function UploadProperty(props){
@@ -48,7 +51,6 @@ function UploadProperty(props){
     }, []);
 
     const currencies = ["TZS", "USD", "KTSH"];
-    const countries = ["Tanzania", "Kenya", "Uganda", "Zanzibar"];
     const terms = ["Week", "Month", "Year"];
 
     let postImages = (propertyID, pictures) => {
@@ -110,11 +112,8 @@ function UploadProperty(props){
             currency: form.currency.value,
             payment_terms: form.payment_terms.value,
             location: {
-                country: form.country.value,
-                region: form.region.value,
-                distric: form.distric.value,
-                street1: form.street1.value,
-                street2: form.street2.value
+                address: fields.location.address,
+                point: fields.location.point
             },
             descriptions: fields.descriptions,
             contact: {
@@ -162,6 +161,13 @@ function UploadProperty(props){
     let updateValue = (e) => {
         updateFields(fields => {
             fields[e.target.name] = e.target.value;
+        })
+    }
+
+    let updateLocation = (location) => {
+        updateFields(fields => {
+            fields.location.address = location.address
+            fields.location.point = `POINT (${location.point.lng} ${location.point.lat})`
         })
     }
 
@@ -307,39 +313,11 @@ function UploadProperty(props){
                         </div>
                     </div>
 
-                    <div class="row p-0 m-0 my-4">
-                        <label class="form-check-label col-12 p-0 m-0">Location</label>
-                        <div class="col-12 p-0 m-0 my-1">
-                            <select class="custom-select" name="country" value={fields.country} onChange={updateValue}>
-                                <option value="" disabled selected>Country</option>
-                                {countries.map((country) => <option value={country}>{country}</option>)}
-                            </select>
-                        </div>
-                        <div class="col-12 p-0 m-0 my-1">
-                            <div class="row">
-                                <div class="col pr-1">
-                                    <input type="text" name="region" value={fields.region} onChange={updateValue}
-                                        class="form-control" placeholder="Region" />
-                                </div>
-                                <div class="col pl-1">
-                                    <input type="text" name="distric" value={fields.distric} onChange={updateValue}
-                                        class="form-control" placeholder="Distric" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 p-0 m-0 my-1">
-                            <div class="row">
-                                <div class="col pr-1">
-                                    <input type="text" name="street1" value={fields.street1} onChange={updateValue}
-                                        class="form-control" placeholder="Street1" />
-                                </div>
-                                <div class="col pl-1">
-                                    <input type="text" name="street2" value={fields.street2} onChange={updateValue}
-                                        class="form-control" placeholder="Street2" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Map search onChangeLocation={updateLocation}
+                        location={{
+                            address: fields.location.address,
+                            point: { lng: fields.location.longitude, lat: fields.location.latitude }
+                        }}/>
 
                     {child.otherInputs?
                         child.otherInputs(fields, updateFields): null
