@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {
     GoogleMap,
     useLoadScript,
@@ -29,9 +29,9 @@ const mapContainerStyle = {
     height: "300px",
     width: "100%",
     "border-radius": "3px",
-    border: "solid 1px rgb(238, 238, 238)",
-    "margin-top": "8px"
+    border: "solid 1px rgb(238, 238, 238)"
 };
+
 const options = {
     styles: mapStyles,
     disableDefaultUI: true,
@@ -61,11 +61,8 @@ function Locate({ panTo }) {
     );
 }
 
-function Search({ panTo, onSelect, selected}) {
-    let location = { lat: () => 43.6532, lng: () => -79.3832 }
-    if (selected) {
-        location = { lat: () => selected.lat, lng: () => selected.lng }
-    }
+
+function Search(props) {
     const {
         ready,
         value,
@@ -74,41 +71,35 @@ function Search({ panTo, onSelect, selected}) {
         clearSuggestions,
     } = usePlacesAutocomplete({
         requestOptions: {
-            location: location,
+            location: {
+                lat: () => props.location.point.lat,
+                lng: () => props.location.point.lng
+            },
             radius: 100 * 1000,
         },
     });
 
     useEffect(function(){
-        handleSelect(null, selected);
-    }, [selected])
-
-    // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
+        setValue(props.location.address, false);
+    }, [props.location])
 
     const handleInput = (e) => {
-        setValue(e.target.value);
+        setValue(e.target.value);  // Make API call
     };
 
-    const handleSelect = async (address, selectedLocation) => {
-        setValue(address, false);
+    const handleSelect = async (address) => {
+        setValue(address, false);  // Don't make API call
         clearSuggestions();
 
         try {
-            const results = await getGeocode({ address, location: selectedLocation });
+            const results = await getGeocode({ address });
             const { lat, lng } = await getLatLng(results[0]);
-            panTo({ lat, lng });
 
-            if(onSelect && !selectedLocation) {
-                const point = {lat, lng}
-                onSelect({point, address});
-            }
-            if (selectedLocation && !address) {
-                const point = selectedLocation
-                const selectedAddress = results[0].formatted_address
-                setValue(selectedAddress, false);
-                clearSuggestions();
-                onSelect({point, address: selectedAddress});
-                panTo(point);
+            const point = {lat, lng}
+            props.panTo(point);
+
+            if(props.onSelectingSearchResult) {
+                props.onSelectingSearchResult({point, address});
             }
         } catch (error) {
             console.log("😱 Error: ", error);
@@ -128,7 +119,7 @@ function Search({ panTo, onSelect, selected}) {
                     <ComboboxList>
                         {status === "OK" &&
                             data.map(({ id, description }) => (
-                                <ComboboxOption key={id} value={description} />
+                                <ComboboxOption style={{height: "40px"}} key={id} value={description} />
                             ))}
                     </ComboboxList>
                 </ComboboxPopover>
@@ -137,20 +128,46 @@ function Search({ panTo, onSelect, selected}) {
     );
 }
 
+
 function Map(props) {
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries,
     });
 
-    const [selected, setSelected] = React.useState(props.center);
+    const [location, setLocation] = React.useState(props.location);
 
-    const onMapClick = React.useCallback((e) => {
-        setSelected({
+    const handleLocationChange = React.useCallback(async (e) => {
+        const selectedPoint = {
             lat: e.latLng.lat(),
             lng: e.latLng.lng()
-        })
+        }
+
+        try {
+            const results = await getGeocode({ location: selectedPoint });
+            const { lat, lng } = await getLatLng(results[0]);
+
+            const point = {lat, lng};
+            const address = results[0].formatted_address
+            panTo(point);
+
+            const selectedLocation = {address, point}
+
+            setLocation(selectedLocation);
+            if(props.onChangeLocation) {
+                props.onChangeLocation(selectedLocation);
+            }
+        } catch (error) {
+            console.log("😱 Error: ", error);
+        }
     }, []);
+
+    const handleSelectingSearchResult = (selectedLocation) => {
+        setLocation(selectedLocation);
+        if(props.onChangeLocation) {
+            props.onChangeLocation(selectedLocation);
+        }
+    }
 
     const mapRef = React.useRef();
     const onMapLoad = React.useCallback((map) => {
@@ -162,36 +179,32 @@ function Map(props) {
         mapRef.current.setZoom(15);
     }, []);
 
-    const handleSelectSearched = (selectedInfo) => {
-        setSelected(selectedInfo.point);
-        if(props.onChangeLocation) {
-            props.onChangeLocation(selectedInfo);
-        }
-    }
-
     if (loadError) return "Failed to load Map";
     if (!isLoaded) return "Loading Map...";
 
     return (
         <div>
-            <Search selected={selected} onSelect={handleSelectSearched} panTo={panTo} />
-            <Locate panTo={panTo} />
+            {props.search ?
+                <>
+                    <Search location={location} onSelectingSearchResult={handleSelectingSearchResult} panTo={panTo} />
+                    <Locate panTo={panTo} />
+                </> : null
+            }
 
             <GoogleMap
                 id="map"
-                mapContainerStyle={mapContainerStyle}
-                zoom={10}
-                center={props.center}
+                mapContainerStyle={{...mapContainerStyle, ...props.style}}
+                zoom={15}
+                center={location.point}
                 options={options}
-                onDblClick={onMapClick}
+                onDblClick={handleLocationChange}
                 onLoad={onMapLoad}>
                     <Marker
                         draggable
-                        position={selected}
-                        onDragEnd={onMapClick}
+                        position={location.point}
+                        onDragEnd={handleLocationChange}
                         onClick={() => {
                             // Show Info
-                           // setSelected();
                         }}
                     />
             </GoogleMap>

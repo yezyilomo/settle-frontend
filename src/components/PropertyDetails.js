@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
     DataFetcher, GlowPageLoader, Rating, ConfirmModal, InfoModal,
-    Carousel as Slider, SaveButton, renderPageError
+    Carousel as Slider, SaveButton, renderPageError, Map
 } from './';
 import { BASE_API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
@@ -375,7 +375,7 @@ function PropertyDetails(props) {
                                             <div class="col-7">
                                                 <div class="property-type">{capitalizeFirst(property.type)}  available for <span class="bg-primary text-light">{property.available_for}</span></div>
                                                 <div class="property-location mt-2"> <i class="fa fa-map-marker-alt"></i>
-                                                &nbsp;{property.location.region + "," + property.location.country}
+                                                &nbsp;{property.location.address}
                                                 </div>
                                                 <div class="property-price mt-2">
                                                     {child.price}
@@ -393,7 +393,7 @@ function PropertyDetails(props) {
                                             </div>
                                         </div>
 
-                                        {property.payment_terms !== null ?
+                                        {property.payment_terms ?
                                             <>
                                                 <hr class="line m-0 p-0 mt-1 mb-1" />
                                                 <div class="peyment-terms">
@@ -422,10 +422,20 @@ function PropertyDetails(props) {
                                 </div>
 
                                 <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
+
                                     <Descriptions value={property.descriptions} />
                                     <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                                     <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
                                     <Badges values={property.potentials.map((potential) => potential.name)} label="Potential For" />
+                                </div>
+                            </div>
+                            
+                            <div class="row p-0 m-0 px-3 px-sm-4 mt-lg-4">
+                                <div class="col-12 p-0 m-0 bw-1" style={{ "overflow": "hidden", "border-color": "#dddddd", "border-radius": "8px" }}>
+                                    <Map style={{ "border-radius": "0", "border": "solid 0 #dddddd" }} location={{
+                                        address: property.location.address,
+                                        point: { lng: property.location.longitude, lat: property.location.latitude }
+                                    }} />
                                 </div>
                             </div>
                         </div>
@@ -446,8 +456,8 @@ function Contact(props) {
             <div class="row p-0 m-0">
                 <div class="col-10 p-0 m-0">
                     <div class="other-feature"><b>Name:</b> {contact.name}</div>
-                    <div class="other-feature"><b>Phone:</b> {contact.phone}</div>
-                    <div class="other-feature"><b>Email:</b> {contact.email}</div>
+                    <div class="other-feature my-2"><b>Phone:</b> {contact.phone}</div>
+                    <div class="other-feature mt-2"><b>Email:</b> {contact.email}</div>
                 </div>
                 <div class="col-2 p-0 m-0 mt-1 d-flex justify-content-end">
                     <div class="owner-profile-picture text-center">
