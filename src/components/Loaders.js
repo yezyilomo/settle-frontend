@@ -55,6 +55,22 @@ function GlowPageLoader(props) {
     );
 }
 
+function GlowBlockLoader(props) {
+    const [visible, setVisibility] = useState(false);
+    setTimeout(function () { setVisibility(true) }, LOADER_DELAY);
+
+    if (!visible) {
+        return null
+    }
+    return (
+        <div class="glow-block-loader col-12 my-3 text-center">
+            <Spinner animation="grow" variant="primary" size="sm" />
+            <Spinner animation="grow" variant="primary" size="sm" />
+            <Spinner animation="grow" variant="primary" size="sm" />
+        </div>
+    );
+}
+
 function GlowInlineLoader(props) {
     const [visible, setVisibility] = useState(false);
     setTimeout(function () { setVisibility(true) }, LOADER_DELAY);
@@ -63,7 +79,7 @@ function GlowInlineLoader(props) {
         return null
     }
     return (
-        <div class="glow-inline-loader col-12 my-3 text-center">
+        <div class="glow-inline-loader">
             <Spinner animation="grow" variant="primary" size="sm" />
             <Spinner animation="grow" variant="primary" size="sm" />
             <Spinner animation="grow" variant="primary" size="sm" />
@@ -71,4 +87,4 @@ function GlowInlineLoader(props) {
     );
 }
 
-export { SpinnerPageLoader, SpinnerInlineLoader, GlowPageLoader, GlowInlineLoader };
+export { SpinnerPageLoader, SpinnerInlineLoader, GlowPageLoader, GlowBlockLoader, GlowInlineLoader};

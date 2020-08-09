@@ -21,7 +21,7 @@ import {SignUp} from './SignUp';
 import {DataFetcher, PaginatedDataFetcher} from './Fetchers';
 import {
     SpinnerPageLoader, SpinnerInlineLoader, 
-    GlowPageLoader, GlowInlineLoader
+    GlowPageLoader, GlowBlockLoader, GlowInlineLoader
 }from './Loaders';
 import {
     EditProperty, EditRoom, EditHouse, EditApartment, EditHostel,
@@ -59,8 +59,8 @@ export {
     EditApartment, EditHostel, EditOffice, EditLand, EditFrame, ImageUploader, 
     MultipleImageUploader, UserProperties, UserFavProperties, SearchProperties, 
     FilterPropertiesByCategory, Rating, BottomNavBar, SpinnerPageLoader, SpinnerInlineLoader,
-    GlowPageLoader, GlowInlineLoader, TopScroller, PageError, InlineError, renderPageError,
-    renderInlineError, PageNotFound, Carousel, GenericFilter ,PropertiesFilter,
+    GlowPageLoader, GlowInlineLoader, GlowBlockLoader, TopScroller, PageError, InlineError,
+    renderPageError, renderInlineError, PageNotFound, Carousel, GenericFilter ,PropertiesFilter,
     EndpointPropertiesFilter, GenericResourcesGroup, PropertiesGroup, AddToHomeScreen,
     SliderPropertiesGroup, TwoRowsPropertiesGroup, ShowBuyProperties, ShowRentProperties,
     EditProfile, ProfilePictureUploader, InfoModal, Map, PROPERTIES_QUERY_PARAM, SaveButton,
