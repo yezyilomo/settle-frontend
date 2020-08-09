@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {
     GoogleMap, useLoadScript, Marker,
     InfoWindow, Circle
@@ -11,11 +11,10 @@ import {
     Combobox, ComboboxInput, ComboboxPopover,
     ComboboxList, ComboboxOption,
 } from "@reach/combobox";
-import { formatRelative } from "date-fns";
 
 import "./Map.scss";
 import "@reach/combobox/styles.css";
-import mapStyles from "./mapStyles";
+//import mapStyles from "./mapStyles";
 
 
 const libraries = ["places"];
@@ -75,7 +74,7 @@ function Search(props) {
         },
     });
 
-    useEffect(function(){
+    React.useEffect(function(){
         setValue(props.location.address, false);
     }, [props.location])
 
