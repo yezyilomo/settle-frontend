@@ -1,10 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 import {
-    GenericFilter, GlowInlineLoader, GlowPageLoader, renderPageError, renderInlineError,
-    TwoRowsPropertiesGroup, SliderPropertiesGroup, PROPERTIES_QUERY_PARAM
+    GenericFilter, GlowBlockLoader, GlowPageLoader, renderPageError,
+    renderInlineError, TwoRowsPropertiesGroup, SliderPropertiesGroup,
+    PROPERTIES_QUERY_PARAM
 } from './';
-import { useRestoreScrollState } from '../hooks';
+import { useRestoreScrollState, useUserLocation } from '../hooks';
+
+
+function NearByProperties(props) {
+    const { location } = useUserLocation();
+    if(location === null){
+        return null;
+    }
+
+    const nearbyPropertiesEndpoint = `
+    nearby-properties/?${PROPERTIES_QUERY_PARAM}
+    &longitude=${location.coords.longitude}
+    &latitude=${location.coords.latitude}
+    &radius_to_scan=5000
+    `
+    return (
+        <GenericFilter endpoint={nearbyPropertiesEndpoint} global selection="userNearbyProperties"
+            placeholder={<GlowBlockLoader />} onError={renderInlineError}>{response => {
+                let data = response.data[0];
+                if (data.results.length < 3) {
+                    return null;
+                }
+                return (
+                    <div class="p-0 m-0 mt-4">
+                        <SliderPropertiesGroup header="Nearby Properties" response={response} />
+                    </div>
+                );
+            }}
+        </GenericFilter>
+    );
+}
 
 
 function Home(props) {
@@ -27,18 +58,17 @@ function Home(props) {
                         </div>
 
                         <GenericFilter endpoint={propertiesToSlideEndpoint} global selection="propertiesToSlide"
-                            placeholder={<GlowInlineLoader />} onError={renderInlineError}>{response => {
-                                let properties = response.data[0];
+                            placeholder={<GlowBlockLoader />} onError={renderInlineError}>{response => {
                                 return (
                                     <div class="p-0 m-0 mt-4">
-                                        <SliderPropertiesGroup header="Amazing Places" properties={properties} />
+                                        <SliderPropertiesGroup header="Amazing Places" response={response} />
                                     </div>
                                 );
                             }}
                         </GenericFilter>
 
                         <GenericFilter endpoint={propertiesToBuyEndpoint} global selection="propertiesToBuy"
-                            placeholder={<GlowInlineLoader />} onError={renderInlineError}>{response => {
+                            placeholder={<GlowBlockLoader />} onError={renderInlineError}>{response => {
                                 let properties = response.data[0];
                                 let footer = `Show all (${properties.count}+)`;
                                 let footerLink = "/explore/buy-properties/";
@@ -50,6 +80,8 @@ function Home(props) {
                                 );
                             }}
                         </GenericFilter>
+
+                        <NearByProperties/>
                     </div>
                 );
             }}
