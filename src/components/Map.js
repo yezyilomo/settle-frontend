@@ -1,20 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {
-    GoogleMap,
-    useLoadScript,
-    Marker,
-    InfoWindow,
+    GoogleMap, useLoadScript, Marker,
+    InfoWindow, Circle
 } from "@react-google-maps/api";
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
 } from "use-places-autocomplete";
 import {
-    Combobox,
-    ComboboxInput,
-    ComboboxPopover,
-    ComboboxList,
-    ComboboxOption,
+    Combobox, ComboboxInput, ComboboxPopover,
+    ComboboxList, ComboboxOption,
 } from "@reach/combobox";
 import { formatRelative } from "date-fns";
 
@@ -33,9 +28,10 @@ const mapContainerStyle = {
 };
 
 const options = {
-    styles: mapStyles,
+    //styles: mapStyles, // Change map style
     disableDefaultUI: true,
-    zoomControl: true,
+    fullscreenControl: true,
+    zoomControl: true
 };
 
 
@@ -136,6 +132,7 @@ function Map(props) {
     });
 
     const [location, setLocation] = React.useState(props.location);
+    const [showInfoWindow, setShowInfoWindow] = React.useState(true);
 
     const handleLocationChange = React.useCallback(async (e) => {
         const selectedPoint = {
@@ -147,14 +144,14 @@ function Map(props) {
             const results = await getGeocode({ location: selectedPoint });
             const { lat, lng } = await getLatLng(results[0]);
 
-            const point = {lat, lng};
+            const point = { lat, lng };
             const address = results[0].formatted_address
             panTo(point);
 
-            const selectedLocation = {address, point}
+            const selectedLocation = { address, point }
 
             setLocation(selectedLocation);
-            if(props.onChangeLocation) {
+            if (props.onChangeLocation) {
                 props.onChangeLocation(selectedLocation);
             }
         } catch (error) {
@@ -164,7 +161,7 @@ function Map(props) {
 
     const handleSelectingSearchResult = (selectedLocation) => {
         setLocation(selectedLocation);
-        if(props.onChangeLocation) {
+        if (props.onChangeLocation) {
             props.onChangeLocation(selectedLocation);
         }
     }
@@ -193,20 +190,55 @@ function Map(props) {
 
             <GoogleMap
                 id="map"
-                mapContainerStyle={{...mapContainerStyle, ...props.style}}
+                mapContainerStyle={{ ...mapContainerStyle, ...props.style }}
                 zoom={15}
                 center={location.point}
                 options={options}
                 onDblClick={handleLocationChange}
                 onLoad={onMapLoad}>
-                    <Marker
-                        draggable
+
+                { showInfoWindow ?
+                    <InfoWindow
                         position={location.point}
-                        onDragEnd={handleLocationChange}
-                        onClick={() => {
-                            // Show Info
-                        }}
-                    />
+                        onCloseClick={(e) => { setShowInfoWindow(false) }}
+                    >
+                        <div class="info-window text-center">
+                            <span class="icon icon-house"></span> <br />
+                            {location.address}
+                        </div>
+                    </InfoWindow> :
+                    null
+                }
+
+                <Marker
+                    draggable
+                    options={{
+                        icon: '',
+                    }}
+                    position={location.point}
+                    onDragEnd={handleLocationChange}
+                    onClick={() => {
+                        setShowInfoWindow(true);
+                    }}
+                />
+
+                <Circle
+                    center={location.point}
+                    options={{
+                        strokeColor: 'black',
+                        strokeOpacity: 0,
+                        strokeWeight: 2,
+                        fillColor: 'black',
+                        fillOpacity: 0.3,
+                        clickable: false,
+                        draggable: false,
+                        editable: false,
+                        visible: true,
+                        radius: 120,
+                        zIndex: 1
+                    }}
+                />
+                
             </GoogleMap>
         </div>
     );
