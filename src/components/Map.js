@@ -134,6 +134,9 @@ function Map(props) {
     const [showInfoWindow, setShowInfoWindow] = React.useState(true);
 
     const handleLocationChange = React.useCallback(async (e) => {
+        if(!props.editable) {
+            return;
+        }
         const selectedPoint = {
             lat: e.latLng.lat(),
             lng: e.latLng.lng()
@@ -183,7 +186,10 @@ function Map(props) {
             {props.search ?
                 <>
                     <Search location={location} onSelectingSearchResult={handleSelectingSearchResult} panTo={panTo} />
-                    <Locate panTo={panTo} />
+                    { props.showCompass ?
+                        <Locate panTo={panTo} />:
+                        null
+                    }
                 </> : null
             }
 
@@ -196,7 +202,7 @@ function Map(props) {
                 onDblClick={handleLocationChange}
                 onLoad={onMapLoad}>
 
-                { showInfoWindow ?
+                { props.showInfoWindow && showInfoWindow ?
                     <InfoWindow
                         position={location.point}
                         onCloseClick={(e) => { setShowInfoWindow(false) }}
@@ -210,7 +216,7 @@ function Map(props) {
                 }
 
                 <Marker
-                    draggable
+                    draggable={props.markerDraggable}
                     options={{
                         icon: '',
                     }}

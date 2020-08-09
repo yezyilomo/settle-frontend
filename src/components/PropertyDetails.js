@@ -44,7 +44,7 @@ function ImagesCarousel(props) {
                     </div>
                 )}
             </Slider>
-            <div class="corousel-items-counter">{index + 1}/{props.images.length}</div>
+            <div class="corousel-items-counter">{index + 1} / {props.images.length}</div>
         </>
     );
 }
@@ -94,6 +94,7 @@ function ImagesModalCarousel(props) {
                     </div>
                 )}
             </Slider>
+            <div class="corousel-items-counter-sm">{index + 1} / {props.images.length}</div>
             <Modal animation={false} backdropClassName="img-modal-backdrop" dialogClassName="cusom-modal-dialog" show={modalShow} onHide={() => setModalShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                 <div class="modal-close" onClick={() => setModalShow(false)}>
                     <span class="icon icon-close"></span>
@@ -437,7 +438,7 @@ function PropertyDetails(props) {
                             
                             <div class="row p-0 m-0 px-3 px-sm-4 mt-lg-4">
                                 <div class="col-12 map p-0 m-0 bw-1">
-                                    <Map style={{ "border-radius": "0", "border-width": 0 }} location={{
+                                    <Map showInfoWindow style={{ "border-radius": "0", "border-width": 0 }} location={{
                                         address: property.location.address,
                                         point: { lng: property.location.longitude, lat: property.location.latitude }
                                     }} />
