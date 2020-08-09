@@ -242,8 +242,20 @@
     background-color: rgb(117, 117, 117);
 }
 
+.badges-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
 .badge {
     font-size: 0.95em;
+    padding: 6px 6px;
+    background-color: rgb(215, 215, 215);
+    color: rgb(73, 73, 73);
+    font-weight: 500;
+    border-radius: 6px;
+    display: inline-flex;
 }
 
 .badge-body {}
@@ -255,4 +267,10 @@
 
 .badge-close {
     cursor: pointer;
+}
+
+.property-details .map{
+    overflow: hidden;
+    border-color: #eeeeee;
+    border-radius: 8px;
 }
