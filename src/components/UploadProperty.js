@@ -5,7 +5,7 @@ import { Button, Spinner } from 'react-bootstrap';
 import { useGlobalState, useLocalState } from 'state-pool';
 import {
     FeaturesInput, ImageUploader, MultipleImageUploader,
-    DataFetcher, GlowInlineLoader, Map
+    DataFetcher, GlowBlockLoader, Map
 } from './';
 import { BASE_API_URL } from '../';
 import { getPropertyRoute, capitalizeFirst } from '../utils';
@@ -250,7 +250,7 @@ function UploadProperty(props){
                                 <DataFetcher
                                     selection={`properties-availability`}
                                     action={fetchPropertiesAvailability}
-                                    placeholder={<GlowInlineLoader />}
+                                    placeholder={<GlowBlockLoader />}
                                     error={`Couldn't load property availability options.`}>
                                     {response => {
                                         const available_for_options = response.data[props.type];

@@ -4,7 +4,9 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
     DataFetcher, GlowPageLoader, Rating, ConfirmModal, InfoModal,
-    Carousel as Slider, SaveButton, renderPageError, Map
+    Carousel as Slider, SaveButton, renderPageError, Map,
+    PROPERTIES_QUERY_PARAM, renderInlineError, SliderPropertiesGroup,
+    GenericFilter, GlowBlockLoader
 } from './';
 import { BASE_API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
@@ -205,24 +207,28 @@ function Badges(props) {
         values = props.values.slice(0, maxValue);
     }
 
+    values = values.sort(function(a, b){return a.length - b.length})
+
     return (
         values.length > 0 ?
             <div class="mb-4">
                 <div class="h5 m-0 p-0 mb-1">{props.label}</div>
-                {values.map((val) => {
-                    return (
-                        <>
-                            <span class="badge badge-secondary mb-1 mr-1">
-                                <span id={val} class={`fa fa-${val} badge-close`} />
-                                <span class="badge-body">{shortenString(val, 17)}</span>
-                            </span>
-                        </>
-                    );
-                })}
+                <div class="col-12 p-0 m-0 badges-container">
+                    {values.map((val) => {
+                        return (
+                            <>
+                                <span class="badge mb-1 mr-1">
+                                    <span id={val} class={`fa fa-${val} badge-close`} />
+                                    <span class="badge-body">{shortenString(val, 17)}</span>
+                                </span>
+                            </>
+                        );
+                    })}
+                </div>
                 {props.values.length > (maxValue) ?
                     <>
-                        <Button className="text-decoration-none m-0 p-0 mt-2 w-100 text-left" variant="link" onClick={() => setModalShow(true)}>
-                            {`Show all ${props.values.length} ${props.label}`}
+                        <Button className="text-decoration-none m-0 p-0 mt-1 w-100 text-left" variant="link" onClick={() => setModalShow(true)}>
+                            {`Show all ${props.values.length} ${props.label.toLowerCase()}`}
                         </Button>
                         <InfoModal positionBottom header={props.label} modalShow={modalShow} setModalShow={setModalShow}>
 
@@ -242,7 +248,7 @@ function Badges(props) {
                     </> :
                     null
                 }
-                <hr class="line d-md-none m-0 mt-2 p-0" />
+                <hr class="line d-md-none m-0 mt-1 p-0" />
             </div> :
             null
     )
@@ -329,7 +335,7 @@ function PropertyDetails(props) {
 
 
                 return (
-                    <div class="row p-0 m-0">
+                    <div class="row p-0 m-0 property-details">
                         <div class="property-images col-12 p-0 m-0 d-md-none">
                             <ImagesModalCarousel activeImage={main_img} images={property.pictures} />
                             <span class="save">
@@ -422,7 +428,6 @@ function PropertyDetails(props) {
                                 </div>
 
                                 <div class="col-12 col-md-7 p-0 m-0 mt-3 mt-sm-0 pr-md-2 text-dark order-2 order-md-1">
-
                                     <Descriptions value={property.descriptions} />
                                     <Badges values={property.amenities.map((amenity) => amenity.name)} label="Amenities" />
                                     <Badges values={property.services.map((service) => service.name)} label="Nearby Services" />
@@ -431,17 +436,50 @@ function PropertyDetails(props) {
                             </div>
                             
                             <div class="row p-0 m-0 px-3 px-sm-4 mt-lg-4">
-                                <div class="col-12 p-0 m-0 bw-1" style={{ "overflow": "hidden", "border-color": "#dddddd", "border-radius": "8px" }}>
-                                    <Map style={{ "border-radius": "0", "border": "solid 0 #dddddd" }} location={{
+                                <div class="col-12 map p-0 m-0 bw-1">
+                                    <Map style={{ "border-radius": "0", "border-width": 0 }} location={{
                                         address: property.location.address,
                                         point: { lng: property.location.longitude, lat: property.location.latitude }
                                     }} />
                                 </div>
                             </div>
+                            <div class="p-0 m-0 mt-4">
+                                <NearbyProperties except={property.id} point={{ lng: property.location.longitude, lat: property.location.latitude }}/>
+                            </div>
                         </div>
                     </div>)
             }}</DataFetcher>
     )
+}
+
+
+function NearbyProperties(props) {
+    const nearbyPropertiesEndpoint = `
+    nearby-properties/?${PROPERTIES_QUERY_PARAM}
+    &longitude=${props.point.lng}
+    &latitude=${props.point.lat}
+    &radius_to_scan=2000
+    `
+    const selection = `nearbyProperties/?longitude=${props.point.lng}&latitude=${props.point.lat}&radius_to_scan=10000`
+
+    return (
+        <GenericFilter endpoint={nearbyPropertiesEndpoint} global selection={selection}
+            placeholder={<GlowBlockLoader />} onError={renderInlineError}>{response => {
+                let data = response.data[0];
+                // Remove this current property to nearby properties
+                data.results = data.results.filter(property => property.id != props.except);
+
+                if (data.results.length < 3) {
+                    return null;
+                }
+                return (
+                    <div class="p-0 m-0 mt-4">
+                        <SliderPropertiesGroup pl={3} header="Nearby Properties" response={response} />
+                    </div>
+                );
+            }}
+        </GenericFilter>
+    );
 }
 
 

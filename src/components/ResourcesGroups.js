@@ -1,7 +1,7 @@
 import React from 'react';
 import './ResourcesGroups.scss';
 import { Link } from 'react-router-dom';
-import { PropertyOverview, GlowInlineLoader, Carousel } from '.'
+import { PropertyOverview, GlowBlockLoader, GlowInlineLoader, Carousel } from '.'
 import { PropertySliderOverview } from './PropertyOverview';
 import { onScrollToBottom } from '../utils';
 import { useRestoreScrollState } from '../hooks';
@@ -10,7 +10,7 @@ import { useGlobalState } from 'state-pool';
 
 function GenericResourcesGroup(props) {
     useRestoreScrollState();
-    const [view, ,setView] = useGlobalState(props.viewKey, {default: 'grid'});
+    const [view, , setView] = useGlobalState(props.viewKey, { default: 'grid' });
 
     let fetchMoreResources = () => {
         if (props.response.canFetchMore) {
@@ -33,7 +33,7 @@ function GenericResourcesGroup(props) {
         setView("grid");
     }
 
-    if(props.FetchMoreOnScrollToBottom){
+    if (props.FetchMoreOnScrollToBottom) {
         window.onScrollActions.fetchMoreResources = onScrollToBottom(fetchMoreResources, 200);
     }
 
@@ -44,12 +44,12 @@ function GenericResourcesGroup(props) {
                 <span class="view-icon d-sm-none fas fa-list-ul" onClick={showListView}></span>
             }
             <div class="group-header col-12 p-0 m-0 px-1 px-sm-2">{props.header}</div>
-            {props.response.data[0].length === 0?
+            {props.response.data[0].length === 0 ?
                 <div class="ml-2 mt-5">
-                  <div>
-                      No results found!..
+                    <div>
+                        No results found!..
                   </div>
-                </div>:
+                </div> :
                 null
             }
             {props.response.data.map((resourcesGroup, i) =>
@@ -62,12 +62,12 @@ function GenericResourcesGroup(props) {
                 </React.Fragment>
             )}
 
-            <div class="col-12 py-2"/>
+            <div class="col-12 py-2" />
 
-            {props.response.isFetchingMore?
-                <div class="col-12 m-0 p-0" style={{position: 'relative', bottom: '25px'}}>
-                    <GlowInlineLoader/>
-                </div>:
+            {props.response.isFetchingMore ?
+                <div class="col-12 m-0 p-0" style={{ position: 'relative', bottom: '25px' }}>
+                    <GlowBlockLoader />
+                </div> :
                 null
             }
         </div>
@@ -91,7 +91,6 @@ function PropertiesGroup(props) {
 
 
 function SliderPropertiesGroup(props) {
-    let properties = props.properties.results;
     const settings = {
         dots: false,
         infinite: false,
@@ -101,7 +100,7 @@ function SliderPropertiesGroup(props) {
         initialSlide: 1,
         centerMode: true,
         centerPadding: "50px 0 0 0",
-        adaptiveHeight: true,
+        adaptiveHeight: false,
         swipeToSlide: true,
         arrows: false,
         responsive: [
@@ -136,15 +135,50 @@ function SliderPropertiesGroup(props) {
         ]
     }
 
+    let fetchMoreResources = () => {
+        if (props.response.canFetchMore) {
+            props.response.fetchMore()
+        }
+    }
+
+    let count = props.response.data[0].count;
+    if (count == 0) {
+        return null;
+    }
+
+    let properties = [];
+    
+    props.response.data.forEach(group => {
+        properties = [...properties, ...group.results]
+    });
+
     return (
         <div class="property-container row m-0 p-0">
-            <div class="group-header col-12 p-0 m-0 px-2 px-sm-4">{props.header}</div>
+            <div class={`group-header col-12 p-0 m-0 px-${props.pl || 2} px-sm-4`}>{props.header}</div>
             <Carousel className="col-12 p-0 m-0 mt-2 slider" {...settings}>
                 {properties.map(property =>
-                    <div class="m-0 p-0 pl-2  pl-sm-0 ml-sm-4 pr-sm-3">
-                        <PropertySliderOverview property={property}/>
+                    <div class={`m-0 p-0 pl-${props.pl || 2}  pl-sm-0 ml-sm-4 pr-sm-3`}>
+                        <PropertySliderOverview property={property} />
                     </div>
                 )}
+
+                {props.response.canFetchMore && !props.response.isFetchingMore ?
+                    <div>
+                        <div class="load-more-button" onClick={fetchMoreResources}>
+                            <span class="icon icon-next"></span>
+                        </div>
+                    </div> :
+                    null
+                }
+
+                {props.response.isFetchingMore ?
+                    <div>
+                        <div class="loading-more">
+                            <GlowInlineLoader />
+                        </div>
+                    </div> :
+                    null
+                }
             </Carousel>
         </div>
     )
@@ -153,15 +187,19 @@ function SliderPropertiesGroup(props) {
 
 function TwoRowsPropertiesGroup(props) {
     let properties = props.properties.results;
+    if (properties.length == 0) {
+        return null;
+    }
     return (
         <div class="property-container row m-0 p-0       d-4 d-sm-4 d-md-6 d-lg-8">
             <div class="group-header col-12 m-0 p-0 px-1 px-sm-2">{props.header}</div>
-            {properties.slice(0,8).map((property, index) =>
-                <div class={`col-6 col-md-4 col-lg-3 m-0 p-0 my-2 px-1 px-sm-2   d-none-${index+1}`}>
-                    <PropertyOverview property={property}/>
+            {properties.slice(0, 8).map((property, index) =>
+                <div class={`col-6 col-md-4 col-lg-3 m-0 p-0 my-2 px-1 px-sm-2   d-none-${index + 1}`}>
+                    <PropertyOverview property={property} />
                 </div>
             )}
-            {props.footer?
+            
+            {props.footer ?
                 <div class="group-footer col-12 m-0 p-0 px-1 px-sm-2 mt-2">
                     <div class="row p-0 m-0">
                         <Link to={props.footerLink} class="show-all-btn btn-ripple text-decoration-none col-12 text-center d-md-none py-2 bw-1">
@@ -172,7 +210,7 @@ function TwoRowsPropertiesGroup(props) {
                             {props.footer}
                         </Link>
                     </div>
-                </div>:
+                </div> :
                 null
             }
         </div>

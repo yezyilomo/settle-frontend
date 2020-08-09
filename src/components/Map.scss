@@ -31,3 +31,26 @@
     width: 30px;
     cursor: pointer;
 }
+
+.info-window {
+    max-width: 200px;
+    padding: 0;
+}
+
+.info-window .icon-house {
+    width: 20px;
+    height: 20px;
+}
+
+.gm-fullscreen-control {
+    border-radius: 6px !important;
+}
+
+.gmnoprint>div {
+    border-radius: 6px !important;
+}
+
+.gm-style-cc {
+    bottom: 5px !important;
+    display: none;
+}
