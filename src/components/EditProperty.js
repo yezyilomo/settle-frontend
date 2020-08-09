@@ -360,7 +360,7 @@ function EditFetchedProperty(props) {
                         </div>
                     </div>
 
-                    <Map search onChangeLocation={updateLocation}
+                    <Map editable search markerDraggable onChangeLocation={updateLocation}
                         location={{
                             address: fields.location.address,
                             point: { lng: fields.location.longitude, lat: fields.location.latitude }
