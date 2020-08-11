@@ -2,7 +2,7 @@ import React from 'react';
 import { useGlobalState } from 'state-pool';
 import {
     PaginatedDataFetcher, GlowPageLoader, renderPageError,
-    PropertyOverview, GenericResourcesGroup
+    PropertyOverview, GenericResourcesGroup, LogInToViewSaved
 } from '.';
 import { BASE_API_URL } from '../';
 import { getPropertyRoute, capitalizeFirst } from '../utils';
@@ -129,10 +129,15 @@ function FilterPropertiesByCategory(props) {
 
 
 function UserFavProperties(props) {
+    const [user,] = useGlobalState("user");
     let selection = `my-fav-properties`;
     let header = (properties) => `Saved properties(${properties.count})..`;
     let endpoint = `my-fav-properties/?${PROPERTIES_QUERY_PARAM}`;
     let viewKey = "myFavPropertiesView";
+
+    if(!user.isLoggedIn) {
+        return <LogInToViewSaved/>
+    }
 
     return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
