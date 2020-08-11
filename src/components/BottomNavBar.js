@@ -116,14 +116,13 @@ function BottomNavBar(props){
                     <div class={`icon-label ${active(buyPath)[1]}`}>BUY</div>
                 </RippleButton>
             </div>
-            {user.isLoggedIn ?
-                <div class="col text-center">
-                    <RippleButton onClick={goToSavedProperties}>
-                        <span class={`icon icon-heart ${active(savedPropertiesPath)[0]}`}></span>
-                        <div class={`icon-label ${active(savedPropertiesPath)[1]}`}>SAVED</div>
-                    </RippleButton>
-                </div> : null
-            }
+
+            <div class="col text-center">
+                <RippleButton onClick={goToSavedProperties}>
+                    <span class={`icon icon-heart ${active(savedPropertiesPath)[0]}`}></span>
+                    <div class={`icon-label ${active(savedPropertiesPath)[1]}`}>SAVED</div>
+                </RippleButton>
+            </div>
 
             <div class="col text-center">
                 <RippleButton onClick={goToFilter}>
