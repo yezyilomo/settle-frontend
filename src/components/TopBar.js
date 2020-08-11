@@ -103,6 +103,8 @@ function TopBar(props) {
                 <Nav className="col-9 col-lg-12 p-0 m-0 nav-menu">
                     <Nav.Link href="#/">Home</Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
+                    <Nav.Link href="#/my-fav-properties">Saved</Nav.Link>
+                    <hr class="line p-0 m-0 d-lg-none" />
                     {!user.isLoggedIn ?
                         <>
                             <LogIn />
