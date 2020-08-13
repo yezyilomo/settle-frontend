@@ -166,7 +166,7 @@ function EditProfile(props) {
                 <div class="col-12 col-md-6 order-1 order-md-2">
                     <div class="row p-0 m-0">
                         <div class="col-12 p-0 m-0 text-center edit-profile-picture">
-                            <ProfilePictureUploader name="picture" src={src(profile.picture)} onChange={setProfilePicture}/>
+                            <ProfilePictureUploader icon="icon-add-user-light" name="picture" src={src(profile.picture)} onChange={setProfilePicture}/>
                         </div>
                     </div>
                     
