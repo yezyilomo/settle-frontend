@@ -85,6 +85,7 @@ function Account(props) {
     const [, updateUser] = useGlobalState("user");
     const [signupError, setSignupError] = useState("");
     const [isLoading, setLoading] = useState(false);
+    const [viewPassword, setViewPassword] = useState(false);
     
     useEffect(setErrorClass, []);
 
@@ -94,6 +95,7 @@ function Account(props) {
             let value= e.target.value;
             user[field] = value;
         });
+        setSignupError("")
     }
 
     let setProfilePicture = (img) => {
@@ -238,6 +240,24 @@ function Account(props) {
         return false
     }
 
+    let toggleViewPassword = () => {
+        setViewPassword(!viewPassword);
+    }
+
+    let getPasswordFieldType = () => {
+        if(viewPassword) {
+            return "text";
+        }
+        return "password"
+    }
+
+    let getPasswordViewIcon = () => {
+        if(viewPassword) {
+            return "icon-eye-close";
+        }
+        return "icon-eye-open";
+    }
+
     return (
         <>
             <div class="row progress-tab m-0 p-0">
@@ -248,7 +268,7 @@ function Account(props) {
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2 text-center upload-profile-pic">
-                            <ProfilePictureUploader modalClass="modal-on-modal" name="picture" src={profilePicSrc()} onChange={setProfilePicture}/>
+                            <ProfilePictureUploader icon="icon-add-user-light" modalClass="modal-on-modal" name="picture" src={profilePicSrc()} onChange={setProfilePicture}/>
                         </div>
                     </div>
 
@@ -262,7 +282,8 @@ function Account(props) {
 
                     <div class="col-10 p-0 m-0 my-2 my-lg-3">
                         <div class="col-12 px-2 floating">
-                            <input type="password" name="password" value={form.password} required
+                            <span class={`toggle-view-password icon ${getPasswordViewIcon()}`} onClick={toggleViewPassword}/>
+                            <input type={getPasswordFieldType()} name="password" value={form.password} required
                                 onChange={handleValueChange} class="form-control floating__input" placeholder="Choose a password" />
                             <label for="password" class="floating__label" data-content="Password"></label>
                         </div>
@@ -310,7 +331,7 @@ function SignUp(props) {
 
     return (
         <>
-            <Nav.Link href="#" onClick={() => setShowSignUpModal(true)}>Sign up</Nav.Link>
+            <Nav.Link href="#" onClick={() => setShowSignUpModal(true)}><span class="d-lg-none icon icon-add-user mr-2"/>Sign up</Nav.Link>
 
             <Modal animation={false} scrollable={true} className="signup-modal" dialogClassName="custom-modal-dialog" show={showSignUpModal} onHide={() => setShowSignUpModal(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                 <div class="modal-close" onClick={() => setShowSignUpModal(false)}>

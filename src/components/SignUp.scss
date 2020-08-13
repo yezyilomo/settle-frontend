@@ -16,8 +16,8 @@
     height: 100px;
 }
 
-.upload-profile-pic .profile-picture-container .icon-user{
-    top: 20px;
+.upload-profile-pic .profile-picture-container .icon{
+    top: 10px;
     width: 90px;
     height: 90px;
 }
@@ -72,6 +72,16 @@ input:-webkit-autofill:active  {
     border-radius: 5px;
     border-width: 0;
     padding: 0;
+}
+
+.signup-form .toggle-view-password {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 26px;
+    width: 26px;
+    cursor: pointer;
+    z-index: 1;
 }
 
 .signup-modal .modal-close{
