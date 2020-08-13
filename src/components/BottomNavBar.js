@@ -1,8 +1,6 @@
 import React from 'react';
 import './BottomNavBar.scss';
 import { useHistory } from 'react-router';
-import { useGlobalState } from 'state-pool';
-
 
 
 function RippleButton({ children, onClick }) {
@@ -26,17 +24,16 @@ function RippleButton({ children, onClick }) {
       [isRippling]
     );
 
-    const ripplePositionStyle = {
-        left: "34px",
-        top: "11px"
-      }
-
-    /* Original version
+      /* Original version
     const ripplePositionStyle = {
         left: coords.x + 10,
         top: coords.y
-      }
+    }
     */
+
+    const ripplePositionStyle = {
+      // Don't use this for now
+    }
   
     return (
       <div
@@ -65,7 +62,6 @@ function RippleButton({ children, onClick }) {
 
 function BottomNavBar(props){
     const history = useHistory();
-    const [user, ] = useGlobalState("user");
     let homePath = "/";
     let filterPath = "/filter";
     let rentPath = "/rent-property";

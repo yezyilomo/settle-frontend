@@ -60,6 +60,12 @@
 	border-radius: 50%;
 	opacity: 0.5;
 	animation: .3s ease 1 forwards ripple-effect;
+
+	// For centering ripple
+	margin: 0 auto;
+	left: calc(50% - 10px); // Minus half of ripple width
+	top: calc(50% - 12px); // Minus almost half of ripple height
+	// End of centering ripple
   }
   
   @keyframes ripple-effect {
