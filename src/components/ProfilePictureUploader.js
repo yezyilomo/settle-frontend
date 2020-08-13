@@ -106,6 +106,13 @@ function ProfilePictureUploader(props) {
         return null;
     }
 
+    const getIconClass = () => {
+        if(props.icon){
+            return props.icon;
+        }
+        return "icon-user-light";
+    }
+
     return (
         <>
             <Modal animation={false} scrollable={true} className={`crop-image-modal ${props.modalClass || ''}`}
@@ -130,7 +137,7 @@ function ProfilePictureUploader(props) {
                 <input type="file" accept="image/*" name={props.name} id={props.name} class="file-input" onChange={addImage} />
                 {!image.src ?
                     <label for={props.name} class="file-input-label w-100 h-100">
-                        <span class="icon icon-user" />
+                        <span class={`icon ${getIconClass()}`} />
                     </label> :
                     <img class="profile-picture-preview" src={image.src} alt="" />
                 }

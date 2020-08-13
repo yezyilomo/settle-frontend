@@ -3,7 +3,7 @@
     //width: 300px;     // To override
     //height: 300px;    // To override
     display: inline-block;
-    border: 2px solid #eeeeee;
+    border: 3px solid #eeeeee;
     border-radius: 50%;
     overflow: hidden;
     text-align: right;
@@ -14,13 +14,13 @@
     color: rgb(150, 150, 150);
 }
 
-.profile-picture-container .icon-user{
+.profile-picture-container .icon{
     position: relative;
     //top: 60px;        // To override
     //width: 250px;     // To override
     //height: 250px;    // To override
     border-radius: 0;
-    background: rgb(170, 170, 170);
+    background: rgb(190, 190, 190);
 }
 
 .file-input{

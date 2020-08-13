@@ -23,7 +23,9 @@ function CreateProperty(props) {
 
     return (
         <>
-            <Nav.Link href="#" onClick={() => setModalShow(true)}>Create</Nav.Link>
+            <Nav.Link href="#" onClick={() => setModalShow(true)}>
+                <span class="d-lg-none icon icon-add mr-2"/>Create
+            </Nav.Link>
             <InfoModal header="Select Property Type" modalShow={modalShow} setModalShow={setModalShow}>
                 <ul class="m-0 p-0">
                     {property_types.map((val) => {
@@ -101,9 +103,9 @@ function TopBar(props) {
             </Navbar.Toggle>
             <Navbar.Collapse className="row collapsible-menu col-lg-4 m-0 px-0 px-lg-3" id="basic-navbar-nav">
                 <Nav className="col-9 col-lg-12 p-0 m-0 nav-menu">
-                    <Nav.Link href="#/">Home</Nav.Link>
+                    <Nav.Link href="#/"><span class="d-lg-none icon icon-house mr-2"/>Home</Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
-                    <Nav.Link href="#/my-fav-properties">Saved</Nav.Link>
+                    <Nav.Link href="#/my-fav-properties"><span class="d-lg-none icon icon-heart mr-2"/>Saved</Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
                     {!user.isLoggedIn ?
                         <>
@@ -112,7 +114,9 @@ function TopBar(props) {
                         </> :
                         null
                     }
-                    <Nav.Link className="d-lg-none" href="#/filter">Filter</Nav.Link>
+                    <Nav.Link className="d-lg-none" href="#/filter">
+                        <span style={{transform: "rotate(90deg)"}} class="d-lg-none icon icon-settings mr-2"/>Filter
+                    </Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
                     {!user.isLoggedIn ?
                         <>
@@ -124,8 +128,6 @@ function TopBar(props) {
                     {user.isLoggedIn ?
                         <>
                             <CreateProperty />
-                            <hr class="line p-0 m-0 d-lg-none" />
-                            <Nav.Link className="d-lg-none" href="#properties/">My Properties</Nav.Link>
                             <hr class="line p-0 m-0 d-lg-none" />
                         </> :
                         null
@@ -141,13 +143,13 @@ function TopBar(props) {
                                             <img src={user.profile_picture} alt="" />
                                         }
                                     </div>
-                                    <span class="d-lg-none">Profile</span>
+                                    <span class="d-lg-none"><span class="d-lg-none icon icon-user mr-2"/>Profile</span>
                                 </Dropdown.Toggle>
-                                <Dropdown.Menu className="nav-dropdown-menu bw-0 bw-lg-1">
+                                <Dropdown.Menu className="nav-dropdown-menu p-0 m-0 bw-0 bw-lg-1">
                                     <hr class="line p-0 m-0 d-lg-none" />
-                                    <Dropdown.Item className="nav-dropdown-item d-none d-lg-block" href="#properties/">My Properties</Dropdown.Item>
-                                    <hr class="line d-none d-lg-block p-0 m-0" />
-                                    <Dropdown.Item className="nav-dropdown-item" href="#edit-profile/">Edit My Profile</Dropdown.Item>
+                                    <Dropdown.Item className="nav-dropdown-item" href="#properties/">My Properties</Dropdown.Item>
+                                    <hr class="line p-0 m-0" />
+                                    <Dropdown.Item className="nav-dropdown-item" href="#edit-profile/">My Profile</Dropdown.Item>
                                     <hr class="line p-0 m-0" />
                                     <Dropdown.Item className="nav-dropdown-item" href="#/" onClick={logOut}>
                                         Logout

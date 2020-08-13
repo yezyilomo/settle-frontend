@@ -92,9 +92,13 @@ function LogIn(props) {
         setShowSignUpModal(true);
     }
 
+    let clearErrors = () => {
+        setLoginError("")
+    } 
+
     return (
         <>
-            <Nav.Link href="#" onClick={() => setShowLogInModal(true)}>Login</Nav.Link>
+            <Nav.Link href="#" onClick={() => setShowLogInModal(true)}><span class="d-lg-none icon icon-enter mr-2"/>Login</Nav.Link>
 
             <Modal animation={false} scrollable={true} className="login-modal" dialogClassName="custom-modal-dialog" show={showLogInModal} onHide={() => setShowLogInModal(false)} size="lg" aria-labelledby="" centered>
                 <div class="modal-close" onClick={() => setShowLogInModal(false)}>
@@ -107,13 +111,15 @@ function LogIn(props) {
                             <div class="row justify-content-center">
                                 <div class="col-10 p-0 m-0 my-2 my-lg-3">
                                     <div class="col-12 px-2 floating">
-                                        <input type="text" name="username" class="form-control floating__input" placeholder="Username" required />
+                                        <input type="text" name="username" class="form-control floating__input" 
+                                        placeholder="Username" onChange={clearErrors} required />
                                         <label for="username" class="floating__label" data-content="Username"></label>
                                     </div>
                                 </div>
                                 <div class="col-10 p-0 m-0 my-2 my-lg-3">
                                     <div class="col-12 px-2 floating">
-                                        <input type="password" name="password" class="form-control floating__input" placeholder="Password" required />
+                                        <input type="password" name="password" class="form-control floating__input"
+                                        placeholder="Password" required onChange={clearErrors} />
                                         <label for="password" class="floating__label" data-content="Password"></label>
                                     </div>
                                 </div>
