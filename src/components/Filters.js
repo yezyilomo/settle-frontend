@@ -1,4 +1,5 @@
 import React from 'react';
+import { parse } from 'query-string';
 import { useGlobalState } from 'state-pool';
 import {
     PaginatedDataFetcher, GlowPageLoader, renderPageError,
@@ -111,10 +112,21 @@ function PropertiesFilter(props) {
 
 
 function SearchProperties(props) {
-    let location = props.location.search.slice(3);
+    const parsed = parse(props.location.search);
+
+    let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}`
+    if(parsed.q){
+        endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&search=${parsed.q}`;
+    }
+    if(parsed.lng && parsed.lat) {
+        endpoint = `
+        nearby-properties/?${PROPERTIES_QUERY_PARAM}
+        &longitude=${parsed.lng}&latitude=${parsed.lat}&radius_to_scan=2000
+        `;
+    } 
     let selection = props.location.pathname + props.location.search;
     let header = (properties) => `Search results(${properties.count})..`;
-    let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&search=${location}`;
+    
     let viewKey = "searchPropertiesView";
 
     return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
