@@ -110,14 +110,15 @@ function Search(props) {
                     disabled={!ready}
                     placeholder="Search your location"
                 />
-                <ComboboxPopover>
-                    <ComboboxList>
-                        {status === "OK" &&
-                            data.map(({ id, description }) => (
-                                <ComboboxOption style={{height: "40px"}} key={id} value={description} />
+                {status === "OK" && data ?
+                    <ComboboxPopover className="map-search-suggestions-box">
+                        <ComboboxList>
+                            {data.map(({ id, description }) => (
+                                <ComboboxOption key={id} value={description} />
                             ))}
-                    </ComboboxList>
-                </ComboboxPopover>
+                        </ComboboxList>
+                    </ComboboxPopover> : null
+                }
             </Combobox>
         </div>
     );
