@@ -10,6 +10,18 @@ import {
     clearStore, capitalizeFirst
 } from '../utils';
 
+import usePlacesAutocomplete, {
+    getGeocode,
+    getLatLng,
+} from "use-places-autocomplete";
+import {
+    Combobox, ComboboxInput, ComboboxPopover,
+    ComboboxList, ComboboxOption,
+} from "@reach/combobox";
+import { useLoadScript } from "@react-google-maps/api";
+
+
+const libraries = ["places"];
 
 function CreateProperty(props) {
     const [modalShow, setModalShow] = useState(false);
@@ -46,15 +58,25 @@ function CreateProperty(props) {
     );
 }
 
-function TopBar(props) {
+
+function Search(props) {
     const history = useHistory();
     const [key, setKey] = useState("");
-    const [user,] = useGlobalState("user");
-
-    let updateField = (e) => {
-        let value = e.target.value;
-        setKey(value);
-    }
+    const {
+        ready,
+        value,
+        suggestions: { status, data },
+        setValue,
+        clearSuggestions,
+    } = usePlacesAutocomplete({
+        requestOptions: {
+            location: {
+                lat: () => 0,
+                lng: () => 0
+            },
+            radius: 100 * 1000,
+        },
+    });
 
     let validateKey = () => {
         if (key) {
@@ -62,6 +84,79 @@ function TopBar(props) {
         }
         return 'return false';
     }
+
+    const handleInputChange = (e) => {
+        setKey(e.target.value);  // Update key
+        if (props.simple) {
+            setValue(e.target.value, false);  // Don't make API call
+        }
+        else {
+            setValue(e.target.value);  // Make API call
+        }
+    };
+
+    const searchNearbyPlaces = (location) => {
+        history.push(`/search/?lng=${location.point.lng}&lat=${location.point.lat}`);
+    }
+
+    const handleSelect = async (address) => {
+        setValue(address, false);  // Don't make API call
+        clearSuggestions();
+
+        try {
+            const results = await getGeocode({ address });
+            const { lat, lng } = await getLatLng(results[0]);
+            const point = { lat, lng }
+            searchNearbyPlaces({ point, address });
+        } catch (error) {
+            console.log("😱 Error: ", error);
+        }
+    };
+
+    return (
+        <>
+            <div class="back-button" >
+                <span class="icon icon-up-arrow"></span>
+            </div>
+            <Combobox onSelect={handleSelect} className="search-box-container col-12 p-0 m-0 ml-1  col-sm-9 col-md-9 col-lg-12">
+                <ComboboxInput value={value} disabled={props.simple || !ready} onChange={handleInputChange} autoComplete="off"
+                    name="search" type="text" placeholder="Search location..."
+                    className="search-input col-12" />
+
+                {status === "OK" && data ?
+                    <ComboboxPopover className="search-suggestions-box">
+                        <ComboboxList>
+                            {data.map(({ id, description }) => (
+                                <ComboboxOption key={id} value={description} />
+                            ))}
+                        </ComboboxList>
+                    </ComboboxPopover> : null
+                }
+            </Combobox>
+            <Link onClick={validateKey()} to={{ pathname: "/search", search: `?q=${key}` }}>
+                <button class="btn px-sm-3" >
+                    <span class="icon icon-search search-button"></span>
+                </button>
+            </Link>
+        </>
+    );
+}
+
+function SimpleSearch(props){
+    return <Search {...props} simple/>
+}
+
+function AdvancedSearch(props){
+    return <Search {...props}/>
+}
+
+function TopBar(props) {
+    const history = useHistory();
+    const [user,] = useGlobalState("user");
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        libraries,
+    });
 
     let logOut = (event) => {
         deleteUserInfoFromCookies([
@@ -82,13 +177,12 @@ function TopBar(props) {
                 </Link>
             </Navbar.Brand>
             <form class="search-form form-inline m-0 ml-3 ml-lg-0 p-0 p-lg-0 col-7 col-sm-8 col-md-8 col-lg-5 ">
-                <input autocomplete="off" name="search" onChange={updateField} class="search-input m-0 py-0 py-lg-3 form-control m-0 col-12 col-sm-9 col-md-9 col-lg-12"
-                    type="search" placeholder="Search location..." aria-label="Search" />
-                <Link onClick={validateKey()} to={{ pathname: "/search", search: `?q=${key}` }}>
-                    <button class="btn px-sm-3" >
-                        <span class="icon icon-search search-button"></span>
-                    </button>
-                </Link>
+
+                { isLoaded ?
+                    <AdvancedSearch />:
+                    <SimpleSearch />
+                }
+
             </form>
             <Navbar.Toggle className="navbar-toggler m-0 py-0 px-2" aria-controls="basic-navbar-nav">
                 {user.isLoggedIn ?
