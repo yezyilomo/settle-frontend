@@ -81,21 +81,41 @@
     top: 0px;
 }
 
+.back-button{
+    display: none;
+}
+
 .search-input {
     color: rgb(190, 190, 190);
-    height: 37px;
-    border-radius: 8px;
+    height: 35px;
+    border-radius: 6px;
     padding-left: 40px;
     text-align: center;
     background-color: rgb(240, 240, 240);
     border-color: transparent;
     border-width: 1px;
-    transition: background-color 0.1s linear, box-shadow 0.1s linear, border-width 0.1s linear, border-color 0.1s linear;
+    font-size: 16px;
+    color: rgb(70, 70, 70);
+    transition: background-color 0.01s linear, box-shadow 0.1s linear, border-width 0.1s linear, border-color 0.1s linear;
+}
+
+.search-suggestions-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 3px;
+    z-index: 555555;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.search-suggestions-box li{
+    padding: 10px 10px;
 }
 
 @include media-breakpoint-up(lg) {
     .search-input {
-        height: 43px;
+        height: 41px;
         border-radius: 7px;
     }
 
@@ -117,9 +137,61 @@
     text-align: left;
 }
 
+@include media-breakpoint-down(sm) {
+    // Make Search box full width
+    .search-form:focus-within {
+        .search-input {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 52px;
+            border-radius: 0;
+            width: 100vw;
+            background-color: white;
+            z-index: 3;
+            outline: none;
+            padding-left: 45px;
+            padding-right: 45px;
+        }
+
+        .back-button{
+            display: block;
+            position: fixed;
+            left: 15px;
+            top: 10px;
+            cursor: pointer;
+            transform: rotate(-90deg);
+            z-index: 4;
+            outline: none;
+            .icon {
+                width: 22px;
+                height: 22px;
+                background: rgb(120, 110, 120);
+            }
+        }
+
+        .search-button{
+            position: fixed;
+            right: 15px;
+            top: 13px;
+            z-index: 3;
+            outline: none;
+            width: 22px;
+            height: 22px;
+        }
+    }
+
+    .search-suggestions-box {
+        border-left-width: 0 !important;
+        border-right-width: 0 !important;
+        border-radius: 0;
+        margin-top: 0;
+    }
+}
+
 .search-button {
     position: relative;
-    right: 4px;
+    right: 2px;
     top: 3px;
     width: 21px;
     height: 21px;
