@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './TopBar.scss';
 import { queryCache } from 'react-query';
@@ -61,7 +61,7 @@ function CreateProperty(props) {
 
 function Search(props) {
     const history = useHistory();
-    const [key, setKey] = useState("");
+    const searchInput = useRef(null);
     const {
         ready,
         value,
@@ -78,25 +78,20 @@ function Search(props) {
         },
     });
 
-    let validateKey = () => {
-        if (key) {
-            return "";
+    const searchByKey = (e) => {
+        clearSuggestions();
+        searchInput.current.blur();
+        e.preventDefault();
+        if (!value) {
+            // Nothing to search
+            return;
         }
-        return 'return false';
+        history.push(`/search/?q=${value}`);
     }
 
-    const handleInputChange = (e) => {
-        setKey(e.target.value);  // Update key
-        if (props.simple) {
-            setValue(e.target.value, false);  // Don't make API call
-        }
-        else {
-            setValue(e.target.value);  // Make API call
-        }
-    };
-
-    const searchNearbyPlaces = (location) => {
-        history.push(`/search/?lng=${location.point.lng}&lat=${location.point.lat}`);
+    const searchByLatLng = (location) => {
+        searchInput.current.blur();
+        history.push(`/search/?lng=${location.lng}&lat=${location.lat}`);
     }
 
     const handleSelect = async (address) => {
@@ -106,22 +101,30 @@ function Search(props) {
         try {
             const results = await getGeocode({ address });
             const { lat, lng } = await getLatLng(results[0]);
-            const point = { lat, lng }
-            searchNearbyPlaces({ point, address });
+            searchByLatLng({lat, lng});
         } catch (error) {
             console.log("😱 Error: ", error);
         }
     };
 
+    const handleInputChange = (e) => {
+        if (props.simple) {
+            setValue(e.target.value, false);  // Don't make API call
+        }
+        else {
+            setValue(e.target.value);  // Make API call
+        }
+    };
+
     return (
-        <>
+        <form onSubmit={searchByKey} class="search-form form-inline m-0 ml-3 ml-lg-0 p-0 p-lg-0 col-7 col-sm-8 col-md-8 col-lg-5 ">
             <div class="back-button" >
                 <span class="icon icon-up-arrow"></span>
             </div>
-            <Combobox onSelect={handleSelect} className="search-box-container col-12 p-0 m-0 ml-1  col-sm-9 col-md-9 col-lg-12">
+            <Combobox onSelect={handleSelect} className="search-box-container col-12 p-0 m-0 col-sm-9 col-md-9 col-lg-12">
                 <ComboboxInput value={value} disabled={props.simple || !ready} onChange={handleInputChange} autoComplete="off"
-                    name="search" type="text" placeholder="Search location..."
-                    className="search-input col-12" />
+                    name="search" type="search" placeholder="Search location..."
+                    className="search-input col-12" ref={searchInput}/>
 
                 {status === "OK" && data ?
                     <ComboboxPopover className="search-suggestions-box">
@@ -133,12 +136,13 @@ function Search(props) {
                     </ComboboxPopover> : null
                 }
             </Combobox>
-            <Link onClick={validateKey()} to={{ pathname: "/search", search: `?q=${key}` }}>
-                <button class="btn px-sm-3" >
-                    <span class="icon icon-search search-button"></span>
-                </button>
-            </Link>
-        </>
+            <button type="submit" class="btn d-none d-md-block search-button" >
+                <span class="icon icon-search"></span>
+            </button>
+            <div class="btn  d-md-none search-button" >
+                <span class="icon icon-search"></span>
+            </div>
+        </form>
     );
 }
 
@@ -176,14 +180,10 @@ function TopBar(props) {
                     <img src="navbar-brand.png" alt="Settle" />
                 </Link>
             </Navbar.Brand>
-            <form class="search-form form-inline m-0 ml-3 ml-lg-0 p-0 p-lg-0 col-7 col-sm-8 col-md-8 col-lg-5 ">
-
                 { isLoaded ?
                     <AdvancedSearch />:
                     <SimpleSearch />
                 }
-
-            </form>
             <Navbar.Toggle className="navbar-toggler m-0 py-0 px-2" aria-controls="basic-navbar-nav">
                 {user.isLoggedIn ?
                     <div class="navbar-profile-picture text-center">
