@@ -118,16 +118,16 @@ function ProfilePictureUploader(props) {
             <Modal animation={false} scrollable={true} className={`crop-image-modal ${props.modalClass || ''}`}
                 dialogClassName="custom-modal-dialog" show={imageToCrop !== null}
                 onHide={() => setImageToCrop(null)} size="lg" aria-labelledby="" centered>
-                <div class="modal-close" onClick={() => setImageToCrop(null)}>
-                    <span class="icon icon-close"></span>
-                </div>
-                <Modal.Body className="p-0 m-0 modal-body">
+                <Modal.Body className="p-0 m-0 modal-body text-center">
                     <ReactCrop className="crop-img" src={imageToCropSrc()}
                         crop={crop} onChange={newCrop => setCrop(newCrop)}
-                        circularCrop onImageLoaded={setImageDimensions} />
-                    <div class="col-12 text-center crop-done-btn">
-                        <div class="btn btn-primary mt-2 col-6 col-md-3" onClick={finishCroping}>
-                            {isLoading ? <Spinner animation="border" size="sm" /> : 'Done'}
+                        circularCrop onImageLoaded={setImageDimensions} keepSelection />
+                    <div class="row p-0 m-0 text-center crop-done-btn">
+                        <div class="col cancel-btn" onClick={() => setImageToCrop(null)}>
+                            Cancel
+                        </div>
+                        <div class="col next-btn" onClick={finishCroping}>
+                            {isLoading ? <Spinner animation="border" size="sm" /> : 'Next'}
                         </div>
                     </div>
                 </Modal.Body>

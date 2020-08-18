@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 
 .upload-main-img{
     width: 100%;
@@ -5,23 +7,23 @@
     border: 1px solid #eeeeee;
     border-radius: 5px;
     overflow: hidden;
-    background-color: rgba(250, 250, 250);
+    background-color: rgb(250, 250, 250);
     text-align: right;
     cursor: pointer;
 }
 
 .upload-main-img:hover span{
-    color: rgba(150, 150, 150);
+    color: rgb(150, 150, 150);
 }
 
 .upload-main-img .camera{
     font-size: 8em;
-    color: rgba(170, 170, 170);
+    color: rgb(170, 170, 170);
 }
 
 .upload-main-img .plus{
     font-size: 30px;
-    color: rgba(170, 170, 170);
+    color: rgb(170, 170, 170);
 }
 
 .file-input{
@@ -56,6 +58,41 @@
 }
 
 
+// Style for all image croping components 
 .crop-img{
+    width: auto;
+    max-height: calc(100vh - 180px);
+    margin-bottom: 40px;
+}
+
+.crop-img img{
+    width: auto;
+    max-height: calc(100vh - 181px);
+}
+
+.crop-done-btn {
     width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+.crop-done-btn>div {
+    padding: 12px 0;
+    cursor: pointer;
+    transition: color .4s ease;
+    font-weight: 500;
+}
+
+.crop-done-btn>div:hover {
+    color: $primary;
+}
+
+.crop-done-btn .cancel-btn{
+    background-color: rgb(250, 250, 250);
+}
+
+.crop-done-btn .next-btn {
+    border-left: solid 1px #cfcfcf;
+    background-color: rgb(230, 230, 230);
 }
