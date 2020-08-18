@@ -22,7 +22,7 @@ const libraries = ["places"];
 const mapContainerStyle = {
     height: "300px",
     width: "100%",
-    "border-radius": "3px",
+    "border-radius": "4px",
     border: "solid 1px rgb(238, 238, 238)"
 };
 
@@ -74,7 +74,7 @@ function Search(props) {
         },
     });
 
-    React.useEffect(function(){
+    React.useEffect(function () {
         setValue(props.location.address, false);
     }, [props.location])
 
@@ -90,11 +90,11 @@ function Search(props) {
             const results = await getGeocode({ address });
             const { lat, lng } = await getLatLng(results[0]);
 
-            const point = {lat, lng}
+            const point = { lat, lng }
             props.panTo(point);
 
-            if(props.onSelectingSearchResult) {
-                props.onSelectingSearchResult({point, address});
+            if (props.onSelectingSearchResult) {
+                props.onSelectingSearchResult({ point, address });
             }
         } catch (error) {
             console.log("😱 Error: ", error);
@@ -135,7 +135,7 @@ function Map(props) {
     const [showInfoWindow, setShowInfoWindow] = React.useState(true);
 
     const handleLocationChange = React.useCallback(async (e) => {
-        if(!props.editable) {
+        if (!props.editable) {
             return;
         }
         const selectedPoint = {
@@ -182,70 +182,79 @@ function Map(props) {
     if (loadError) return "Failed to load Map";
     if (!isLoaded) return "Loading Map...";
 
+    const showMap = () => {
+        if (location.point.lng && location.point.lat) {
+            return ""
+        }
+        return "d-none"
+    }
+
     return (
         <div>
             {props.search ?
                 <>
                     <Search location={location} onSelectingSearchResult={handleSelectingSearchResult} panTo={panTo} />
-                    { props.showCompass ?
-                        <Locate panTo={panTo} />:
+                    {props.showCompass ?
+                        <Locate panTo={panTo} /> :
                         null
                     }
                 </> : null
             }
 
-            <GoogleMap
-                id="map"
-                mapContainerStyle={{ ...mapContainerStyle, ...props.style }}
-                zoom={15}
-                center={location.point}
-                options={options}
-                onDblClick={handleLocationChange}
-                onLoad={onMapLoad}>
-
-                { props.showInfoWindow && showInfoWindow ?
-                    <InfoWindow
-                        position={location.point}
-                        onCloseClick={(e) => { setShowInfoWindow(false) }}
-                    >
-                        <div class="info-window text-center">
-                            <span class="icon icon-house"></span> <br />
-                            {location.address}
-                        </div>
-                    </InfoWindow> :
-                    null
-                }
-
-                <Marker
-                    draggable={props.markerDraggable}
-                    options={{
-                        icon: '',
-                    }}
-                    position={location.point}
-                    onDragEnd={handleLocationChange}
-                    onClick={() => {
-                        setShowInfoWindow(true);
-                    }}
-                />
-
-                <Circle
+            <span className={showMap()}>
+                <GoogleMap
+                    id="map"
+                    mapContainerStyle={{ ...mapContainerStyle, ...props.style }}
+                    zoom={15}
                     center={location.point}
-                    options={{
-                        strokeColor: 'black',
-                        strokeOpacity: 0,
-                        strokeWeight: 2,
-                        fillColor: 'black',
-                        fillOpacity: 0.3,
-                        clickable: false,
-                        draggable: false,
-                        editable: false,
-                        visible: true,
-                        radius: 120,
-                        zIndex: 1
-                    }}
-                />
-                
-            </GoogleMap>
+                    options={options}
+                    onDblClick={handleLocationChange}
+                    onLoad={onMapLoad}>
+
+                    {props.showInfoWindow && showInfoWindow ?
+                        <InfoWindow
+                            position={location.point}
+                            onCloseClick={(e) => { setShowInfoWindow(false) }}
+                        >
+                            <div class="info-window text-center">
+                                <span class="icon icon-house"></span> <br />
+                                {location.address}
+                            </div>
+                        </InfoWindow> :
+                        null
+                    }
+
+                    <Marker
+                        draggable={props.markerDraggable}
+                        options={{
+                            icon: '',
+                        }}
+                        position={location.point}
+                        onDragEnd={handleLocationChange}
+                        onClick={() => {
+                            setShowInfoWindow(true);
+                        }}
+                    />
+
+                    <Circle
+                        center={location.point}
+                        options={{
+                            strokeColor: 'black',
+                            strokeOpacity: 0,
+                            strokeWeight: 2,
+                            fillColor: 'black',
+                            fillOpacity: 0.3,
+                            clickable: false,
+                            draggable: false,
+                            editable: false,
+                            visible: true,
+                            radius: 120,
+                            zIndex: 1
+                        }}
+                    />
+
+                </GoogleMap>
+            </span>
         </div>
     );
 }
