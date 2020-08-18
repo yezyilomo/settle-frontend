@@ -121,7 +121,7 @@ function ProfilePictureUploader(props) {
                 <Modal.Body className="p-0 m-0 modal-body text-center">
                     <ReactCrop className="crop-img" src={imageToCropSrc()}
                         crop={crop} onChange={newCrop => setCrop(newCrop)}
-                        circularCrop onImageLoaded={setImageDimensions} keepSelection />
+                        circularCrop onImageLoaded={setImageDimensions} keepSelection ruleOfThirds />
                     <div class="row p-0 m-0 text-center crop-done-btn">
                         <div class="col cancel-btn" onClick={() => setImageToCrop(null)}>
                             Cancel
