@@ -8,6 +8,7 @@ import { useGlobalState } from 'state-pool';
 function SaveButton(props) {
     const [user,] = useGlobalState("user");
     const [isSaved, setIsSaved] = useState(props.property.is_my_favourite);
+    const [, ,setShowLogInModal] = useGlobalState("showLogInModal");
     const postUrl = `${BASE_API_URL}/users/${user.id}/`;
     const headers = {
         'Authorization': `Token ${user.auth_token}`,
@@ -32,12 +33,20 @@ function SaveButton(props) {
     }
 
     const [addToSaved] = useMutation(() => {
+        if(!user.isLoggedIn) {
+            setShowLogInModal(true);
+            return;
+        }
         setIsSaved(true);
         const body = JSON.stringify({ "fav_properties": { "add": [props.property.id] } });
         return fetch(postUrl, { body: body, method: 'PATCH', headers: headers })
     }, responses)
 
     const [removeFromSaved] = useMutation(() => {
+        if(!user.isLoggedIn) {
+            setShowLogInModal(true);
+            return;
+        }
         setIsSaved(false);
         const body = JSON.stringify({ "fav_properties": { "remove": [props.property.id] } });
         return fetch(postUrl, { body: body, method: 'PATCH', headers: headers })
