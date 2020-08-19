@@ -331,7 +331,7 @@ function SignUp(props) {
 
     return (
         <>
-            <Nav.Link href="#" onClick={() => setShowSignUpModal(true)}><span class="d-lg-none icon icon-add-user mr-2"/>Sign up</Nav.Link>
+            <Nav.Link href="#" onClick={() => setShowSignUpModal(true)}><span class="d-lg-none icon icon-add-user"/>Sign up</Nav.Link>
 
             <Modal animation={false} scrollable={true} className="signup-modal" dialogClassName="custom-modal-dialog" show={showSignUpModal} onHide={() => setShowSignUpModal(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                 <div class="modal-close" onClick={() => setShowSignUpModal(false)}>

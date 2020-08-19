@@ -78,7 +78,7 @@
 .profile-dropdown.navbar-profile-picture{
     position: absolute;
     right:0px;
-    top: 0px;
+    top: 3px;
 }
 
 .back-button{
@@ -294,13 +294,25 @@
         justify-content: flex-start;
         box-shadow: inset 20px -2px 10px rgb(189, 189, 189);
         overflow-y: auto;
+        a{
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
         .icon {
             height: 20px;
             width: 20px;
             position: relative;
             top: 3px;
-            margin-right: 11px !important;
+            margin-left: 5px !important;
+            margin-right: 15px !important;
             background-color: #585858;
+        }
+        .dropdown-menu{
+            margin-left: 16px !important;
+            a{
+                padding-top: 12px !important;
+                padding-bottom: 12px !important;
+            }
         }
     }
     

@@ -98,7 +98,7 @@ function LogIn(props) {
 
     return (
         <>
-            <Nav.Link href="#" onClick={() => setShowLogInModal(true)}><span class="d-lg-none icon icon-enter mr-2"/>Login</Nav.Link>
+            <Nav.Link href="#" onClick={() => setShowLogInModal(true)}><span class="d-lg-none icon icon-enter"/>Login</Nav.Link>
 
             <Modal animation={false} scrollable={true} className="login-modal" dialogClassName="custom-modal-dialog" show={showLogInModal} onHide={() => setShowLogInModal(false)} size="lg" aria-labelledby="" centered>
                 <div class="modal-close" onClick={() => setShowLogInModal(false)}>

@@ -37,7 +37,7 @@ function CreateProperty(props) {
     return (
         <>
             <Nav.Link href="#" onClick={() => setModalShow(true)}>
-                <span class="d-lg-none icon icon-add mr-2"/>Create
+                <span class="d-lg-none icon icon-add"/>Create
             </Nav.Link>
             <InfoModal header="Select Property Type" modalShow={modalShow} setModalShow={setModalShow}>
                 <ul class="m-0 p-0">
@@ -198,12 +198,12 @@ function TopBar(props) {
             </Navbar.Toggle>
             <Navbar.Collapse className="row collapsible-menu col-lg-4 m-0 px-0 px-lg-3" id="basic-navbar-nav">
                 <Nav className="col-9 col-lg-12 p-0 m-0 nav-menu">
-                    <Nav.Link href="#/"><span class="d-lg-none icon icon-house mr-2"/>Home</Nav.Link>
+                    <Nav.Link href="#/"><span class="d-lg-none icon icon-house"/>Home</Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
-                    <Nav.Link href="#/my-fav-properties"><span class="d-lg-none icon icon-heart mr-2"/>Saved</Nav.Link>
+                    <Nav.Link href="#/my-fav-properties"><span class="d-lg-none icon icon-heart"/>Saved</Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
                     <Nav.Link className="d-lg-none" href="#/filter">
-                        <span style={{transform: "rotate(90deg)"}} class="d-lg-none icon icon-settings mr-2"/>Filter
+                        <span style={{transform: "rotate(90deg)"}} class="d-lg-none icon icon-settings"/>Filter
                     </Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
 
@@ -236,7 +236,7 @@ function TopBar(props) {
                                             <img src={user.profile_picture} alt="" />
                                         }
                                     </div>
-                                    <span class="d-lg-none"><span class="d-lg-none icon icon-user mr-2"/>Profile</span>
+                                    <span class="d-lg-none"><span class="d-lg-none icon icon-user"/>Profile</span>
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="nav-dropdown-menu p-0 m-0 bw-0 bw-lg-1">
                                     <hr class="line p-0 m-0 d-lg-none" />
