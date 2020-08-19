@@ -21,11 +21,10 @@
 }
 
 .search .current-location {
-    padding: 8px 8px 1px 6px;
-    float: right;
-    position: relative;
-    right: 2px;
-    bottom: 38px;
+    padding: 8px 7px 1px 7px;
+    position: absolute;
+    right: 17px;
+    margin-top: -38px;
     z-index: 3;
     cursor: pointer;
     .icon-localization {
