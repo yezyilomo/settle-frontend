@@ -101,6 +101,38 @@ function Search(props) {
         }
     };
 
+    const setLocation = async (position) => {
+        const selectedPoint = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+        };
+
+        try {
+            const results = await getGeocode({ location: selectedPoint });
+            const { lat, lng } = await getLatLng(results[0]);
+
+            const point = { lat, lng };
+            const address = results[0].formatted_address
+            props.panTo(point);
+
+            const selectedLocation = { address, point }
+
+            if (props.setLocation) {
+                props.setLocation(selectedLocation)
+            }
+        } catch (error) {
+            console.log("😱 Error: ", error);
+        }
+    }
+
+    const setCurrentLocation = (e) => {
+        e.preventDefault();
+        navigator.geolocation.getCurrentPosition(
+            setLocation,
+            () => null
+        );
+    }
+
     return (
         <div className="search">
             <Combobox onSelect={handleSelect}>
@@ -110,6 +142,10 @@ function Search(props) {
                     disabled={!ready}
                     placeholder="Search your location"
                 />
+                <div class="current-location" data-toggle="tooltip" onClick={setCurrentLocation}
+                data-placement="bottom" title="Click to get your current location">
+                <span class="icon icon-localization" />
+                </div>
                 {status === "OK" && data ?
                     <ComboboxPopover className="map-search-suggestions-box">
                         <ComboboxList>
@@ -193,7 +229,7 @@ function Map(props) {
         <div>
             {props.search ?
                 <>
-                    <Search location={location} onSelectingSearchResult={handleSelectingSearchResult} panTo={panTo} />
+                    <Search setLocation={setLocation} location={location} onSelectingSearchResult={handleSelectingSearchResult} panTo={panTo} />
                     {props.showCompass ?
                         <Locate panTo={panTo} /> :
                         null
