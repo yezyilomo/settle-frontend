@@ -202,24 +202,11 @@ function TopBar(props) {
                     <hr class="line p-0 m-0 d-lg-none" />
                     <Nav.Link href="#/my-fav-properties"><span class="d-lg-none icon icon-heart mr-2"/>Saved</Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
-                    {!user.isLoggedIn ?
-                        <>
-                            <LogIn />
-                            <hr class="line p-0 m-0 d-lg-none" />
-                        </> :
-                        null
-                    }
                     <Nav.Link className="d-lg-none" href="#/filter">
                         <span style={{transform: "rotate(90deg)"}} class="d-lg-none icon icon-settings mr-2"/>Filter
                     </Nav.Link>
                     <hr class="line p-0 m-0 d-lg-none" />
-                    {!user.isLoggedIn ?
-                        <>
-                            <SignUp />
-                            <hr class="line p-0 m-0 d-lg-none" />
-                        </> :
-                        null
-                    }
+
                     {user.isLoggedIn ?
                         <>
                             <CreateProperty />
@@ -227,6 +214,17 @@ function TopBar(props) {
                         </> :
                         null
                     }
+
+                    {!user.isLoggedIn ?
+                        <>
+                            <LogIn />
+                            <hr class="line p-0 m-0 d-lg-none" />
+                            <SignUp />
+                            <hr class="line p-0 m-0 d-lg-none" />
+                        </> :
+                        null
+                    }
+
                     {user.isLoggedIn ?
                         <>
                             <Dropdown alignRight>
