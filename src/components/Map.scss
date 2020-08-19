@@ -7,6 +7,7 @@
 
 .search input {
     padding: 0.5rem;
+    padding-right: 38px;
     font-size: 1.1rem;
     width: 100%;
     border: solid 1px rgb(238, 238, 238);
@@ -17,6 +18,26 @@
 
 .search input:focus {
     background-color: rgb(251, 251, 251);
+}
+
+.search .current-location {
+    padding: 8px 8px 1px 6px;
+    float: right;
+    position: relative;
+    right: 2px;
+    bottom: 38px;
+    z-index: 3;
+    cursor: pointer;
+    .icon-localization {
+        width: 20px;
+        height: 20px;
+        background-color: rgb(156, 156, 156);
+        transition: background-color .3s ease;
+    }
+}
+
+.search .current-location:hover .icon-localization {
+    background-color: $primary;
 }
 
 .map-search-suggestions-box {
