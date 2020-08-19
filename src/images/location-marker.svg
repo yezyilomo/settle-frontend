@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   enable-background="new 0 0 512 512"
+   height="61"
+   viewBox="0 0 512 512"
+   width="45"
+   version="1.1"
+   sodipodi:docname="location.svg"
+   inkscape:export-filename="/home/yezy/Projects/personal/settle-frontend/src/images/location.png"
+   inkscape:export-xdpi="11.408652"
+   inkscape:export-ydpi="11.408652"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <metadata
+     id="metadata13">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs11" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="744"
+     id="namedview9"
+     showgrid="false"
+     inkscape:zoom="7.375"
+     inkscape:cx="-7.6271187"
+     inkscape:cy="30.275935"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g6" />
+  <g
+     id="g6">
+    <path
+       d="m 256.77138,-85.936723 c -144.71872,0 -251.8113613,116.618125 -251.8113613,263.280373 0,82.48993 47.4282623,178.29688 130.4875613,284.75203 60.7816,77.89369 115.36534,131.74129 117.87906,133.99223 7.99471,7.13971 -1.21564,7.23809 6.88947,0 2.51372,-2.25094 57.09746,-56.09854 117.87906,-133.99223 83.0593,-106.45515 130.48756,-202.2621 130.48756,-284.75203 0,-146.662248 -107.09264,-263.280373 -251.81135,-263.280373 z M 240.71676,220.4551 268.99185,198.06092 c 0.36976,-2.18625 1.56676,1.54871 0,0 l -23.35291,2.97518 c -12.60188,-12.47863 -12.85288,-29.83221 4.58358,-32.41068 l 18.76933,29.4355 c 2.1666,-0.31944 -0.96825,1.98947 0,0 v 0 c 7.81115,-16.00736 -7.8085,-16.00196 0,0 v 0 c -14.90173,22.4589 -2.1666,-0.31944 0,0 v 0 c 17.4245,2.57714 12.60852,-12.48536 0,0 v 0 c -1.56675,1.54871 -0.36974,-2.18625 0,0 l 22.58957,16.54576 c -30.69134,-2.98459 -2.30529,16.42459 -17.89837,8.11765 l -12.79297,-11.10224 c 9.12552,-91.05253 1.9378,-1.03247 0,0 l 2.05325,27.18534 c -15.50664,8.28 -25.21511,-0.68034 -22.22657,-18.35233 z"
+       id="path2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssccccssccccccccccccccccccccc"
+       inkscape:export-filename="/home/yezy/Projects/personal/settle-frontend/src/images/location.png"
+       inkscape:export-xdpi="11.408652"
+       inkscape:export-ydpi="11.408652"
+       style="fill:#333333;stroke-width:1.33891404" />
+    <path
+       d="m 265.96645,254.61847 54.12399,30.0881 c 3.8984,2.16625 8.45566,-1.33309 7.70999,-5.92215 l -10.34554,-63.70929 c -1.57635,-9.71729 1.4701,-19.64057 8.1652,-26.53069 l 43.79444,-45.11717 c 3.15446,-3.25034 1.41339,-8.91219 -2.94373,-9.58062 l -60.52861,-9.29795 c -9.22791,-1.42295 -17.21597,-7.54538 -21.34282,-16.38274 L 257.53559,50.184122 c -1.9483,-4.175266 -7.58069,-4.175266 -9.53075,0 l -27.06379,57.981838 c -4.12689,8.83736 -12.11491,14.95979 -21.34281,16.38274 l -60.52861,9.29795 c -4.3589,0.67028 -6.09822,6.33214 -2.94373,9.58062 l 43.7962,45.11717 c 6.69508,6.89012 9.74154,16.8134 8.16517,26.53069 l -10.34551,63.70929 c -0.74567,4.58906 3.81158,8.0884 7.70998,5.92215 l 54.12398,-30.0881 c 8.22542,-4.53288 18.03602,-4.60402 26.39073,0 z"
+       id="path4"
+       inkscape:export-filename="/home/yezy/Projects/personal/settle-frontend/src/images/location.png"
+       inkscape:export-xdpi="10.24"
+       inkscape:export-ydpi="10.24"
+       style="fill:#f9f9f9;stroke-width:1.82105005"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

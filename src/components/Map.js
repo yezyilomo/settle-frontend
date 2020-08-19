@@ -11,6 +11,7 @@ import {
     Combobox, ComboboxInput, ComboboxPopover,
     ComboboxList, ComboboxOption,
 } from "@reach/combobox";
+import markerIcon from '../images/location-marker.svg';
 
 import "./Map.scss";
 import "@reach/combobox/styles.css";
@@ -143,8 +144,8 @@ function Search(props) {
                     placeholder="Search your location"
                 />
                 <div class="current-location" data-toggle="tooltip" onClick={setCurrentLocation}
-                data-placement="bottom" title="Click to get your current location">
-                <span class="icon icon-localization" />
+                    data-placement="bottom" title="Click to get your current location">
+                    <span class="icon icon-localization" />
                 </div>
                 {status === "OK" && data ?
                     <ComboboxPopover className="map-search-suggestions-box">
@@ -263,7 +264,7 @@ function Map(props) {
                     <Marker
                         draggable={props.markerDraggable}
                         options={{
-                            icon: '',
+                            icon: markerIcon,
                         }}
                         position={location.point}
                         onDragEnd={handleLocationChange}
