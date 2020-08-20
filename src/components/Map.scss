@@ -24,18 +24,18 @@
     padding: 8px 7px 1px 7px;
     position: absolute;
     right: 17px;
-    margin-top: -38px;
+    margin-top: -40px;
     z-index: 3;
     cursor: pointer;
-    .icon-localization {
-        width: 20px;
-        height: 20px;
+    .icon {
+        width: 24px;
+        height: 24px;
         background-color: rgb(156, 156, 156);
         transition: background-color .3s ease;
     }
 }
 
-.search .current-location:hover .icon-localization {
+.search .current-location:hover .icon {
     background-color: $primary;
 }
 

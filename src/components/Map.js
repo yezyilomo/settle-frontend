@@ -145,7 +145,7 @@ function Search(props) {
                 />
                 <div class="current-location" data-toggle="tooltip" onClick={setCurrentLocation}
                     data-placement="bottom" title="Click to get your current location">
-                    <span class="icon icon-localization" />
+                    <span class="icon icon-marker" />
                 </div>
                 {status === "OK" && data ?
                     <ComboboxPopover className="map-search-suggestions-box">
