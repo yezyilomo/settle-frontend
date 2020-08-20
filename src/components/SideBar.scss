@@ -71,6 +71,18 @@ $thumbBG: transparent;
     border-color: $primary;
 }
 
+.sidebar .price-range {
+    overflow: hidden;
+}
+
+.sidebar .price-range .MuiSlider-thumb[data-index="0"] {
+    margin-left: 0 !important;
+}
+
+.sidebar .price-range .MuiSlider-thumb[data-index="1"] {
+    margin-left: -24px !important;
+}
+
 .sidebar button {
     font-size: 1.09em;
 }

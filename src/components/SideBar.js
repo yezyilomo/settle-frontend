@@ -21,7 +21,7 @@ const PriceRangeSlider = withStyles({
         backgroundColor: '#fff',
         border: '2px solid currentColor',
         marginTop: -8,
-        marginLeft: -12,
+        //marginLeft: -12,
         '&:focus, &:hover, &$active': {
             boxShadow: 'inherit',
         },
@@ -131,7 +131,7 @@ function SideBar(props) {
                     </div>
                 </div>
 
-                <div className="p-0 m-0 mt-3">
+                <div className="price-range p-0 m-0 mt-3">
                     <PriceRangeSlider
                         className="range-input"
                         value={[filterFields.price__gt, filterFields.price__lt]}
