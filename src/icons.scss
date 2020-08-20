@@ -7,11 +7,11 @@
 }
 
 .icon-menu {
-    mask: url(icons/open-menu.svg);
+    mask: url(icons/menu.svg);
 }
 
 .icon-search {
-    mask: url(icons/magnifying-glass.svg);
+    mask: url(icons/search.svg);
 }
 
 .icon-house {
@@ -86,7 +86,15 @@
     mask: url(icons/eye-close.svg);
 }
 
-.icon-localization {
-    mask: url(icons/localization.svg);
+.icon-gps {
+    mask: url(icons/gps.svg);
+}
+
+.icon-marker {
+    mask: url(icons/marker.svg);
+}
+
+.icon-marker-light {
+    mask: url(icons/marker-light.svg);
 }
 
