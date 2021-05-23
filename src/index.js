@@ -17,8 +17,8 @@ import { initializeStore } from './store';
 // Do this before calling ReactDOM.render
 initializeStore()
 
-//let BASE_API_URL = "http://192.168.43.129:8000";  //For testing purpose
-let BASE_API_URL = "https://api.yezyilomo.com";
+//let BASE_API_URL = "http://172.20.10.2:8000";  //For testing purpose
+let BASE_API_URL = "https://api.yezyilomo.me";
 
 window.onScrollActions = {};
 
