@@ -2,7 +2,7 @@
 
 .add-to-home-screen {
     position: fixed;
-    bottom: 0;
+    bottom: calc(0px +  env(safe-area-inset-bottom));
     left: 0;
     width: 100%;
     font-size: 1.1em;

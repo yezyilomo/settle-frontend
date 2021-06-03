@@ -2,6 +2,11 @@
 
 $border-radius: 15px;
 
+.info-modal-backdrop {
+    opacity: 0.9 !important;
+    background-color: rgb(14, 14, 14);
+}
+
 .info-modal .modal-header {
     border-radius: $border-radius $border-radius 0 0;
 

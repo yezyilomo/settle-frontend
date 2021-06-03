@@ -6,6 +6,11 @@
     overflow: visible;
 }
 
+.notch {
+    height: env(safe-area-inset-top);
+    width: 100%;
+}
+
 .navbar-brand {
     overflow: visible;
     outline: none;
@@ -132,7 +137,7 @@
 
 .search-suggestions-box {
     position: absolute;
-    top: 0;
+    top: calc(0px + env(safe-area-inset-top));;
     left: 0;
     margin-top: 3px;
     z-index: 555555;
@@ -179,7 +184,7 @@
         .search-input {
             position: fixed;
             left: 0;
-            top: 0;
+            top: calc(0px + env(safe-area-inset-top));
             height: 52px;
             border-radius: 0;
             width: 100vw;
@@ -193,12 +198,14 @@
         .back-button{
             display: block;
             position: fixed;
-            left: 15px;
-            top: 12px;
+            left: 0;
+            top: calc(0px + env(safe-area-inset-top));
             cursor: pointer;
             transform: rotate(-90deg);
             z-index: 4;
             outline: none;
+
+            padding: 10px;
             .icon {
                 width: 22px;
                 height: 22px;
@@ -225,7 +232,7 @@
 
     .search-suggestions-box {
         position: fixed !important;
-        top: 52px !important;
+        top: calc(52px + env(safe-area-inset-top)) !important;
         border-color: #dddddd !important;
     }
 
@@ -281,7 +288,7 @@
 
     width: calc(100% + 30px);
     position: fixed;
-    top: 53px;
+    top: calc(env(safe-area-inset-top) + 53px);
     background-color: transparent;
     -webkit-transition: none;
     transition: none;

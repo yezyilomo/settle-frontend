@@ -13,7 +13,8 @@ function InfoModal(props) {
     }
     
     return (
-        <Modal className={`info-modal ${bottomModalClass}`} animation={false} dialogClassName="custom-modal-dialog"
+        <Modal className={`info-modal ${bottomModalClass}`} animation={false} 
+            dialogClassName="custom-modal-dialog"  backdropClassName="info-modal-backdrop"
             show={props.modalShow} onHide={() => props.setModalShow(false)} size="lg"
             aria-labelledby="contained-modal-title-vcenter" scrollable centered>
             <div class="modal-close" onClick={() => props.setModalShow(false)}>
