@@ -1,6 +1,12 @@
 // This is the global sytle
 @import "variables.scss";
 
+
+html {
+  min-height: calc(100% + env(safe-area-inset-top));
+  padding-bottom: env(safe-area-inset-bottom);
+ }
+
 body {
   margin: 0;
   padding: 0;

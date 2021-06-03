@@ -64,7 +64,7 @@
 .modal-close {
     position: fixed;
     right: 10px;
-    top: 12px;
+    top: calc(12px + env(safe-area-inset-top));
     cursor: pointer;
 }
 
@@ -214,7 +214,7 @@
 
 .corousel-items-counter {
     position: fixed;
-    bottom: 15px;
+    bottom: calc(15px + env(safe-area-inset-bottom));
     left: 20px;
     color: white;
 }

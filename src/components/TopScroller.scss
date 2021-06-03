@@ -1,6 +1,6 @@
 .scroll-up .icon-up-arrow {
     position: fixed;
-    bottom: 60px;
+    bottom: calc(60px + env(safe-area-inset-bottom));
     right: 15px;
     cursor: pointer;
     width: 25px;
