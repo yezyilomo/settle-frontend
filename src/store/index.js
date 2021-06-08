@@ -44,7 +44,10 @@ function initializeStore(){
             price__lt: 950000,
             price__gt: 50000,
             currency: "",
-            location: "",
+            location: {
+                address: "",
+                point: null
+            },
             available_for: "rent",
             property_type: "houses",
             amenities: []

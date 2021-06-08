@@ -95,7 +95,10 @@ query={
 
 function PropertiesFilter(props) {
     const [filters, ] = useGlobalState("sideBar");
-    let {property_type, available_for, price__gt, price__lt, location, amenities, currency} = filters;
+    let {
+        property_type, available_for, price__gt, price__lt,
+        location, amenities, currency
+    } = filters;
     let amenity_ids = JSON.stringify(amenities.map(amenity => amenity.value));
     let header = (properties) => `Filter results(${properties.count})..`;
     let viewKey = "propertiesFilterView";
@@ -104,7 +107,12 @@ function PropertiesFilter(props) {
     &price__gt=${price__gt}
     &price__lt=${price__lt}
     &currency=${currency||""}
-    &search=${location}
+    ${location.point? 
+        `&longitude=${location.point.longitude}
+         &latitude=${location.point.latitude}
+         &radius_to_scan=5000`: 
+        `&search=${location.address}`
+    }
     &amenities__contains=${amenity_ids}`
 
     return <EndpointPropertiesFilter selection={endpoint} viewKey={viewKey} endpoint={endpoint} header={header}/>;

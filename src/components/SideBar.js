@@ -9,6 +9,18 @@ import { setErrorClass } from '../utils';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 
+import usePlacesAutocomplete, {
+    getGeocode,
+    getLatLng,
+} from "use-places-autocomplete";
+import {
+    Combobox, ComboboxInput, ComboboxPopover,
+    ComboboxList, ComboboxOption,
+} from "@reach/combobox";
+import { useLoadScript } from "@react-google-maps/api";
+
+
+const libraries = ["places"];
 
 const PriceRangeSlider = withStyles({
     root: {
@@ -41,11 +53,88 @@ const PriceRangeSlider = withStyles({
 })(Slider);
 
 
+function Search(props) {
+    const {
+        ready,
+        value,
+        suggestions: { status, data },
+        setValue,
+        clearSuggestions,
+    } = usePlacesAutocomplete();
+
+    const handleSelect = async (address) => {
+        setValue(address, false);  // Don't make API call
+        clearSuggestions();
+
+        try {
+            const results = await getGeocode({ address });
+            const { lat, lng } = await getLatLng(results[0]);
+            if(props.onChange) {
+                props.onChange({
+                    address: address,
+                    point: {latitude: lat, longitude: lng}
+                })
+            }
+        } catch (error) {
+            console.log("😱 Error: ", error);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        if (props.simple) {
+            setValue(e.target.value, false);  // Don't make API call
+        }
+        else {
+            setValue(e.target.value);  // Make API call
+        }
+    };
+
+    useEffect(() => {
+        if(props.onChange){
+            props.onChange({
+                address: value,
+                point: props.value.point // use the old value
+            })
+        }
+    }, [value])
+
+    return (
+            <Combobox class="location-container" onSelect={handleSelect} className="col-12 p-0 m-0">
+                <ComboboxInput value={props.value.address} disabled={props.simple || !ready} onChange={handleInputChange} autoComplete="off"
+                    name="location" type="text" placeholder="City, Region or Street"
+                    className="location col-12"/>
+
+                {status === "OK" && data ?
+                    <ComboboxPopover className="location-suggestions-box">
+                        <ComboboxList>
+                            {data.map(({ id, description }) => (
+                                <ComboboxOption key={id} value={description} />
+                            ))}
+                        </ComboboxList>
+                    </ComboboxPopover> : null
+                }
+            </Combobox>
+    );
+}
+
+function SimpleSearch(props){
+    return <Search {...props} simple/>
+}
+
+function AdvancedSearch(props){
+    return <Search {...props}/>
+}
+
 function SideBar(props) {
     const hooks = props.hooks || [];
     hooks.map(hook => hook());
     const history = useHistory();
     const [filterFields, updateFilterFields] = useGlobalState("sideBar");
+
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        libraries,
+    });
 
     useEffect(setErrorClass, []);
 
@@ -55,6 +144,12 @@ function SideBar(props) {
         updateFilterFields(filter => {
             filter[field] = value;
         });
+    }
+
+    let updateLocation = (location) => {
+        updateFilterFields(filter => {
+            filter["location"] = location
+        })
     }
 
     let handleSubmit = (e) => {
@@ -154,8 +249,10 @@ function SideBar(props) {
 
                 <div class="m-0 p-0 mt-5 mt-lg-4">
                     <label class="form-check-label col-12 p-0 m-0">Location</label>
-                    <input type="text" name="location" class="form-control col-12" value={filterFields.location}
-                        onChange={updateFieldValue} placeholder="City, Region or Street" />
+                { isLoaded ?
+                    <AdvancedSearch value={filterFields.location} onChange={updateLocation} />:
+                    <SimpleSearch value={filterFields.location} onChange={updateLocation} />
+                }
                 </div>
 
                 <div class="m-0 p-0 mt-2 mb-2">
