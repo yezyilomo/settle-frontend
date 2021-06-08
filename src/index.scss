@@ -5,6 +5,13 @@
 html {
   min-height: calc(100% + env(safe-area-inset-top));
   padding-bottom: env(safe-area-inset-bottom);
+  padding-top: calc(53px + env(safe-area-inset-top));
+ }
+
+ @include media-breakpoint-up(lg) {
+  html{
+    padding-top: calc(65px + env(safe-area-inset-top));
+  }
  }
 
 body {

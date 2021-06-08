@@ -1,9 +1,14 @@
 @import "../variables.scss";
 
 #top-navbar {
-    box-shadow: 0 -2px 10px rgb(190, 190, 190);
+    box-shadow: 0 3px 8px -4px rgb(195, 195, 195);
     font-size: 1.15em;
     overflow: visible;
+    position: fixed;
+    top: 0;
+    background-color: white;
+    z-index: 5;
+    width: 100%;
 }
 
 .notch {
@@ -91,6 +96,8 @@
 }
 
 .search-input {
+    outline: none;
+    left: 2px;
     height: 35px;
     border-radius: 7px;
     padding-left: 38px;
@@ -122,7 +129,7 @@
 
 .search-button {
     position: absolute;
-    left: 3px;
+    left: 5px;
     top: 3px;
     padding: 3px;
     padding-left: 6px;
@@ -152,6 +159,7 @@
 
 @include media-breakpoint-up(lg) {
     .search-input {
+        left: 0;
         height: 41px;
     }
     

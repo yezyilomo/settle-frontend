@@ -4,7 +4,7 @@ import { useGlobalState } from 'state-pool';
 import './SideBar.scss';
 import variables from '../variables.scss';
 import { BASE_API_URL } from '../';
-import { AsyncCreatableSelect } from './'
+import { AsyncSelect } from './'
 import { setErrorClass } from '../utils';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
@@ -162,7 +162,7 @@ function SideBar(props) {
                     <label class="form-check-label col-12 p-0 m-0">Amenities</label>
                     <div class="row mt-1 mb-3">
                         <div class="col-12">
-                            <AsyncCreatableSelect isMulti cacheOptions
+                            <AsyncSelect isMulti cacheOptions
                                 defaultOptions value={filterFields.amenities}
                                 loadOptions={getAmenities} onChange={updateAmenities} />
                         </div>

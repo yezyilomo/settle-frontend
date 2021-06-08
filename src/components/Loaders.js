@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Loaders.css';
+import './Loaders.scss';
 import { Spinner } from 'react-bootstrap';
 
 
