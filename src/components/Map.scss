@@ -85,3 +85,8 @@
     bottom: 5px !important;
     display: none;
 }
+
+a[title="Open this area in Google Maps (opens a new window)"] img {
+    -webkit-filter: grayscale(100%) !important; /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%) !important;
+}

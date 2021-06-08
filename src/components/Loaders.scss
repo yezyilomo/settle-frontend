@@ -1,0 +1,47 @@
+@import "../variables.scss";
+
+.spinner-grow {
+    margin: 0 2px 0 2px;
+}
+
+.page-loader{
+    margin-top: 35vh;
+}
+
+.inline-loader{
+    background-color: #eeeeee;
+    border-radius: 5px;
+    padding: 8px 0 7px 0;
+}
+
+.page-loader .spinner-border{
+    border-width: 2px;
+    height: 50px;
+    width: 50px;
+}
+
+.inline-loader .spinner-border{
+    height: 25px;
+    width: 25px;
+    border-width: 1px;
+}
+
+
+// Fix spinner now showing on Safari browser
+@keyframes spinner-grow {
+    0% {
+         -webkit-transform: scale(0);
+         transform: scale(0);
+    }
+    40% {
+        opacity: 1;
+        -webkit-transform: scale(.5);
+         transform: scale(.5);
+    }
+    80% {
+        opacity: .4;
+        -webkit-transform: scale(1);
+         transform: scale(1);
+    }
+   }
+// End of fix

@@ -1,5 +1,6 @@
 import React from 'react';
 import variables from '../variables.scss';
+import AsyncSelect from 'react-select/async';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 
 
@@ -36,6 +37,11 @@ function CustomAsyncCreatableSelect(props){
     return <AsyncCreatableSelect theme={theme} styles={styles} {...props}/>
 }
 
+function CustomAsyncSelect(props){
+    return <AsyncSelect theme={theme} styles={styles} {...props}/>
+}
+
 export {
-    CustomAsyncCreatableSelect as AsyncCreatableSelect
+    CustomAsyncCreatableSelect as AsyncCreatableSelect,
+    CustomAsyncSelect as AsyncSelect
 }

@@ -47,7 +47,7 @@ import {InfoModal} from './InfoModal';
 import {ConfirmModal} from './ConfirmModal';
 import {Map} from './Map';
 import {SaveButton} from './SaveButton';
-import {AsyncCreatableSelect} from './SelectInputs';
+import {AsyncSelect, AsyncCreatableSelect} from './SelectInputs';
 import {LogInToViewSaved} from './LogInToViewSaved';
 
 
@@ -65,5 +65,5 @@ export {
     EndpointPropertiesFilter, GenericResourcesGroup, PropertiesGroup, AddToHomeScreen,
     SliderPropertiesGroup, TwoRowsPropertiesGroup, ShowBuyProperties, ShowRentProperties,
     EditProfile, ProfilePictureUploader, InfoModal, Map, PROPERTIES_QUERY_PARAM, SaveButton,
-    AsyncCreatableSelect, LogInToViewSaved
+    AsyncSelect, AsyncCreatableSelect, LogInToViewSaved
 };
