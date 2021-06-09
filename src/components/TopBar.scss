@@ -101,7 +101,7 @@
     height: 35px;
     border-radius: 7px;
     padding-left: 38px;
-    padding-right: 5px;
+    padding-right: 36px;
     text-align: center;
     background-color: rgb(240, 240, 240);
     border-color: transparent;
@@ -125,6 +125,62 @@
     mask-size: cover;
     mask: url(../icons/plus.svg);
     transform: rotate(45deg);
+}
+
+.search-container .current-location {
+    padding: 8px 7px 1px 7px;
+    position: absolute;
+    right: 2px;
+    margin-top: -37px;
+    z-index: 0;
+    cursor: pointer;
+    .icon {
+        width: 22px;
+        height: 22px;
+        background-color: rgb(156, 156, 156);
+        transition: background-color .3s ease;
+    }
+
+    .load-location {
+        animation-name: load-by-spin;
+        animation-duration: 1s;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+    }
+}
+
+@keyframes load-by-spin {
+    0% {
+        background: linear-gradient(45deg, $primary 50%, rgb(156, 156, 156) 50%);
+    }
+    12.5% {
+        background: linear-gradient(90deg, $primary 50%, rgb(156, 156, 156) 50%);
+    }
+    25% {
+        background: linear-gradient(135deg, $primary 50%, rgb(156, 156, 156) 50%);
+    }
+    37.5% {
+        background: linear-gradient(180deg, $primary 50%, rgb(156, 156, 156) 50%);
+    }
+    50% {
+        background: linear-gradient(225deg, $primary 50%, rgb(156, 156, 156) 50%);
+    }
+    62.5% {
+        background: linear-gradient(270deg, $primary 50%, rgb(156, 156, 156) 50%);
+    }
+    75% {
+        background: linear-gradient(315deg, $primary 50%, rgb(156, 156, 156) 50%);
+    }
+    87.5% {
+        background: linear-gradient(360deg, $primary 50%, rgb(156, 156, 156) 50%);
+    }
+    100% {
+        background: linear-gradient(405deg, $primary 50%, rgb(156, 156, 156) 50%);
+    }
+}
+
+.search-container .current-location:hover .icon {
+    background-color: $primary;
 }
 
 .search-button {
@@ -162,7 +218,16 @@
         left: 0;
         height: 41px;
     }
-    
+
+    .search-container .current-location {
+        right: 5px;
+        margin-top: -40px;
+        .icon {
+            width: 22px;
+            height: 22px;
+        }
+    }
+
     .navbar-brand {
         height: 49px;
     }
@@ -201,6 +266,10 @@
             outline: none;
             padding-left: 40px;
             padding-right: 15px;
+        }
+
+        .current-location {
+            display: none;
         }
 
         .back-button{

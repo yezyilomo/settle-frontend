@@ -14,6 +14,7 @@
     border-radius: 3px;
     background-color: rgb(250, 250, 250);
     outline: none;
+    -webkit-appearance: none !important;
 }
 
 .search input:focus {
@@ -32,6 +33,12 @@
         height: 24px;
         background-color: rgb(156, 156, 156);
         transition: background-color .3s ease;
+    }
+    .load-location {
+        animation-name: load-by-spin;
+        animation-duration: 1s;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
     }
 }
 

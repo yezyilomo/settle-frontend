@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useGlobalState } from 'state-pool';
 import './SideBar.scss';
@@ -54,6 +54,7 @@ const PriceRangeSlider = withStyles({
 
 
 function Search(props) {
+    const [loading, setLoading] = useState(false);
     const {
         ready,
         value,
@@ -98,11 +99,59 @@ function Search(props) {
         }
     }, [value])
 
+    const setLocation = async (position) => {
+        const selectedPoint = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+        };
+
+        try {
+            const results = await getGeocode({ location: selectedPoint });
+            const { lat, lng } = await getLatLng(results[0]);
+
+            const point = { latitude: lat, longitude: lng };
+            const address = results[0].formatted_address
+            setValue(address, false);  // Don't make API call
+            clearSuggestions();
+            if(props.onChange){
+                props.onChange({
+                    address: address,
+                    point: point
+                })
+            }
+        } catch (error) {
+            console.log("😱 Error: ", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const setCurrentLocation = (e) => {
+        setLoading(true);
+        e.preventDefault();
+        navigator.geolocation.getCurrentPosition(
+            setLocation,
+            () => {setLoading(false); return null}
+        );
+    }
+
+    const showLoading = () => {
+        if(loading){
+            return "load-location"
+        }
+        return ""
+    }
+
     return (
-            <Combobox class="location-container" onSelect={handleSelect} className="col-12 p-0 m-0">
-                <ComboboxInput value={props.value.address} disabled={props.simple || !ready} onChange={handleInputChange} autoComplete="off"
+            <Combobox onSelect={handleSelect} className="location-container col-12 p-0 m-0">
+                <ComboboxInput value={props.value.address} onChange={handleInputChange} autoComplete="off"
                     name="location" type="text" placeholder="City, Region or Street"
                     className="location col-12"/>
+
+                <div class="current-location" data-toggle="tooltip" onClick={setCurrentLocation}
+                    data-placement="bottom" title="Click to get your current location">
+                    <span class={`icon icon-marker ${showLoading()}`} />
+                </div>
 
                 {status === "OK" && data ?
                     <ComboboxPopover className="location-suggestions-box">

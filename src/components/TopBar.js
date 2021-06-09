@@ -61,6 +61,7 @@ function CreateProperty(props) {
 
 
 function Search(props) {
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
     const searchInput = useRef(null);
     const {
@@ -117,15 +118,59 @@ function Search(props) {
         }
     };
 
+
+    const setLocation = async (position) => {
+        const selectedPoint = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+        };
+
+        try {
+            const results = await getGeocode({ location: selectedPoint });
+            const { lat, lng } = await getLatLng(results[0]);
+
+            const point = { lat, lng };
+            const address = results[0].formatted_address
+            setValue(address, false);  // Don't make API call
+            clearSuggestions();
+            searchByLatLng(point);
+        } catch (error) {
+            console.log("😱 Error: ", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const setCurrentLocation = (e) => {
+        setLoading(true);
+        e.preventDefault();
+        navigator.geolocation.getCurrentPosition(
+            setLocation,
+            () => {setLoading(false); return null}
+        );
+    }
+
+    const showLoading = () => {
+        if(loading){
+            return "load-location"
+        }
+        return ""
+    }
+
     return (
         <form onSubmit={searchByKey} class="search-form form-inline m-0 ml-3 ml-lg-0 p-0 p-lg-0 col-7 col-sm-8 col-md-8 col-lg-5 ">
             <div class="back-button" >
                 <span class="icon icon-up-arrow"></span>
             </div>
-            <Combobox onSelect={handleSelect} className="search-box-container col-12 p-0 m-0 col-sm-9 col-md-9 col-lg-12">
-                <ComboboxInput value={value} disabled={props.simple || !ready} onChange={handleInputChange} autoComplete="off"
+            <Combobox onSelect={handleSelect} className="search-container col-12 p-0 m-0 col-sm-9 col-md-9 col-lg-12">
+                <ComboboxInput value={value} onChange={handleInputChange} autoComplete="off"
                     name="search" type="search" placeholder="Search location..."
                     className="search-input col-12" ref={searchInput}/>
+
+                <div class="current-location" data-toggle="tooltip" onClick={setCurrentLocation}
+                    data-placement="bottom" title="Click to get your current location">
+                    <span class={`icon icon-marker ${showLoading()}`} />
+                </div>
 
                 {status === "OK" && data ?
                     <ComboboxPopover className="search-suggestions-box">

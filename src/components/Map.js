@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     GoogleMap, useLoadScript, Marker,
     InfoWindow, Circle
@@ -59,6 +59,7 @@ function Locate({ panTo }) {
 
 
 function Search(props) {
+    const [loading, setLoading] = useState(false);
     const {
         ready,
         value,
@@ -123,15 +124,25 @@ function Search(props) {
             }
         } catch (error) {
             console.log("😱 Error: ", error);
+        } finally {
+            setLoading(false);
         }
     }
 
     const setCurrentLocation = (e) => {
+        setLoading(true);
         e.preventDefault();
         navigator.geolocation.getCurrentPosition(
             setLocation,
-            () => null
+            () => {setLoading(false); return null}
         );
+    }
+
+    const showLoading = () => {
+        if(loading){
+            return "load-location"
+        }
+        return ""
     }
 
     return (
@@ -145,7 +156,7 @@ function Search(props) {
                 />
                 <div class="current-location" data-toggle="tooltip" onClick={setCurrentLocation}
                     data-placement="bottom" title="Click to get your current location">
-                    <span class="icon icon-marker" />
+                    <span class={`icon icon-marker ${showLoading()}`} />
                 </div>
                 {status === "OK" && data ?
                     <ComboboxPopover className="map-search-suggestions-box">
@@ -199,7 +210,7 @@ function Map(props) {
         }
     }, []);
 
-    const handleSelectingSearchResult = (selectedLocation) => {
+    const updateLocation = (selectedLocation) => {
         setLocation(selectedLocation);
         if (props.onChangeLocation) {
             props.onChangeLocation(selectedLocation);
@@ -230,7 +241,7 @@ function Map(props) {
         <div>
             {props.search ?
                 <>
-                    <Search setLocation={setLocation} location={location} onSelectingSearchResult={handleSelectingSearchResult} panTo={panTo} />
+                    <Search setLocation={updateLocation} location={location} onSelectingSearchResult={updateLocation} panTo={panTo} />
                     {props.showCompass ?
                         <Locate panTo={panTo} /> :
                         null
