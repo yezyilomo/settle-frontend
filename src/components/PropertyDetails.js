@@ -486,7 +486,7 @@ function NearbyProperties(props) {
 
 function Contact(props) {
     const contact = props.property.contact;
-    const ownerPicture = props.property.owner.picture.src;
+    const ownerPicture = props.property.owner.picture;
     return (
         <div class="col-12 p-0 m-0">
             <div class="h5 p-0 m-0 mt-3">Contact Dealer</div>
@@ -502,7 +502,7 @@ function Contact(props) {
                     <div class="owner-profile-picture text-center">
                         {!ownerPicture ?
                             <span class="icon icon-user" /> :
-                            <img src={ownerPicture} alt="" />
+                            <img src={ownerPicture.src} alt="" />
                         }
                     </div>
                 </div>

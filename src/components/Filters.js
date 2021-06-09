@@ -129,7 +129,9 @@ function SearchProperties(props) {
     if(parsed.lng && parsed.lat) {
         endpoint = `
         nearby-properties/?${PROPERTIES_QUERY_PARAM}
-        &longitude=${parsed.lng}&latitude=${parsed.lat}&radius_to_scan=2000
+        &longitude=${parsed.lng}
+        &latitude=${parsed.lat}
+        &radius_to_scan=${parsed.radius_to_scan||5000}
         `;
     } 
     let selection = props.location.pathname + props.location.search;
