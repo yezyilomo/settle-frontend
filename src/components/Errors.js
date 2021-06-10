@@ -24,6 +24,21 @@ function PageError(props) {
     );
 }
 
+function NotFoundError(props) {
+
+    return (
+        <div class="col-12 text-center">
+            <div class="col-12 page-error">
+                <i class="error-icon fas fa-exclamation-triangle"></i>
+                <div class="text-center">
+                    Oops!, We can't seem to find the page you're looking for. 
+                    <p>Error code: 404</p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function InlineError(props) {
     function refetch(e){
         if(props.refetch){
@@ -54,4 +69,10 @@ function renderInlineError (fetchAgain) {
     return <InlineError refetch={fetchAgain}/>
 }
 
-export { PageError, InlineError, renderPageError, renderInlineError };
+function renderNotFoundError (fetchAgain) {
+    return <InlineError refetch={fetchAgain}/>
+}
+
+export {
+    PageError, InlineError, NotFoundError, renderPageError, renderInlineError
+};

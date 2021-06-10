@@ -56,12 +56,11 @@ const PriceRangeSlider = withStyles({
 function Search(props) {
     const [loading, setLoading] = useState(false);
     const {
-        ready,
         value,
         suggestions: { status, data },
         setValue,
         clearSuggestions,
-    } = usePlacesAutocomplete();
+    } = usePlacesAutocomplete({defaultValue: props.value.address});
 
     const handleSelect = async (address) => {
         setValue(address, false);  // Don't make API call
@@ -87,17 +86,14 @@ function Search(props) {
         }
         else {
             setValue(e.target.value);  // Make API call
+            if(props.onChange){
+                props.onChange({
+                    address: e.target.value,
+                    point: null // use the old value
+                })
+            }
         }
     };
-
-    useEffect(() => {
-        if(props.onChange){
-            props.onChange({
-                address: value,
-                point: props.value.point // use the old value
-            })
-        }
-    }, [value])
 
     const setLocation = async (position) => {
         const selectedPoint = {
@@ -144,7 +140,7 @@ function Search(props) {
 
     return (
             <Combobox onSelect={handleSelect} className="location-container col-12 p-0 m-0">
-                <ComboboxInput value={props.value.address} onChange={handleInputChange} autoComplete="off"
+                <ComboboxInput value={value} onChange={handleInputChange} autoComplete="off"
                     name="location" type="text" placeholder="City, Region or Street"
                     className="location col-12"/>
 

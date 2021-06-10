@@ -6,7 +6,7 @@ import {
     DataFetcher, GlowPageLoader, Rating, ConfirmModal, InfoModal,
     Carousel as Slider, SaveButton, renderPageError, Map,
     PROPERTIES_QUERY_PARAM, renderInlineError, SliderPropertiesGroup,
-    GenericFilter, GlowBlockLoader
+    GenericFilter, GlowBlockLoader, NotFoundError
 } from './';
 import { BASE_API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
@@ -280,13 +280,17 @@ function PropertyDetails(props) {
 
     let fetchProperty = () => {
         return fetch(`${BASE_API_URL}/${getPropertyRoute(props.type)}/${props.id}/`, {headers: headers})
-        .then(res => res.json())
+        .then(res => res.json().then(data => ({statusCode: res.status, data})))
+        
     }
 
     return (
         <DataFetcher action={fetchProperty} selection={`property/${props.id}`}
             placeholder={<GlowPageLoader />} onError={renderPageError}>{response => {
-                const property = response.data;
+                if(response.data.statusCode === 404){
+                    return <NotFoundError />
+                }
+                const property = response.data.data;
                 let isAllowedToEdit = user.id == property.owner.id
 
                 let main_img = property.pictures.filter((picture) => picture.is_main)
@@ -321,7 +325,7 @@ function PropertyDetails(props) {
                 }
 
                 const confirmDeletionOptions = [
-                    { label: "Yes", onClick: deleteProperty, variant: "primary" },
+                    { label: "Yes", onClick: deleteProperty, variant: "danger" },
                     { label: "Cancel", onClick: function (e) { setDeleteModalShow(false) }, variant: "secondary" }
                 ]
                 const confirmDeletionText = "Are you sure you want to delete this property permanently?."

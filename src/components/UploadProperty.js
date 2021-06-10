@@ -295,6 +295,7 @@ function UploadProperty(props){
                                     </div>
                                     <div class="col-3 pl-1">
                                         <select class="custom-select" data-field="price_rate_unit" name="price_rate_unit" value={fields.price_rate_unit} onChange={updateValue} required>
+                                            <option value="" disabled selected>/Term</option>
                                             {terms.map((term) => <option value={term}>/ {term}</option>)}
                                         </select>
                                     </div>
