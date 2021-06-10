@@ -10826,12 +10826,10 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-places-autocomplete@^1.3.9:
-  version "1.3.9"
-  resolved "https://registry.yarnpkg.com/use-places-autocomplete/-/use-places-autocomplete-1.3.9.tgz#f26687a0b831fa77c216a4c86fd6709d065255f8"
-  integrity sha512-WVMevEZE8yI1OPP9sRQxSw5lQ0+WJiO5w9gldhJYc/0XnlzHBmJW75m4N5+OmWyjdX5qiTkR8Oh3N441opo9ww==
-  dependencies:
-    lodash.debounce "^4.0.8"
+use-places-autocomplete@^1.9.3:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/use-places-autocomplete/-/use-places-autocomplete-1.9.3.tgz#20aeb0536bb23f15eb1abca9e329928fee64796e"
+  integrity sha512-9N05hAAKttkx3e6WVW6MR2q53v2FN2TbmwAAPES26gUINb8P5ZzHvoT4D/E+NLY3qnGehGffYRm1Iflro29GQQ==
 
 use@^3.1.0:
   version "3.1.1"
