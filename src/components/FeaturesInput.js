@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import './FeaturesInput.css';
 import { useLocalState } from 'state-pool';
 
@@ -11,19 +11,12 @@ function FeaturesInput(props) {
         updateFeatures(features => {
             features.push({id: null, name: "", value: ""});
         });
-        if(props.onChange !== undefined){
-            props.onChange(features)
-        }
     }
 
     let deleteFeature = (featureToDelete) => {
         updateFeatures(draftFeatures => {
             return features.filter((feature) => feature !== featureToDelete);
         });
-
-        if(props.onChange !== undefined){
-            props.onChange(features)
-        }
         if(props.onDelete !== undefined){
             props.onDelete(featureToDelete)
         }
@@ -35,9 +28,6 @@ function FeaturesInput(props) {
             let index = features.indexOf(feature);
             draftFeatures[index].value = value;
         });
-        if(props.onChange !== undefined){
-            props.onChange(features);
-        }
     }
 
     let updateName = (event, feature) => {
@@ -46,10 +36,13 @@ function FeaturesInput(props) {
             let index = features.indexOf(feature);
             draftFeatures[index].name = name;
         });
-        if(props.onChange !== undefined){
-            props.onChange(features)
-        }
     }
+
+    useEffect(() => {
+        if(props.onChange !== undefined){
+            props.onChange(features);
+        }
+    }, [features])
 
     return (
         <>

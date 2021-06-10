@@ -37,7 +37,10 @@ import {
 import {Rating} from './Rating';
 import {BottomNavBar} from './BottomNavBar';
 import {TopScroller} from './TopScroller';
-import {PageError, InlineError, renderPageError, renderInlineError} from './Errors';
+import {
+    PageError, InlineError, NotFoundError, renderPageError,
+    renderInlineError
+} from './Errors';
 import {PageNotFound} from './PageNotFound';
 import {Carousel} from './Carousel';
 import {AddToHomeScreen} from './AddToHomeScreen';
@@ -61,9 +64,9 @@ export {
     MultipleImageUploader, UserProperties, UserFavProperties, SearchProperties, 
     FilterPropertiesByCategory, Rating, BottomNavBar, SpinnerPageLoader, SpinnerInlineLoader,
     GlowPageLoader, GlowInlineLoader, GlowBlockLoader, TopScroller, PageError, InlineError,
-    renderPageError, renderInlineError, PageNotFound, Carousel, GenericFilter ,PropertiesFilter,
-    EndpointPropertiesFilter, GenericResourcesGroup, PropertiesGroup, AddToHomeScreen,
-    SliderPropertiesGroup, TwoRowsPropertiesGroup, ShowBuyProperties, ShowRentProperties,
-    EditProfile, ProfilePictureUploader, InfoModal, Map, PROPERTIES_QUERY_PARAM, SaveButton,
-    AsyncSelect, AsyncCreatableSelect, LogInToViewSaved
+    NotFoundError, renderPageError, renderInlineError, PageNotFound,
+    Carousel, GenericFilter ,PropertiesFilter, EndpointPropertiesFilter, GenericResourcesGroup,
+    PropertiesGroup, AddToHomeScreen, SliderPropertiesGroup, TwoRowsPropertiesGroup,
+    ShowBuyProperties, ShowRentProperties, EditProfile, ProfilePictureUploader, InfoModal, Map,
+    PROPERTIES_QUERY_PARAM, SaveButton, AsyncSelect, AsyncCreatableSelect, LogInToViewSaved
 };

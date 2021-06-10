@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { Button, Spinner } from 'react-bootstrap';
 import {
     FeaturesInput, DataFetcher, GlowPageLoader, ImageUploader,
-    MultipleImageUploader, renderPageError, Map
+    MultipleImageUploader, renderPageError, Map, NotFoundError
 } from './';
 import { BASE_API_URL } from '../';
 import { useGlobalState, useLocalState } from 'state-pool';
@@ -342,6 +342,7 @@ function EditFetchedProperty(props) {
                                     </div>
                                     <div class="col-3 pl-1">
                                         <select class="custom-select" data-field="price_rate_unit" name="price_rate_unit" value={fields.price_rate_unit} onChange={updateValue} required>
+                                            <option value="" disabled selected>/Term</option>
                                             {terms.map((term) => <option value={term}>/ {term}</option>)}
                                         </select>
                                     </div>
@@ -494,7 +495,7 @@ function EditProperty(props) {
 
     let fetchProperty = () => {
         return fetch(`${BASE_API_URL}/${getPropertyRoute(props.type)}/${props.id}/`, {headers: headers})
-        .then(res => res.json())
+        .then(res => res.json().then(data => ({statusCode: res.status, data})))
     }
 
     return (
@@ -504,7 +505,10 @@ function EditProperty(props) {
             placeholder={<GlowPageLoader />}
             onError={renderPageError}>
             {response => {
-                const property = response.data;
+                if(response.data.statusCode === 404){
+                    return <NotFoundError />
+                }
+                const property = response.data.data;
                 return (
                 <EditFetchedProperty property={property} {...props}>
                     {props.children}
