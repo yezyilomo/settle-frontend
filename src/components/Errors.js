@@ -69,10 +69,6 @@ function renderInlineError (fetchAgain) {
     return <InlineError refetch={fetchAgain}/>
 }
 
-function renderNotFoundError (fetchAgain) {
-    return <InlineError refetch={fetchAgain}/>
-}
-
 export {
     PageError, InlineError, NotFoundError, renderPageError, renderInlineError
 };

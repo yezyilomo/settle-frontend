@@ -51,7 +51,7 @@ function Home(props) {
                 let footer = `Show all (${properties.count}+)`;
                 let footerLink = "/explore/rent-properties/";
                 return (
-                    <div class="animate-page">
+                    <div>
                         <div class="p-0 m-0 px-1 px-sm-3 mt-2 mt-md-3">
                             <TwoRowsPropertiesGroup header="Rent a place" properties={properties}
                                 footer={footer} footerLink={footerLink} />

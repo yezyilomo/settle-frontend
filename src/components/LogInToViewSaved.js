@@ -20,7 +20,7 @@ function LogInToViewSaved(props){
     }
 
     return (
-        <div class="row animate-page p-0 m-0">
+        <div class="row p-0 m-0">
             <div class="col-12 p-0 m-0 mt-5 pt-5 pt-md-0 mt-md-4 d-flex justify-content-center">
                 <img class="col-12 col-md-6" src={lovingItImage}/>
             </div>

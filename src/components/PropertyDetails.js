@@ -365,7 +365,7 @@ function PropertyDetails(props) {
                                 <div class="actions row m-0 p-0">
                                     <div class="col text-center py-2 p-0 m-0">
                                         <ConfirmModal size="md" modalShow={deleteModalShow} setModalShow={setDeleteModalShow} options={confirmDeletionOptions} text={confirmDeletionText} />
-                                        <b class="delete-property" onClick={() => { setDeleteModalShow(true) }}><span class="fa fa-trash mt-2 mr-1 mr-lg-3 delete-property-icon" /> Delete</b>
+                                        <Link class="delete-property text-decoration-none" onClick={() => { setDeleteModalShow(true) }}><span class="fa fa-trash mt-2 mr-1 mr-lg-3 delete-property-icon" /> Delete</Link>
                                     </div>
                                     <div class="col text-center py-2 p-0 m-0">
                                         <Link to={`/edit/${getPropertyRoute(props.type)}/${property.id}`} class="edit-property text-decoration-none">
