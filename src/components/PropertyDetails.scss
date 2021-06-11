@@ -177,13 +177,8 @@
     background-color: rgb(245, 245, 245);
 }
 
-.edit-property {
+.delete-property, .edit-property {
     color: black;
-}
-
-.delete-property:hover {
-    color: $red;
-    cursor: pointer;
 }
 
 .cusom-modal-dialog {

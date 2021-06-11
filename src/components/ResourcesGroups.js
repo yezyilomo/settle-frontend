@@ -38,7 +38,7 @@ function GenericResourcesGroup(props) {
     }
 
     return (
-        <div class="row m-0 p-0 animate-page">
+        <div class="row m-0 p-0">
             {view === "list" ?
                 <span class="view-icon d-sm-none fas fa-th-large" onClick={showGridView}></span>:
                 <span class="view-icon d-sm-none fas fa-list-ul" onClick={showListView}></span>

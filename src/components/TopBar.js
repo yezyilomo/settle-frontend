@@ -65,7 +65,6 @@ function Search(props) {
     const history = useHistory();
     const searchInput = useRef(null);
     const {
-        ready,
         value,
         suggestions: { status, data },
         setValue,

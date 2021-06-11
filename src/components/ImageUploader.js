@@ -3,7 +3,7 @@ import './ImageUploader.scss';
 import { useLocalState } from 'state-pool';
 import { Modal, Spinner } from 'react-bootstrap';
 import ReactCrop from 'react-image-crop';
-import { cropImage, setTabColorDark } from '../utils';
+import { cropImage, getSuitableImageQuality, setTabColorDark } from '../utils';
 import 'react-image-crop/lib/ReactCrop.scss';
 
 
@@ -88,11 +88,13 @@ function ImageUploader(props) {
     function finishCroping(e) {
         setLoading(true);
         let img = document.createElement('img');
+        let quality = getSuitableImageQuality(imageToCrop.size)
+
         img.src = URL.createObjectURL(imageToCrop);
         img.height = imageToCropDimensions.height;
         img.width = imageToCropDimensions.width;
 
-        cropImage(img, crop, saveImage)
+        cropImage(img, crop, saveImage, quality)
     }
 
     let setImageDimensions = (image) => {

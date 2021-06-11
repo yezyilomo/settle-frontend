@@ -104,7 +104,7 @@ function onScrollToBottom(handleScrollToBottom, y = 1) {
  * @param {Object} crop - crop Object
  * @param {Function} saveImage- Function which receives cropped image and saves
  */
-function cropImage(image, crop, saveImage) {
+function cropImage(image, crop, saveImage, ration=0.8) {
     image.onload = function () {
         const canvas = document.createElement('canvas');
 
@@ -130,8 +130,22 @@ function cropImage(image, crop, saveImage) {
             dx, dy, dw, dh  // Destination dimensions
         );
 
-        canvas.toBlob(saveImage, 'image/jpeg', 1);
+        canvas.toBlob(saveImage, 'image/jpeg', ration);
     }
+}
+
+function getSuitableImageQuality(imageSize){
+    let imageSizeInMB = imageSize/1000000  // Size in MB
+
+    if (imageSizeInMB < 0.25)
+        return 0.6
+    if (imageSizeInMB < 1)
+        return 0.4
+    if (imageSizeInMB < 5)
+        return 0.3
+    if (imageSizeInMB < 10)
+        return 0.2
+    return 0.1
 }
 
 function setTabColorDark(conditionToChangeColor, darkColor="rgb(14, 14, 14)"){
@@ -157,5 +171,5 @@ export {
     setErrorClass, setCookie, getCookie, saveUserInfoToCookies, 
     getUserInfoFromCookies, deleteUserInfoFromCookies, onScrollToBottom, 
     propertyTypes, getPropertyRoute, getPropertyType, cropImage, setTabColorDark,
-    clearStore, capitalizeFirst
+    clearStore, capitalizeFirst, getSuitableImageQuality
 }
