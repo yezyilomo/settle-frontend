@@ -3,9 +3,11 @@ import {Link} from 'react-router-dom';
 import { useGlobalState } from 'state-pool';
 import { Button } from 'react-bootstrap';
 import lovingItImage from '../images/undraw_loving_it.svg';
+import { usePageTransition } from '../hooks';
 
 
 function LogInToViewSaved(props){
+    const animate = usePageTransition()
     const [, ,setShowLogInModal] = useGlobalState("showLogInModal");
     const [, ,setShowSignUpModal] = useGlobalState("showSignUpModal");
     
@@ -20,7 +22,7 @@ function LogInToViewSaved(props){
     }
 
     return (
-        <div class="row p-0 m-0">
+        <div class={`row p-0 m-0 ${animate()}`}>
             <div class="col-12 p-0 m-0 mt-5 pt-5 pt-md-0 mt-md-4 d-flex justify-content-center">
                 <img class="col-12 col-md-6" src={lovingItImage}/>
             </div>
