@@ -1,6 +1,7 @@
 import React from 'react';
 import './BottomNavBar.scss';
 import { useHistory } from 'react-router';
+import { useGlobalState } from 'state-pool';
 
 
 function RippleButton({ children, onClick }) {
@@ -62,26 +63,40 @@ function RippleButton({ children, onClick }) {
 
 function BottomNavBar(props){
     const history = useHistory();
+    const [,,setAnimatePageTransition] = useGlobalState("animatePageTransition");
     let homePath = "/";
     let filterPath = "/filter";
     let rentPath = "/rent-property";
     let buyPath = "/buy-property";
     let savedPropertiesPath = "/my-fav-properties";
 
+    let goTo = (location) => {
+        if(location === history.location.pathname){
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
+        }
+        else {
+            setAnimatePageTransition(true);
+            history.push(location)
+        }
+    }
+
     let goToHome = (e) => {
-        history.push(homePath)
+        goTo(homePath)
     }
     let goToFilter = (e) => {
-        history.push(filterPath)
+        goTo(filterPath)
     }
     let goToRent = (e) => {
-        history.push(rentPath)
+        goTo(rentPath)
     }
     let goToBuy = (e) => {
-        history.push(buyPath)
+        goTo(buyPath)
     }
     let goToSavedProperties = (e) => {
-        history.push(savedPropertiesPath)
+        goTo(savedPropertiesPath)
     }
 
     let active = (iconPath) => {

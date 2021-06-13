@@ -61,6 +61,34 @@ body {
 /* End of Lazy load placeholder*/
 
 
+.refresh-arrow {
+  transform: rotate(180deg);
+  background: rgb(173, 173, 173) !important;
+}
+
+
+/* Animate page transition */
+.animate-page{
+	opacity: 0;
+	animation-name: page-animation;
+	animation-delay: 0.2s;
+	animation-duration: 0.05s;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease;
+}
+
+@keyframes page-animation {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+/* End of animate page transition */
+
+
 /* Floating Label Input */
 .floating {
   background-color: transparent;

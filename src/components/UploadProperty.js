@@ -314,9 +314,9 @@ function UploadProperty(props){
                         </div>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-3 map">
                         <label class="form-check-label col-12 p-0 m-0">Location</label>
-                        <Map editable search markerDraggable onChangeLocation={updateLocation}
+                        <Map required editable search markerDraggable onChangeLocation={updateLocation}
                             location={{
                                 address: fields.location.address,
                                 point: { lng: fields.location.longitude, lat: fields.location.latitude }

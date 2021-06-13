@@ -56,6 +56,11 @@
     padding: 10px 10px;
 }
 
+#google-map>div{
+    overflow: hidden;
+    z-index: 1;
+}
+
 .locate {
     position: absolute;
     right: 10px;

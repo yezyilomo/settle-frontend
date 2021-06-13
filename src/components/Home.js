@@ -5,7 +5,7 @@ import {
     renderInlineError, TwoRowsPropertiesGroup, SliderPropertiesGroup,
     PROPERTIES_QUERY_PARAM
 } from './';
-import { useRestoreScrollState, useUserLocation } from '../hooks';
+import { usePageTransition, useRestoreScrollState, useUserLocation } from '../hooks';
 
 
 function NearByProperties(props) {
@@ -40,6 +40,8 @@ function NearByProperties(props) {
 
 function Home(props) {
     useRestoreScrollState();
+    const animate = usePageTransition()
+
     const proertiesToRentEndpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=rent`
     const propertiesToBuyEndpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=sale`
     const propertiesToSlideEndpoint = `properties/?${PROPERTIES_QUERY_PARAM}&price__lt=800000`
@@ -51,7 +53,7 @@ function Home(props) {
                 let footer = `Show all (${properties.count}+)`;
                 let footerLink = "/explore/rent-properties/";
                 return (
-                    <div>
+                    <div class={`${animate()}`}>
                         <div class="p-0 m-0 px-1 px-sm-3 mt-2 mt-md-3">
                             <TwoRowsPropertiesGroup header="Rent a place" properties={properties}
                                 footer={footer} footerLink={footerLink} />

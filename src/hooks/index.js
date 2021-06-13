@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
+import { useGlobalState } from 'state-pool';
 
 
 function useUserLocation(){
@@ -70,4 +71,17 @@ function useScrollTop() {
     }, [])
 }
 
-export { useRestoreScrollState, useScrollTop, useUserLocation };
+function usePageTransition(){
+    const [animatePageTransition, , setAnimatePageTransition] = useGlobalState("animatePageTransition");
+    const animate = () => {
+        if(animatePageTransition === true){
+            setAnimatePageTransition(false);
+            return "animate-page"
+        }
+        setAnimatePageTransition(false);
+        return ""
+    }
+    return animate;
+}
+
+export { useRestoreScrollState, useScrollTop, useUserLocation, usePageTransition };

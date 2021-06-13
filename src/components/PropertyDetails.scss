@@ -276,8 +276,15 @@
     cursor: pointer;
 }
 
-.property-details .map{
+.property-details .map #google-map>div{
     overflow: hidden;
-    border-color: #eeeeee;
-    border-radius: 8px;
+    border: solid 1px #dddddd;
+    border-radius: 4px;
 }
+
+@include media-breakpoint-up(md) {
+    .property-details .map #google-map>div{
+        border-radius: 8px;
+    }
+}
+

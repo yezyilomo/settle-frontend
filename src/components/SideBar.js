@@ -18,6 +18,7 @@ import {
     ComboboxList, ComboboxOption,
 } from "@reach/combobox";
 import { useLoadScript } from "@react-google-maps/api";
+import { usePageTransition, useScrollTop } from '../hooks';
 
 
 const libraries = ["places"];
@@ -170,9 +171,7 @@ function AdvancedSearch(props){
     return <Search {...props}/>
 }
 
-function SideBar(props) {
-    const hooks = props.hooks || [];
-    hooks.map(hook => hook());
+function FiltersView(props) {
     const history = useHistory();
     const [filterFields, updateFilterFields] = useGlobalState("sideBar");
 
@@ -232,7 +231,7 @@ function SideBar(props) {
     };
 
     return (
-        <div class={`sidebar text-secondary p-0 m-0 ${props.setting}`}>
+        <>
             <div class="m-0 p-0 px-2 px-lg-3 mt-2 mt-md-0 col-12 filter-header">Quick Filter</div>
             <form id="filter-form" class="p-0 m-0 px-2 px-lg-3" onSubmit={handleSubmit}>
                 <div class="m-0 p-0 mt-2">
@@ -311,11 +310,31 @@ function SideBar(props) {
                     </div>
 
                 </div>
-                <button type="submit" class="col-12 btn btn-primary mt-3 my-md-2 py-2 py-md-1">Submit</button>
+                <button type="submit" class="col-12 btn btn-primary mt-3 my-md-2 py-2 py-md-1">Search</button>
             </form>
-        </div>
+        </>
     );
 }
 
 
-export { SideBar }
+function SideBar(props){
+    return (
+        <div class={`sidebar sidebar-lg text-secondary p-0 m-0 pt-2 sticky-top d-none d-lg-block col-lg-2`}>
+            <FiltersView />
+        </div>
+    )
+}
+
+
+function FiltersPage(props){
+    useScrollTop();
+    const animate = usePageTransition();
+    return (
+        <div class={`sidebar sidebar-sm text-secondary p-0 m-0 px-2 d-relative d-lg-none col-12 pb-4 ${animate()}`}>
+            <FiltersView />
+        </div>
+    )
+}
+
+
+export { SideBar, FiltersPage }

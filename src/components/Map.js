@@ -23,8 +23,8 @@ const libraries = ["places"];
 const mapContainerStyle = {
     height: "300px",
     width: "100%",
-    "border-radius": "4px",
-    border: "solid 1px rgb(238, 238, 238)"
+    "border-radius": "0",
+    border: "solid 0 white"
 };
 
 const options = {
@@ -153,6 +153,7 @@ function Search(props) {
                     onChange={handleInput}
                     disabled={!ready}
                     placeholder="Search your location"
+                    required={props.required}
                 />
                 <div class="current-location" data-toggle="tooltip" onClick={setCurrentLocation}
                     data-placement="bottom" title="Click to get your current location">
@@ -180,9 +181,9 @@ function Map(props) {
     });
 
     const [location, setLocation] = React.useState(props.location);
-    const [showInfoWindow, setShowInfoWindow] = React.useState(true);
+    const [showInfoWindow, setShowInfoWindow] = React.useState(props.showInfoWindow);
 
-    const handleLocationChange = React.useCallback(async (e) => {
+    const handleLocationChange = async (e) => {
         if (!props.editable) {
             return;
         }
@@ -208,7 +209,7 @@ function Map(props) {
         } catch (error) {
             console.log("😱 Error: ", error);
         }
-    }, []);
+    };
 
     const updateLocation = (selectedLocation) => {
         setLocation(selectedLocation);
@@ -241,7 +242,11 @@ function Map(props) {
         <div>
             {props.search ?
                 <>
-                    <Search setLocation={updateLocation} location={location} onSelectingSearchResult={updateLocation} panTo={panTo} />
+                    <Search 
+                    setLocation={updateLocation} 
+                    location={location} 
+                    onSelectingSearchResult={updateLocation} 
+                    panTo={panTo} required={props.required}/>
                     {props.showCompass ?
                         <Locate panTo={panTo} /> :
                         null
@@ -249,9 +254,9 @@ function Map(props) {
                 </> : null
             }
 
-            <span className={showMap()}>
+            <span className={`${showMap()} map-container`}>
                 <GoogleMap
-                    id="map"
+                    id="google-map"
                     mapContainerStyle={{ ...mapContainerStyle, ...props.style }}
                     zoom={15}
                     center={location.point}
@@ -259,7 +264,7 @@ function Map(props) {
                     onDblClick={handleLocationChange}
                     onLoad={onMapLoad}>
 
-                    {props.showInfoWindow && showInfoWindow ?
+                    {showInfoWindow ?
                         <InfoWindow
                             position={location.point}
                             onCloseClick={(e) => { setShowInfoWindow(false) }}

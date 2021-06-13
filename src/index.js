@@ -1,9 +1,13 @@
 import 'react-app-polyfill/ie9';
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
+import smoothscroll from 'smoothscroll-polyfill';
+ 
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
+import PullToRefresh from 'pulltorefreshjs';
 import * as serviceWorker from './serviceWorker';
 import './custom.scss';
 import './index.scss';
@@ -13,6 +17,9 @@ import { HashRouter as Router } from 'react-router-dom';
 import { ReactQueryConfigProvider } from 'react-query';
 import { initializeStore } from './store';
 
+
+// kick off the polyfill!
+smoothscroll.polyfill();
 
 // Do this before calling ReactDOM.render
 initializeStore()
@@ -35,6 +42,27 @@ const queryConfig = {
 }
 
 function Application(props) {
+    useEffect(() => {
+        PullToRefresh.init({
+            mainElement: 'body',
+            onRefresh() {
+                window.location.reload();
+            },
+            distThreshold: 80,
+            distMax: 130,
+            distReload: 60,
+            resistanceFunction: t => Math.min(1, t / 6),
+            iconArrow: ReactDOMServer.renderToString(
+                <span class="icon icon-up-arrow refresh-arrow"></span>
+            ),
+            iconRefreshing: ReactDOMServer.renderToString(
+                <span>...</span>
+            ),
+        });
+
+        return () => {PullToRefresh.destroyAll();}
+    })
+
     return (
         <ReactQueryConfigProvider config={queryConfig}>
             <Router base="/">

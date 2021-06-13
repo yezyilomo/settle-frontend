@@ -1,14 +1,16 @@
 import React from 'react';
 import './ResourcesGroups.scss';
-import { Link } from 'react-router-dom';
+import { parse } from 'query-string';
+import { Link, useHistory } from 'react-router-dom';
 import { PropertyOverview, GlowBlockLoader, GlowInlineLoader, Carousel } from '.'
 import { PropertySliderOverview } from './PropertyOverview';
 import { onScrollToBottom } from '../utils';
-import { useRestoreScrollState } from '../hooks';
+import { useRestoreScrollState, usePageTransition } from '../hooks';
 import { useGlobalState } from 'state-pool';
 
 
 function GenericResourcesGroup(props) {
+    const animate = usePageTransition()
     useRestoreScrollState();
     const [view, , setView] = useGlobalState(props.viewKey, { default: 'grid' });
 
@@ -38,7 +40,7 @@ function GenericResourcesGroup(props) {
     }
 
     return (
-        <div class="row m-0 p-0">
+        <div class={`row m-0 p-0 ${animate()}`}>
             {view === "list" ?
                 <span class="view-icon d-sm-none fas fa-th-large" onClick={showGridView}></span>:
                 <span class="view-icon d-sm-none fas fa-list-ul" onClick={showListView}></span>
