@@ -22,7 +22,14 @@ function initializeStore(){
         userInfo
     )
 
-    
+
+    // Set user state
+    store.setState(
+        "animatePageTransition",
+        false
+    )
+
+
     // Set showLogInModal
     store.setState(
         "showLogInModal",

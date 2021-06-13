@@ -440,9 +440,9 @@ function PropertyDetails(props) {
                                 </div>
                             </div>
                             
-                            <div class="row p-0 m-0 px-3 px-sm-4 mt-lg-4">
-                                <div class="col-12 map p-0 m-0 bw-1">
-                                    <Map showInfoWindow style={{ "border-radius": "0", "border-width": 0 }} location={{
+                            <div class="row p-0 m-0 px-3 px-sm-4 mt-md-4">
+                                <div class="col-12 map p-0 m-0">
+                                    <Map location={{
                                         address: property.location.address,
                                         point: { lng: property.location.longitude, lat: property.location.latitude }
                                     }} />

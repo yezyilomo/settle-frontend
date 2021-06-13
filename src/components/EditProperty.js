@@ -58,23 +58,6 @@ function EditFetchedProperty(props) {
             .then(obj => obj)
     }
 
-    /*
-    let updateImage = (img) => {
-        let imgInfo = {
-            tool_tip: img.tool_tip,
-            is_main: img.is_main
-        }
-        let postUrl = `${BASE_API_URL}/picture/${img.id}/`;
-        let headers = {
-            'Authorization': `Token ${user.auth_token}`,
-            'Content-Type': 'application/json'
-        }
-        return fetch(postUrl, {method: 'PUT', body: JSON.stringify(imgInfo), headers: headers})
-        .then(res =>  res.json().then(data => ({status: res.status, data: data})))
-        .then(obj => obj)
-    }
-    */
-
     let deleteImage = (imgID) => {
         let postUrl = `${BASE_API_URL}/property-pictures/${imgID}/`;
         let headers = {
@@ -361,7 +344,7 @@ function EditFetchedProperty(props) {
                         </div>
                     </div>
 
-                    <div class="my-3">
+                    <div class="my-3 map">
                         <label class="form-check-label col-12 p-0 m-0">Location</label>
                         <Map editable search markerDraggable onChangeLocation={updateLocation}
                             location={{

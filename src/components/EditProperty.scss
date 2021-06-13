@@ -39,3 +39,9 @@
     position: relative;
     left: 20px;
 }
+
+.property-form .map #google-map>div{
+    overflow: hidden;
+    border: solid 1px rgb(230, 230, 230);
+    border-radius: 4px;
+}

@@ -10,7 +10,7 @@ import {
     SliderPropertiesGroup, TwoRowsPropertiesGroup
 }from './ResourcesGroups';
 import {TopBar} from './TopBar';
-import {SideBar} from './SideBar';
+import {SideBar, FiltersPage} from './SideBar';
 import {
     UploadProperty, UploadRoom, UploadHouse, UploadApartment,
     UploadHostel, UploadOffice, UploadLand, UploadFrame
@@ -55,7 +55,7 @@ import {LogInToViewSaved} from './LogInToViewSaved';
 
 
 export {
-    App, Home, PropertyOverview, TopBar, SideBar, PropertyDetails, RoomDetails, 
+    App, Home, PropertyOverview, TopBar, SideBar, FiltersPage, PropertyDetails, RoomDetails, 
     HouseDetails, ApartmentDetails, HostelDetails, OfficeDetails, LandDetails,
     FrameDetails, UploadProperty, UploadRoom, UploadHouse, UploadApartment,
     UploadHostel, UploadOffice, UploadLand, UploadFrame, FeaturesInput, ConfirmModal,

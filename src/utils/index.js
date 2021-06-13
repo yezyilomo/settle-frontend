@@ -104,7 +104,7 @@ function onScrollToBottom(handleScrollToBottom, y = 1) {
  * @param {Object} crop - crop Object
  * @param {Function} saveImage- Function which receives cropped image and saves
  */
-function cropImage(image, crop, saveImage, ration=0.8) {
+function cropImage(image, crop, saveImage, imageQuality=0.8) {
     image.onload = function () {
         const canvas = document.createElement('canvas');
 
@@ -130,7 +130,7 @@ function cropImage(image, crop, saveImage, ration=0.8) {
             dx, dy, dw, dh  // Destination dimensions
         );
 
-        canvas.toBlob(saveImage, 'image/jpeg', ration);
+        canvas.toBlob(saveImage, 'image/jpeg', imageQuality);
     }
 }
 

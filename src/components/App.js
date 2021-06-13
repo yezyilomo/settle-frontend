@@ -10,9 +10,8 @@ import {
     EditFrame, PropertiesFilter, UserProperties, SearchProperties,
     Home, BottomNavBar, TopScroller, PageNotFound, AddToHomeScreen,
     FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties,
-    EditProfile, UserFavProperties
+    EditProfile, UserFavProperties, FiltersPage
 } from './';
-import { useScrollTop } from '../hooks';
 
 
 function App(props) {
@@ -22,7 +21,7 @@ function App(props) {
         <div class="container-fluid">
             <TopBar />
             <div class="row contents">
-                <SideBar setting="sidebar-lg sticky-top d-none d-lg-block col-lg-2 pt-2" />
+                <SideBar />
 
                 <div class="contents-body col-12 col-lg-10 p-0 m-0 mb-4 pb-5">
                     <Switch location={location}>
@@ -147,9 +146,7 @@ function App(props) {
 
 
                         <Route exact path="/ft" component={PropertiesFilter} />
-                        <Route exact path="/filter" render={({ match }) => {
-                            return <SideBar key={match.path} hooks={[useScrollTop]} setting="sidebar-sm px-2 d-relative d-lg-none col-12 pb-4" />
-                        }} />
+                        <Route exact path="/filter" component={FiltersPage} />
                         <Route exact path="/search/" component={SearchProperties} />
 
                         <Route exact path="/explore/rent-properties" component={ShowRentProperties} />
