@@ -16,9 +16,9 @@
    id="svg8"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="logo.svg"
-   inkscape:export-filename="/home/yezy/Projects/personal/settle-frontend/public/logo16.png"
-   inkscape:export-xdpi="2.7499688"
-   inkscape:export-ydpi="2.7499688">
+   inkscape:export-filename="/home/yezy/Projects/personal/settle-frontend/public/logo512.png"
+   inkscape:export-xdpi="87.999001"
+   inkscape:export-ydpi="87.999001">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -29,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="164.28571"
-     inkscape:cy="445.71429"
+     inkscape:cx="72.693516"
+     inkscape:cy="477.99116"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -62,8 +62,8 @@
        height="147.54332"
        x="12.460814"
        y="81.055374"
-       rx="39.309525"
-       ry="36.285706"
+       rx="30.616077"
+       ry="31.372019"
        inkscape:export-xdpi="88.06324"
        inkscape:export-ydpi="88.06324" />
     <flowRoot
