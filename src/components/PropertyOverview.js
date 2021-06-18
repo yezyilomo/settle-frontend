@@ -28,7 +28,7 @@ function PropertyOverview(props) {
             <div class="prop-img col-12 p-0 m-0">
                 
                 <Link className="lazy-container lazy-load-animation" to={{pathname: `/${getPropertyRoute(property.type)}/${property.id}`}}>
-                    <img src={main_img.src+'x'} alt="" />
+                    <img src={main_img.src} alt="" />
                 </Link>
                 <SaveButton property={property} />
             </div>
