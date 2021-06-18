@@ -2,11 +2,11 @@ import React from 'react';
 import './PropertyOverview.scss';
 import { Link } from 'react-router-dom';
 import { Rating, SaveButton } from './';
-import { getPropertyRoute, capitalizeFirst } from '../utils';
+import { getPropertyRoute, capitalizeFirst, thousandsSeparator } from '../utils';
 
 
 function price(property) {
-    const cash = <span class="price">{property.currency} {property.price}</span>
+    const cash = <span class="price">{property.currency} {thousandsSeparator(property.price)}</span>
     if (property.price_rate_unit) {
         return <span>{cash} / {property.price_rate_unit}</span>;
     }
@@ -28,7 +28,7 @@ function PropertyOverview(props) {
             <div class="prop-img col-12 p-0 m-0">
                 
                 <Link className="lazy-container lazy-load-animation" to={{pathname: `/${getPropertyRoute(property.type)}/${property.id}`}}>
-                    <img src={main_img.src} alt="" />
+                    <img src={main_img.src+'x'} alt="" />
                 </Link>
                 <SaveButton property={property} />
             </div>

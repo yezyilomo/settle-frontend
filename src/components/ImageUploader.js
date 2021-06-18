@@ -139,7 +139,7 @@ function ImageUploader(props) {
                 <>
                     <i class="fas fa-times remove-main-img" onClick={(e) => { removeImg(files[0]) }}></i>
                     <div class="main-img lazy-container">
-                        <div class="lazy-container">
+                        <div class="lazy-container lazy-load-animation">
                             <img class="main-img-preview" src={croppedImageSrc()} alt="" />
                         </div>
                     </div>

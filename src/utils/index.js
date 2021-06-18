@@ -166,10 +166,14 @@ function capitalizeFirst(string) {
     return string[0].toUpperCase() + string.slice(1);
 }
 
+function thousandsSeparator(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 
 export {
     setErrorClass, setCookie, getCookie, saveUserInfoToCookies, 
     getUserInfoFromCookies, deleteUserInfoFromCookies, onScrollToBottom, 
     propertyTypes, getPropertyRoute, getPropertyType, cropImage, setTabColorDark,
-    clearStore, capitalizeFirst, getSuitableImageQuality
+    clearStore, capitalizeFirst, getSuitableImageQuality, thousandsSeparator
 }
