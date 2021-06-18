@@ -11,7 +11,7 @@ import {
 import { BASE_API_URL } from '../';
 import { Button, Modal } from 'react-bootstrap';
 import { useGlobalState } from 'state-pool';
-import { getPropertyRoute, setTabColorDark, capitalizeFirst } from '../utils';
+import { getPropertyRoute, setTabColorDark, capitalizeFirst, thousandsSeparator } from '../utils';
 import { queryCache } from 'react-query';
 import { useScrollTop } from '../hooks';
 
@@ -39,7 +39,7 @@ function ImagesCarousel(props) {
         <>
             <Slider {...settings}>
                 {props.images.map((image) =>
-                    <div class="lazy-container">
+                    <div class="lazy-container lazy-load-animation">
                         <img class="full-img d-block w-100" src={image.src} alt="" />
                     </div>
                 )}
@@ -89,7 +89,7 @@ function ImagesModalCarousel(props) {
         <>
             <Slider {...settings}>
                 {props.images.map((image) =>
-                    <div class="lazy-container d-flex">
+                    <div class="lazy-container lazy-load-animation d-flex">
                         <img class="full-img d-block w-100" src={image.src} alt="" onClick={() => setModalShow(true)} />
                     </div>
                 )}
@@ -116,7 +116,7 @@ function MainPropertyImage(props) {
     return (
         <>
             <div class="main-prop-img col-12 col-lg-6 mx-0 px-0">
-                <div class="lazy-container">
+                <div class="lazy-container lazy-load-animation">
                     <img class="main-img" src={props.activeImage.src} alt="" onClick={() => setModalShow(true)} />
                 </div>
             </div>
@@ -168,7 +168,7 @@ function OthersPropertyImages(props) {
                 return (
                     <div class="pictures col-6 m-0 p-0">
                         <div class="other-prop-img col-12">
-                            <div class="lazy-container">
+                            <div class="lazy-container lazy-load-animation">
                                 <img class="small-img" style={style} src={image.src} alt="" onClick={() => openModal(image)} />
                             </div>
                         </div>
@@ -517,7 +517,7 @@ function Contact(props) {
 
 
 function price(property) {
-    const cash = <span class="price">{property.currency} {property.price}</span>
+    const cash = <span class="price">{property.currency} {thousandsSeparator(property.price)}</span>
     if (property.price_rate_unit) {
         return <span>{cash} / {property.price_rate_unit}</span>;
     }
