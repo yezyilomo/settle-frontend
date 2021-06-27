@@ -41,7 +41,7 @@ function PropertyOverview(props) {
                     {price(property)}
                 </div>
                 <div class="prop-rating">
-                    <Rating rating={property.rating}/>(4.6)
+                    <Rating property={property}/>({property.total_rating_score})
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@ function PropertySliderOverview(props) {
                     {price(property)}
                 </div>
                 <div class="prop-rating">
-                    <Rating rating={property.rating}/>({property.rating})
+                    <Rating property={property}/>({property.total_rating_score})
                 </div>
             </div>
         </div>

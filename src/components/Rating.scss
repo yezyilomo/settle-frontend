@@ -16,7 +16,7 @@
   margin: 3px;
   vertical-align: middle;
   line-height: 1;
-  font-size: 15px;
+  font-size: 17px;
   color: gray;
   transition: color .2s ease-out;
 }
@@ -25,6 +25,26 @@
 }
 .star-rating__star.is-selected {
   color: $primary;
+}
+
+.animate-click .is-selected {
+  animation-name: rate;
+  animation-duration: 1s;
+  animation-delay: .2s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes rate {
+  0% {
+    transform: rotate(0deg);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  50% {
+    transform: rotate(360deg);
+    transform: translate3d(30px, 0, 0);
+    opacity: 0;
+  }
 }
 .star-rating__star.is-disabled:hover {
   cursor: default;

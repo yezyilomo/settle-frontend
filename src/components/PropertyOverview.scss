@@ -87,6 +87,7 @@
 }
 
 .prop-overview .prop-rating {
+    overflow: visible !important;
     position: relative;
     right: 3px;
 }
@@ -146,6 +147,7 @@
 }
 
 .prop-slider-overview .prop-rating {
+    overflow: visible !important;
     position: relative;
     right: 3px;
 }

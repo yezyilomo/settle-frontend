@@ -88,7 +88,8 @@ query={
     },
     currency,
     location,
-    rating,
+    total_rating_score,
+    my_rating,
     is_my_favourite
 }&format=json`
 
