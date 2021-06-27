@@ -23,6 +23,13 @@ function initializeStore(){
     )
 
 
+    // Set toast notifications
+    store.setState(
+        "notifications",
+        []
+    )
+
+
     // Set user state
     store.setState(
         "animatePageTransition",

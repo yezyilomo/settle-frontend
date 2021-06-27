@@ -1,0 +1,47 @@
+@import '../variables.scss';
+
+.toast-notifications {
+    position: fixed;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.toast-notifications .toast {
+ margin: 5px auto;
+ background-color: rgba(240, 240, 240, .9);
+ border-radius: 8px;
+ color: rgb(78, 78, 78);
+ font-size: 14px;
+
+ animation-name: slide;
+ animation-duration: 1s;
+ animation-delay: 0;
+ animation-fill-mode: backwards;
+}
+
+@include media-breakpoint-up(lg) {
+    .toast-notifications {
+        top: unset;
+        bottom: 10px;
+    }
+    
+    .toast-notifications .toast {
+        margin: 5px 0 5px auto;
+        background-color: rgba(240, 240, 240, 1);
+    }
+}
+  
+@keyframes slide {
+    0% {
+      transform: translate3d(0, -100px, 0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }

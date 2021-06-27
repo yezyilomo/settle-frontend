@@ -9,16 +9,21 @@ function SaveButton(props) {
     const [user,] = useGlobalState("user");
     const [isSaved, setIsSaved] = useState(props.property.is_my_favourite);
     const [, ,setShowLogInModal] = useGlobalState("showLogInModal");
+    const [, updateNotifications] = useGlobalState("notifications");
+
     const postUrl = `${BASE_API_URL}/users/${user.id}/`;
     const headers = {
         'Authorization': `Token ${user.auth_token}`,
         'Content-Type': 'application/json'
     }
 
-    const responses = {
+    const responses = (msg) => ({
 
         onSuccess: (res) => {
             if (res.status === 200) {
+                updateNotifications((notifications) => {
+                    notifications.push(msg)
+                })
                 queryCache.invalidateQueries(`property/${props.property.id}`);
                 queryCache.invalidateQueries(`my-fav-properties`);
             }
@@ -30,7 +35,7 @@ function SaveButton(props) {
         onError: () => {
             setIsSaved(isSaved);
         }
-    }
+    })
 
     const [addToSaved] = useMutation(() => {
         if(!user.isLoggedIn) {
@@ -40,7 +45,7 @@ function SaveButton(props) {
         setIsSaved(true);
         const body = JSON.stringify({ "fav_properties": { "add": [props.property.id] } });
         return fetch(postUrl, { body: body, method: 'PATCH', headers: headers })
-    }, responses)
+    }, responses("Saved.."))
 
     const [removeFromSaved] = useMutation(() => {
         if(!user.isLoggedIn) {
@@ -50,7 +55,7 @@ function SaveButton(props) {
         setIsSaved(false);
         const body = JSON.stringify({ "fav_properties": { "remove": [props.property.id] } });
         return fetch(postUrl, { body: body, method: 'PATCH', headers: headers })
-    }, responses)
+    }, responses("Removed From Saved.."))
 
     if (isSaved) {
         return <div class="save-button" onClick={removeFromSaved}><span class='icon icon-heart-solid'></span></div>
