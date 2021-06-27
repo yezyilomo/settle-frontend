@@ -398,8 +398,8 @@ function PropertyDetails(props) {
                                                     <i class="fa fa-clock"></i> {formatDistance(new Date(property.post_date), new Date())} ago
                                                 </div>
                                                 <div class="property-rating p-0 m-0 mt-3">
-                                                    <div>(4.6)</div>
-                                                    <Rating rating={property.rating} />
+                                                    <div>({property.total_rating_score})</div>
+                                                    <Rating property={property} />
                                                 </div>
                                             </div>
                                         </div>
