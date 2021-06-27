@@ -52,6 +52,7 @@ import {Map} from './Map';
 import {SaveButton} from './SaveButton';
 import {AsyncSelect, AsyncCreatableSelect} from './SelectInputs';
 import {LogInToViewSaved} from './LogInToViewSaved';
+import {ToastNotifications} from './ToastNotifications';
 
 
 export {
@@ -68,5 +69,6 @@ export {
     Carousel, GenericFilter ,PropertiesFilter, EndpointPropertiesFilter, GenericResourcesGroup,
     PropertiesGroup, AddToHomeScreen, SliderPropertiesGroup, TwoRowsPropertiesGroup,
     ShowBuyProperties, ShowRentProperties, EditProfile, ProfilePictureUploader, InfoModal, Map,
-    PROPERTIES_QUERY_PARAM, SaveButton, AsyncSelect, AsyncCreatableSelect, LogInToViewSaved
+    PROPERTIES_QUERY_PARAM, SaveButton, AsyncSelect, AsyncCreatableSelect, LogInToViewSaved,
+    ToastNotifications
 };

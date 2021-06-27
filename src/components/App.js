@@ -10,7 +10,7 @@ import {
     EditFrame, PropertiesFilter, UserProperties, SearchProperties,
     Home, BottomNavBar, TopScroller, PageNotFound, AddToHomeScreen,
     FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties,
-    EditProfile, UserFavProperties, FiltersPage
+    EditProfile, UserFavProperties, FiltersPage, ToastNotifications
 } from './';
 
 
@@ -24,6 +24,7 @@ function App(props) {
                 <SideBar />
 
                 <div class="contents-body col-12 col-lg-10 p-0 m-0 mb-4 pb-5">
+                    <ToastNotifications/>
                     <Switch location={location}>
                         <Route exact path="/" render={({ match }) => {
                             return <Home key={match.path} />;
