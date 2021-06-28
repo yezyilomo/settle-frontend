@@ -142,7 +142,7 @@ function Search(props) {
     return (
             <Combobox onSelect={handleSelect} className="location-container col-12 p-0 m-0">
                 <ComboboxInput value={value} onChange={handleInputChange} autoComplete="off"
-                    name="location" type="text" placeholder="City, Region or Street"
+                    name="location" type="search" placeholder="City, Region or Street"
                     className="location col-12"/>
 
                 <div class="current-location" data-toggle="tooltip" onClick={setCurrentLocation}
