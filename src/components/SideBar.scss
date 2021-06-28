@@ -151,6 +151,34 @@ $thumbBG: transparent;
   background-color: white;
   text-align: left;
 }
+
+.sidebar .location::-webkit-search-cancel-button{
+  position:relative;
+  right: 0px;
+  top: 0; 
+  -webkit-appearance: none;
+  border-radius:11px;
+
+  display: none;
+  width: 22px;
+  height: 22px;
+  background: rgb(107, 107, 107);
+  mask-size: cover;
+  mask: url(../icons/plus.svg);
+  transform: rotate(45deg);
+}
+
+.location-container:focus-within {
+  .current-location{
+    display: none;
+  }
+  .location {
+    padding: 0 5px 0 5px;
+  }
+  .location::-webkit-search-cancel-button{
+    display: inline-block;
+  }
+}
 // End styling Location input
 
 
