@@ -2,7 +2,7 @@
 
 .toast-notifications {
     position: fixed;
-    top: 120px;
+    top: calc(65px + env(safe-area-inset-top));
     left: 0;
     width: 100%;
     z-index: 2;
