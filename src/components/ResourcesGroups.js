@@ -91,15 +91,28 @@ function PropertiesGroup(props) {
     )
 }
 
-
+const initialSlides = {}  // This is for keeping track of initial slides
 function SliderPropertiesGroup(props) {
+    let initialSlide = 0;
+    if(props.selection){
+        initialSlide = initialSlides[props.selection];
+        if(initialSlide === undefined){
+            initialSlide = 0;
+        }
+    }
+
     const settings = {
+        afterChange: (index) => {
+            if(props.selection){
+                    initialSlides[props.selection] = index;
+            }
+        },
         dots: false,
         infinite: false,
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1,
-        initialSlide: 1,
+        initialSlide: initialSlide === 0? 1: initialSlide,
         centerMode: true,
         centerPadding: "50px 0 0 0",
         adaptiveHeight: false,
@@ -109,29 +122,26 @@ function SliderPropertiesGroup(props) {
             {
                 breakpoint: 1200,
                 settings: {
-                    slidesToShow: 3,
-                    initialSlide: 1,
+                    slidesToShow: 3
                 }
             },
             {
                 breakpoint: 992,
                 settings: {
-                    slidesToShow: 3,
-                    initialSlide: 1,
+                    slidesToShow: 3
                 }
             },
             {
                 breakpoint: 768,
                 settings: {
-                    slidesToShow: 2,
-                    initialSlide: 1,
+                    slidesToShow: 2
                 }
             },
             {
                 breakpoint: 576,
                 settings: {
                     slidesToShow: 1,
-                    initialSlide: 0,
+                    initialSlide
                 }
             }
         ]

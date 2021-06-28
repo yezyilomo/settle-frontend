@@ -479,7 +479,7 @@ function NearbyProperties(props) {
                 }
                 return (
                     <div class="p-0 m-0 mt-4">
-                        <SliderPropertiesGroup pl={3} header="Nearby Properties" response={response} />
+                        <SliderPropertiesGroup selection={`nearby/property/${props.except}`} pl={3} header="Nearby Properties" response={response} />
                     </div>
                 );
             }}
