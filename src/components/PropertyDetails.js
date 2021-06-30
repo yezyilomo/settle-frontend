@@ -463,9 +463,11 @@ function NearbyProperties(props) {
     nearby-properties/?${PROPERTIES_QUERY_PARAM}
     &longitude=${props.point.lng}
     &latitude=${props.point.lat}
-    &radius_to_scan=2000
+    &radius_to_scan=5000
     `
-    const selection = `nearbyProperties/?longitude=${props.point.lng}&latitude=${props.point.lat}&radius_to_scan=10000`
+    const viewAllTitle = `View All`;
+    const viewAllLink = `/nearby-properties/?lng=${props.point.lng}&lat=${props.point.lat}&radius_to_scan=5000`
+    const selection = viewAllLink;
 
     return (
         <GenericFilter endpoint={nearbyPropertiesEndpoint} global selection={selection}
@@ -479,7 +481,13 @@ function NearbyProperties(props) {
                 }
                 return (
                     <div class="p-0 m-0 mt-4">
-                        <SliderPropertiesGroup selection={`nearby/property/${props.except}`} pl={3} header="Nearby Properties" response={response} />
+                        <SliderPropertiesGroup
+                            selection={`nearby/property/${props.except}`} pl={3}
+                            header="Nearby Properties"
+                            response={response}
+                            viewAllLink={viewAllLink}
+                            viewAllTitle={viewAllTitle}
+                        />
                     </div>
                 );
             }}

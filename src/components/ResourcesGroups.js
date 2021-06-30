@@ -1,7 +1,6 @@
 import React from 'react';
 import './ResourcesGroups.scss';
-import { parse } from 'query-string';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { PropertyOverview, GlowBlockLoader, GlowInlineLoader, Carousel } from '.'
 import { PropertySliderOverview } from './PropertyOverview';
 import { onScrollToBottom } from '../utils';
@@ -11,7 +10,7 @@ import { useGlobalState } from 'state-pool';
 
 function GenericResourcesGroup(props) {
     const animate = usePageTransition()
-    useRestoreScrollState();
+    useRestoreScrollState(props.restoreScrollOnMovingBackOnly);
     const [view, , setView] = useGlobalState(props.viewKey, { default: 'grid' });
 
     let fetchMoreResources = () => {
@@ -83,6 +82,7 @@ function PropertiesGroup(props) {
             viewKey={props.viewKey}
             header={props.header}
             response={props.response}
+            restoreScrollOnMovingBackOnly={props.restoreScrollOnMovingBackOnly}
             FetchMoreOnScrollToBottom={props.FetchMoreOnScrollToBottom}>
             {property =>
                 <PropertyOverview property={property} />
@@ -91,20 +91,14 @@ function PropertiesGroup(props) {
     )
 }
 
-const initialSlides = {}  // This is for keeping track of initial slides
+
 function SliderPropertiesGroup(props) {
-    let initialSlide = 0;
-    if(props.selection){
-        initialSlide = initialSlides[props.selection];
-        if(initialSlide === undefined){
-            initialSlide = 0;
-        }
-    }
+    const [initialSlide, ,setInitialSlide] = useGlobalState("initialSlides_" + props.selection, {default: 0})
 
     const settings = {
         afterChange: (index) => {
             if(props.selection){
-                    initialSlides[props.selection] = index;
+                setInitialSlide(index);
             }
         },
         dots: false,
@@ -154,7 +148,7 @@ function SliderPropertiesGroup(props) {
     }
 
     let count = props.response.data[0].count;
-    if (count == 0) {
+    if (count === 0) {
         return null;
     }
 
@@ -166,7 +160,16 @@ function SliderPropertiesGroup(props) {
 
     return (
         <div class="property-container row m-0 p-0">
-            <div class={`group-header col-12 p-0 m-0 px-${props.pl || 2} px-sm-4`}>{props.header}</div>
+            <div class={`group-header col-12 p-0 m-0 px-${props.pl || 2} px-sm-4`}>
+                <div class="row p-0 m-0">
+                    <div class="col-8 p-0 m-0">{props.header}</div>
+                    <div class="col p-0 m-0 mr-1 text-right">
+                        <Link to={props.viewAllLink} class="view-all-link">
+                            {props.viewAllTitle} <span class="icon icon-right-arrow"></span>
+                        </Link>
+                    </div>
+                </div>
+            </div>
             <Carousel className="col-12 p-0 m-0 mt-2 slider" {...settings}>
                 {properties.map(property =>
                     <div class={`m-0 p-0 pl-${props.pl || 2}  pl-sm-0 ml-sm-4 pr-sm-3`}>
@@ -199,7 +202,7 @@ function SliderPropertiesGroup(props) {
 
 function TwoRowsPropertiesGroup(props) {
     let properties = props.properties.results;
-    if (properties.length == 0) {
+    if (properties.length === 0) {
         return null;
     }
     return (

@@ -10,7 +10,8 @@ import {
     EditFrame, PropertiesFilter, UserProperties, SearchProperties,
     Home, BottomNavBar, TopScroller, PageNotFound, AddToHomeScreen,
     FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties,
-    EditProfile, UserFavProperties, FiltersPage, ToastNotifications
+    EditProfile, UserFavProperties, FiltersPage, ToastNotifications,
+    NearByProperties, UserNearByProperties
 } from './';
 
 
@@ -164,6 +165,10 @@ function App(props) {
                         <Route exact path="/my-fav-properties" render={({ match }) => {
                             return <UserFavProperties key={match.path} />;
                         }} />
+                        <Route exact path="/my-nearby-properties" render={({ match }) => {
+                            return <UserNearByProperties key={match.path} />;
+                        }} />
+                        <Route exact path="/nearby-properties" component={NearByProperties} />
 
 
                         <Route component={PageNotFound} />
