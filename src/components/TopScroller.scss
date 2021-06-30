@@ -1,11 +1,16 @@
-.scroll-up .icon-up-arrow {
+.scroll-up {
+    border-radius: 10px;
     position: fixed;
-    bottom: calc(60px + env(safe-area-inset-bottom));
-    right: 15px;
+    bottom: calc(50px + env(safe-area-inset-bottom));
+    right: 4px;
     cursor: pointer;
+    z-index: 10;
+    padding: 10px 12px 4px 12px;
+}
+
+.scroll-up .icon-up-arrow {
     width: 25px;
     height: 25px;
-    z-index: 10;
 }
 
 .scroll-up:active {
