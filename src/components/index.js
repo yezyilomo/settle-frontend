@@ -32,7 +32,8 @@ import {MultipleImageUploader} from './MultipleImageUploader';
 import {
     GenericFilter ,PropertiesFilter, UserProperties, SearchProperties,
     FilterPropertiesByCategory, EndpointPropertiesFilter, ShowBuyProperties,
-    ShowRentProperties, UserFavProperties, PROPERTIES_QUERY_PARAM
+    ShowRentProperties, UserFavProperties, PROPERTIES_QUERY_PARAM, NearByProperties,
+    UserNearByProperties
 } from './Filters';
 import {Rating} from './Rating';
 import {BottomNavBar} from './BottomNavBar';
@@ -70,5 +71,5 @@ export {
     PropertiesGroup, AddToHomeScreen, SliderPropertiesGroup, TwoRowsPropertiesGroup,
     ShowBuyProperties, ShowRentProperties, EditProfile, ProfilePictureUploader, InfoModal, Map,
     PROPERTIES_QUERY_PARAM, SaveButton, AsyncSelect, AsyncCreatableSelect, LogInToViewSaved,
-    ToastNotifications
+    ToastNotifications, NearByProperties, UserNearByProperties
 };

@@ -64,6 +64,22 @@
 	cursor: pointer;
 }
 
+.view-all-link {
+	text-decoration: none !important;
+	font-size: 18px;
+	position: relative;
+	bottom: 2px;
+}
+
+.view-all-link .icon {
+	width: 24px;
+	height: 24px;
+	position: relative;
+	top: 6px;
+	left: 1px;
+	background-color: $primary;
+}
+
 .load-more-button{
 	width: 40px;
 	height: 40px;

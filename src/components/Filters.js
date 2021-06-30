@@ -7,6 +7,7 @@ import {
 } from '.';
 import { BASE_API_URL } from '../';
 import { getPropertyRoute, capitalizeFirst } from '../utils';
+import { useUserLocation } from '../hooks';
 
 
 function GenericFilter(props) {
@@ -62,6 +63,7 @@ function EndpointPropertiesFilter(props) {
                             viewKey={props.viewKey}
                             header={header}
                             response={response}
+                            restoreScrollOnMovingBackOnly={props.restoreScrollOnMovingBackOnly}
                             FetchMoreOnScrollToBottom>
                             {property =>
                                 <PropertyOverview property={property} />
@@ -116,7 +118,7 @@ function PropertiesFilter(props) {
     }
     &amenities__contains=${amenity_ids}`
 
-    return <EndpointPropertiesFilter selection={endpoint} viewKey={viewKey} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter restoreScrollOnMovingBackOnly selection={endpoint} viewKey={viewKey} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -140,7 +142,7 @@ function SearchProperties(props) {
     
     let viewKey = "searchPropertiesView";
 
-    return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter restoreScrollOnMovingBackOnly viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -166,6 +168,45 @@ function UserFavProperties(props) {
 }
 
 
+function UserNearByProperties(props) {
+    const { location } = useUserLocation();
+    if(location === null){
+        return null;
+    }
+
+    const endpoint = `
+    nearby-properties/?${PROPERTIES_QUERY_PARAM}
+    &longitude=${location.coords.longitude}
+    &latitude=${location.coords.latitude}
+    &radius_to_scan=5000
+    `
+    let selection = `userNearbyProperties`;
+    let header = (properties) => `Nearby Properties(${properties.count})..`;
+    let viewKey = "myNearByPropertiesView";
+
+    return <EndpointPropertiesFilter restoreScrollOnMovingBackOnly viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
+}
+
+
+function NearByProperties(props) {
+    const parsed = parse(props.location.search);
+    const lng = parsed.lng;
+    const lat = parsed.lat;
+    const radius = parsed.radius_to_scan || 5000;  // Use 5000 meters as a default
+    const endpoint = `
+    nearby-properties/?${PROPERTIES_QUERY_PARAM}
+    &longitude=${lng}
+    &latitude=${lat}
+    &radius_to_scan=${radius}
+    `
+    const selection = `/nearby-properties/?lng=${lng}&lat=${lat}&radius_to_scan=${radius}`
+    let header = (properties) => `Nearby Properties(${properties.count})..`;
+    let viewKey = "nearByPropertiesView";
+
+    return <EndpointPropertiesFilter restoreScrollOnMovingBackOnly viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
+}
+
+
 function UserProperties(props) {
     const [user, ] = useGlobalState("user");
     let selection = `myProperties.${getPropertyRoute(props.type)}`;
@@ -173,7 +214,7 @@ function UserProperties(props) {
     let endpoint = `${getPropertyRoute(props.type)}/?${PROPERTIES_QUERY_PARAM}&owner=${user.id}`;
     let viewKey = "userPropertiesView";
 
-    return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter restoreScrollOnMovingBackOnly viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -183,7 +224,7 @@ function ShowRentProperties(props){
     let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=rent`;
     let viewKey = "explore/rent-propertiesView";
 
-    return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter restoreScrollOnMovingBackOnly viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
@@ -193,12 +234,12 @@ function ShowBuyProperties(props){
     let endpoint = `properties/?${PROPERTIES_QUERY_PARAM}&available_for=sale`;
     let viewKey = "explore/buy-propertiesView";
 
-    return <EndpointPropertiesFilter viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
+    return <EndpointPropertiesFilter restoreScrollOnMovingBackOnly viewKey={viewKey} selection={selection} endpoint={endpoint} header={header}/>;
 }
 
 
 export {
     GenericFilter ,PropertiesFilter, SearchProperties, EndpointPropertiesFilter,
     FilterPropertiesByCategory, UserProperties, ShowRentProperties, ShowBuyProperties,
-    UserFavProperties, PROPERTIES_QUERY_PARAM
+    UserFavProperties, PROPERTIES_QUERY_PARAM, NearByProperties, UserNearByProperties
 }

@@ -29,7 +29,13 @@ function NearByProperties(props) {
                 }
                 return (
                     <div class="p-0 m-0 mt-4">
-                        <SliderPropertiesGroup selection="userNearbyProperties" header="Nearby Properties" response={response} />
+                        <SliderPropertiesGroup
+                            selection="userNearbyProperties"
+                            header="Nearby Properties"
+                            viewAllTitle="View All"
+                            viewAllLink="/my-nearby-properties"
+                            response={response}
+                        />
                     </div>
                 );
             }}
@@ -63,7 +69,13 @@ function Home(props) {
                             placeholder={<GlowBlockLoader />} onError={renderInlineError}>{response => {
                                 return (
                                     <div class="p-0 m-0 mt-4">
-                                        <SliderPropertiesGroup selection="propertiesToSlide" header="Amazing Places" response={response} />
+                                        <SliderPropertiesGroup
+                                            selection="propertiesToSlide"
+                                            header="Amazing Places"
+                                            response={response}
+                                            viewAllTitle="View All"
+                                            viewAllLink="/explore/rent-properties/"
+                                        />
                                     </div>
                                 );
                             }}
