@@ -338,6 +338,10 @@ function PropertyDetails(props) {
                     child = props.children(property);
                 }
 
+                const scrollToMap = (e) => {
+                    document.getElementById('google-map').scrollIntoView(); 
+                }
+
 
                 return (
                     <div class="row p-0 m-0 property-details">
@@ -365,7 +369,9 @@ function PropertyDetails(props) {
                                 <div class="actions row m-0 p-0">
                                     <div class="col text-center py-2 p-0 m-0">
                                         <ConfirmModal size="md" modalShow={deleteModalShow} setModalShow={setDeleteModalShow} options={confirmDeletionOptions} text={confirmDeletionText} />
-                                        <Link class="delete-property text-decoration-none" onClick={() => { setDeleteModalShow(true) }}><span class="fa fa-trash mt-2 mr-1 mr-lg-3 delete-property-icon" /> Delete</Link>
+                                        <Link class="delete-property text-decoration-none" onClick={() => { setDeleteModalShow(true) }}>
+                                            <b><span class="fa fa-trash mt-2 mr-1 mr-lg-3 delete-property-icon" /> Delete</b>
+                                        </Link>
                                     </div>
                                     <div class="col text-center py-2 p-0 m-0">
                                         <Link to={`/edit/${getPropertyRoute(props.type)}/${property.id}`} class="edit-property text-decoration-none">
@@ -395,11 +401,21 @@ function PropertyDetails(props) {
 
                                             <div class="col text-right">
                                                 <div class="property-post-time">
-                                                    <i class="fa fa-clock"></i> {formatDistance(new Date(property.post_date), new Date())} ago
+                                                    <i class="fa fa-clock"></i> {capitalizeFirst(formatDistance(new Date(property.post_date), new Date()))}
                                                 </div>
-                                                <div class="property-rating p-0 m-0 mt-3">
-                                                    <div>({property.total_rating_score})</div>
+                                                <div class="property-rating p-0 m-0 mt-1">
+                                                    <div class="summary">
+                                                        <span class="score">{property.total_rating_score}</span>
+                                                        <span class="reviews-count">
+                                                            ({property.raters_count} Review{property.raters_count === 1? "": "s"})
+                                                        </span>
+                                                    </div>
                                                     <Rating property={property} />
+                                                </div>
+                                                <div class="scroll-to-map mt-3">
+                                                    <Link onClick={scrollToMap}>
+                                                        <span class="icon icon-map-location"></span> View on map
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -525,11 +541,21 @@ function Contact(props) {
 
 
 function price(property) {
-    const cash = <span class="price">{property.currency} {thousandsSeparator(property.price)}</span>
+    const cash = `${property.currency} ${thousandsSeparator(property.price)}`
     if (property.price_rate_unit) {
-        return <span>{cash} / {property.price_rate_unit}</span>;
+        return (
+            <span class="price">
+                <span class="amount">{cash}</span>
+                <span class="forward-slash"> / </span>
+                <span class="rate">{property.price_rate_unit}</span>
+            </span>
+        );
     }
-    return cash;
+    return (
+        <span class="price">
+            <span class="amount">{cash}</span>
+        </span>
+    );
 }
 
 
