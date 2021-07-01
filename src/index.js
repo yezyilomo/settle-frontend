@@ -48,7 +48,7 @@ function Application(props) {
             onRefresh() {
                 window.location.reload();
             },
-            distThreshold: 80,
+            distThreshold: 90,
             distMax: 130,
             distReload: 60,
             resistanceFunction: t => Math.min(1, t / 6),
