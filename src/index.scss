@@ -14,6 +14,18 @@ html {
   }
  }
 
+// Style pull to refresh(ptr)
+.ptr--ptr {
+   background-color: rgb(240, 240, 240);
+   box-shadow: inset 0 -1px 10px rgb(214, 214, 214) !important;
+}
+
+.refresh-arrow {
+  transform: rotate(180deg);
+  background: rgb(173, 173, 173) !important;
+}
+// End of styling pull to refresh(ptr)
+
 body {
   margin: 0;
   padding: 0;
@@ -59,12 +71,6 @@ body {
 }
 }
 /* End of Lazy load placeholder*/
-
-
-.refresh-arrow {
-  transform: rotate(180deg);
-  background: rgb(173, 173, 173) !important;
-}
 
 
 /* Animate page transition */
