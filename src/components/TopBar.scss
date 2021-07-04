@@ -82,12 +82,12 @@
     height: 100%;
     position: relative;
     top: 5px;
-    background-color: rgb(117, 117, 117);
+    background-color: rgb(170, 170, 170);
 }
 
 .profile-dropdown.navbar-profile-picture{
     position: absolute;
-    right:0px;
+    right: 0px;
     top: 3px;
 }
 
@@ -382,7 +382,7 @@
             padding-top: 10px;
             padding-bottom: 10px;
         }
-        .icon {
+        .nav-link>.icon, .profile-toggle .icon {
             height: 20px;
             width: 20px;
             position: relative;
