@@ -3,26 +3,57 @@ import { useHistory } from 'react-router';
 import { useGlobalState } from 'state-pool';
 
 
-function useUserLocation(){
-    const [location, setLocation] = useState(null);
-    const [error, setError] = useState(null);
+function useGeolocationErrorsLogger(displayNotification){
+    const [, updateNotifications] = useGlobalState("notifications");
+
+    function showNotification(msg){
+        updateNotifications((notifications) => {
+            notifications.push(msg)
+        })
+    }
 
     function logError(error) {
+        let msg = "";
         switch (error.code) {
             case error.PERMISSION_DENIED:
-                console.log("User denied the request for Geolocation.")
+                msg = "User denied the request for Geolocation."
+                console.log(msg);
+                if(displayNotification){
+                    showNotification(msg);
+                }
                 break;
             case error.POSITION_UNAVAILABLE:
-                console.log("Location information is unavailable.")
+                msg = "Location information is unavailable."
+                console.log(msg)
+                if(displayNotification){
+                    showNotification(msg);
+                }
                 break;
             case error.TIMEOUT:
-                console.log("The request to get user location timed out.")
+                msg = "The request to get user location timed out."
+                console.log(msg)
+                if(displayNotification){
+                    showNotification(msg);
+                }
                 break;
             case error.UNKNOWN_ERROR:
-                console.log("An unknown error occurred when getting user location.")
+                msg = "An unknown error occurred when getting user location."
+                console.log(msg)
+                if(displayNotification){
+                    showNotification(msg);
+                }
                 break;
         }
     }
+
+    return logError;
+}
+
+
+function useUserLocation(){
+    const [location, setLocation] = useState(null);
+    const [error, setError] = useState(null);
+    const logError = useGeolocationErrorsLogger(false);
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -36,7 +67,8 @@ function useUserLocation(){
                 }
             );
         } else {
-            console.log("Geolocation is not supported by this browser.");
+            let msg = "Geolocation is not supported by this browser."
+            console.log(msg);
         }
     }, [])
 
@@ -92,4 +124,7 @@ function usePageTransition(){
     return animate;
 }
 
-export { useRestoreScrollState, useScrollTop, useUserLocation, usePageTransition };
+export {
+    useRestoreScrollState, useScrollTop, useUserLocation,
+    usePageTransition, useGeolocationErrorsLogger
+};

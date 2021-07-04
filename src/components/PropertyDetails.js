@@ -339,7 +339,7 @@ function PropertyDetails(props) {
                 }
 
                 const scrollToMap = (e) => {
-                    document.getElementById('google-map').scrollIntoView(); 
+                    document.getElementById('location-on-map').scrollIntoView({behavior: "smooth"}); 
                 }
 
 
@@ -456,7 +456,11 @@ function PropertyDetails(props) {
                                 </div>
                             </div>
                             
-                            <div class="row p-0 m-0 px-3 px-sm-4 mt-md-4">
+                            <div id="location-on-map" class="row p-0 m-0 px-3 px-sm-4 mt-md-4">
+                                <div class="col-12 p-0 m-0 h5">Location</div>
+                                <div class="col-12 p-0 m-0">
+                                    {property.location.address}
+                                </div>
                                 <div class="col-12 map p-0 m-0">
                                     <Map location={{
                                         address: property.location.address,

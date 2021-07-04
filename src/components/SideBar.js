@@ -18,7 +18,7 @@ import {
     ComboboxList, ComboboxOption,
 } from "@reach/combobox";
 import { useLoadScript } from "@react-google-maps/api";
-import { usePageTransition, useScrollTop } from '../hooks';
+import { useGeolocationErrorsLogger, usePageTransition, useScrollTop } from '../hooks';
 
 
 const libraries = ["places"];
@@ -56,6 +56,7 @@ const PriceRangeSlider = withStyles({
 
 function Search(props) {
     const [loading, setLoading] = useState(false);
+    const logError = useGeolocationErrorsLogger(true);
     const {
         value,
         suggestions: { status, data },
@@ -128,7 +129,10 @@ function Search(props) {
         e.preventDefault();
         navigator.geolocation.getCurrentPosition(
             setLocation,
-            () => {setLoading(false); return null}
+            (error) => {
+                setLoading(false);
+                logError(error);
+            }
         );
     }
 

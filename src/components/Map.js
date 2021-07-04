@@ -15,6 +15,7 @@ import markerIcon from '../images/location-marker.svg';
 
 import "./Map.scss";
 import "@reach/combobox/styles.css";
+import { useGeolocationErrorsLogger } from "../hooks";
 //import mapStyles from "./mapStyles";
 
 
@@ -60,6 +61,7 @@ function Locate({ panTo }) {
 
 function Search(props) {
     const [loading, setLoading] = useState(false);
+    const logError = useGeolocationErrorsLogger(true);
     const {
         ready,
         value,
@@ -134,7 +136,10 @@ function Search(props) {
         e.preventDefault();
         navigator.geolocation.getCurrentPosition(
             setLocation,
-            () => {setLoading(false); return null}
+            (error) => {
+                setLoading(false);
+                logError(error)
+            }
         );
     }
 

@@ -20,6 +20,7 @@ import {
     ComboboxList, ComboboxOption,
 } from "@reach/combobox";
 import { useLoadScript } from "@react-google-maps/api";
+import { useGeolocationErrorsLogger } from '../hooks';
 
 
 const libraries = ["places"];
@@ -64,6 +65,7 @@ function Search(props) {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const searchInput = useRef(null);
+    const logError = useGeolocationErrorsLogger(true);
     const {
         value,
         suggestions: { status, data },
@@ -145,7 +147,10 @@ function Search(props) {
         e.preventDefault();
         navigator.geolocation.getCurrentPosition(
             setLocation,
-            () => {setLoading(false); return null}
+            (error) => {
+                setLoading(false)
+                logError(error)
+            }
         );
     }
 
@@ -281,7 +286,9 @@ function TopBar(props) {
                                             <img src={user.profile_picture} alt="" />
                                         }
                                     </div>
-                                    <span class="d-lg-none"><span class="d-lg-none icon icon-user"/>Profile</span>
+                                    <span class="profile-toggle d-lg-none">
+                                        <span class="d-lg-none icon icon-user"/>Profile
+                                    </span>
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className="nav-dropdown-menu p-0 m-0 bw-0 bw-lg-1">
                                     <hr class="line p-0 m-0 d-lg-none" />
