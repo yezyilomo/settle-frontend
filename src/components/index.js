@@ -54,6 +54,7 @@ import {SaveButton} from './SaveButton';
 import {AsyncSelect, AsyncCreatableSelect} from './SelectInputs';
 import {LogInToViewSaved} from './LogInToViewSaved';
 import {ToastNotifications} from './ToastNotifications';
+import {ResetPassword} from './ResetPassword';
 
 
 export {
@@ -71,5 +72,5 @@ export {
     PropertiesGroup, AddToHomeScreen, SliderPropertiesGroup, TwoRowsPropertiesGroup,
     ShowBuyProperties, ShowRentProperties, EditProfile, ProfilePictureUploader, InfoModal, Map,
     PROPERTIES_QUERY_PARAM, SaveButton, AsyncSelect, AsyncCreatableSelect, LogInToViewSaved,
-    ToastNotifications, NearByProperties, UserNearByProperties
+    ToastNotifications, NearByProperties, UserNearByProperties, ResetPassword
 };
