@@ -55,3 +55,16 @@ input:-webkit-autofill:active  {
     border-color: $red;
     box-shadow: 0 0 0 white;
 }
+
+
+.forgot-password-btn {
+    font-size: 14px;
+    color: $primary;
+}
+
+.forgot-password-btn span {
+    cursor: pointer;
+    position: relative;
+    left: 7px;
+}
+

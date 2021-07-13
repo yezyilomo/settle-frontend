@@ -11,7 +11,7 @@ import {
     Home, BottomNavBar, TopScroller, PageNotFound, AddToHomeScreen,
     FilterPropertiesByCategory, ShowBuyProperties, ShowRentProperties,
     EditProfile, UserFavProperties, FiltersPage, ToastNotifications,
-    NearByProperties, UserNearByProperties
+    NearByProperties, UserNearByProperties, ResetPassword
 } from './';
 
 
@@ -169,6 +169,7 @@ function App(props) {
                             return <UserNearByProperties key={match.path} />;
                         }} />
                         <Route exact path="/nearby-properties" component={NearByProperties} />
+                        <Route exact path="/confirm-password-reset" component={ResetPassword} />
 
 
                         <Route component={PageNotFound} />
